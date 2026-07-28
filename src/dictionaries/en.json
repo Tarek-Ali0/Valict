@@ -71,6 +71,6 @@
     "contactUs": "Contact Us",
     "emailLabel": "Email",
     "phoneLabel": "Phone",
-    "copyright": "© {year} Valict | All rights reserved"
+    "copyright": "{year} © Valict | All rights reserved"
   }
 }
