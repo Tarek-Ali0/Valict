@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "changeLanguage": "Change Language",
+    "toggleTheme": "Toggle Theme",
+    "getStarted": "Get Started",
+    "services": "Services",
+    "whyValict": "Why Valict",
+    "aboutUs": "About Us"
+  },
+  "hero": {
+    "badge": "Where ICT Meets Value.",
+    "title1": "Powering your business with",
+    "title2": "Reliable Solutions",
+    "subheadline": "Comprehensive managed IT and security solutions to keep your systems running smoothly.",
+    "cta": "Get Started"
+  },
+  "services": {
+    "subtitle": "Our Core Expertise",
+    "title": "IT & Security Solutions",
+    "highlight": "That Drive Efficiency",
+    "description": "Comprehensive managed services and infrastructure solutions to help businesses operate securely and without disruption.",
+    "learnMore": "Learn more",
+    "items": [
+      { "title": "Managed IT Services", "desc": "Proactive monitoring and support to keep operations running smoothly." },
+      { "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
+      { "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
+      { "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
+      { "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
+      { "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
+    ]
+  },
+  "why": {
+    "title": "Why Valict?",
+    "uptime": "99.9%",
+    "uptimeLabel": "System Uptime",
+    "headline": "Connecting Technology with Real Business Value",
+    "points": [
+      { "title": "Reduce downtime and keep operations running", "desc": "Keep operations running smoothly with our proactive maintenance and support." },
+      { "title": "Improve performance and system efficiency", "desc": "Optimize your system efficiency for faster, smarter, and scalable operations." },
+      { "title": "Secure your business infrastructure", "desc": "Flexible IT infrastructure designed to grow effortlessly with your business." }
+    ]
+  },
+  "about": {
+    "title": "About Us",
+    "text": "At Valict, we specialize in delivering integrated ICT infrastructure solutions. Our focus is reducing downtime, improving performance, and ensuring continuity. Technology is a tool to create real value."
+  },
+  "how": {
+    "subtitle": "Our Process",
+    "title": "How It Works",
+    "steps": [
+      { "title": "Assess", "desc": "Evaluate your current IT environment and identify technical gaps." },
+      { "title": "Design", "desc": "Create tailored, scalable architecture solutions for your business." },
+      { "title": "Implement", "desc": "Deploy and optimize your new systems seamlessly and securely." },
+      { "title": "Monitor", "desc": "Continuous support and proactive 24/7 maintenance to prevent issues." }
+    ]
+  },
+  "cta": {
+    "headline": "Unlock the full value of your IT",
+    "sub": "Let us help you build a reliable and scalable technology environment.",
+    "button": "Book a Free Consultation"
+  },
+  "contact": {
+    "email": "info@valict.com",
+    "phone": "+20 150 554 4455",
+    "language": "العربية"
+  },
+  "footer": {
+    "about": "At Valict, we deliver integrated ICT infrastructure solutions focused on reducing downtime, improving performance, and ensuring business continuity.",
+    "badge": "Validate Your Vision",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "copyright": "© {year} Valict ICT Solutions. All rights reserved."
+  }
+}

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valict | Smart ICT. Real Value.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              valict: {
+                navy: "#1e3a8a" /* Extracted from Valict logo text */,
+                cyan: "#22d3ee" /* Extracted from the arrow in the logo */,
+                dark: "#0f172a",
+                light: "#f8fafc",
+              },
+            },
+            boxShadow: {
+              premium: "0 20px 50px -12px rgba(30, 58, 138, 0.1)",
+              "inner-soft": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Circuit board dot pattern inspired by the logo */
+      .circuit-bg {
+        background-image: radial-gradient(
+          circle at 2px 2px,
+          #e2e8f0 1px,
+          transparent 0
+        );
+        background-size: 32px 32px;
+      }
+
+      .logo-gradient-text {
+        background: linear-gradient(135deg, #1e3a8a 0%, #22d3ee 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .btn-gradient {
+        background: linear-gradient(135deg, #1e3a8a 0%, #22d3ee 100%);
+        transition: all 0.3s ease;
+      }
+
+      .btn-gradient:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(34, 211, 238, 0.4);
+      }
+
+      /* Subtle hero shape inspired by the upward arrow */
+      .hero-shape {
+        position: absolute;
+        top: -10%;
+        right: -5%;
+        width: 40%;
+        height: 120%;
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.03) 0%,
+          rgba(34, 211, 238, 0.03) 100%
+        );
+        clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+        z-index: -1;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e3a8a;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white text-slate-800 antialiased font-sans selection:bg-valict-cyan selection:text-valict-navy"
+  >
+    <nav
+      class="fixed w-full bg-white/80 backdrop-blur-xl border-b border-slate-100 z-50"
+    >
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex justify-between items-center h-24">
+          <img src="./Valict copy2.png" alt="Valict Logo" class="w-40" />
+
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="#services"
+              class="text-slate-600 hover:text-valict-navy font-semibold transition-colors"
+              >Services</a
+            >
+            <a
+              href="#why-valict"
+              class="text-slate-600 hover:text-valict-navy font-semibold transition-colors"
+              >Why Valict</a
+            >
+            <a
+              href="#about"
+              class="text-slate-600 hover:text-valict-navy font-semibold transition-colors"
+              >About Us</a
+            >
+            <a
+              href="#contact"
+              class="btn-gradient text-white px-8 py-3 rounded-full font-bold shadow-lg"
+            >
+              Get Started
+            </a>
+        
+          </div>
+
+          <div class="lg:hidden">
+            <i class="fa-solid fa-bars-staggered text-2xl text-valict-navy"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="relative pt-48 pb-32 overflow-hidden">
+      <div class="hero-shape"></div>
+      <div
+        class="absolute top-20 left-10 w-64 h-64 bg-valict-cyan/10 rounded-full blur-3xl"
+      ></div>
+      <div class="circuit-bg absolute inset-0 opacity-[0.4] -z-10"></div>
+
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <div class="lg:w-3/5 text-left">
+            <div
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-6"
+            >
+              <span
+                class="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"
+              ></span>
+              <span
+                class="text-sm font-bold text-valict-navy tracking-widest uppercase"
+                >Smart ICT. Real Value.</span
+              >
+            </div>
+            <h1
+              class="text-5xl md:text-7xl font-black leading-[1.1] mb-8 text-valict-dark tracking-tight"
+            >
+              Powering your business with <br />
+              <span class="logo-gradient-text leading-relaxed"
+                >Reliable Solutions</span
+              >
+            </h1>
+            <p class="text-xl text-slate-500 mb-10 max-w-2xl leading-relaxed">
+              Reliable, value-driven ICT solutions that maximize performance,
+              secure your infrastructure, and keep your business running without
+              interruption.
+            </p>
+            <div class="flex flex-wrap gap-4 items-center">
+              <a
+                href="#contact"
+                class="btn-gradient text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center gap-3"
+              >
+                Free IT Assessment
+                <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+              <div
+                class="flex items-center gap-4 bg-white p-2 pl-6 rounded-2xl border border-slate-100 shadow-sm"
+              >
+                <div class="flex -space-x-2">
+                  <div
+                    class="w-10 h-10 rounded-full bg-slate-200 border-2 border-white"
+                  ></div>
+                  <div
+                    class="w-10 h-10 rounded-full bg-slate-300 border-2 border-white"
+                  ></div>
+                </div>
+                <span class="text-slate-600 font-semibold text-sm"
+                  >Trusted by <br />Leading Teams</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:w-2/5 relative">
+            <div
+              class="relative z-10 bg-white p-4 rounded-[2.5rem] shadow-premium border border-slate-50"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800"
+                alt="Tech Dashboard"
+                class="rounded-[2rem] shadow-inner"
+              />
+            </div>
+            <div
+              class="absolute -bottom-10 -left-10 w-40 h-40 bg-valict-navy rounded-3xl -z-10 -rotate-12 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-chart-line text-white text-5xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="services"
+      class="py-32 bg-slate-50/50 relative border-t border-slate-100"
+    >
+      <div class="max-w-7xl mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-end mb-20 gap-6"
+        >
+          <div class="max-w-2xl text-left">
+            <h2
+              class="text-valict-cyan font-black text-sm uppercase tracking-widest mb-4"
+            >
+              Our Core Expertise
+            </h2>
+            <h3
+              class="text-4xl md:text-5xl font-bold text-valict-dark leading-tight tracking-tight"
+            >
+              IT & Security Solutions <br />That Drive Efficiency
+            </h3>
+          </div>
+          <p
+            class="text-slate-500 max-w-sm text-left md:text-right leading-relaxed"
+          >
+            Comprehensive managed services and infrastructure solutions to help
+            businesses operate securely and without disruption.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-laptop-code text-2xl text-valict-navy group-hover:text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Managed IT Services
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              Proactive monitoring and support to keep your systems running
+              smoothly, minimizing downtime.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-cyan-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-network-wired text-2xl text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Network & Infrastructure
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              Design, implementation, and optimization of highly reliable and
+              fast network environments.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-cloud text-2xl text-slate-700 group-hover:text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Cloud Solutions
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              Scalable cloud systems tailored to your business needs, enabling
+              flexibility and remote access.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-shield-halved text-2xl text-red-600 group-hover:text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Cybersecurity
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              Protect your valuable data and infrastructure with advanced,
+              multi-layered security solutions.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-headset text-2xl text-green-600 group-hover:text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Monitoring & Support
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              24/7 continuous monitoring and rapid response support to prevent
+              and resolve issues instantly.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+
+          <div
+            class="group bg-white p-10 rounded-[2rem] shadow-premium hover:bg-valict-navy transition-all duration-500 border border-slate-100"
+          >
+            <div
+              class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors"
+            >
+              <i
+                class="fa-solid fa-code text-2xl text-purple-600 group-hover:text-valict-cyan"
+              ></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3 group-hover:text-white">
+              Web Development
+            </h4>
+            <p
+              class="text-slate-500 text-sm group-hover:text-slate-300 leading-relaxed mb-6"
+            >
+              Professional, fast websites designed to strengthen your brand
+              presence and support growth.
+            </p>
+            <a
+              href="#"
+              class="text-valict-navy font-semibold text-sm group-hover:text-valict-cyan flex items-center gap-2"
+            >
+              Learn more <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="why-valict"
+      class="py-32 bg-white overflow-hidden border-t border-slate-100"
+    >
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row items-center gap-20">
+          <div class="lg:w-1/2 relative">
+            <div class="grid grid-cols-2 gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1573163231162-80113439c4f9?auto=format&fit=crop&q=80&w=400"
+                alt="IT Team"
+                class="rounded-[2rem] shadow-lg mt-10 object-cover h-64 w-full"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=400"
+                alt="Server Room"
+                class="rounded-[2rem] shadow-lg object-cover h-64 w-full"
+              />
+            </div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-valict-navy p-8 rounded-3xl text-center shadow-2xl border-4 border-white"
+            >
+              <span class="block text-4xl font-black text-valict-cyan mb-1"
+                >99.9%</span
+              >
+              <span
+                class="text-white text-xs font-bold uppercase tracking-widest"
+                >System Uptime</span
+              >
+            </div>
+          </div>
+
+          <div class="lg:w-1/2 text-left">
+            <h2
+              class="text-valict-navy font-bold uppercase tracking-widest text-sm mb-4"
+            >
+              Why Choose Valict?
+            </h2>
+            <h3
+              class="text-4xl font-bold text-valict-dark mb-6 leading-tight tracking-tight"
+            >
+              Connecting Technology with Real Business Value
+            </h3>
+            <p class="text-slate-500 mb-10 leading-relaxed">
+              At Valict, we believe technology is not an end in itself, but a
+              tool to create real value. We focus on delivering reliable,
+              secure, and scalable ICT solutions tailored to your unique needs.
+            </p>
+
+            <div class="space-y-8">
+              <div class="flex items-start gap-5 group">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center group-hover:bg-valict-cyan transition-all duration-300"
+                >
+                  <i
+                    class="fa-solid fa-arrow-trend-down text-valict-navy group-hover:text-valict-dark"
+                  ></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-slate-900 mb-1">
+                    Reduce Downtime
+                  </h4>
+                  <p class="text-slate-500 text-sm">
+                    Keep operations running smoothly with our proactive
+                    maintenance.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-5 group">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center group-hover:bg-valict-cyan transition-all duration-300"
+                >
+                  <i
+                    class="fa-solid fa-gauge-high text-valict-navy group-hover:text-valict-dark"
+                  ></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-slate-900 mb-1">
+                    Improve Performance
+                  </h4>
+                  <p class="text-slate-500 text-sm">
+                    Optimize your system efficiency for faster, smarter
+                    operations.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-5 group">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center group-hover:bg-valict-cyan transition-all duration-300"
+                >
+                  <i
+                    class="fa-solid fa-up-right-and-arrow-up-right-from-center text-valict-navy group-hover:text-valict-dark"
+                  ></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-slate-900 mb-1">
+                    Scalable Solutions
+                  </h4>
+                  <p class="text-slate-500 text-sm">
+                    Flexible IT infrastructure designed to grow effortlessly
+                    with your business.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 bg-slate-50 border-t border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2
+          class="text-valict-navy font-bold uppercase tracking-widest text-sm mb-4"
+        >
+          Our Process
+        </h2>
+        <h3
+          class="text-3xl md:text-4xl font-bold text-valict-dark mb-16 tracking-tight"
+        >
+          How It Works
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <div class="text-4xl font-black text-valict-cyan/30 mb-4">01</div>
+            <h4 class="text-lg font-bold text-slate-900 mb-2">Assess</h4>
+            <p class="text-sm text-slate-500">
+              Evaluating your current IT environment and needs.
+            </p>
+          </div>
+          <div>
+            <div class="text-4xl font-black text-valict-cyan/30 mb-4">02</div>
+            <h4 class="text-lg font-bold text-slate-900 mb-2">Design</h4>
+            <p class="text-sm text-slate-500">
+              Creating tailored, scalable architecture solutions.
+            </p>
+          </div>
+          <div>
+            <div class="text-4xl font-black text-valict-cyan/30 mb-4">03</div>
+            <h4 class="text-lg font-bold text-slate-900 mb-2">Implement</h4>
+            <p class="text-sm text-slate-500">
+              Deploying and optimizing your new systems seamlessly.
+            </p>
+          </div>
+          <div>
+            <div class="text-4xl font-black text-valict-cyan/30 mb-4">04</div>
+            <h4 class="text-lg font-bold text-slate-900 mb-2">Monitor</h4>
+            <p class="text-sm text-slate-500">
+              Continuous support and proactive 24/7 maintenance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div
+          class="relative bg-valict-navy rounded-[3rem] p-12 md:p-20 overflow-hidden shadow-2xl"
+        >
+          <div class="circuit-bg absolute inset-0 opacity-[0.05]"></div>
+          <div
+            class="absolute top-0 right-0 w-96 h-96 bg-valict-cyan opacity-20 blur-[120px]"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-64 h-64 bg-blue-600 opacity-20 blur-[100px]"
+          ></div>
+
+          <div
+            class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-left"
+          >
+            <div class="lg:w-2/3">
+              <h2
+                class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight tracking-tight"
+              >
+                Unlock the full value of your IT.
+              </h2>
+              <p class="text-blue-100 text-xl font-light">
+                Let us help you build a reliable, secure, and scalable
+                technology environment.
+              </p>
+            </div>
+            <div class="lg:w-1/3 flex flex-col gap-4 w-full">
+              <a
+                href="mailto:info@valict.com"
+                class="bg-white text-valict-navy text-center py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 transform hover:-translate-y-1"
+              >
+                Book Free Consultation
+              </a>
+              <div class="mt-4 text-center">
+                <a
+                  href="mailto:info@valict.com"
+                  class="block text-white/80 hover:text-white mb-2 font-medium"
+                  ><i class="fa-solid fa-envelope mr-2 text-valict-cyan"></i>
+                  info@valict.com</a
+                >
+                <a
+                  href="tel:+20000000000"
+                  class="block text-white/80 hover:text-white font-medium"
+                  ><i class="fa-solid fa-phone mr-2 text-valict-cyan"></i> +20
+                  XXX XXX XXXX</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-slate-50 py-12 border-t border-slate-200">
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            src="https://i.ibb.co/hR0V6vL/valict-logo.png"
+            alt="Valict Logo"
+            class="h-8 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
+          />
+        </div>
+
+        <p class="text-slate-500 text-sm text-center md:text-left">
+          © 2026 Valict ICT Solutions. All rights reserved.
+        </p>
+
+        <div class="flex gap-4">
+          <a
+            href="#"
+            class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-valict-navy hover:border-valict-navy transition-all shadow-sm"
+          >
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a
+            href="#"
+            class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-valict-navy hover:border-valict-navy transition-all shadow-sm"
+          >
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
