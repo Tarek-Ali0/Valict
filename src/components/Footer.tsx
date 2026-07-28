@@ -118,7 +118,7 @@ export function Footer({ dict }: FooterProps) {
                 <FaLinkedinIn className="w-4 h-4" />
               </a>
               <a
-                href="https://www.facebook.com/profile.php?id=61572077354354"
+                href="https://www.facebook.com/ValictOfficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-valict-cyan dark:border dark:border-slate-700"
