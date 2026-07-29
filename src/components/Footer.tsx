@@ -84,7 +84,7 @@ export function Footer({ dict }: FooterProps) {
               </li>
               <li>
                 <a 
-                  href="tel:+20000000000" 
+                  href="tel:+201505544455" 
                   className="group flex items-start gap-4 text-slate-500 dark:text-slate-400 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
                 >
                   <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:border-valict-cyan group-hover:bg-valict-cyan/5 transition-all duration-300">
