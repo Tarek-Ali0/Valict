@@ -1,0 +1,19 @@
+export default async function sitemap() {
+  const baseUrl = 'https://valict.com';
+
+  // قائمة بجميع مسارات الصفحات الأخرى في موقعك
+  const routes = [
+    '',                 // الصفحة الرئيسية
+    '/about',           // صفحة من نحن
+    '/services',        // صفحة الخدمات
+    '/portfolio',       // صفحة أعمالنا
+    '/contact',         // صفحة اتصل بنا
+  ];
+
+  return routes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: route === '' ? 'daily' : 'weekly', // الرئيسية تتحدث يومياً، والباقي أسبوعياً
+    priority: route === '' ? 1.0 : 0.8,                // الرئيسية لها الأولوية القصوى
+  }));
+}
