@@ -11,6 +11,13 @@ const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 export const metadata: Metadata = {
   title: "Valict | IT Management & ICT Solutions",
   description: "Reliable, value-driven ICT solutions that maximize performance and keep your business running without interruption.",
+  alternates: {
+    canonical: "https://valict.com",
+    languages: {
+      "en": "https://valict.com",
+      "ar": "https://valict.com",
+    },
+  },
 };
 
 export async function generateStaticParams() {
