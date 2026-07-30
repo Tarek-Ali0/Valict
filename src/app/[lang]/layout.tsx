@@ -23,14 +23,6 @@ export const metadata: Metadata = {
     description: "Validate Your Vision | Powering your business with Reliable Solutions",
     url: "https://valict.com",
     siteName: "Valict",
-    images: [
-      {
-        url: "https://valict.com",
-        width: 600,
-        height: 600,
-        alt: "Valict IT Solutions",
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -38,7 +30,6 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Valict | IT Management & ICT Solutions",
     description: "Validate Your Vision | Powering your business with Reliable Solutions",
-    images: ["https://valict.com"],
   },
 };
 
