@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://valict.com",
-        width: 32,
-        height: 32,
+        width: 600,
+        height: 600,
         alt: "Valict IT Solutions",
       },
     ],
