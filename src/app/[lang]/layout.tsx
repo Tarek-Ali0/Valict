@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     siteName: "Valict",
     images: [
       {
-        url: "https://githubusercontent.com",
-        width: 1200,
-        height: 630,
+        url: "https://valict.com",
+        width: 32,
+        height: 32,
         alt: "Valict IT Solutions",
       },
     ],
@@ -35,10 +35,10 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Valict | IT Management & ICT Solutions",
     description: "Validate Your Vision | Powering your business with Reliable Solutions",
-    images: ["https://githubusercontent.com"],
+    images: ["https://valict.com"],
   },
 };
 
