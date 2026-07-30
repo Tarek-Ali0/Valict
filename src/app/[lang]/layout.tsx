@@ -10,13 +10,35 @@ const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 
 export const metadata: Metadata = {
   title: "Valict | IT Management & ICT Solutions",
-  description: "Reliable, value-driven ICT solutions that maximize performance and keep your business running without interruption.",
+  description: "Validate Your Vision | Powering your business with Reliable Solutions",
   alternates: {
     canonical: "https://valict.com",
     languages: {
       "en": "https://valict.com",
       "ar": "https://valict.com",
     },
+  },
+  openGraph: {
+    title: "Valict | IT Management & ICT Solutions",
+    description: "Validate Your Vision | Powering your business with Reliable Solutions",
+    url: "https://valict.com",
+    siteName: "Valict",
+    images: [
+      {
+        url: "https://valict.com",
+        width: 1200,
+        height: 630,
+        alt: "Valict IT Solutions",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Valict | IT Management & ICT Solutions",
+    description: "Validate Your Vision | Powering your business with Reliable Solutions",
+    images: ["https://valict.com"],
   },
 };
 
