@@ -52,7 +52,7 @@ export default async function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 font-sans antialiased transition-colors duration-300",
+          "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
           inter.variable,
           plusJakartaSans.variable,
           cairo.variable
