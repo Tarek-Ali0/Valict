@@ -1,38 +1,14 @@
 import type { Metadata } from "next";
-import { Outfit, Cairo } from "next/font/google";
+import { Inter, Cairo } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const outfitFont = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
-const cairoFont = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 
 export const metadata: Metadata = {
   title: "Valict | IT Management & ICT Solutions",
   description: "Validate Your Vision | Powering your business with Reliable Solutions",
-  alternates: {
-    canonical: "https://valict.com",
-    languages: {
-      "en": "https://valict.com",
-      "ar": "https://valict.com",
-    },
-  },
-  openGraph: {
-    title: "Valict | IT Management & ICT Solutions",
-    description: "Validate Your Vision | Powering your business with Reliable Solutions",
-    url: "https://valict.com",
-    siteName: "Valict",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: "Valict | IT Management & ICT Solutions",
-    description: "Validate Your Vision | Powering your business with Reliable Solutions",
-  },
 };
-
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "ar" }];
-}
 
 export default async function RootLayout({
   children,
@@ -48,7 +24,7 @@ export default async function RootLayout({
     <html lang={resolvedParams.lang} dir={dir} suppressHydrationWarning={true}>
       <body
         suppressHydrationWarning={true}
-        className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${outfitFont.className} ${cairoFont.className}`}
+        className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${inter.variable} ${cairo.variable}`}
       >
         <ThemeProvider
           attribute="class"
@@ -56,7 +32,9 @@ export default async function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <main className="flex-grow">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
