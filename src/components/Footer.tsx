@@ -29,7 +29,7 @@ export function Footer({ dict }: FooterProps) {
                   alt="Valict Logo"
                   fill
                   sizes="(max-width: 768px) 150px, 200px"
-                  className="object-contain object-left "
+                  className="object-contain object-left filter dark:brightness-0 dark:invert "
                 />
               </div>
             </Link>
