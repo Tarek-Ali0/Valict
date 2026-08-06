@@ -53,7 +53,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               alt="Valict Logo"
               fill
               sizes="(max-width: 768px) 150px, 200px"
-              className="filter dark:brightness-0 dark:invert"
+              className="dark:hue-rotate-180 dark:saturate-200"
               priority
             />
           </Link>
