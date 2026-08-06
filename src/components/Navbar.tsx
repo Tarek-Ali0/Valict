@@ -48,19 +48,12 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-24">
           <Link href={`/${lang}`} className="relative block w-40 h-12">
-           <Image src="/valict-logo.png"
-              alt="Valict Logo"
-              fill
-              sizes="(max-width: 768px) 150px, 200px"
-              className="dark:hidden"
-              priority
-            />
-<Image
+           <Image
               src="/valict-logo.png"
               alt="Valict Logo"
               fill
               sizes="(max-width: 768px) 150px, 200px"
-              className="hidden dark:block dark:brightness-0 dark:invert"
+              className="filter dark:brightness-0 dark:invert"
               priority
             />
 
