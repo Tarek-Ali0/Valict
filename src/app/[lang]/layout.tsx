@@ -9,8 +9,8 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://valict.com"),
-  title: "Valict | IT Management & ICT Solutions",
-  description: "Validate Your Vision | Powering your business with Reliable Solutions",
+  title: "Valict | Validate Your Vision",
+  description: "Reliable IT Solutions | Powering your business with innovative technology",
   alternates: {
     canonical: "https://valict.com",
     languages: {
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Valict | IT Management & ICT Solutions",
-    description: "Validate Your Vision | Powering your business with Reliable Solutions",
+    title: "Valict | Validate Your Vision",
+    description: "Reliable IT Solutions | Powering your business with innovative technology",
     url: "https://valict.com",
     siteName: "Valict",
     locale: "en_US",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Valict | IT Management & ICT Solutions",
-    description: "Validate Your Vision | Powering your business with Reliable Solutions",
+    title: "Valict | Validate Your Vision",
+    description: "Reliable IT Solutions | Powering your business with innovative technology",
     images: ["/valict-openGraph.png"]
   },
 };
