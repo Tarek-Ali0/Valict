@@ -24,7 +24,7 @@ export function Hero({ dict }: HeroProps) {
 
   // حركة اللاب توب (للديسكتوب فقط)
   const imageScale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
-    const imageY = useTransform(scrollYProgress, [0, 0.5], ["10vh", "5vh"]);
+    const imageY = useTransform(scrollYProgress, [0, 0.5], ["28vh", "5vh"]);
 
   // جمعنا محتوى النص في متغير عشان ما نكررش الكود مرتين
   const heroContent = (
