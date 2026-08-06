@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Cairo } from "next/font/google";
+import { Fraunces, Outfit, Cairo } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const Outfit = Inter({ subsets: ["latin"], variable: "--font-Outfit" });
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 
@@ -51,7 +51,7 @@ export default async function RootLayout({
     <html lang={resolvedParams.lang} dir={dir} suppressHydrationWarning={true}>
       <body
         suppressHydrationWarning={true}
-        className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${inter.className} ${cairo.className}`}
+        className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${Outfit.className} ${cairo.className}`}
       >
         <ThemeProvider
           attribute="class"
