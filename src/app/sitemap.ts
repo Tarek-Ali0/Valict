@@ -4,11 +4,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://valict.com';
 
   const routes = [
-    '',
-    '/about',
-    '/services',
-    '/portfolio',
-    '/contact',
+    "",
+    "/en",
+    "/ar"
   ];
 
   return routes.map((route) => ({
