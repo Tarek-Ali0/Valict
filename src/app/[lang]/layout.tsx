@@ -8,6 +8,7 @@ const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://valict.com"),
   title: "Valict | IT Management & ICT Solutions",
   description: "Validate Your Vision | Powering your business with Reliable Solutions",
   alternates: {
@@ -24,11 +25,20 @@ export const metadata: Metadata = {
     siteName: "Valict",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/valict-openGraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Valict Logo",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Valict | IT Management & ICT Solutions",
     description: "Validate Your Vision | Powering your business with Reliable Solutions",
+    images: ["/valict-openGraph.png"]
   },
 };
 
