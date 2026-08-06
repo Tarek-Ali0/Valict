@@ -51,9 +51,7 @@ export default async function RootLayout({
     <html lang={resolvedParams.lang} dir={dir} suppressHydrationWarning={true}>
       <body
         suppressHydrationWarning={true}
-       className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${inter.variable} ${cairo.variable}`}
-          cairo.variable
-        )}
+        className={`min-h-screen bg-white text-slate-900 dark:bg-[#0a1120] dark:text-slate-100 antialiased transition-colors duration-300 ${inter.className} ${cairo.className}`}
       >
         <ThemeProvider
           attribute="class"
