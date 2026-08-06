@@ -44,14 +44,14 @@ export function Hero({ dict }: HeroProps) {
         </span>
       </h1>
 
-      <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 mb-8 lg:mb-10 max-w-2xl leading-relaxed mx-auto px-2">
+      <p className="font-sans text-lg md:text-xl text-slate-500 dark:text-slate-400 mb-8 lg:mb-10 max-w-2xl leading-relaxed mx-auto px-2">
         {dict.hero.subheadline}
       </p>
 
       {/* <div className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center justify-center w-full px-4 sm:px-0">
         <Link
           href="#contact"
-          className="btn-gradient text-white w-full sm:w-auto justify-center px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg flex items-center gap-3 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
+          className="font-sans btn-gradient text-white w-full sm:w-auto justify-center px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg flex items-center gap-3 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
         >
           {dict.hero.cta}
           <FaArrowRightLong className="h-4 w-4 md:h-5 md:w-5 rtl:rotate-180" />
