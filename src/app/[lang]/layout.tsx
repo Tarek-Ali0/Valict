@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cairo, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Cairo, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
   title: "Valict | IT Management & ICT Solutions",
@@ -53,8 +54,9 @@ export default async function RootLayout({
         suppressHydrationWarning={true}
         className={cn(
           "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
-          inter.variable,
+          geist.variable,
           plusJakartaSans.variable,
+          inter.variable,
           cairo.variable
         )}
       >
