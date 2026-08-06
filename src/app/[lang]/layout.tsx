@@ -54,7 +54,7 @@ export default async function RootLayout({
         className={cn(
           "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 font-sans antialiased transition-colors duration-300",
           inter.variable,
-          fraunces.variable,
+          plusJakartaSans.variable,
           cairo.variable
         )}
       >
