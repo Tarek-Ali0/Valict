@@ -34,7 +34,7 @@
   --shadow-inner-soft: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 
   /* Fonts */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-cairo: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
