@@ -49,21 +49,30 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
         <div className="flex justify-between items-center h-24">
           <Link href={`/${lang}`} className="relative block w-40 h-12">
            <Image
-  src="/valict-logo.png"
-  alt="Valict Logo"
-  fill
-  sizes="(max-width: 768px) 150px, 200px"
-  className="dark:hidden"
-  priority
-/>
+              src="/valict-logo.png"
+              alt="Valict Logo"
+              fill
+              sizes="(max-width: 768px) 150px, 200px"
+              className="filter dark:brightness-0 dark:invert"
+              priority
+            />
+
+<Image src="/valict-logo.png"
+              alt="Valict Logo"
+              fill
+              sizes="(max-width: 768px) 150px, 200px"
+              className="dark:hidden"
+              priority
+            />
 <Image
-  src="/valict-logo.png"
-  alt="Valict Logo"
-  fill
-  sizes="(max-width: 768px) 150px, 200px"
-  className="hidden dark:block dark:brightness-0 dark:invert"
-  priority
-/>
+              src="/valict-logo.png"
+              alt="Valict Logo"
+              fill
+              sizes="(max-width: 768px) 150px, 200px"
+              className="hidden dark:block dark:brightness-0 dark:invert"
+              priority
+            />
+
           </Link>
 
           <div className="hidden lg:flex items-center gap-6">
