@@ -29,12 +29,13 @@ export function Hero({ dict }: HeroProps) {
   // جمعنا محتوى النص في متغير عشان ما نكررش الكود مرتين
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-3 mt-10 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-6 shadow-sm">
-        <span className="flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-        <span className="text-xs md:text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
-          {dict.hero.badge}
-        </span>
-      </div>
+         <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-6 shadow-sm">
+            <span className="flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="text-xs md:text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
+              {dict.hero.badge}
+            </span>
+            <span className="flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+          </div>
 
       <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-6 lg:mb-8 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
