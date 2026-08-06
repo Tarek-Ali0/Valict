@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Cairo } from "next/font/google";
+import { Inter, Cairo, Plus_Jakarta_Sans } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
 
 export const metadata: Metadata = {
   title: "Valict | IT Management & ICT Solutions",
