@@ -22,7 +22,7 @@ const config: Config = {
         "inner-soft": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "sans-serif"],
+        sans: ["var(--font-outfit)", "outfit", "sans-serif"],
         cairo: ["var(--font-cairo)", "Cairo", "sans-serif"],
       },
     },
