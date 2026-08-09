@@ -91,14 +91,14 @@ export function Hero({ dict }: HeroProps) {
 
         {/* Laptop / Dashboard Image - hidden on mobile and tablet (hidden lg:block) */}
         <motion.div
-          className="hidden lg:block absolute z-30 w-full max-w-7xl px-2 sm:px-4 lg:px-8"
+          className="hidden lg:block relative z-30 w-full max-w-6xl px-4 mt-0"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
             src="/dashboard-mockup.png"
             alt="Tech Dashboard"
-            width={1400}
-            height={900}
+            width={1300}
+            height={850}
             className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
             priority
           />
