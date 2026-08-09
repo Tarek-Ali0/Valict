@@ -70,14 +70,14 @@ export function Hero({ dict }: HeroProps) {
           </div>
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-6 py-2 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25 mt-1"
+            className="font-sans btn-gradient text-white px-6 py-2 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25 mt-2"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-3.5 w-3.5 rtl:rotate-180" />
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب (العنوان والبادج) - تم زيادة الـ mt لتنزيل الـ 3 سطور واستغلال المسافة فوق اللاب */}
+        {/* 2. حاوية الديسكتوب (العنوان والبادج) */}
         <motion.div
           className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-6 lg:mt-8"
           style={{ y: textY, opacity: textOpacity }}
@@ -100,8 +100,8 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* زر الـ CTA تحت اللابتوب */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
+        {/* زر الـ CTA - تم ظبط الـ mt ليكون في منتصف المسافة تماماً بين اللاب وبداية القسم التالي */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-6">
           <Link
             href="#contact"
             className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
