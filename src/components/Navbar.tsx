@@ -20,10 +20,20 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   const { setTheme, theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const pathname = usePathname();
 
   React.useEffect(() => {
     setMounted(true);
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleLang = () => {
@@ -44,7 +54,14 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   ];
 
   return (
-    <nav className="fixed w-full bg-transparent z-50 transition-colors duration-300">
+    <nav
+      className={cn(
+        "fixed w-full z-50 transition-all duration-300",
+        isScrolled
+          ? "bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm"
+          : "bg-transparent"
+      )}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-24">
           <Link href={`/${lang}`} className="relative block w-40 h-12">
@@ -56,7 +73,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
              className="filter dark:brightness-0 dark:invert"
              priority
            />
-
           </Link>
 
           <div className="hidden lg:flex items-center gap-6">
