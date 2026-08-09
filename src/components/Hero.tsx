@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 export function Hero({ dict }: HeroProps) {
-  containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,7 +46,7 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section ref={containerRef} className="relative h-[90dvh] lg:h-[150vh] transition-colors duration-300">
       
-      {/* Sticky Container - زوّدنا البادينج هنا شوية عشان العنوان ينزل عن النافبار */}
+      {/* Sticky Container */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 lg:pt-28">
         
         {/* --- Premium Background Elements --- */}
@@ -85,7 +85,7 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image (ثابت في مكانه من غير ما يتحرك) */}
+        {/* Laptop / Dashboard Image */}
         <motion.div
           className="hidden lg:block relative z-30 w-full max-w-6xl px-4 mt-1"
           style={{ scale: imageScale, y: imageY }}
