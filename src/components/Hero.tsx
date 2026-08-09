@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 export function Hero({ dict }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,8 +46,8 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section ref={containerRef} className="relative h-[90dvh] lg:h-[150vh] transition-colors duration-300">
       
-      {/* Sticky Container */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-16 lg:pt-20">
+      {/* Sticky Container - زوّدنا البادينج هنا شوية عشان العنوان ينزل عن النافبار */}
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 lg:pt-28">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -85,9 +85,9 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image (تم تعديلها لـ relative و mt-0 لتلصق تحت العنوان مباشرة) */}
+        {/* Laptop / Dashboard Image (ثابت في مكانه من غير ما يتحرك) */}
         <motion.div
-          className="hidden lg:block relative z-30 w-full max-w-6xl px-4 mt-0"
+          className="hidden lg:block relative z-30 w-full max-w-6xl px-4 mt-1"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
