@@ -13,16 +13,36 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
   const dict = await getDictionary(lang);
 
   return (
-    <main className="w-full selection:bg-valict-cyan selection:text-valict-navy transition-colors duration-300">
+    <main className="w-full bg-[var(--color-valict-dark,#0f172a)] text-slate-100 selection:bg-valict-cyan selection:text-valict-navy transition-colors duration-300 overflow-x-hidden">
       <Navbar lang={lang} dict={dict} />
       
       <Hero dict={dict} />
       
+      {/* فاصل إضاءة */}
+      <div className="w-full flex justify-center py-4">
+        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
+      </div>
+      
       <Services dict={dict} />
+      
+      {/* فاصل إضاءة */}
+      <div className="w-full flex justify-center py-4">
+        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
+      </div>
       
       <WhyUs dict={dict} />
       
+      {/* فاصل إضاءة */}
+      <div className="w-full flex justify-center py-4">
+        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
+      </div>
+      
       <HowItWorks dict={dict} />
+      
+      {/* فاصل إضاءة */}
+      <div className="w-full flex justify-center py-4">
+        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
+      </div>
       
       <Contact dict={dict} />
       
@@ -30,4 +50,3 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
     </main>
   );
 }
-
