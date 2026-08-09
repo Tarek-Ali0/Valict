@@ -44,10 +44,7 @@ export function Hero({ dict }: HeroProps) {
         </span>
       </h1>
 
-      <p className="font-sans text-lg md:text-xl text-slate-500 dark:text-slate-400 mb-8 lg:mb-10 max-w-2xl leading-relaxed mx-auto px-2">
-        {dict.hero.subheadline}
-      </p>
-
+      
       {/* <div className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center justify-center w-full px-4 sm:px-0">
         <Link
           href="#contact"
