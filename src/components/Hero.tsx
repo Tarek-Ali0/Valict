@@ -26,7 +26,7 @@ export function Hero({ dict }: HeroProps) {
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2 shadow-sm">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-3 shadow-sm">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
         <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
@@ -46,8 +46,8 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section ref={containerRef} className="relative h-[90dvh] lg:h-[125vh] transition-colors duration-300">
       
-      {/* Sticky Container - تم تقليل الـ pt العلوية وإضافة mt للكتلة لتنزيلها بالكامل للمسافة المطلوبة */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-12 lg:pt-16">
+      {/* Sticky Container */}
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-14 lg:pt-20">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -56,9 +56,9 @@ export function Hero({ dict }: HeroProps) {
         {/* ----------------------------------- */}
 
         {/* 1. حاوية الموبايل والتابلت */}
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl mt-2">
+        <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl mt-4">
           {heroContent}
-          <div className="w-full max-w-4xl my-1">
+          <div className="w-full max-w-4xl my-2">
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard"
@@ -77,9 +77,9 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب (العنوان والبادج) - تم إضافة mt-3 لتنزيل الكتلة كلها مقدار نصف سطر */}
+        {/* 2. حاوية الديسكتوب (العنوان والبادج) - تم زيادة الـ mt لتنزيل الـ 3 سطور واستغلال المسافة فوق اللاب */}
         <motion.div
-          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-3"
+          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-6 lg:mt-8"
           style={{ y: textY, opacity: textOpacity }}
         >
           {heroContent}
@@ -87,7 +87,7 @@ export function Hero({ dict }: HeroProps) {
 
         {/* Laptop / Dashboard Image */}
         <motion.div
-          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[980px] px-4 mt-2"
+          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[980px] px-4 mt-3"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
@@ -100,8 +100,8 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* زر الـ CTA تحت اللابتوب بمسافة متناسقة ومضبوطة تماماً */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-2">
+        {/* زر الـ CTA تحت اللابتوب */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
           <Link
             href="#contact"
             className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
