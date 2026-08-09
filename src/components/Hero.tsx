@@ -18,17 +18,18 @@ export function Hero({ dict }: HeroProps) {
     offset: ["start start", "end start"],
   });
 
-  // حركة العنوان (تختفي بسلاسة مع السكرول)
+  // حركة العنوان
   const textY = useTransform(scrollYProgress, [0, 0.25], ["0vh", "-10vh"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
-  // حركة اللابتوب (تبدأ مباشرة تحت العنوان وبدون مسافات)
+  // حركة اللابتوب
   const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "0vh"]);
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-4 py-2 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-4 shadow-sm">
+      {/* مسافة آمنة تحت النافبار عشان الـ Badge ما تدخلش فيه */}
+      <div className="inline-flex items-center gap-2 px-4 py-2 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-4 shadow-sm mt-4 lg:mt-6">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
         <span className="text-xs md:text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
@@ -36,7 +37,7 @@ export function Hero({ dict }: HeroProps) {
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-2 text-valict-dark dark:text-white tracking-tight">
+      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-3 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
         <span className="logo-gradient-text leading-relaxed">
           {dict.hero.title2}
@@ -49,7 +50,7 @@ export function Hero({ dict }: HeroProps) {
     <section ref={containerRef} className="relative h-[90dvh] lg:h-[160vh] transition-colors duration-300">
       
       {/* Sticky Container */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-6 lg:pt-8">
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-16 lg:pt-20">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -82,7 +83,7 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب (بالمقاسات الأصلية الضخمة للخط) */}
+        {/* 2. حاوية الديسكتوب */}
         <motion.div
           className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl"
           style={{ y: textY, opacity: textOpacity }}
@@ -90,9 +91,9 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image (لزق تحت العنوان مباشرة وبدون أي مسافات فاضية) */}
+        {/* Laptop / Dashboard Image (تحت العنوان مباشرة وبشكل متناسق) */}
         <motion.div
-          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-0"
+          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-2"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
@@ -106,7 +107,7 @@ export function Hero({ dict }: HeroProps) {
         </motion.div>
 
         {/* السطر الفرعي والـ CTA (تحت اللابتوب مباشرة) */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-3xl mt-2">
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-3xl mt-3">
           <p className="font-sans text-base lg:text-lg text-slate-500 dark:text-slate-400 mb-3 leading-relaxed">
             {dict.hero.subheadline}
           </p>
