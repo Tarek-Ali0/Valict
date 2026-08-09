@@ -18,21 +18,17 @@ export function Hero({ dict }: HeroProps) {
     offset: ["start start", "end start"],
   });
 
-  // حركة العنوان والبادج (بيطلعوا لفوق ويدخلوا تحت النافبار بشكل طبيعي)
-  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-12vh"]);
+  // حركة السكرول للعنوان واللابتوب بشكل متناسق ومستقر
+  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-10vh"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
 
-  // حركة اللابتوب (تلزق فوراً تحت العنوان بدون أي مساحات مهدرة)
-  const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-2vh"]);
-
-  // حركة السطر الفرعي والـ CTA تحت اللابتوب (ظاهرين ومقربين عشان مايتحتاجوش تصغير عرض)
-  const bottomContentY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "0vh"]);
-  const bottomContentOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 1]);
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2 shadow-sm">
+      {/* الـ Badge في مكانها الطبيعي والمتناسق */}
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-3 shadow-sm">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
         <span className="text-xs md:text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
@@ -40,7 +36,7 @@ export function Hero({ dict }: HeroProps) {
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.1] mb-1 text-valict-dark dark:text-white tracking-tight">
+      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-2 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
         <span className="logo-gradient-text leading-relaxed">
           {dict.hero.title2}
@@ -74,12 +70,13 @@ export function Hero({ dict }: HeroProps) {
               priority
             />
           </div>
-          <p className="font-sans text-base text-slate-500 dark:text-slate-400 mb-3 max-w-2xl leading-relaxed">
+          {/* السطر الفرعي مصغر لـ سطر واحد */}
+          <p className="font-sans text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-3 whitespace-nowrap overflow-hidden text-ellipsis max-w-full leading-relaxed px-2">
             {dict.hero.subheadline}
           </p>
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-8 py-3 rounded-xl font-bold text-base flex items-center gap-2 shadow-lg shadow-valict-cyan/20"
+            className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/20"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
@@ -94,9 +91,9 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image (لزق تحت العنوان مباشرة وبدون مساحة فاضية) */}
+        {/* Laptop / Dashboard Image (لازق تحت العنوان مباشرة بدون مسافات) */}
         <motion.div
-          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-1"
+          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-0"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
@@ -109,23 +106,20 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* السطر الفرعي والـ CTA (تحت اللابتوب مباشرة وواضحين تماماً بدون تصغير) */}
-        <motion.div
-          className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-3xl mt-1"
-          style={{ y: bottomContentY, opacity: bottomContentOpacity }}
-        >
-          <p className="font-sans text-sm lg:text-base text-slate-500 dark:text-slate-400 mb-2 leading-relaxed">
+        {/* السطر الفرعي (مصغر في سطر واحد) وزر الـ CTA أسفل اللابتوب مباشرة */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-1">
+          <p className="font-sans text-xs sm:text-sm lg:text-sm text-slate-500 dark:text-slate-400 mb-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full leading-relaxed">
             {dict.hero.subheadline}
           </p>
 
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
+            className="font-sans btn-gradient text-white px-7 py-2 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
