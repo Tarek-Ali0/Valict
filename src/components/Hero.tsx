@@ -26,7 +26,7 @@ export function Hero({ dict }: HeroProps) {
   const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.85, 1]);
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["20vh", "2vh"]);
 
-  // جمعنا محتوى النص في متغير عشان ما نكررش الكود مرتين
+  // محتوى النص بالكامل (مضمن فيه البادچ والعنوان ووصف السطر الفرعي)
   const heroContent = (
     <>
       <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-6 shadow-sm">
@@ -68,7 +68,7 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </div>
 
-        {/* 2. حاوية الديسكتوب (حركة سريعة ومختصرة) */}
+        {/* 2. حاوية الديسكتوب */}
         <motion.div
           className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 md:px-6 w-full max-w-6xl"
           style={{ y: textY, opacity: textOpacity }}
