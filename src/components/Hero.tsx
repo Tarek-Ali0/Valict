@@ -34,9 +34,10 @@ export function Hero({ dict }: HeroProps) {
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-0 text-valict-dark dark:text-white tracking-tight">
+      {/* تم تقليل الـ leading هنا إلى leading-[1.05] لتقريب السطرين من بعضهما تماماً */}
+      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] mb-0 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
-        <span className="logo-gradient-text leading-relaxed">
+        <span className="logo-gradient-text leading-tight">
           {dict.hero.title2}
         </span>
       </h1>
@@ -85,7 +86,7 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image - مسافة صفرية أو سالبة بسيطة لتلصق تماماً */}
+        {/* Laptop / Dashboard Image */}
         <motion.div
           className="hidden lg:block relative z-30 w-full max-w-6xl px-4 -mt-1 lg:-mt-2"
           style={{ scale: imageScale, y: imageY }}
