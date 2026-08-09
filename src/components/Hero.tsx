@@ -68,9 +68,12 @@ export function Hero({ dict }: HeroProps) {
               priority
             />
           </div>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium mt-1 mb-2">
+            {dict.hero.description || "Comprehensive managed IT and security solutions to keep your systems running smoothly."}
+          </p>
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-6 py-2 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25 mt-2"
+            className="font-sans btn-gradient text-white px-6 py-2 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-3.5 w-3.5 rtl:rotate-180" />
@@ -100,8 +103,11 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* زر الـ CTA - تم تقليل الـ mt ليقترب من اللابتوب ويتوسطن في المسافة المتاحة بدقة */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
+        {/* السطر الإضافي تحت اللابتوب مباشرة وفوق زرار Get Started بدون مسافات كبيرة */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-2">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium mb-2">
+            {dict.hero.description || "Comprehensive managed IT and security solutions to keep your systems running smoothly."}
+          </p>
           <Link
             href="#contact"
             className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
