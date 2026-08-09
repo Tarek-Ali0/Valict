@@ -100,8 +100,8 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* زر الـ CTA - تم ظبط الـ mt ليكون في منتصف المسافة تماماً بين اللاب وبداية القسم التالي */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-6">
+        {/* زر الـ CTA - تم تقليل الـ mt ليقترب من اللابتوب ويتوسطن في المسافة المتاحة بدقة */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
           <Link
             href="#contact"
             className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
