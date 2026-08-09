@@ -18,31 +18,11 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       
       <Hero dict={dict} />
       
-      {/* فاصل إضاءة */}
-      <div className="w-full flex justify-center py-4 bg-transparent">
-        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
-      </div>
-      
       <Services dict={dict} />
-      
-      {/* فاصل إضاءة */}
-      <div className="w-full flex justify-center py-4 bg-transparent">
-        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
-      </div>
       
       <WhyUs dict={dict} />
       
-      {/* فاصل إضاءة */}
-      <div className="w-full flex justify-center py-4 bg-transparent">
-        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
-      </div>
-      
       <HowItWorks dict={dict} />
-      
-      {/* فاصل إضاءة */}
-      <div className="w-full flex justify-center py-4 bg-transparent">
-        <div className="w-3/4 max-w-xl h-[1px] bg-gradient-to-r from-transparent via-[var(--color-valict-cyan,#22d3ee)]/40 to-transparent"></div>
-      </div>
       
       <Contact dict={dict} />
       
@@ -50,3 +30,4 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
     </main>
   );
 }
+
