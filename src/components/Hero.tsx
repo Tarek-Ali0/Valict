@@ -46,7 +46,7 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section ref={containerRef} className="relative h-[90dvh] lg:h-[125vh] transition-colors duration-300">
       
-      {/* Sticky Container */}
+      {/* Sticky Container - رجعنا المسافة العلوية المظبوطة تحت النافبار */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-14 lg:pt-20">
         
         {/* --- Premium Background Elements --- */}
@@ -82,7 +82,7 @@ export function Hero({ dict }: HeroProps) {
 
         {/* 2. حاوية الديسكتوب (العنوان والبادج) */}
         <motion.div
-          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-6 lg:mt-8"
+          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-6 lg:mt-4"
           style={{ y: textY, opacity: textOpacity }}
         >
           {heroContent}
@@ -90,7 +90,7 @@ export function Hero({ dict }: HeroProps) {
 
         {/* Laptop / Dashboard Image */}
         <motion.div
-          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[980px] px-4 mt-3"
+          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[950px] px-4 mt-2"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
@@ -103,8 +103,8 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* السطر الإضافي تحت اللابتوب مباشرة وفوق زرار Get Started بدون مسافات كبيرة */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-2">
+        {/* السطر والزرار تحت اللابتوب مباشرة مع مساحة كافية pb تضمن ظهوره كاملاً بدون أي قطع */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-2 pb-6">
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium mb-2">
             {dict.hero.description || "Comprehensive managed IT and security solutions to keep your systems running smoothly."}
           </p>
