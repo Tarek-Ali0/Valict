@@ -34,8 +34,8 @@ export function Hero({ dict }: HeroProps) {
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      {/* تم تقليل الـ leading هنا إلى leading-[1.05] لتقريب السطرين من بعضهما تماماً */}
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] mb-0 text-valict-dark dark:text-white tracking-tight">
+      {/* تم تصغير حجم الخط هنا خطوة بسيطة لتناسب الشاشات بشكل أفضل */}
+      <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.05] mb-0 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
         <span className="logo-gradient-text leading-tight">
           {dict.hero.title2}
