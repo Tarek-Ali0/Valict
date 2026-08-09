@@ -18,18 +18,21 @@ export function Hero({ dict }: HeroProps) {
     offset: ["start start", "end start"],
   });
 
-  // حركة العنوان
-  const textY = useTransform(scrollYProgress, [0, 0.25], ["0vh", "-10vh"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  // حركة العنوان والبادج (بيطلعوا لفوق ويدخلوا تحت النافبار بشكل طبيعي)
+  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-12vh"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
 
-  // حركة اللابتوب
-  const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
-  const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "0vh"]);
+  // حركة اللابتوب (تلزق فوراً تحت العنوان بدون أي مساحات مهدرة)
+  const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1]);
+  const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-2vh"]);
+
+  // حركة السطر الفرعي والـ CTA تحت اللابتوب (ظاهرين ومقربين عشان مايتحتاجوش تصغير عرض)
+  const bottomContentY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "0vh"]);
+  const bottomContentOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 1]);
 
   const heroContent = (
     <>
-      {/* مسافة آمنة تحت النافبار عشان الـ Badge ما تدخلش فيه */}
-      <div className="inline-flex items-center gap-2 px-4 py-2 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 mb-4 shadow-sm mt-4 lg:mt-6">
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2 shadow-sm">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
         <span className="text-xs md:text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
@@ -37,7 +40,7 @@ export function Hero({ dict }: HeroProps) {
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.15] lg:leading-[1.1] mb-3 text-valict-dark dark:text-white tracking-tight">
+      <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.1] mb-1 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
         <span className="logo-gradient-text leading-relaxed">
           {dict.hero.title2}
@@ -47,7 +50,7 @@ export function Hero({ dict }: HeroProps) {
   );
 
   return (
-    <section ref={containerRef} className="relative h-[90dvh] lg:h-[160vh] transition-colors duration-300">
+    <section ref={containerRef} className="relative h-[90dvh] lg:h-[150vh] transition-colors duration-300">
       
       {/* Sticky Container */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-16 lg:pt-20">
@@ -61,7 +64,7 @@ export function Hero({ dict }: HeroProps) {
         {/* 1. حاوية الموبايل والتابلت */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
           {heroContent}
-          <div className="w-full max-w-5xl my-2">
+          <div className="w-full max-w-5xl my-1">
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard"
@@ -71,7 +74,7 @@ export function Hero({ dict }: HeroProps) {
               priority
             />
           </div>
-          <p className="font-sans text-base text-slate-500 dark:text-slate-400 mb-4 max-w-2xl leading-relaxed">
+          <p className="font-sans text-base text-slate-500 dark:text-slate-400 mb-3 max-w-2xl leading-relaxed">
             {dict.hero.subheadline}
           </p>
           <Link
@@ -83,7 +86,7 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب */}
+        {/* 2. حاوية الديسكتوب (العنوان والبادج) */}
         <motion.div
           className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl"
           style={{ y: textY, opacity: textOpacity }}
@@ -91,9 +94,9 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Laptop / Dashboard Image (تحت العنوان مباشرة وبشكل متناسق) */}
+        {/* Laptop / Dashboard Image (لزق تحت العنوان مباشرة وبدون مساحة فاضية) */}
         <motion.div
-          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-2"
+          className="hidden lg:block relative z-35 w-full max-w-6xl px-4 mt-1"
           style={{ scale: imageScale, y: imageY }}
         >
           <Image
@@ -106,20 +109,23 @@ export function Hero({ dict }: HeroProps) {
           />
         </motion.div>
 
-        {/* السطر الفرعي والـ CTA (تحت اللابتوب مباشرة) */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-3xl mt-3">
-          <p className="font-sans text-base lg:text-lg text-slate-500 dark:text-slate-400 mb-3 leading-relaxed">
+        {/* السطر الفرعي والـ CTA (تحت اللابتوب مباشرة وواضحين تماماً بدون تصغير) */}
+        <motion.div
+          className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-3xl mt-1"
+          style={{ y: bottomContentY, opacity: bottomContentOpacity }}
+        >
+          <p className="font-sans text-sm lg:text-base text-slate-500 dark:text-slate-400 mb-2 leading-relaxed">
             {dict.hero.subheadline}
           </p>
 
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-8 py-3 rounded-xl font-bold text-base flex items-center gap-3 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
+            className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/20 hover:shadow-valict-cyan/40 transition-all duration-300"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
