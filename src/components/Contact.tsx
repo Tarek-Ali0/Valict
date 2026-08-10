@@ -9,9 +9,7 @@ export function Contact({ dict }: ContactProps) {
   return (
     <section id="contact" className="transition-colors duration-300">
       <div className="w-full bg-valict-navy shadow-2xl">
-        <div className="max-w-7xl mx-auto relative px-6  py-20 overflow-hidden ">
- 
-
+        <div className="max-w-7xl mx-auto relative px-6 py-20 overflow-hidden">
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-start">
             <div className="lg:w-2/3">
               <h2 className="text-3xl text-start md:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
@@ -28,20 +26,20 @@ export function Contact({ dict }: ContactProps) {
               >
                 {dict.cta.button}
               </a>
-              <div className="mt-4 text-center">
+              <div className="mt-4 flex flex-col items-center lg:items-start gap-2.5">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="block text-white/80 hover:text-white mb-2 font-medium transition-colors"
+                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
                 >
-                  <FaEnvelope className="inline-block w-5 h-5 mr-2 text-valict-cyan rtl:ml-2 rtl:mr-0" />
-                  {dict.contact.email}
+                  <FaEnvelope className="w-5 h-5 text-valict-cyan shrink-0" />
+                  <span>{dict.contact.email}</span>
                 </a>
                 <a
                   href={`tel:${dict.contact.phone}`}
-                  className="block text-white/80 hover:text-white font-medium transition-colors"
+                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
                 >
-                  <FaPhone className="inline-block w-5 h-5 mr-2 text-valict-cyan rtl:ml-2 rtl:mr-0" />
-                 <span dir="ltr">{dict.contact.phone}</span>
+                  <FaPhone className="w-5 h-5 text-valict-cyan shrink-0" />
+                  <span dir="ltr">{dict.contact.phone}</span>
                 </a>
               </div>
             </div>
