@@ -4,11 +4,33 @@ import Link from "next/link";
 import { FaLinkedinIn, FaXTwitter, FaEnvelope, FaPhone, FaChevronRight, FaFacebook } from "react-icons/fa6";
 
 interface FooterProps {
-  dict?: any; // ضفتها عشان لو هتربطه باللغات بعدين
+  dict?: any;
+  lang?: string; // أضفنا الـ lang هنا عشان نظبط بيه الروابط
 }
 
-export function Footer({ dict }: FooterProps) {
+export function Footer({ dict, lang = "en" }: FooterProps) {
   const currentYear = new Date().getFullYear();
+
+  // تأمين البيانات في حال كان dict مش واصل كاملاً
+  const footerDict = dict?.footer || {
+    about: "Empowering your business with innovative IT solutions.",
+    badge: "IT & Security Solutions",
+    quickLinks: "Quick Links",
+    contactUs: "Contact Us",
+    emailLabel: "Email Us",
+    phoneLabel: "Call Us",
+    copyright: "© {year} Valict. All rights reserved."
+  };
+
+  const navDict = dict?.nav || {
+    services: "Services",
+    whyValict: "Why Valict",
+    aboutUs: "About Us"
+  };
+
+  const howDict = dict?.how || {
+    title: "How It Works"
+  };
 
   return (
     <footer className="bg-slate-50 dark:bg-[#0B1120] pt-20 pb-10 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
@@ -22,41 +44,46 @@ export function Footer({ dict }: FooterProps) {
           
           {/* Column 1: Brand & About */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6 relative group">
+            <Link href={`/${lang}`} className="inline-block mb-6 relative group">
               <div className="relative w-40 h-20 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/valict-logo.png"
                   alt="Valict Logo"
                   fill
                   sizes="(max-width: 768px) 150px, 200px"
-                  className="object-contain object-left filter dark:brightness-0 dark:invert "
+                  className="object-contain object-left filter dark:brightness-0 dark:invert"
                 />
               </div>
             </Link>
             <p className="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-sm mb-6">
-              {dict.footer.about}
+              {footerDict.about}
             </p>
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-sm font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
-                {dict.footer.badge}
+                {footerDict.badge}
               </span>
             </div>
           </div>
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-lg font-bold text-valict-dark dark:text-white mb-6">{dict.footer.quickLinks}</h4>
+            <h4 className="text-lg font-bold text-valict-dark dark:text-white mb-6">{footerDict.quickLinks}</h4>
             <ul className="space-y-4">
-              {[dict.nav.services, dict.nav.whyValict, dict.how.title, dict.nav.aboutUs].map((item: string, index: number) => (
+              {[
+                { name: navDict.services, href: `/${lang}/#services` },
+                { name: navDict.whyValict, href: `/${lang}/#why-valict` },
+                { name: howDict.title, href: `/${lang}/#how-it-works` },
+                { name: navDict.aboutUs, href: `/${lang}/#about` }
+              ].map((link, index) => (
                 <li key={index}>
                   <Link 
-                    href={['#services', '#why-valict', '#how-it-works', '#about'][index]} 
+                    href={link.href} 
                     className="group flex items-center text-slate-500 dark:text-slate-400 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
                   >
                     <FaChevronRight className="text-[10px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-valict-cyan transition-all duration-300 rtl:rotate-180 mr-2" />
                     <span className="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
-                      {item}
+                      {link.name}
                     </span>
                   </Link>
                 </li>
@@ -66,7 +93,7 @@ export function Footer({ dict }: FooterProps) {
 
           {/* Column 3: Contact Info */}
           <div>
-            <h4 className="text-lg font-bold text-valict-dark dark:text-white mb-6">{dict.footer.contactUs}</h4>
+            <h4 className="text-lg font-bold text-valict-dark dark:text-white mb-6">{footerDict.contactUs}</h4>
             <ul className="space-y-5">
               <li>
                 <a 
@@ -77,8 +104,8 @@ export function Footer({ dict }: FooterProps) {
                     <FaEnvelope className="text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{dict.footer.emailLabel}</span>
-                    <span className="font-medium dark:text-slate-300">{dict.contact.email}</span>
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{footerDict.emailLabel}</span>
+                    <span className="font-medium dark:text-slate-300">{dict?.contact?.email || "info@valict.com"}</span>
                   </div>
                 </a>
               </li>
@@ -91,8 +118,8 @@ export function Footer({ dict }: FooterProps) {
                     <FaPhone className="text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{dict.footer.phoneLabel}</span>
-                    <span className="font-medium dark:text-slate-300" dir="ltr">{dict.contact.phone}</span>
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{footerDict.phoneLabel}</span>
+                    <span className="font-medium dark:text-slate-300" dir="ltr">{dict?.contact?.phone || "+20 150 554 4455"}</span>
                   </div>
                 </a>
               </li>
@@ -102,9 +129,9 @@ export function Footer({ dict }: FooterProps) {
         </div>
 
         {/* Bottom Bar: Copyright & Socials */}
-        <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
           <p dir="rtl" className="text-slate-500 dark:text-slate-400 text-sm text-center md:text-start">
-            {dict.footer.copyright.replace('{year}', currentYear.toString())}
+            {footerDict.copyright.replace('{year}', currentYear.toString())}
           </p>
 
           <div className="flex items-center gap-3">
