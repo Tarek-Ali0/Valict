@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Footer } from "@/components/Footer"; // 1. استيراد الفوتر
 import { cn } from "@/lib/utils";
 
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
@@ -73,6 +74,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Footer /> {/* 2. وضع الفوتر هنا عشان يظهر في كل الصفحات تلقائياً */}
         </ThemeProvider>
       </body>
     </html>
