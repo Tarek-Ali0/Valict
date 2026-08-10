@@ -1,18 +1,44 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://valict.com';
 
-  const routes = [
+  // قائمة الـ Slugs الخاصة بخدماتك
+  const services = [
+    "managed-it",
+    "network",
+    "cloud",
+    "cybersecurity",
+    "monitoring",
+    "web-design"
+  ];
+
+  // اللغات المدعومة في الموقع
+  const languages = ['en', 'ar'];
+
+  // الصفحات الثابتة الأساسية باللغات
+  const staticRoutes = [
     "",
     "/en",
     "/ar"
   ];
 
-  return routes.map((route) => ({
+  const mapStaticRoutes = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(), // Next.js سيتولى تحويل التاريخ تلقائياً بصيغة ISO
-    changeFrequency: route === '' ? 'daily' : 'weekly',
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
     priority: route === '' ? 1.0 : 0.8,
   }));
+
+  // توليد روابط الخدمات ديناميكياً لكل لغة
+  const serviceRoutes = languages.flatMap((lang) => 
+    services.map((slug) => ({
+      url: `${baseUrl}/${lang}/services/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }))
+  );
+
+  return [...mapStaticRoutes, ...serviceRoutes];
 }
