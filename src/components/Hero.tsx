@@ -44,10 +44,10 @@ export function Hero({ dict }: HeroProps) {
   );
 
   return (
-    <section ref={containerRef} className="relative h-[86dvh] xs:h-[84dvh] sm:h-[82dvh] lg:h-[125vh] transition-colors duration-300">
+    <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300">
       
-      {/* Sticky Container - تم ضبط المسافات العلوية والسفلية لتتوسط الشاشة تماماً بدون أي فراغات زايدة */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-32">
+      {/* Sticky Container - الموبايل هيمشي أوتوماتيك على قد محتواه بدون فراغ، والديسكتوب هيفضل sticky مظبوط */}
+      <div className="relative lg:sticky top-0 lg:h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-32 pb-6 lg:pb-0">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -55,10 +55,10 @@ export function Hero({ dict }: HeroProps) {
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        {/* 1. حاوية الموبايل والتابلت */}
+        {/* 1. حاوية الموبايل والتابلت (تم إزالة أي فراغ سفلي نهائياً لتبدأ القسم التالي فوراً) */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
           {heroContent}
-          <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2">
+          <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard"
@@ -70,7 +70,7 @@ export function Hero({ dict }: HeroProps) {
           </div>
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-6 py-2 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
+            className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
