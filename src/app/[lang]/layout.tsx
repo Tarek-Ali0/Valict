@@ -3,6 +3,7 @@ import { Cairo, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop"; // استدعاء المكون الجديد
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -80,6 +81,7 @@ export default async function RootLayout({
         >
           {children}
           <Footer lang={lang} dict={dict} />
+          <ScrollToTop /> {/* إضافة زر الصعود هنا */}
         </ThemeProvider>
       </body>
     </html>
