@@ -1,4 +1,5 @@
 import { getDictionary } from "@/lib/dictionaries";
+import { Navbar } from "@/components/Navbar"; // 1. أضف استيراد النافبار هنا
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { notFound } from "next/navigation";
@@ -10,10 +11,8 @@ export default async function ServiceDetailsPage({
 }) {
   const { lang, slug } = await params;
   
-  // التأكد من تمرير اللغة بالشكل الصحيح للـ TypeScript
   const dict = await getDictionary(lang as "en" | "ar");
   
-  // البحث عن الخدمة المطلوبة بناءً على الـ slug
   const service = dict.services.items.find((item: any) => item.slug === slug);
 
   if (!service) {
@@ -22,6 +21,10 @@ export default async function ServiceDetailsPage({
 
   return (
     <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-valict-dark transition-colors duration-300">
+      
+      {/* 2. أضف النافبار هنا ليظهر في الصفحات الفرعية */}
+      <Navbar lang={lang} dict={dict} />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* زرار الرجوع */}
