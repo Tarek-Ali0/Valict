@@ -1,7 +1,8 @@
 import { getDictionary } from "@/lib/dictionaries";
 import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
-import { FaArrowRightLong, FaCheckCircle } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
 import { notFound } from "next/navigation";
 
 // بيانات تفصيلية إضافية لكل خدمة عشان تظهر من جوه بشكل منسق ومقسم لنقاط
