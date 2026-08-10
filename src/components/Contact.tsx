@@ -29,17 +29,17 @@ export function Contact({ dict }: ContactProps) {
               <div className="mt-4 flex flex-col items-start gap-2.5 w-full">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
+                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group rtl:flex-row-reverse"
                 >
-                  <FaEnvelope className="w-5 h-5 text-valict-cyan shrink-0 order-last rtl:order-first" />
-                  <span className="order-first rtl:order-last">{dict.contact.email}</span>
+                  <FaEnvelope className="w-5 h-5 text-valict-cyan shrink-0" />
+                  <span>{dict.contact.email}</span>
                 </a>
                 <a
                   href={`tel:${dict.contact.phone}`}
-                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
+                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group rtl:flex-row-reverse"
                 >
-                  <FaPhone className="w-5 h-5 text-valict-cyan shrink-0 order-last rtl:order-first" />
-                  <span dir="ltr" className="order-first rtl:order-last">{dict.contact.phone}</span>
+                  <FaPhone className="w-5 h-5 text-valict-cyan shrink-0" />
+                  <span dir="ltr">{dict.contact.phone}</span>
                 </a>
               </div>
             </div>
