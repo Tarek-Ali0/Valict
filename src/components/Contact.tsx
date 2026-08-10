@@ -26,7 +26,7 @@ export function Contact({ dict }: ContactProps) {
               >
                 {dict.cta.button}
               </a>
-              <div className="mt-4 flex flex-col items-center lg:items-start gap-2.5">
+              <div className="mt-4 flex flex-col items-start gap-2.5 w-full" dir="ltr">
                 <a
                   href={`mailto:${dict.contact.email}`}
                   className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
@@ -39,7 +39,7 @@ export function Contact({ dict }: ContactProps) {
                   className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
                 >
                   <FaPhone className="w-5 h-5 text-valict-cyan shrink-0" />
-                  <span dir="ltr">{dict.contact.phone}</span>
+                  <span>{dict.contact.phone}</span>
                 </a>
               </div>
             </div>
