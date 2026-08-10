@@ -20,14 +20,14 @@
     "highlight": "That Drive Efficiency",
     "description": "",
     "learnMore": "Learn more",
-    "items": [
-      { "title": "Managed IT Services", "desc": "Proactive monitoring and support to keep operations running smoothly." },
-      { "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
-      { "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
-      { "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
-      { "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
-      { "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
-    ]
+   "items": [
+  { "slug": "managed-it", "title": "Managed IT Services", "desc": "Proactive monitoring and support to keep operations running smoothly." },
+  { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
+  { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
+  { "slug": "cybersecurity", "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
+  { "slug": "monitoring", "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
+  { "slug": "web-design", "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
+]
   },
   "why": {
     "title": "Why Valict?",
