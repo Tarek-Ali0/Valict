@@ -48,7 +48,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   }
 
   const navLinks: NavLink[] = [
-    { name: dict.nav.services, href: "#services" },
+    { name: dict.nav.services, href: `/${lang}/#services` },
     { name: dict.nav.whyValict, href: "#why-valict" },
     { name: dict.nav.aboutUs, href: "#about" },
   ];
