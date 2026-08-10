@@ -18,7 +18,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       
       <Hero dict={dict} />
       
-      <Services dict={dict} />
+      <Services dict={dict} lang={lang} />
       
       <WhyUs dict={dict} />
       
