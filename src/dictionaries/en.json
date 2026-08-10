@@ -24,7 +24,7 @@
       { 
         "slug": "managed-it", 
         "title": "Managed IT Services", 
-        "desc": "Empower your business with comprehensive, end-to-end IT management designed to eliminate downtime, optimize performance, and secure your digital workspace. We provide proactive 24/7 monitoring to prevent issues before they impact your workflow, reducing internal overhead while giving you access to senior technical experts." 
+        "desc": "Proactive monitoring and support to keep operations running smoothly." 
       },
       { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
       { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
