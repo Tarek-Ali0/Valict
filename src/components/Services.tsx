@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { 
   FaLaptopCode, 
   FaNetworkWired, 
@@ -13,12 +14,14 @@ import {
 import { motion, Variants } from "framer-motion";
 
 interface ServiceItem {
+  slug: string;
   title: string;
   desc: string;
 }
 
 interface ServicesProps {
   dict: any;
+  lang?: string;
 }
 
 const iconMap: { [key: number]: any } = {
@@ -61,7 +64,7 @@ const cardVariants: Variants = {
   },
 };
 
-export function Services({ dict }: ServicesProps) {
+export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section id="services" className="py-24 md:py-32 bg-slate-50 dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
@@ -121,15 +124,15 @@ export function Services({ dict }: ServicesProps) {
                   {service.desc}
                 </p>
                 
-                {/* زرار Learn More بيتحرك بنعومة لقدام */}
+                {/* زرار Learn More بيتحرك بنعومة لقدام وبيودي للـ slug الصحيح */}
                 <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
-                  <a
-                    href="#"
+                  <Link
+                    href={`/${lang}/services/${service.slug}`}
                     className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
                   >
                     {dict.services.learnMore} 
                     <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             );
