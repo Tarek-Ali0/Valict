@@ -1,19 +1,21 @@
-import { getDictionary } from "@/lib/dictionaries"; // تأكد من مسار جلب الترجمة عندك
+import { getDictionary } from "@/lib/dictionaries";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { notFound } from "next/navigation";
 
 export default async function ServiceDetailsPage({
-  params: { lang, slug },
+  params,
 }: {
-  params: { lang: string; slug: string };
+  params: Promise<{ lang: string; slug: string }>;
 }) {
-  const dict = await getDictionary(lang);
+  const { lang, slug } = await params;
   
-  // البحث عن الخدمة المطلوبة من ملف الترجمة بناءً على الـ slug
+  // التأكد من تمرير اللغة بالشكل الصحيح للـ TypeScript
+  const dict = await getDictionary(lang as "en" | "ar");
+  
+  // البحث عن الخدمة المطلوبة بناءً على الـ slug
   const service = dict.services.items.find((item: any) => item.slug === slug);
 
-  // لو الخدمة مش موجودة يحوله لصفحة 404
   if (!service) {
     notFound();
   }
@@ -45,7 +47,6 @@ export default async function ServiceDetailsPage({
             {service.desc}
           </p>
 
-          {/* محتوى إضافي يمكن إضافته لاحقاً في ملف الـ JSON */}
           <div className="w-full h-[1px] bg-slate-100 dark:bg-slate-800 mb-10"></div>
 
           <div className="flex flex-col sm:flex-row gap-4">
