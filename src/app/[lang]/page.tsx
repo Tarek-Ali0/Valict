@@ -25,8 +25,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       
       <Contact dict={dict} />
       
-      <Footer dict={dict} />
-    </main>
+         </main>
   );
 }
 
