@@ -20,14 +20,18 @@
     "highlight": "That Drive Efficiency",
     "description": "",
     "learnMore": "Learn more",
-   "items": [
-  { "slug": "managed-it", "title": "Managed IT Services", "desc": "Proactive monitoring and support to keep operations running smoothly." },
-  { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
-  { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
-  { "slug": "cybersecurity", "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
-  { "slug": "monitoring", "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
-  { "slug": "web-design", "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
-]
+    "items": [
+      { 
+        "slug": "managed-it", 
+        "title": "Managed IT Services", 
+        "desc": "Empower your business with comprehensive, end-to-end IT management designed to eliminate downtime, optimize performance, and secure your digital workspace. We provide proactive 24/7 monitoring to prevent issues before they impact your workflow, reducing internal overhead while giving you access to senior technical experts." 
+      },
+      { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
+      { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
+      { "slug": "cybersecurity", "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
+      { "slug": "monitoring", "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
+      { "slug": "web-design", "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
+    ]
   },
   "why": {
     "title": "Why Valict?",
