@@ -1,13 +1,15 @@
 import { getDictionary } from "@/lib/dictionaries";
 import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
+import Image from "next/image";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import { notFound } from "next/navigation";
 
-// بيانات تفصيلية إضافية لكل خدمة عشان تظهر من جوه بشكل منسق ومقسم لنقاط
-const serviceDetailsContent: Record<string, { en: { overview: string; features: string[] }, ar: { overview: string; features: string[] } }> = {
+// بيانات تفصيلية إضافية لكل خدمة مع مسار الصورة الخاصة بها
+const serviceDetailsContent: Record<string, { image: string, en: { overview: string; features: string[] }, ar: { overview: string; features: string[] } }> = {
   "managed-it": {
+    image: "/images/services/managed-it.webp",
     en: {
       overview: "Empower your business with comprehensive, end-to-end IT management designed to eliminate downtime, optimize performance, and secure your digital workspace. We provide proactive solutions to streamline your workflow.",
       features: [
@@ -28,6 +30,7 @@ const serviceDetailsContent: Record<string, { en: { overview: string; features: 
     }
   },
   "network": {
+    image: "/images/services/network.webp", // تقدر تغيرها لما تجهز صورتها
     en: {
       overview: "Design, implementation, and optimization of robust network environments tailored to scale seamlessly with your growing corporate infrastructure.",
       features: [
@@ -48,6 +51,7 @@ const serviceDetailsContent: Record<string, { en: { overview: string; features: 
     }
   },
   "cloud": {
+    image: "/images/services/cloud.webp",
     en: {
       overview: "Scalable cloud systems and architecture designed for high availability, supreme performance, and cost-effective operational flexibility.",
       features: [
@@ -68,6 +72,7 @@ const serviceDetailsContent: Record<string, { en: { overview: string; features: 
     }
   },
   "cybersecurity": {
+    image: "/images/services/cybersecurity.webp",
     en: {
       overview: "Protect critical data, corporate digital assets, and user privacy with advanced, multi-layered security measures and proactive threat defense.",
       features: [
@@ -88,6 +93,7 @@ const serviceDetailsContent: Record<string, { en: { overview: string; features: 
     }
   },
   "monitoring": {
+    image: "/images/services/monitoring.webp",
     en: {
       overview: "Round-the-clock monitoring and dedicated technical support services designed to deliver total peace of mind for your daily operations.",
       features: [
@@ -108,6 +114,7 @@ const serviceDetailsContent: Record<string, { en: { overview: string; features: 
     }
   },
   "web-design": {
+    image: "/images/services/web-design.webp",
     en: {
       overview: "Professional, high-performance corporate websites built with modern technologies to enhance your digital footprint and convert visitors.",
       features: [
@@ -144,11 +151,14 @@ export default async function ServiceDetailsPage({
     notFound();
   }
 
-  // جلب المحتوى التفصيلي المميز أو الاعتماد على الوصف الأساسي كبديل
-  const details = serviceDetailsContent[slug]?.[lang as "en" | "ar"] || {
-    overview: service.desc,
-    features: []
+  // جلب المحتوى التفصيلي مع مسار الصورة أو الاعتماد على قيم افتراضية
+  const serviceData = serviceDetailsContent[slug] || {
+    image: "/images/services/managed-it.webp",
+    en: { overview: service.desc, features: [] },
+    ar: { overview: service.desc, features: [] }
   };
+
+  const details = serviceData[lang as "en" | "ar"];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-valict-dark transition-colors duration-300">
@@ -156,10 +166,10 @@ export default async function ServiceDetailsPage({
       {/* النافبار ثابت فوق */}
       <Navbar lang={lang} dict={dict} />
 
-      {/* محتوى الصفحة مع مساحة علوية كافية (pt-44) عشان النافبار ما يغطيش حاجة */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
+      {/* محتوى الصفحة مع مساحة علوية كافية */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         
-        {/* زرار الرجوع للخدمات في الهوم بيج */}
+        {/* زرار الرجوع للخدمات */}
         <Link 
           href={`/${lang}/#services`}
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-valict-cyan dark:text-slate-400 mb-8 transition-colors"
@@ -168,51 +178,71 @@ export default async function ServiceDetailsPage({
           {lang === "ar" ? "العودة للخدمات" : "Back to Services"}
         </Link>
 
-        {/* محتوى تفاصيل الخدمة */}
+        {/* كارت محتوى تفاصيل الخدمة مقسم لعمودين (نص وصورة) */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm mb-6">
-            {dict.services.title}
-          </div>
-          
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
-            {service.title}
-          </h1>
-          
-          <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8 max-w-3xl">
-            {details.overview}
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* عمود النصوص والمميزات (يأخذ 7 أعمدة) */}
+            <div className="lg:col-span-7">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm mb-6">
+                {dict.services.title}
+              </div>
+              
+              <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
+                {service.title}
+              </h1>
+              
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                {details.overview}
+              </p>
 
-          <div className="w-full h-[1px] bg-slate-100 dark:bg-slate-800 mb-8"></div>
+              <div className="w-full h-[1px] bg-slate-100 dark:bg-slate-800 mb-8"></div>
 
-          {/* قسم المميزات والنقاط الرئيسية */}
-          {details.features.length > 0 && (
-            <div className="mb-10">
-              <h3 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
-                {lang === "ar" ? "المميزات الرئيسية للخدمة:" : "Key Features & Benefits:"}
-              </h3>
-              <ul className="grid grid-cols-1 gap-4">
-                {details.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <FaCheckCircle className="w-5 h-5 text-valict-cyan shrink-0 mt-1" />
-                    <span className="text-slate-600 dark:text-slate-300 font-medium">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {details.features.length > 0 && (
+                <div className="mb-10">
+                  <h3 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
+                    {lang === "ar" ? "المميزات الرئيسية للخدمة:" : "Key Features & Benefits:"}
+                  </h3>
+                  <ul className="grid grid-cols-1 gap-4">
+                    {details.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <FaCheckCircle className="w-5 h-5 text-valict-cyan shrink-0 mt-1" />
+                        <span className="text-slate-600 dark:text-slate-300 font-medium">
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href={`/${lang}/#contact`}
+                  className="btn-gradient text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg hover:shadow-valict-cyan/40 transition-all inline-block"
+                >
+                  {dict.cta.button}
+                </Link>
+              </div>
             </div>
-          )}
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link 
-              href={`/${lang}/#contact`}
-              className="btn-gradient text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg hover:shadow-valict-cyan/40 transition-all"
-            >
-              {dict.cta.button}
-            </Link>
+            {/* عمود الصورة التوضيحية (يأخذ 5 أعمدة) */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50">
+                <Image 
+                  src={serviceData.image} 
+                  alt={service.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  priority
+                />
+              </div>
+            </div>
+
           </div>
-
         </div>
+
       </div>
     </div>
   );
