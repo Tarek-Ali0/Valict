@@ -5,7 +5,6 @@ import { Services } from "@/components/Services";
 import { WhyUs } from "@/components/WhyUs";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
 
 export default async function Home({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
   const resolvedParams = await params;
