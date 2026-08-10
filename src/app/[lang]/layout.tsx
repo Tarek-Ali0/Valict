@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Cairo, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Footer } from "@/components/Footer"; // 1. استيراد الفوتر
+import { Footer } from "@/components/Footer";
+import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
@@ -55,10 +56,14 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }) {
   const resolvedParams = await params;
-  const dir = resolvedParams.lang === "ar" ? "rtl" : "ltr";
+  const lang = resolvedParams.lang;
+  const dir = lang === "ar" ? "rtl" : "ltr";
+  
+  // جلب الترجمة وتمريرها للفوتر لتجنب أي أخطاء أثناء الـ Build
+  const dict = await getDictionary(lang as "en" | "ar");
 
   return (
-    <html lang={resolvedParams.lang} dir={dir} suppressHydrationWarning={true}>
+    <html lang={lang} dir={dir} suppressHydrationWarning={true}>
       <body
         suppressHydrationWarning={true}
         className={cn(
@@ -74,7 +79,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Footer /> {/* 2. وضع الفوتر هنا عشان يظهر في كل الصفحات تلقائياً */}
+          <Footer lang={lang} dict={dict} />
         </ThemeProvider>
       </body>
     </html>
