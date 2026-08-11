@@ -28,7 +28,9 @@ export function proxy(request: NextRequest) {
 
   // 4. Redirect any request missing a locale to the default locale
   request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  
+  // نغير لـ Redirect 301 عشان جوجل يعرف إنه انتقال دائم مش مؤقت
+  return NextResponse.redirect(request.nextUrl, 301);
 }
 
 export const config = {
