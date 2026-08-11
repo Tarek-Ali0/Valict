@@ -81,17 +81,24 @@ export default async function RootLayout({
 
   // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة لجوجل
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Valict",
-    "alternateName": ["فالكت", "Valict ICT Solutions"],
-    "url": "https://valict.com",
-    "logo": "https://valict.com/valict-openGraph.png",
-    "description": "Reliable IT Solutions and ICT Infrastructure Services",
-    "sameAs": [
-      "https://valict.com"
-    ]
-  };
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://valict.com/#organization",
+  "name": "Valict",
+  "alternateName": ["فالكت", "Valict ICT Solutions"],
+  "url": "https://valict.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://valict.com/valict-openGraph.png",
+    "width": 1200,
+    "height": 630
+  },
+  "description": "Reliable IT Solutions and ICT Infrastructure Services",
+  "slogan": "Validate Your Vision",
+  "sameAs": [
+    "https://www.linkedin.com/company/valict"
+  ]
+};
 
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning={true}>
