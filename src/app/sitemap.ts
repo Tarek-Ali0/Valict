@@ -16,9 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // اللغات المدعومة في الموقع
   const languages = ['en', 'ar'];
 
-  // الصفحات الثابتة الأساسية باللغات
+  // الصفحات الثابتة الأساسية باللغات (الاكتفاء بالمسارات المخصصة للغات لتفادي التكرار)
   const staticRoutes = [
-    "",
     "/en",
     "/ar"
   ];
@@ -27,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
-    priority: route === '' ? 1.0 : 0.8,
+    priority: 1.0, // أولوية قصوى للصفحتين الرئيسيتين باللغتين
   }));
 
   // توليد روابط الخدمات ديناميكياً لكل لغة
