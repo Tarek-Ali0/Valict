@@ -17,7 +17,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 export function Navbar({ lang, dict }: { lang: string; dict: any }) {
-  const { setTheme, theme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -36,11 +36,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleLang = () => {
-    const newLang = lang === "en" ? "ar" : "en";
-    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
-    window.location.href = newPath;
-  };
+  // حساب المسار البديل للغة الأخرى للأرشفة السليمة وروابط الـ Link الحقيقية
+  const alternateLang = lang === "en" ? "ar" : "en";
+  const alternatePath = pathname.replace(`/${lang}`, `/${alternateLang}`);
 
   interface NavLink {
     name: string;
@@ -87,8 +85,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             ))}
 
             <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
-              <button
-                onClick={toggleLang}
+              <Link
+                href={alternatePath}
                 className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 title={dict.nav.changeLanguage}
               >
@@ -96,7 +94,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 <span className="text-sm font-bold leading-none mt-0.5 uppercase">
                   {lang === "ar" ? "EN" : "AR"}
                 </span>
-              </button>
+              </Link>
 
               <button
                 onClick={() =>
@@ -135,8 +133,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
           </div>
 
           <div className="lg:hidden flex items-center gap-4">
-            <button
-              onClick={toggleLang}
+            <Link
+              href={alternatePath}
               className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
               aria-label={dict.nav.changeLanguage}
             >
@@ -144,7 +142,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               <span className="text-sm font-bold leading-none mt-0.5 uppercase">
                 {lang === "ar" ? "EN" : "AR"}
               </span>
-            </button>
+            </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
@@ -179,7 +177,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href={`/${lang}/#contact`}
             onClick={() => setIsMobileMenuOpen(false)}
             className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-center mt-2"
           >
