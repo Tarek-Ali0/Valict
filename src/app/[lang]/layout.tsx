@@ -10,40 +10,54 @@ import { cn } from "@/lib/utils";
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://valict.com"),
-  title: "Valict | Validate Your Vision",
-  description: "Reliable IT Solutions | Powering your business with innovative technology",
-  alternates: {
-    canonical: "https://valict.com",
-    languages: {
-      "en": "https://valict.com",
-      "ar": "https://valict.com",
-    },
-  },
-  openGraph: {
-    title: "Valict | Validate Your Vision",
-    description: "Reliable IT Solutions | Powering your business with innovative technology",
-    url: "https://valict.com",
-    siteName: "Valict",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/valict-openGraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Valict Logo",
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang;
+
+  const title = "Valict | Validate Your Vision";
+  const description = lang === "ar"
+    ? "حلول تقنية موثوقة | نساعدك في تطوير أعمالك من خلال التكنولوجيا المبتكرة"
+    : "Reliable IT Solutions | Powering your business with innovative technology";
+
+  return {
+    metadataBase: new URL("https://valict.com"),
+    title,
+    description,
+    alternates: {
+      canonical: `https://valict.com/${lang}`,
+      languages: {
+        "en": "https://valict.com/en",
+        "ar": "https://valict.com/ar",
       },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Valict | Validate Your Vision",
-    description: "Reliable IT Solutions | Powering your business with innovative technology",
-    images: ["/valict-openGraph.png"]
-  },
-};
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://valict.com/${lang}`,
+      siteName: "Valict",
+      locale: lang === "ar" ? "ar_AR" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: "/valict-openGraph.png",
+          width: 1200,
+          height: 630,
+          alt: "Valict Logo",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/valict-openGraph.png"],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ar" }];
