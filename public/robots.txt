@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://valict.com
+Sitemap: https://valict.com/sitemap.xml
