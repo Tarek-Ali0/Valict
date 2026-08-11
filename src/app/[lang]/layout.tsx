@@ -33,6 +33,7 @@ export async function generateMetadata({
       languages: {
         "en": "https://valict.com/en",
         "ar": "https://valict.com/ar",
+        "x-default": "https://valict.com/ar",
       },
     },
     openGraph: {
