@@ -3,12 +3,19 @@ import { Cairo, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
-import { ScrollToTop } from "@/components/ScrollToTop"; // استدعاء المكون الجديد
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
-const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const cairo = Cairo({
+  subsets: ["arabic"],
+  variable: "--font-cairo",
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
 
 export async function generateMetadata({
   params,
@@ -18,50 +25,55 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
 
+  const siteUrl = "https://valict.com";
+  const pageUrl = `${siteUrl}/${lang}`;
+  const logoUrl = `${siteUrl}/JustV.png`;
+
   const title = "Valict | Validate Your Vision";
 
-  // تحديث الوصف ليكون أكثر تفصيلاً وغنياً بالكلمات المفتاحية ليظهر كنبذة احترافية في نتائج البحث
   const description =
     lang === "ar"
       ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
       : "Reliable IT Solutions and ICT Infrastructure Services. At Valict, we specialize in delivering integrated technology solutions, managed IT services, cloud systems, and cybersecurity to optimize performance and drive business growth.";
 
   return {
-    metadataBase: new URL("https://valict.com"),
+    metadataBase: new URL(siteUrl),
+
     title,
     description,
 
     alternates: {
-      canonical: `https://valict.com/${lang}`,
+      canonical: pageUrl,
       languages: {
-        en: "https://valict.com/en",
-        ar: "https://valict.com/ar",
-        "x-default": "https://valict.com/en",
+        en: `${siteUrl}/en`,
+        ar: `${siteUrl}/ar`,
+        "x-default": `${siteUrl}/en`,
       },
     },
 
     openGraph: {
       title,
       description,
-      url: `https://valict.com/${lang}`,
+      url: pageUrl,
       siteName: "Valict",
       locale: lang === "ar" ? "ar_AR" : "en_US",
       type: "website",
+
       images: [
         {
-          url: "/valict-openGraph.png",
-          width: 1200,
-          height: 630,
+          url: logoUrl,
+          width: 400,
+          height: 400,
           alt: "Valict Logo",
         },
       ],
     },
 
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title,
       description,
-      images: ["/valict-openGraph.png"],
+      images: [logoUrl],
     },
   };
 }
@@ -89,27 +101,39 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://valict.com/#organization",
+
     "name": "Valict",
-    "alternateName": ["فالكت", "Valict ICT Solutions"],
+
+    "alternateName": [
+      "فالكت",
+      "Valict ICT Solutions",
+    ],
+
     "url": "https://valict.com",
 
     "logo": {
       "@type": "ImageObject",
       "url": "https://valict.com/JustV.png",
       "width": 400,
-      "height": 400
+      "height": 400,
     },
 
-    "description": "Reliable IT Solutions and ICT Infrastructure Services",
+    "description":
+      "Reliable IT Solutions and ICT Infrastructure Services",
+
     "slogan": "Validate Your Vision",
 
     "sameAs": [
-      "https://www.linkedin.com/company/valict"
-    ]
+      "https://www.linkedin.com/company/valict",
+    ],
   };
 
   return (
-    <html lang={lang} dir={dir} suppressHydrationWarning={true}>
+    <html
+      lang={lang}
+      dir={dir}
+      suppressHydrationWarning={true}
+    >
       <head>
         {/* حقن بيانات الـ Schema في رأس الصفحة لتقرأها محركات البحث */}
         <script
@@ -136,9 +160,12 @@ export default async function RootLayout({
         >
           {children}
 
-          <Footer lang={lang} dict={dict} />
+          <Footer
+            lang={lang}
+            dict={dict}
+          />
 
-          <ScrollToTop /> {/* إضافة زر الصعود هنا */}
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>
