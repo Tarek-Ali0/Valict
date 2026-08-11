@@ -77,8 +77,29 @@ export default async function RootLayout({
   // جلب الترجمة وتمريرها للفوتر لتجنب أي أخطاء أثناء الـ Build
   const dict = await getDictionary(lang as "en" | "ar");
 
+  // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة لجوجل
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Valict",
+    "alternateName": ["فالكت", "Valict ICT Solutions"],
+    "url": "https://valict.com",
+    "logo": "https://valict.com/valict-openGraph.png",
+    "description": "Reliable IT Solutions and ICT Infrastructure Services",
+    "sameAs": [
+      "https://valict.com"
+    ]
+  };
+
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning={true}>
+      <head>
+        {/* حقن بيانات الـ Schema في رأس الصفحة لتقرأها محركات البحث */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body
         suppressHydrationWarning={true}
         className={cn(
