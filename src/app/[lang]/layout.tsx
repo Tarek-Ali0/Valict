@@ -19,9 +19,10 @@ export async function generateMetadata({
   const lang = resolvedParams.lang;
 
   const title = "Valict | Validate Your Vision";
+  // تحديث الوصف ليكون أكثر تفصيلاً وغنياً بالكلمات المفتاحية ليظهر كنبذة احترافية في نتائج البحث
   const description = lang === "ar"
-    ? "حلول تقنية موثوقة | نساعدك في تطوير أعمالك من خلال التكنولوجيا المبتكرة"
-    : "Reliable IT Solutions | Powering your business with innovative technology";
+    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
+    : "Reliable IT Solutions and ICT Infrastructure Services. At Valict, we specialize in delivering integrated technology solutions, managed IT services, cloud systems, and cybersecurity to optimize performance and drive business growth.";
 
   return {
     metadataBase: new URL("https://valict.com"),
