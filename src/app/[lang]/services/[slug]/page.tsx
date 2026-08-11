@@ -180,6 +180,24 @@ const serviceDetailsContent: Record<
 };
 
 /**
+ * Generate static pages for all supported languages and services
+ */
+export async function generateStaticParams() {
+  const languages = ["en", "ar"] as const;
+
+  const slugs = Object.keys(serviceDetailsContent);
+
+  return languages.flatMap((lang) =>
+    slugs.map((slug) => ({
+      lang,
+      slug,
+    }))
+  );
+}
+
+export const dynamicParams = false;
+
+/**
  * SEO Metadata لكل صفحة خدمة
  */
 export async function generateMetadata({
