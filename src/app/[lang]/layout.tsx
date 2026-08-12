@@ -3,7 +3,7 @@ import { Cairo, Geist } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
-import { ScrollToTop } from "@/components/ScrollToTop"; // استدعاء المكون الجديد
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -18,9 +18,13 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
 
-  const title = "Valict | Validate Your Vision";
+  // عنوان الصفحة حسب اللغة
+  const title =
+    lang === "ar"
+      ? "فالكت | عزّز رؤيتك"
+      : "Valict | Validate Your Vision";
 
-  // تحديث الوصف ليكون أكثر تفصيلاً وغنياً بالكلمات المفتاحية ليظهر كنبذة احترافية في نتائج البحث
+  // الوصف حسب اللغة
   const description =
     lang === "ar"
       ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
@@ -28,6 +32,7 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL("https://valict.com"),
+
     title,
     description,
 
@@ -47,6 +52,7 @@ export async function generateMetadata({
       siteName: "Valict",
       locale: lang === "ar" ? "ar_AR" : "en_US",
       type: "website",
+
       images: [
         {
           url: "/valict-openGraph.png",
@@ -81,37 +87,43 @@ export default async function RootLayout({
   const lang = resolvedParams.lang;
   const dir = lang === "ar" ? "rtl" : "ltr";
 
-  // جلب الترجمة وتمريرها للفوتر لتجنب أي أخطاء أثناء الـ Build
+  // جلب الترجمة وتمريرها للفوتر
   const dict = await getDictionary(lang as "en" | "ar");
 
-  // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة لجوجل
+  // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://valict.com/#organization",
-    "name": "Valict",
-    "alternateName": ["فالكت", "Valict ICT Solutions"],
-    "url": "https://valict.com",
 
-    "logo": {
+    name: "Valict",
+
+    alternateName: ["فالكت", "Valict ICT Solutions"],
+
+    url: "https://valict.com",
+
+    logo: {
       "@type": "ImageObject",
-      "url": "https://valict.com/JustV.png",
-      "width": 400,
-      "height": 400
+      url: "https://valict.com/JustV.png",
+      width: 400,
+      height: 400,
     },
 
-    "description": "Reliable IT Solutions and ICT Infrastructure Services",
-    "slogan": "Validate Your Vision",
+    description: "Reliable IT Solutions and ICT Infrastructure Services",
 
-    "sameAs": [
-      "https://www.linkedin.com/company/valict"
-    ]
+    slogan: "Validate Your Vision",
+
+    sameAs: ["https://www.linkedin.com/company/valict"],
   };
 
   return (
-    <html lang={lang} dir={dir} suppressHydrationWarning={true}>
+    <html
+      lang={lang}
+      dir={dir}
+      suppressHydrationWarning={true}
+    >
       <head>
-        {/* حقن بيانات الـ Schema في رأس الصفحة لتقرأها محركات البحث */}
+        {/* حقن بيانات الـ Schema في رأس الصفحة */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -138,7 +150,7 @@ export default async function RootLayout({
 
           <Footer lang={lang} dict={dict} />
 
-          <ScrollToTop /> {/* إضافة زر الصعود هنا */}
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>
