@@ -73,7 +73,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 { name: navDict.services, href: `/${lang}/#services` },
                 { name: navDict.whyValict, href: `/${lang}/#why-valict` },
                 { name: howDict.title, href: `/${lang}/#how-it-works` },
-                { name: navDict.aboutUs, href: `/${lang}/#about` }
+                { name: navDict.aboutUs, href: `/${lang}/about` }
               ].map((link, index) => (
                 <li key={index}>
                   <Link 
