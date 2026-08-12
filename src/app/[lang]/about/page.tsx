@@ -118,7 +118,7 @@ export default async function AboutPage({
 
               <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
                 {currentLang === "ar"
-                  ? "Valict | Validate Your Vision"
+                  ? "فالكت | عزّز رؤيتك"
                   : "Valict | Validate Your Vision"}
               </h1>
 
