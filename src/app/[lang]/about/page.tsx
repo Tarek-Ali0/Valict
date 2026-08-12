@@ -127,7 +127,7 @@ export default async function AboutPage({
 
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "في Valict، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
+                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
                     : "At Valict, we provide reliable and value-driven IT and ICT solutions designed to support the way modern businesses operate. We combine technology, infrastructure, security, and practical expertise to create solutions that are aligned with business needs."}
                 </p>
 
