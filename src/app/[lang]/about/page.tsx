@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -23,8 +22,8 @@ export async function generateMetadata({
 
   const description =
     currentLang === "ar"
-      ? "تعرف على Valict ورؤيتنا في تقديم حلول تقنية موثوقة للبنية التحتية لتقنية المعلومات والاتصالات، والخدمات المدارة، والحلول السحابية والأمن السيبراني."
-      : "Learn more about Valict and our vision for delivering reliable IT infrastructure, managed services, cloud solutions, and cybersecurity solutions that help businesses grow securely and efficiently.";
+      ? "تعرف على Valict ونهجنا في تقديم حلول تقنية موثوقة وقائمة على القيمة في مجالات البنية التحتية لتقنية المعلومات والاتصالات، والخدمات المدارة، والحلول السحابية، والأمن السيبراني."
+      : "Learn more about Valict and our approach to delivering reliable, value-driven IT and ICT solutions across infrastructure, managed services, cloud, cybersecurity, and web technologies.";
 
   const url = `https://valict.com/${currentLang}/about`;
 
@@ -82,6 +81,7 @@ export default async function AboutPage({
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-valict-dark transition-colors duration-300">
+
       {/* Navbar */}
       <Navbar lang={currentLang} dict={dict} />
 
@@ -122,11 +122,28 @@ export default async function AboutPage({
                   : "Valict | Validate Your Vision"}
               </h1>
 
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
-                {currentLang === "ar"
-                  ? "في Valict، نؤمن بأن التكنولوجيا ليست مجرد أدوات وأنظمة، بل هي عنصر أساسي لنجاح الأعمال واستمراريتها. نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات تساعد الشركات على العمل بكفاءة وأمان والاستعداد للنمو."
-                  : "At Valict, we believe technology is more than just tools and systems. It is a fundamental part of business success and continuity. We deliver reliable, integrated IT and ICT infrastructure solutions that help businesses operate efficiently, securely, and stay ready for growth."}
-              </p>
+              {/* Introduction */}
+              <div className="space-y-5 mb-8">
+
+                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {currentLang === "ar"
+                    ? "في Valict، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
+                    : "At Valict, we provide reliable and value-driven IT and ICT solutions designed to support the way modern businesses operate. We combine technology, infrastructure, security, and practical expertise to create solutions that are aligned with business needs."}
+                </p>
+
+                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {currentLang === "ar"
+                    ? "منهجنا يتجاوز مجرد تطبيق التكنولوجيا؛ فنحن نركز على بناء بيئات تقنية موثوقة وآمنة وقابلة للتوسع، تساعد على رفع الكفاءة التشغيلية، ودعم استمرارية الأعمال، وتوفير أساس قوي للنمو المستدام."
+                    : "Our approach goes beyond implementing technology. We focus on building reliable, secure, and scalable environments that improve operational efficiency, support business continuity, and provide a solid foundation for sustainable growth."}
+                </p>
+
+                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {currentLang === "ar"
+                    ? "بدءًا من البنية التحتية وخدمات تقنية المعلومات المدارة، وصولًا إلى الحلول السحابية والشبكات والأمن السيبراني وتقنيات الويب، نساعد الشركات على تبسيط بيئتها التقنية وتحقيق أقصى استفادة منها."
+                    : "From IT infrastructure and managed services to cloud solutions, networking, cybersecurity, and web technologies, we help businesses simplify their technology environment and make better use of it."}
+                </p>
+
+              </div>
 
               <div className="w-full h-[1px] bg-slate-100 dark:bg-slate-800 mb-8" />
 
@@ -156,8 +173,8 @@ export default async function AboutPage({
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {currentLang === "ar"
-                      ? "تقديم حلول تقنية موثوقة وعملية وقابلة للتوسع، مع التركيز على الأداء والأمان واستمرارية الأعمال."
-                      : "To deliver reliable, practical, and scalable technology solutions focused on performance, security, and business continuity."}
+                      ? "تقديم حلول تقنية موثوقة وعملية وقابلة للتوسع، تركز على الأداء والأمان واستمرارية الأعمال، وتساعد الشركات على تحقيق قيمة ملموسة من استثماراتها التقنية."
+                      : "To deliver reliable, practical, and scalable technology solutions focused on performance, security, and business continuity, helping businesses achieve tangible value from their technology investments."}
                   </p>
                 </div>
 
@@ -168,7 +185,7 @@ export default async function AboutPage({
 
                 <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
                   {currentLang === "ar"
-                    ? "ما يميزنا"
+                    ? "ما نؤمن به"
                     : "What We Stand For"}
                 </h2>
 
