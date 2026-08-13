@@ -128,7 +128,7 @@ export function WhyUs({ dict }: WhyUsProps) {
               {dict.why.headline}
             </h3>
             <p className="text-slate-500 dark:text-slate-400 mb-10 text-base md:text-lg leading-relaxed max-w-lg">
-              {dict.about.text}
+              {dict.why.text || dict.about.text}
             </p>
 
             {/* List with Staggered Animation */}
