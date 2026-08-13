@@ -95,18 +95,18 @@ export function WhyUs({ dict }: WhyUsProps) {
               />
             </div>
 
-            {/* Premium Floating Badge */}
+            {/* Premium Floating Badge (تم تصغيره وضبط مظهره ليصبح أنيقاً) */}
             <motion.div 
-              className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy p-6 md:p-8 rounded-3xl text-center shadow-[0_20px_40px_rgba(30,58,138,0.4)] border border-white/10 z-30 w-48 md:w-56"
+              className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy/95 backdrop-blur-md p-4 md:p-5 rounded-2xl text-center shadow-[0_15px_30px_rgba(30,58,138,0.3)] border border-white/15 z-30 w-36 md:w-44"
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6, type: "spring", bounce: 0.4 }}
               viewport={{ once: true }}
             >
-              <span className="block text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-valict-cyan mb-2">
+              <span className="block text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-valict-cyan mb-1">
                 {dict.why.uptime}
               </span>
-              <span className="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">
+              <span className="text-white/90 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.15em]">
                 {dict.why.uptimeLabel}
               </span>
             </motion.div>
