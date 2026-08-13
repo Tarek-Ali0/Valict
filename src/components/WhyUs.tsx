@@ -95,18 +95,18 @@ export function WhyUs({ dict }: WhyUsProps) {
               />
             </div>
 
-            {/* Premium Glassmorphism Floating Badge (معدل: حجم مدمج، خط كبيير، وتأثير زجاجي راقي) */}
+            {/* Premium Glassmorphism Floating Badge (تم تعديل العرض ليحتوي النص بدون خروج) */}
             <motion.div 
-              className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy/70 backdrop-blur-md p-4 md:p-5 rounded-2xl text-center shadow-[0_15px_30px_rgba(0,0,0,0.2)] border border-white/20 z-30 w-28 md:w-36"
+              className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy/75 backdrop-blur-md px-5 py-4 rounded-2xl text-center shadow-[0_15px_30px_rgba(0,0,0,0.25)] border border-white/20 z-30 w-auto whitespace-nowrap"
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6, type: "spring", bounce: 0.4 }}
               viewport={{ once: true }}
             >
-              <span className="block text-4xl md:text-5xl font-black text-white mb-1 drop-shadow-md">
+              <span className="block text-2xl md:text-4xl font-black text-white mb-1 drop-shadow-md">
                 {dict.why.uptime}
               </span>
-              <span className="text-white/90 text-xs md:text-sm font-bold uppercase tracking-[0.15em]">
+              <span className="block text-white/95 text-[10px] md:text-xs font-bold uppercase tracking-[0.15em]">
                 {dict.why.uptimeLabel}
               </span>
             </motion.div>
