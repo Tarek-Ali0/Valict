@@ -79,7 +79,7 @@ export function WhyUs({ dict }: WhyUsProps) {
                 alt="IT Monitoring"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
@@ -91,7 +91,7 @@ export function WhyUs({ dict }: WhyUsProps) {
                 alt="Server Room"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
