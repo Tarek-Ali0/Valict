@@ -75,7 +75,7 @@ export function WhyUs({ dict }: WhyUsProps) {
             <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl group">
               <div className="absolute inset-0 bg-valict-navy/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
-                src="/why-monitoring.webp"
+                src="/why-server-room.webp"
                 alt="IT Monitoring"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -87,7 +87,7 @@ export function WhyUs({ dict }: WhyUsProps) {
             <div className="absolute bottom-0 left-0 w-[60%] h-[60%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[8px] md:border-[12px] border-white dark:border-slate-900 z-20 group">
               <div className="absolute inset-0 bg-valict-cyan/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
-                src="/why-server-room.webp"
+                src="/why-monitoring.webp"
                 alt="Server Room"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
