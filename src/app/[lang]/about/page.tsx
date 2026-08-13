@@ -233,7 +233,7 @@ export default async function AboutPage({
                   src="/JustV.png"
                   alt="Valict"
                   fill
-                  className="object-contain p-12"
+                  className="object-contain p-12 dark:brightness-0 dark:invert"
                   sizes="(max-width: 768px) 100vw, 500px"
                   priority
                 />
