@@ -17,7 +17,7 @@ export async function generateMetadata({
 
   const title =
     currentLang === "ar"
-      ? "من نحن | فالكت"
+      ? "فالكت | من نحن"
       : "Valict | About Us";
 
   const description =
