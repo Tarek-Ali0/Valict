@@ -231,7 +231,10 @@ export async function generateMetadata({
     serviceData?.[currentLang]?.overview ||
     service.desc;
 
-  const title = `${service.title} | Valict`;
+  const title =
+    currentLang === "ar"
+      ? `${service.title} | فالكت`
+      : `${service.title} | Valict`;
 
   const url = `https://valict.com/${currentLang}/services/${slug}`;
 
