@@ -109,12 +109,12 @@ export default async function RootLayout({
       height: 400,
     },
 
-    description: "Reliable IT Solutions and ICT Infrastructure Services",
-
-    slogan: "Validate Your Vision",
-
-    sameAs: ["https://www.linkedin.com/company/valict"],
-  };
+    description: lang === 'ar' 
+    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات." 
+    : "Reliable IT Solutions and ICT Infrastructure Services.",
+  slogan: lang === 'ar' ? "عزّز رؤيتك" : "Validate Your Vision",
+  sameAs: ["https://www.linkedin.com/company/valict"],
+};
 
   return (
     <html
