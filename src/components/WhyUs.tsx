@@ -75,8 +75,8 @@ export function WhyUs({ dict }: WhyUsProps) {
             <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl group">
               <div className="absolute inset-0 bg-valict-navy/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800"
-                alt="Server Room"
+                src="/why-monitoring.webp"
+                alt="IT Monitoring"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
@@ -87,8 +87,8 @@ export function WhyUs({ dict }: WhyUsProps) {
             <div className="absolute bottom-0 left-0 w-[60%] h-[60%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[8px] md:border-[12px] border-white dark:border-slate-900 z-20 group">
               <div className="absolute inset-0 bg-valict-cyan/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
-                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=600"
-                alt="IT Team"
+                src="/why-server-room.webp"
+                alt="Server Room"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
@@ -128,7 +128,7 @@ export function WhyUs({ dict }: WhyUsProps) {
               {dict.why.headline}
             </h3>
             <p className="text-slate-500 dark:text-slate-400 mb-10 text-base md:text-lg leading-relaxed max-w-lg">
-              {dict.why.text || dict.about.text}
+              {dict.about.text}
             </p>
 
             {/* List with Staggered Animation */}
