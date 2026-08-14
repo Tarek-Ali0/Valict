@@ -13,6 +13,16 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.hostname = "valict.com";
 
+    // If no locale is present, go directly to the default locale
+    if (
+      !locales.some(
+        (locale) =>
+          pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+      )
+    ) {
+      url.pathname = `/${defaultLocale}${pathname}`;
+    }
+
     return NextResponse.redirect(url, 301);
   }
 
