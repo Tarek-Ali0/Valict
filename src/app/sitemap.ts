@@ -17,12 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const languages = ["en", "ar"];
 
   // الصفحات الثابتة الأساسية باللغات
-  const staticRoutes = 
-    "/en",
-    "/ar",
-    "/en/about",
-    "/ar/about",
-  ];
+  const staticRoutes = [
+  "/en",
+  "/ar",
+  "/en/about",
+  "/ar/about",
+];
 
   const mapStaticRoutes = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
