@@ -198,12 +198,3 @@
 [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
   font-family: var(--font-cairo), sans-serif;
 }
-
-@keyframes border-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.animate-border-rotate {
-  animation: border-rotate 4s linear infinite;
-}
