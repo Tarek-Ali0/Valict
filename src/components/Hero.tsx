@@ -26,12 +26,16 @@ export function Hero({ dict }: HeroProps) {
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2.5 shadow-sm">
-        <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-        <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
-          {dict.hero.badge}
-        </span>
-        <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+      {/* البادج مع البرواز المتدرج المتحرك فقط */}
+      <div className="relative inline-flex p-[1.5px] rounded-full overflow-hidden mb-2.5 shadow-sm group">
+        <span className="absolute inset-[-500%] bg-[conic-gradient(from_90deg_at_50%_50%,#22d3ee_0%,#3b82f6_50%,#1e3a8a_100%)] animate-border-rotate"></span>
+        <div className="relative inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 backdrop-blur-md">
+          <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+          <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
+            {dict.hero.badge}
+          </span>
+          <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+        </div>
       </div>
 
       <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-0 text-valict-dark dark:text-white tracking-tight">
