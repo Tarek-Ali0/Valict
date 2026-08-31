@@ -18,7 +18,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
     contactUs: "Contact Us",
     emailLabel: "Email Us",
     phoneLabel: "Call Us",
-    copyright: "© Valict {year}. All rights reserved."
+    copyright: "© Valict" "{year}". "All rights reserved."
   };
 
   const navDict = dict?.nav || {
