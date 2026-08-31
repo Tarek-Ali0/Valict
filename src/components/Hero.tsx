@@ -26,7 +26,7 @@ export function Hero({ dict }: HeroProps) {
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 text-xs rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-cyan-500/20 dark:border-cyan-400/20 mb-3 shadow-sm transition-all duration-300 hover:border-cyan-500/40">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2.5 shadow-sm">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
         <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
@@ -44,35 +44,33 @@ export function Hero({ dict }: HeroProps) {
   );
 
   return (
-    <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300 overflow-hidden">
+    <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300">
       
-      {/* Sticky Container */}
+      {/* Sticky Container - الموبايل هيمشي أوتوماتيك على قد محتواه بدون فراغ، والديسكتوب هيفضل sticky مظبوط */}
       <div className="relative lg:sticky top-0 lg:h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-32 pb-6 lg:pb-0">
         
-        {/* --- Modern 2026 Background Glow Elements --- */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-gradient-to-tr from-valict-cyan/20 to-valict-navy/15 dark:from-valict-cyan/10 dark:to-valict-navy/20 rounded-full blur-[100px] md:blur-[140px] -z-10 pointer-events-none"></div>
+        {/* --- Premium Background Elements --- */}
+        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        {/* 1. حاوية الموبايل والتابلت */}
+        {/* 1. حاوية الموبايل والتابلت (تم إزالة أي فراغ سفلي نهائياً لتبدأ القسم التالي فوراً) */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
           {heroContent}
-          
-          {/* Modern Floating Glass Container for Mobile */}
-          <div className="w-full max-w-[340px] xs:max-w-xs sm:max-w-md my-3 p-2 rounded-2xl bg-gradient-to-b from-white/40 to-white/10 dark:from-slate-900/40 dark:to-slate-900/10 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl">
+          <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard"
               width={900}
               height={600}
-              className="w-full h-auto rounded-xl object-contain pointer-events-none"
+              className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
               priority
             />
           </div>
-
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25 mt-1"
+            className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
           >
             {dict.hero.cta}
             <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
@@ -87,34 +85,29 @@ export function Hero({ dict }: HeroProps) {
           {heroContent}
         </motion.div>
 
-        {/* Modern Floating Dashboard Mockup for Desktop */}
+        {/* Laptop / Dashboard Image للديسكتوب */}
         <motion.div
-          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[920px] px-4 mt-4"
+          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[880px] px-4 mt-3"
           style={{ scale: imageScale, y: imageY }}
         >
-          <div className="relative p-3 rounded-3xl bg-gradient-to-b from-white/50 via-white/20 to-transparent dark:from-slate-800/40 dark:via-slate-900/20 dark:to-transparent backdrop-blur-2xl border border-white/30 dark:border-slate-700/40 shadow-[0_25px_60px_-15px_rgba(30,58,138,0.25)] dark:shadow-[0_25px_60px_-15px_rgba(34,211,238,0.1)]">
-            {/* Inner glow effect */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-valict-cyan/10 via-transparent to-valict-navy/10 pointer-events-none"></div>
-            
-            <Image
-              src="/dashboard-mockup.png"
-              alt="Tech Dashboard"
-              width={1050}
-              height={680}
-              className="w-full h-auto rounded-2xl object-contain pointer-events-none shadow-inner"
-              priority
-            />
-          </div>
+          <Image
+            src="/dashboard-mockup.png"
+            alt="Tech Dashboard"
+            width={1050}
+            height={680}
+            className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+            priority
+          />
         </motion.div>
 
-        {/* الزرار تحت الواجهة للديسكتوب */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-4">
+        {/* الزرار تحت اللابتوب للديسكتوب */}
+        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
           <Link
             href="#contact"
-            className="font-sans btn-gradient text-white px-8 py-3 rounded-xl font-bold text-sm flex items-center gap-3 shadow-lg shadow-valict-cyan/30 hover:shadow-valict-cyan/50 hover:scale-[1.02] transition-all duration-300"
+            className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
           >
             {dict.hero.cta}
-            <FaArrowRightLong className="h-4 w-4 rtl:rotate-180 transition-transform group-hover:translate-x-1" />
+            <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
           </Link>
         </div>
       </div>
