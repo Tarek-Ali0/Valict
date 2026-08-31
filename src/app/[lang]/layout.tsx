@@ -1,218 +1,158 @@
-"use client";
-
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import {
-  FaBarsStaggered,
-  FaXmark,
-  FaGlobe,
-  FaSun,
-  FaMoon,
-  FaLinkedinIn,
-  FaFacebook,
-} from "react-icons/fa6";
-import { useTheme } from "next-themes";
+import type { Metadata } from "next";
+import { Cairo, Geist } from "next/font/google";
+import "@/app/globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
-export function Navbar({ lang, dict }: { lang: string; dict: any }) {
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isScrolled, setIsScrolled] = React.useState(false);
-  const pathname = usePathname();
+const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
-  React.useEffect(() => {
-    setMounted(true);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang;
 
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+  // عنوان الصفحة حسب اللغة
+  const title =
+    lang === "ar"
+      ? "فالكت | عزّز رؤيتك"
+      : "Valict | Validate Your Vision";
 
-    window.addEventListener("scroll", handleScroll);
+  // الوصف حسب اللغة
+  const description =
+    lang === "ar"
+      ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
+      : "Reliable IT Solutions and ICT Infrastructure Services. At Valict, we specialize in delivering integrated technology solutions, managed IT services, cloud systems, and cybersecurity to optimize performance and drive business growth.";
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  return {
+    metadataBase: new URL("https://valict.com"),
 
-  // حساب المسار البديل للغة الأخرى للأرشفة السليمة وروابط الـ Link الحقيقية
-  const alternateLang = lang === "en" ? "ar" : "en";
-  const alternatePath = pathname.replace(`/${lang}`, `/${alternateLang}`);
+    title,
+    description,
 
-  interface NavLink {
-    name: string;
-    href: string;
-  }
+    alternates: {
+      canonical: `https://valict.com/${lang}`,
+      languages: {
+        en: "https://valict.com/en",
+        ar: "https://valict.com/ar",
+        "x-default": "https://valict.com/en",
+      },
+    },
 
-  const navLinks: NavLink[] = [
-    { name: dict.nav.services, href: `/${lang}/#services` },
-    { name: dict.nav.whyValict, href: `/${lang}/#why-valict` },
-    { name: dict.nav.aboutUs, href: `/${lang}/about` },
-  ];
+    openGraph: {
+      title,
+      description,
+      url: `https://valict.com/${lang}`,
+      siteName: "Valict",
+      locale: lang === "ar" ? "ar_AR" : "en_US",
+      type: "website",
+
+      images: [
+        {
+          url: "/valict-openGraph.png",
+          width: 1200,
+          height: 630,
+          alt: "Valict Logo",
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/valict-openGraph.png"],
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "ar" }];
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
+}) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang;
+  const dir = lang === "ar" ? "rtl" : "ltr";
+
+  // جلب الترجمة وتمريرها للفوتر
+  const dict = await getDictionary(lang as "en" | "ar");
+
+  // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://valict.com/#organization",
+
+    name: "Valict",
+
+    alternateName: ["فالكت", "Valict ICT Solutions"],
+
+    url: "https://valict.com",
+
+    logo: {
+      "@type": "ImageObject",
+      url: "https://valict.com/JustV.png",
+      width: 400,
+      height: 400,
+    },
+
+    description: lang === 'ar' 
+    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات." 
+    : "Reliable IT Solutions and ICT Infrastructure Services.",
+  slogan: lang === 'ar' ? "عزّز رؤيتك" : "Validate Your Vision",
+  sameAs: ["https://www.linkedin.com/company/valict"],
+};
 
   return (
-    <nav
-      className={cn(
-        "fixed w-full z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm"
-          : "bg-transparent"
-      )}
+    <html
+      lang={lang}
+      dir={dir}
+      suppressHydrationWarning={true}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-24">
+      <head>
+        {/* حقن بيانات الـ Schema في رأس الصفحة */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      </head>
 
-          {/* Logo */}
-          <Link
-            href={`/${lang}`}
-            className="group relative block w-40 h-12"
-          >
-            <Image
-              src="/valict-logo.png"
-              alt="Valict Logo"
-              fill
-              sizes="(max-width: 768px) 150px, 200px"
-              className="filter dark:brightness-0 dark:invert transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.45)] group-hover:brightness-110 dark:group-hover:brightness-125"
-              priority
-            />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6">
-
-            {navLinks.map((link: NavLink) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="group relative text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold transition-colors duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-valict-cyan after:transition-all after:duration-300 hover:after:w-full"
-              >
-                {link.name}
-              </Link>
-            ))}
-
-            {/* Language & Theme */}
-            <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
-
-              <Link
-                href={alternatePath}
-                className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.changeLanguage}
-              >
-                <FaGlobe className="h-4 w-4" />
-
-                <span className="text-sm font-bold leading-none mt-0.5 uppercase">
-                  {lang === "ar" ? "EN" : "AR"}
-                </span>
-              </Link>
-
-              <button
-                onClick={() =>
-                  setTheme(resolvedTheme === "light" ? "dark" : "light")
-                }
-                className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.toggleTheme}
-              >
-                {mounted && resolvedTheme === "dark" ? (
-                  <FaSun className="h-5 w-5" />
-                ) : (
-                  <FaMoon className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-
-            {/* Social Media */}
-            <div className="flex items-center gap-3">
-
-              <a
-                href="https://www.linkedin.com/company/valict"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedinIn className="w-4 h-4" />
-              </a>
-
-              <a
-                href="https://www.facebook.com/ValictOfficial"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="Facebook"
-              >
-                <FaFacebook className="w-4 h-4" />
-              </a>
-
-            </div>
-          </div>
-
-          {/* Mobile Controls */}
-          <div className="lg:hidden flex items-center gap-4">
-
-            <Link
-              href={alternatePath}
-              className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-              aria-label={dict.nav.changeLanguage}
-            >
-              <FaGlobe className="h-4 w-4" />
-
-              <span className="text-sm font-bold leading-none mt-0.5 uppercase">
-                {lang === "ar" ? "EN" : "AR"}
-              </span>
-            </Link>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
-              aria-label="Toggle Menu"
-            >
-              {isMobileMenuOpen ? (
-                <FaXmark size={24} />
-              ) : (
-                <FaBarsStaggered size={24} />
-              )}
-            </button>
-
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
+      <body
+        suppressHydrationWarning={true}
         className={cn(
-          "lg:hidden absolute top-24 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
-          isMobileMenuOpen
-            ? "max-h-96 opacity-100"
-            : "max-h-0 opacity-0"
+          "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
+          geist.variable,
+          cairo.variable
         )}
       >
-        <div className="p-6 flex flex-col gap-4">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
 
-          {navLinks.map((link: NavLink) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
-            >
-              {link.name}
-            </Link>
-          ))}
+          <Footer lang={lang} dict={dict} />
 
-          <Link
-            href={`/${lang}/#contact`}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-center mt-2"
-          >
-            {dict.nav.getStarted}
-          </Link>
-
-        </div>
-      </div>
-    </nav>
+          <ScrollToTop />
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
