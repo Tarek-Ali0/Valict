@@ -76,7 +76,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               alt="Valict Logo"
               fill
               sizes="(max-width: 768px) 150px, 200px"
-              className="filter dark:brightness-0 dark:invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0 group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+              className="filter dark:brightness-0 dark:invert"
               priority
             />
           </Link>
