@@ -55,7 +55,7 @@ export async function generateMetadata({
 
       images: [
         {
-          url: "/valict-openGraph.png",
+          url: "https://valict.com/valict-openGraph.png",
           width: 1200,
           height: 630,
           alt: "Valict Logo",
@@ -67,7 +67,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/valict-openGraph.png"],
+      images: ["https://valict.com/valict-openGraph.png"],
     },
   };
 }
