@@ -116,7 +116,7 @@ export default async function RootLayout({
   sameAs: 
     ["https://www.linkedin.com/company/valict",
      "https://www.facebook.com/ValictOfficial"
-  ],
+  ]
 };
 
   return (
