@@ -67,21 +67,20 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
         <div className="flex justify-between items-center h-24">
 
           {/* Logo */}
-<Link
-  href={`/${lang}`}
-  className="group relative flex items-center w-[160px] h-[48px]" 
-  aria-label="Valict Corporate Home"
->
-  <Image
-    src="/valict-logo.png"
-    alt="Valict Logo"
-    width={1198}        // الأبعاد الحقيقية لملفك بالكامل
-    height={351}       // النسبة الأصلية للحفاظ على الأبعاد بدون تمطيط
-    unoptimized        // إيقاف المعالجة تماماً لضمان الجودة الأصلية 100%
-    priority           // تحميل فوري
-    className="w-full h-auto max-w-[160px] max-h-[48px] object-contain filter dark:brightness-0 dark:invert"
-  />
-</Link>
+          <Link
+            href={`/${lang}`}
+            className="group relative block w-40 h-12"
+            aria-label="Valict Corporate Home"
+          >
+            <Image
+              src="/valict-logo.png"
+              alt="Valict Logo"
+              fill
+              sizes="(max-width: 768px) 150px, 200px"
+              className="filter dark:brightness-0 dark:invert"
+              priority
+            />
+          </Link>
 
 
           {/* Desktop Navigation */}
