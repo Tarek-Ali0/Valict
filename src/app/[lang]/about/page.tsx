@@ -79,6 +79,21 @@ export default async function AboutPage({
 
   const dict = await getDictionary(currentLang);
 
+  // مصفوفة القيم الأساسية للغتين لإكمال الكود المقطوع
+  const coreValues = currentLang === "ar"
+    ? [
+        "الموثوقية واستمرارية الأعمال",
+        "الأمان وحماية البيانات",
+        "حلول عملية وقابلة للتوسع",
+        "التركيز على قيمة الأعمال",
+      ]
+    : [
+        "Reliability and business continuity",
+        "Security and data protection",
+        "Practical and scalable solutions",
+        "Business value-focused technology",
+      ];
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-valict-dark transition-colors duration-300">
 
@@ -88,10 +103,10 @@ export default async function AboutPage({
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
 
-        {/* Back to Home */}
+        {/* Back to Home - تم تحسين تباين ألوان النص للـ SEO هنا */}
         <Link
           href={`/${currentLang}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-valict-cyan dark:text-slate-400 mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan mb-8 transition-colors"
         >
           <FaArrowRightLong
             className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
@@ -127,7 +142,7 @@ export default async function AboutPage({
 
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
+                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين Tكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
                     : "At Valict, we provide reliable and value-driven IT and ICT solutions designed to support the way modern businesses operate. We combine technology, infrastructure, security, and practical expertise to create solutions that are aligned with business needs."}
                 </p>
 
@@ -182,7 +197,6 @@ export default async function AboutPage({
 
               {/* Core Values */}
               <div>
-
                 <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
                   {currentLang === "ar"
                     ? "ما نؤمن به"
@@ -190,60 +204,33 @@ export default async function AboutPage({
                 </h2>
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                  {(
-                    currentLang === "ar"
-                      ? [
-                          "الموثوقية واستمرارية الأعمال",
-                          "الأمان وحماية البيانات",
-                          "حلول عملية وقابلة للتوسع",
-                          "التركيز على قيمة الأعمال",
-                        ]
-                      : [
-                          "Reliability and business continuity",
-                          "Security and data protection",
-                          "Practical and scalable solutions",
-                          "Business value-focused technology",
-                        ]
-                  ).map((value, index) => (
-                    <li
-                      key={index}
-                      className="flex items-start gap-3"
-                    >
-                      <FaCheckCircle className="w-5 h-5 text-valict-cyan shrink-0 mt-1" />
-
-                      <span className="text-slate-600 dark:text-slate-300 font-medium">
-                        {value}
-                      </span>
+                  {coreValues.map((value, index) => (
+                    <li key={index} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                      <FaCheckCircle className="text-valict-cyan flex-shrink-0" />
+                      <span className="text-sm font-medium">{value}</span>
                     </li>
                   ))}
-
                 </ul>
-
               </div>
 
             </div>
 
-            {/* Image */}
+            {/* Right Column: Visual Brand Representation (يمكن إغلاقه بتصميم شعار V للشركة) */}
             <div className="lg:col-span-5 flex justify-center">
-
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50">
-
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 opacity-85 dark:opacity-100">
                 <Image
                   src="/JustV.png"
-                  alt="Valict"
+                  alt="Valict Icon"
                   fill
-                  className="object-contain p-12 dark:brightness-0 dark:invert"
-                  sizes="(max-width: 768px) 100vw, 500px"
-                  priority
+                  sizes="(max-width: 768px) 250px, 320px"
+                  className="object-contain"
                 />
-
               </div>
-
             </div>
 
           </div>
         </div>
+
       </div>
     </div>
   );
