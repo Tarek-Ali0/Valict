@@ -1,10 +1,24 @@
 import { getDictionary } from "@/lib/dictionaries";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Services } from "@/components/Services";
-import { WhyUs } from "@/components/WhyUs";
-import { HowItWorks } from "@/components/HowItWorks";
-import { Contact } from "@/components/Contact";
+import dynamic from "next/dynamic";
+
+// تحميل المكونات السفلى ديناميكياً لتخفيف الجافاسكريبت ووقت الحظر (TBT)
+const Services = dynamic(() => import("@/components/Services").then((mod) => mod.Services), {
+  ssr: true, // الإبقاء على ميزة السيو والـ SSR سليمة
+});
+
+const WhyUs = dynamic(() => import("@/components/WhyUs").then((mod) => mod.WhyUs), {
+  ssr: true,
+});
+
+const HowItWorks = dynamic(() => import("@/components/HowItWorks").then((mod) => mod.HowItWorks), {
+  ssr: true,
+});
+
+const Contact = dynamic(() => import("@/components/Contact").then((mod) => mod.Contact), {
+  ssr: true,
+});
 
 export default async function Home({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
   const resolvedParams = await params;
@@ -15,8 +29,10 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
     <main className="w-full selection:bg-valict-cyan selection:text-valict-navy transition-colors duration-300">
       <Navbar lang={lang} dict={dict} />
       
+      {/* المكونات الرئيسية العلوية تظل ثابتة لتحميل أسرع (LCP) */}
       <Hero dict={dict} />
       
+      {/* المكونات السفلية المحملة ديناميكياً بذكاء */}
       <Services dict={dict} lang={lang} />
       
       <WhyUs dict={dict} />
@@ -24,8 +40,6 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       <HowItWorks dict={dict} />
       
       <Contact dict={dict} />
-      
-         </main>
+    </main>
   );
 }
-
