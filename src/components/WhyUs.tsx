@@ -78,7 +78,7 @@ export function WhyUs({ dict }: WhyUsProps) {
                 src="/why-server-room.webp"
                 alt="IT Monitoring"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 75vw, (max-width: 1200px) 38vw, 480px"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -90,7 +90,7 @@ export function WhyUs({ dict }: WhyUsProps) {
                 src="/why-monitoring.webp"
                 alt="Server Room"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 60vw, (max-width: 1200px) 30vw, 380px"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
