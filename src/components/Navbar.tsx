@@ -70,6 +70,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
           <Link
             href={`/${lang}`}
             className="group relative block w-40 h-12"
+            aria-label="Valict Corporate Home"
           >
             <Image
               src="/valict-logo.png"
@@ -97,10 +98,14 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             {/* Language & Theme */}
             <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
 
+              {/* إضافة علاقة الأرشفة البديلة للمسار اللغوي الآخر المقابل للـ SEO الهيكلي */}
               <Link
                 href={alternatePath}
+                rel="alternate"
+                hrefLang={alternateLang}
                 className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.changeLanguage}
+                title={dict.nav.changeLanguage || "Change Language"}
+                aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
               >
                 <FaGlobe className="h-4 w-4" />
 
@@ -114,7 +119,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                   setTheme(resolvedTheme === "light" ? "dark" : "light")
                 }
                 className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.toggleTheme}
+                title={dict.nav.toggleTheme || "Toggle Dark/Light Mode"}
+                aria-label="Toggle display theme color mode"
               >
                 {mounted && resolvedTheme === "dark" ? (
                   <FaSun className="h-5 w-5" />
@@ -132,7 +138,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="LinkedIn"
+                aria-label="Visit Valict Official LinkedIn Company Profile"
+                title="LinkedIn Profile"
               >
                 <FaLinkedinIn className="w-4 h-4" />
               </a>
@@ -142,7 +149,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="Facebook"
+                aria-label="Visit Valict Official Facebook Page"
+                title="Facebook Page"
               >
                 <FaFacebook className="w-4 h-4" />
               </a>
@@ -155,8 +163,10 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
             <Link
               href={alternatePath}
+              rel="alternate"
+              hrefLang={alternateLang}
               className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-              aria-label={dict.nav.changeLanguage}
+              aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
             >
               <FaGlobe className="h-4 w-4" />
 
@@ -168,7 +178,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
-              aria-label="Toggle Menu"
+              aria-label="Toggle responsive mobile navigation menu"
             >
               {isMobileMenuOpen ? (
                 <FaXmark size={24} />
@@ -203,14 +213,15 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             </Link>
           ))}
 
+          {/* تم إكمال وإغلاق الرابط الأخير بنجاح لإنهاء المشكلة البرمجية المقطوعة */}
           <Link
             href={`/${lang}/#contact`}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-center mt-2"
+            className="text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
           >
-            {dict.nav.getStarted}
+            {dict.footer.contactUs || "Contact Us"}
           </Link>
-
+          
         </div>
       </div>
     </nav>
