@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedinIn, FaXTwitter, FaEnvelope, FaPhone, FaChevronRight, FaFacebook } from "react-icons/fa6";
+import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook } from "react-icons/fa6";
 
 interface FooterProps {
   dict?: any;
@@ -43,7 +43,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
           
           {/* Column 1: Brand & About */}
           <div className="lg:col-span-2">
-            <Link href={`/${lang}`} className="inline-block mb-4 relative group">
+            <Link href={`/${lang}`} className="inline-block mb-4 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/valict-logo.png"
@@ -54,7 +54,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 />
               </div>
             </Link>
-            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-sm mb-4">
+            {/* تحسين تباين لون نص النبذة التعريفية */}
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-w-sm mb-4">
               {footerDict.about}
             </p>
             <div className="flex items-center gap-2">
@@ -67,7 +68,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h4>
+            {/* ضبط وسم العنوان إلى h2 لسلامة التسلسل الهيكلي */}
+            <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h2>
             <ul className="space-y-2">
               {[
                 { name: navDict.services, href: `/${lang}/#services` },
@@ -78,7 +80,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 <li key={index}>
                   <Link 
                     href={link.href} 
-                    className="group flex items-center text-sm text-slate-500 dark:text-slate-400 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
+                    className="group flex items-center text-sm text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
                   >
                     <FaChevronRight className="text-[9px] opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-valict-cyan transition-all duration-300 rtl:rotate-180 mr-2" />
                     <span className="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
@@ -92,33 +94,36 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
           {/* Column 3: Contact Info */}
           <div>
-            <h4 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.contactUs}</h4>
+            {/* ضبط وسم العنوان إلى h2 لسلامة التسلسل الهيكلي */}
+            <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.contactUs}</h2>
             <ul className="space-y-3">
               <li>
                 <a 
                   href="mailto:info@valict.com" 
-                  className="group flex items-start gap-3 text-slate-500 dark:text-slate-400 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
+                  className="group flex items-start gap-3 text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
                 >
                   <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:border-valict-cyan group-hover:bg-valict-cyan/5 transition-all duration-300">
                     <FaEnvelope className="text-xs text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{footerDict.emailLabel}</span>
-                    <span className="text-sm font-medium dark:text-slate-300">{dict?.contact?.email || "info@valict.com"}</span>
+                    {/* تغميق درجات تسميات العناوين الفرعية للاتصال */}
+                    <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{footerDict.emailLabel}</span>
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200">{dict?.contact?.email || "info@valict.com"}</span>
                   </div>
                 </a>
               </li>
               <li>
                 <a 
                   href="tel:+201505544455" 
-                  className="group flex items-start gap-3 text-slate-500 dark:text-slate-400 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
+                  className="group flex items-start gap-3 text-slate-600 dark:text-slate-300 hover:text-valict-navy dark:hover:text-valict-cyan transition-colors duration-300"
                 >
                   <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:border-valict-cyan group-hover:bg-valict-cyan/5 transition-all duration-300">
                     <FaPhone className="text-xs text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{footerDict.phoneLabel}</span>
-                    <span className="text-sm font-medium dark:text-slate-300" dir="ltr">{dict?.contact?.phone || "+20 150 554 4455"}</span>
+                    {/* تغميق درجات تسميات العناوين الفرعية للاتصال */}
+                    <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{footerDict.phoneLabel}</span>
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200" dir="ltr">{dict?.contact?.phone || "+20 150 554 4455"}</span>
                   </div>
                 </a>
               </li>
@@ -129,7 +134,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
         {/* Bottom Bar: Copyright & Socials */}
         <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p dir="rtl" className="text-slate-500 dark:text-slate-400 text-xs text-center md:text-start">
+          {/* تحسين تباين نص الحقوق وسيو الوصف */}
+          <p dir="rtl" className="text-slate-600 dark:text-slate-400 text-xs text-center md:text-start">
             {footerDict.copyright.replace('{year}', currentYear.toString())}
           </p>
 
@@ -138,8 +144,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 href="https://www.linkedin.com/company/valict"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="LinkedIn"
+                className="group w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-valict-cyan dark:border dark:border-slate-700"
+                aria-label="Visit Valict LinkedIn Company Page"
               >
                 <FaLinkedinIn className="w-3.5 h-3.5" />
               </a>
@@ -147,8 +153,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 href="https://www.facebook.com/ValictOfficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-valict-cyan dark:border dark:border-slate-700"
-                aria-label="Facebook"
+                className="group w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-valict-cyan dark:border dark:border-slate-700"
+                aria-label="Visit Valict Facebook Official Page"
               >
                 <FaFacebook className="w-3.5 h-3.5" />
               </a>
