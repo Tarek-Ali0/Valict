@@ -73,7 +73,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-20 gap-6">
           <div className="max-w-2xl text-start">
-            <h2 className="text-valict-cyan font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
+            <h2 className="text-cyan-600 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
               <span className="w-8 h-[2px] bg-valict-cyan inline-block rounded-full"></span>
               {dict.services.subtitle}
             </h2>
