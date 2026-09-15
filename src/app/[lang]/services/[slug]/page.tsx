@@ -381,6 +381,7 @@ export default async function ServiceDetailsPage({
 
                 <Link
                   href={`/${currentLang}/#contact`}
+                  aria-label={`${dict.cta.button} - ${service.title}`}
                   className="btn-gradient text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg hover:shadow-valict-cyan/40 transition-all inline-block"
                 >
                   {dict.cta.button}
