@@ -26,20 +26,28 @@ export function Hero({ dict }: HeroProps) {
 
   const heroContent = (
     <>
-      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 mb-2.5 shadow-sm">
+      {/* تحسين تباين درجات الألوان للبادج العلوي ليتوافق مع معايير القراءة الصارمة لجوجل */}
+      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-        <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
+        <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
           {dict.hero.badge}
         </span>
         <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
       </div>
 
-      <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-0 text-valict-dark dark:text-white tracking-tight">
+      <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-4 text-valict-dark dark:text-white tracking-tight">
         {dict.hero.title1} <br className="hidden sm:block" />
         <span className="logo-gradient-text leading-relaxed">
           {dict.hero.title2}
         </span>
       </h1>
+      
+      {/* إضافة وسم فقرة نصية وصفية عالية التباين لملء شجرة السيو ودعم قوارئ الشاشة */}
+      {dict.hero.description && (
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
+          {dict.hero.description}
+        </p>
+      )}
     </>
   );
 
@@ -60,7 +68,7 @@ export function Hero({ dict }: HeroProps) {
           <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
             <Image
               src="/dashboard-mockup.png"
-              alt="Tech Dashboard"
+              alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={900}
               height={600}
               className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
@@ -71,6 +79,7 @@ export function Hero({ dict }: HeroProps) {
           </div>
           <Link
             href="#contact"
+            aria-label="Navigate to Valict consultation and contact section"
             className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
           >
             {dict.hero.cta}
@@ -93,7 +102,7 @@ export function Hero({ dict }: HeroProps) {
         >
           <Image
             src="/dashboard-mockup.png"
-            alt="Tech Dashboard"
+            alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
             width={1050}
             height={680}
             className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
@@ -107,6 +116,7 @@ export function Hero({ dict }: HeroProps) {
         <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
           <Link
             href="#contact"
+            aria-label="Navigate to Valict consultation and contact section"
             className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
           >
             {dict.hero.cta}
