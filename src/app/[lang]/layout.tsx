@@ -136,7 +136,8 @@ export default async function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
-        {/* حقن بيانات الـ Schema في رأس الصفحة */}
+        <link rel="preconnect" href="https://googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
