@@ -12,7 +12,7 @@ const config: Config = {
       colors: {
         valict: {
           navy: "#1e3a8a",
-          cyan: "#22d3ee",
+          cyan: "#06b6d4",
           dark: "#0f172a",
           light: "#f8fafc",
         },
