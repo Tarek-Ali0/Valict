@@ -33,28 +33,26 @@ const iconMap: { [key: number]: any } = {
   5: FaCode
 };
 
-// فصلنا الخلفية عن لون النص عشان Tailwind تقراهم بشكل أسرع وأدق
+// تم تعديل التباين ببعض كلاسات الألوان لتمرير اختبارات جوجل بدقة
 const colorMap: { [key: number]: { bg: string; text: string } } = {
-  0: { bg: "bg-blue-50", text: "text-blue-600" },
-  1: { bg: "bg-cyan-50", text: "text-valict-cyan" },
-  2: { bg: "bg-slate-100", text: "text-slate-700" },
-  3: { bg: "bg-red-50", text: "text-red-500" },
-  4: { bg: "bg-green-50", text: "text-green-500" },
-  5: { bg: "bg-purple-50", text: "text-purple-500" }
+  0: { bg: "bg-blue-50 dark:bg-blue-950/30", text: "text-blue-600 dark:text-blue-400" },
+  1: { bg: "bg-cyan-50 dark:bg-cyan-950/30", text: "text-valict-cyan" },
+  2: { bg: "bg-slate-100 dark:bg-slate-800", text: "text-slate-700 dark:text-slate-300" },
+  3: { bg: "bg-red-50 dark:bg-red-950/30", text: "text-red-600 dark:text-red-400" },
+  4: { bg: "bg-green-50 dark:bg-green-950/30", text: "text-green-600 dark:text-green-400" },
+  5: { bg: "bg-purple-50 dark:bg-purple-950/30", text: "text-purple-600 dark:text-purple-400" }
 };
 
-// إعدادات حركة الـ Scroll (العنصر الأب)
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // الفرق الزمني بين ظهور كل كارت والتاني
+      staggerChildren: 0.15,
     },
   },
 };
 
-// إعدادات حركة الكروت نفسها (بتطلع من تحت لفوق بنعومة)
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
@@ -68,7 +66,6 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section id="services" className="py-24 md:py-32 bg-slate-50 dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
-      {/* لمسة جمالية في الخلفية */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -87,7 +84,8 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               </span>
             </h3>
           </div>
-          <p className="text-slate-500 dark:text-slate-400 max-w-md text-start lg:text-end text-base md:text-lg leading-relaxed">
+          {/* تحسين تباين النص الوصفي للقسم */}
+          <p className="text-slate-600 dark:text-slate-300 max-w-md text-start lg:text-end text-base md:text-lg leading-relaxed">
             {dict.services.description}
           </p>
         </div>
@@ -98,7 +96,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }} // الكروت هتظهر أول ما السكرول يوصلها
+          viewport={{ once: true, margin: "-100px" }}
         >
           {dict.services.items.map((service: ServiceItem, index: number) => {
             const Icon = iconMap[index] || FaLaptopCode;
@@ -116,15 +114,16 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
                   <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
                 </div>
                 
-                <h4 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
+                {/* تعديل الـ h4 إلى h2 لسلامة الأرشفة والتدرج الهيكلي الصحيح */}
+                <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
                   {service.title}
-                </h4>
+                </h2>
                 
-                <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-300 transition-colors duration-300">
+                {/* تحسين تباين ألوان نصوص وصف الخدمات */}
+                <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
                   {service.desc}
                 </p>
                 
-                {/* زرار Learn More بيتحرك بنعومة لقدام وبيودي للـ slug الصحيح */}
                 <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
                   <Link
                     href={`/${lang}/services/${service.slug}`}
