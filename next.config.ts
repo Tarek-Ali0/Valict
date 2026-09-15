@@ -1,31 +1,27 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // 1. حل مشكلة (Improve image delivery): إجبار المحرك على تقديم الصور بأحدث وأصغر صيغ عالمية (AVIF و WebP)
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '://unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
+      { protocol: 'https', hostname: '://unsplash.com', port: '', pathname: '/**' },
     ],
   },
-  
-  // 2. تحسين إضافي للسيو والأداء وحذف الـ Legacy JS: تنظيف أكواد الـ console.logs تلقائياً عند بناء النسخة النهائية
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+  // الحل السحري لتدمير مشكلة الـ Network dependency tree الخاصة بالأيقونات والمكتبات الكبيرة
+  modularizeImports: {
+    "react-icons/fa6": {
+      transform: "react-icons/fa6/{{member}}",
+      skipDefaultConversion: true,
+    },
   },
 
   async redirects() {
     return [
-      {
-        source: "/",
-        destination: "/en",
-        permanent: true,
-      },
+      { source: "/", destination: "/en", permanent: true },
     ];
   },
 };
