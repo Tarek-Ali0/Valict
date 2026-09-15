@@ -95,7 +95,7 @@ export function WhyUs({ dict }: WhyUsProps) {
               />
             </div>
 
-            {/* Premium Glassmorphism Floating Badge (تم تعديل العرض ليحتوي النص بدون خروج) */}
+            {/* Premium Glassmorphism Floating Badge */}
             <motion.div 
               className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy/75 backdrop-blur-md px-5 py-4 rounded-2xl text-center shadow-[0_15px_30px_rgba(0,0,0,0.25)] border border-white/20 z-30 w-auto whitespace-nowrap"
               initial={{ scale: 0.8, opacity: 0 }}
@@ -127,7 +127,8 @@ export function WhyUs({ dict }: WhyUsProps) {
             <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white mb-6 leading-tight tracking-tight">
               {dict.why.headline}
             </h3>
-            <p className="text-slate-500 dark:text-slate-400 mb-10 text-base md:text-lg leading-relaxed max-w-lg">
+            {/* تم تحسين تباين ألوان النص هنا */}
+            <p className="text-slate-600 dark:text-slate-300 mb-10 text-base md:text-lg leading-relaxed max-w-lg">
               {dict.about.text}
             </p>
 
@@ -147,10 +148,12 @@ export function WhyUs({ dict }: WhyUsProps) {
                     <point.icon className="w-5 h-5 md:w-6 md:h-6 text-valict-navy dark:text-valict-cyan transition-colors duration-300 group-hover:text-valict-cyan" />
                   </div>
                   <div className="mt-1">
-                    <h4 className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-valict-navy dark:group-hover:text-valict-cyan transition-colors">
+                    {/* تم استبدال الـ h4 بـ p يحمل مظهر عنوان للحفاظ على سلامة الـ SEO الهيكلي */}
+                    <p className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-valict-navy dark:group-hover:text-valict-cyan transition-colors">
                       {point.title}
-                    </h4>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed">
+                    </p>
+                    {/* تم تحسين تباين ألوان نص الوصف هنا */}
+                    <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
                       {point.desc}
                     </p>
                   </div>
