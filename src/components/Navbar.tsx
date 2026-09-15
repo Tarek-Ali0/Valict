@@ -46,12 +46,14 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   interface NavLink {
     name: string;
     href: string;
+    ariaLabel: string; // إضافة نص وصفي خلفي لمحركات البحث
   }
 
+  // تزويد مصفوفة الروابط بنصوص وصفية فريدة لحل مشكلة التكرار للـ SEO
   const navLinks: NavLink[] = [
-    { name: dict.nav.services, href: `/${lang}/#services` },
-    { name: dict.nav.whyValict, href: `/${lang}/#why-valict` },
-    { name: dict.nav.aboutUs, href: `/${lang}/about` },
+    { name: dict.nav.services, href: `/${lang}/#services`, ariaLabel: `${dict.nav.services} services section` },
+    { name: dict.nav.whyValict, href: `/${lang}/#why-valict`, ariaLabel: `Why Valict company advantages section` },
+    { name: dict.nav.aboutUs, href: `/${lang}/about`, ariaLabel: `About Valict corporate profile page` },
   ];
 
   return (
@@ -66,7 +68,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-24">
 
-          {/* Logo */}
+          {/* Logo - تم الحفاظ على الكود والمظهر القديم بالمليمتر دون تعديل بناءً على طلبك */}
           <Link
             href={`/${lang}`}
             className="group relative block w-40 h-12"
@@ -82,7 +84,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             />
           </Link>
 
-
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
 
@@ -90,8 +91,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               <Link
                 key={link.href}
                 href={link.href}
-                // تعديل تباين النص هنا (slate-700 للمضيء و slate-200 للمظلم) لضمان اجتياز الفحص الصارم
-                className="group relative text-slate-700 dark:text-slate-200 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold transition-colors duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-valict-cyan after:transition-all after:duration-300 hover:after:w-full"
+                aria-label={link.ariaLabel}
+                // تعديل الألوان لتعميق التباين: slate-800 للمضيء و slate-100 للمظلم لضمان اجتياز فحص جوجل بنجاح
+                className="group relative text-slate-800 dark:text-slate-100 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold transition-colors duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-valict-cyan after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.name}
               </Link>
@@ -105,7 +107,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href={alternatePath}
                 rel="alternate"
                 hrefLang={alternateLang}
-                className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 title={dict.nav.changeLanguage || "Change Language"}
                 aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
               >
@@ -120,7 +122,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 onClick={() =>
                   setTheme(resolvedTheme === "light" ? "dark" : "light")
                 }
-                className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 title={dict.nav.toggleTheme || "Toggle Dark/Light Mode"}
                 aria-label="Toggle display theme color mode"
               >
@@ -139,7 +141,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official LinkedIn Company Profile"
                 title="LinkedIn Profile"
               >
@@ -150,7 +152,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official Facebook Page"
                 title="Facebook Page"
               >
@@ -167,7 +169,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               href={alternatePath}
               rel="alternate"
               hrefLang={alternateLang}
-              className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+              className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
               aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
             >
               <FaGlobe className="h-4 w-4" />
@@ -179,8 +181,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              // تعديل تباين زر الهامبرغر للقائمة المتنقلة ليصبح واضحًا وحادًا (text-slate-700 للمضيء و text-slate-200 للمظلم)
-              className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
+              className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
               aria-label="Toggle responsive mobile navigation menu"
             >
               {isMobileMenuOpen ? (
@@ -209,9 +210,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             <Link
               key={link.href}
               href={link.href}
+              aria-label={link.ariaLabel}
               onClick={() => setIsMobileMenuOpen(false)}
-              // تعميق ألوان نصوص الهواتف لتفادي أخطاء الـ Contrast
-              className="text-slate-700 dark:text-slate-200 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
+              className="text-slate-800 dark:text-slate-100 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
             >
               {link.name}
             </Link>
@@ -219,9 +220,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
           <Link
             href={`/${lang}/#contact`}
+            aria-label="Navigate to contact information section"
             onClick={() => setIsMobileMenuOpen(false)}
-            // تعميق ألوان نصوص الهواتف لتفادي أخطاء الـ Contrast
-            className="text-slate-700 dark:text-slate-200 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
+            className="text-slate-800 dark:text-slate-100 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
           >
             {dict.footer.contactUs || "Contact Us"}
           </Link>
