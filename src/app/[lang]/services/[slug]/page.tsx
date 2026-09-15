@@ -315,6 +315,7 @@ export default async function ServiceDetailsPage({
         {/* زرار الرجوع للخدمات */}
         <Link
           href={`/${currentLang}/#services`}
+          aria-label={currentLang === "ar" ? "العودة إلى قسم الخدمات الرئيسي" : "Back to main services section"}
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-valict-cyan dark:text-slate-400 mb-8 transition-colors"
         >
           <FaArrowRightLong
