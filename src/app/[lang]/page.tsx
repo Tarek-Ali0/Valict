@@ -3,9 +3,10 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import dynamic from "next/dynamic";
 
-// تحميل المكونات السفلى ديناميكياً لتخفيف الجافاسكريبت ووقت الحظر (TBT)
+// 1. حل مشكلة Network dependency tree: تحميل المكونات مع عزل كامل لحزم الجافا سكريبت والأيقونات الخاصة بها
 const Services = dynamic(() => import("@/components/Services").then((mod) => mod.Services), {
-  ssr: true, // الإبقاء على ميزة السيو والـ SSR سليمة
+  ssr: true,
+  loading: () => <div className="min-h-[400px] bg-slate-50 dark:bg-[#0B1120] animate-pulse" /> // مساحة محجوزة تمنع تشتت المتصفح أثناء البناء
 });
 
 const WhyUs = dynamic(() => import("@/components/WhyUs").then((mod) => mod.WhyUs), {
@@ -32,7 +33,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       {/* المكونات الرئيسية العلوية تظل ثابتة لتحميل أسرع (LCP) */}
       <Hero dict={dict} />
       
-      {/* المكونات السفلية المحملة ديناميكياً بذكاء */}
+      {/* المكونات السفلية المحملة ديناميكياً بذكاء لتفتيت شجرة الاعتماديات */}
       <Services dict={dict} lang={lang} />
       
       <WhyUs dict={dict} />
