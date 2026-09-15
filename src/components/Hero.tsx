@@ -46,7 +46,6 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300">
       
-      {/* Sticky Container - الموبايل هيمشي أوتوماتيك على قد محتواه بدون فراغ، والديسكتوب هيفضل sticky مظبوط */}
       <div className="relative lg:sticky top-0 lg:h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-32 pb-6 lg:pb-0">
         
         {/* --- Premium Background Elements --- */}
@@ -55,7 +54,7 @@ export function Hero({ dict }: HeroProps) {
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        {/* 1. حاوية الموبايل والتابلت (تم إزالة أي فراغ سفلي نهائياً لتبدأ القسم التالي فوراً) */}
+        {/* 1. حاوية الموبايل والتابلت */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
           {heroContent}
           <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
@@ -66,6 +65,8 @@ export function Hero({ dict }: HeroProps) {
               height={600}
               className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
               priority
+              fetchPriority="high"
+              sizes="(max-width: 640px) 320px, (max-width: 1024px) 450px, 900px"
             />
           </div>
           <Link
@@ -97,6 +98,8 @@ export function Hero({ dict }: HeroProps) {
             height={680}
             className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
             priority
+            fetchPriority="high"
+            sizes="(min-width: 1024px) 880px, 100vw"
           />
         </motion.div>
 
