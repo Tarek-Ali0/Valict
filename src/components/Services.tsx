@@ -127,6 +127,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
                 <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
                   <Link
                     href={`/${lang}/services/${service.slug}`}
+                    aria-label={`${dict.services.learnMore} - ${service.title}`}
                     className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
                   >
                     {dict.services.learnMore} 
