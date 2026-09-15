@@ -1,23 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // 1. حل مشكلة (Improve image delivery): إجبار المحرك على تحويل وتقديم الصور بأحدث وأصغر صيغ عالمية (AVIF و WebP)
+  // 1. حل مشكلة (Improve image delivery): إجبار المحرك على تقديم الصور بأحدث وأصغر صيغ عالمية (AVIF و WebP)
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
+        hostname: '://unsplash.com',
         port: '',
         pathname: '/**',
       },
     ],
   },
-
-  // 2. حل مشكلة (Legacy JavaScript): إجبار مترجم Next.js السريع (SWC) على ضغط الملفات وحذف الأكواد المهملة للنسخ القديمة
-  swcMinify: true,
   
-  // تحسين إضافي للسيو والأداء: تنظيف أكواد الطباعة (console.logs) تلقائياً عند بناء النسخة النهائية للموقع لتقليل حجم الحزم
+  // 2. تحسين إضافي للسيو والأداء وحذف الـ Legacy JS: تنظيف أكواد الـ console.logs تلقائياً عند بناء النسخة النهائية
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
