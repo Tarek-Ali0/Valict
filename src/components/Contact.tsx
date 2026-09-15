@@ -15,7 +15,8 @@ export function Contact({ dict }: ContactProps) {
               <h2 className="text-3xl text-start md:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
                 {dict.cta.headline}
               </h2>
-              <p className="text-blue-100 text-start text-xl font-light">
+              {/* تم تحسين التباين هنا من blue-100 إلى blue-50 لضمان القراءة المثالية */}
+              <p className="text-blue-50 text-start text-xl font-light">
                 {dict.cta.sub}
               </p>
             </div>
@@ -27,16 +28,19 @@ export function Contact({ dict }: ContactProps) {
                 {dict.cta.button}
               </a>
               <div className="mt-4 flex flex-col items-start gap-2.5 w-full" dir="ltr">
+                {/* تم تعديل الشفافية من white/80 إلى slate-100 لزيادة قوة تباين الألوان أمام محركات البحث */}
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
+                  className="flex items-center gap-3 text-slate-100 hover:text-white font-medium transition-colors group"
+                  aria-label={`Send an email to ${dict.contact.email}`}
                 >
                   <FaEnvelope className="w-5 h-5 text-valict-cyan shrink-0" />
                   <span>{dict.contact.email}</span>
                 </a>
                 <a
                   href={`tel:${dict.contact.phone}`}
-                  className="flex items-center gap-3 text-white/80 hover:text-white font-medium transition-colors group"
+                  className="flex items-center gap-3 text-slate-100 hover:text-white font-medium transition-colors group"
+                  aria-label={`Call Valict support team at ${dict.contact.phone}`}
                 >
                   <FaPhone className="w-5 h-5 text-valict-cyan shrink-0" />
                   <span>{dict.contact.phone}</span>
