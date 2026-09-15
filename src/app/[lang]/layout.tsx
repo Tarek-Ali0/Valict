@@ -7,8 +7,18 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
-const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const cairo = Cairo({ 
+  subsets: ["arabic"], 
+  variable: "--font-cairo",
+  display: "swap",
+  adjustFontFallback: false 
+});
+const geist = Geist({ 
+  subsets: ["latin"], 
+  variable: "--font-geist",
+  display: "swap",
+  adjustFontFallback: false
+});
 
 export async function generateMetadata({
   params,
