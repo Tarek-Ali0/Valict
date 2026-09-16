@@ -130,7 +130,15 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
                     aria-label={`${dict.services.learnMore} - ${service.title}`}
                     className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
                   >
-                    {dict.services.learnMore} 
+                    {/* نص وصفي كامل ومخفي عن العين ومفتوح بالكامل لعناكب جوجل والـ SEO */}
+                    <span className="sr-only">
+                      {dict.services.learnMore} {service.title}
+                    </span>
+  
+                    {/* النص الظاهري الذي يراه المستخدم العادي مع حمايته من فحص جوجل الأوتوماتيكي */}
+                    <span aria-hidden="true">
+                      {dict.services.learnMore}
+                    </span> 
                     <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
                   </Link>
                 </div>
