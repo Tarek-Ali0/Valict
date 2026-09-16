@@ -25,7 +25,10 @@
 
   /* Valict Custom Colors */
   --color-valict-navy: #1e3a8a;
-  --color-valict-cyan: #22d3ee;
+  
+  /* تم تعديل هذا السطر ليربط لون السايان بمتغير ذكي يتغير أوتوماتيكياً حسب وضع الصفحة لضمان التباين */
+  --color-valict-cyan: var(--valict-cyan-dynamic);
+  
   --color-valict-dark: #0f172a;
   --color-valict-light: #f8fafc;
 
@@ -40,6 +43,9 @@
 
 @layer base {
   :root {
+    /* درجة السايان الغامقة المخصصة للتصميم المضيء لتخطي فحص التباين بنجاح */
+    --valict-cyan-dynamic: #0891b2; 
+
     --background: hsl(0 0% 100%);
     --foreground: hsl(222.2 84% 4.9%);
     --card: hsl(0 0% 100%);
@@ -62,6 +68,9 @@
     --radius: 0.5rem;
   }
   .dark {
+    /* درجة السايان المشرقة والنقية المخصصة للتصميم المظلم لتشع بوضوح وفخامة */
+    --valict-cyan-dynamic: #22d3ee; 
+
     --background: hsl(222.2 84% 4.9%);
     --foreground: hsl(210 40% 98%);
     --card: hsl(222.2 84% 4.9%);
