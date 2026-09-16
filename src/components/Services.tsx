@@ -12,7 +12,6 @@ import {
   FaChevronRight
 } from "react-icons/fa6";
 import { motion, Variants } from "framer-motion";
-
 interface ServiceItem {
   slug: string;
   title: string;
