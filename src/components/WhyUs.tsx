@@ -120,10 +120,10 @@ export function WhyUs({ dict }: WhyUsProps) {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeUpVariant}
           >
-            <h2 className="text-valict-cyan font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
-              <span className="w-8 h-[2px] bg-valict-cyan inline-block rounded-full"></span>
-              {dict.why.title}
-            </h2>
+            <h2 className="text-cyan-600 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
+            <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
+            {dict.why.title}
+          </h2>>
             <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white mb-6 leading-tight tracking-tight">
               {dict.why.headline}
             </h3>
