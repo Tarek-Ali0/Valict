@@ -56,10 +56,10 @@ export function HowItWorks({ dict }: HowItWorksProps) {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-20"
         >
-          <h2 className="text-valict-cyan font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2 justify-center">
-            <span className="w-8 h-[2px] bg-valict-cyan inline-block rounded-full"></span>
+          <h2 className="text-cyan-600 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center justify-center gap-2">
+            <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
             {dict.how.subtitle}
-            <span className="w-8 h-[2px] bg-valict-cyan inline-block rounded-full"></span>
+            <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
           </h2>
           <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white tracking-tight">
             {dict.how.title}
