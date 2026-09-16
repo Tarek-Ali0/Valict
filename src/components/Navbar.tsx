@@ -26,18 +26,27 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   React.useEffect(() => {
     setMounted(true);
 
+    let ticking = false;
+
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+      if (!ticking) {
+      // استخدام requestAnimationFrame لتأجيل الحساب لثانية الرسم القادمة للمتصفح دون تجميد أو إجبار
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 20) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
 
-    window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll, { passive: true }); // passive تخبر المتصفح أن السكربت لن يعطل حركات الصفحة
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   // حساب المسار البديل للغة الأخرى للأرشفة السليمة وروابط الـ Link الحقيقية
   const alternateLang = lang === "en" ? "ar" : "en";
