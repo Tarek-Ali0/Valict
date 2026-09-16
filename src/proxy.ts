@@ -46,9 +46,15 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 5. Redirect any request missing a locale to the default locale
-  request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
+  // 5. تم تعديل هذا الجزء برمجياً للقضاء على تحذير الـ Render-blocking تماماً
+  // إذا كان الزائر يطلب الصفحة الرئيسية المجردة، نعرض له محتوى الإنجليزي فوراً بدون Redirect
+  if (pathname === "/") {
+    request.nextUrl.pathname = `/${defaultLocale}`;
+    return NextResponse.rewrite(request.nextUrl); // عرض داخلي سريع بدون إعادة توجيه
+  }
 
+  // لأي مسارات داخلية أخرى مفقودة اللغة، نترك التوجيه الدائم يعمل كالمعتاد لحماية الـ SEO
+  request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
   return NextResponse.redirect(request.nextUrl, 301);
 }
 
