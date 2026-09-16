@@ -74,7 +74,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-20 gap-6">
           <div className="max-w-2xl text-start">
             <h2 className="text-cyan-600 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
-              <span className="w-8 h-[2px] bg-valict-cyan inline-block rounded-full"></span>
+              <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
               {dict.services.subtitle}
             </h2>
             <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white leading-tight tracking-tight">
