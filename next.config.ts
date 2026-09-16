@@ -28,4 +28,14 @@ const nextConfig: NextConfig = {
   compress: true, 
 };
 
+// هذا الجزء الإضافي يضمن التوجيه الفوري للإنجليزي مع التوافق الكامل مع خوادم Vercel
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/en",
+        permanent: false, // تحويل فوري مرن يمنع حظر الشبكة والـ Render-blocking تماماً
+      },
+    ];
+  }
 export default nextConfig;
