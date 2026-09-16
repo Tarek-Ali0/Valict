@@ -77,9 +77,9 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
               {dict.services.subtitle}
             </h2>
-            <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white leading-tight tracking-tight">
+            <h3 className="text-cyan-600 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
               {dict.services.title} <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-valict-navy to-valict-cyan">
+              className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
                 {dict.services.highlight}
               </span>
             </h3>
