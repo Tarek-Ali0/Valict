@@ -136,8 +136,13 @@ export default async function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
-        <link rel="preconnect" href="https://googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://gstatic.com" crossOrigin="anonymous" />
+        <link
+  rel="preload"
+  href="/_next/static/media/d41831e24743a3c1-s.02r-fjhi~6g_a.woff2"
+  as="font"
+  type="font/woff2"
+  crossOrigin="anonymous"
+/>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
