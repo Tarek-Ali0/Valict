@@ -6,3 +6,11 @@ Welcome to the Valict AI agent directory. This website provides reliable managed
 - [Services](https://valict.com)
 - [Why Us](https://valict.com)
 - [About](https://valict.com)
+
+## Our Services
+- [Managed IT Services](https://valict.com)
+- [Network & Infrastructure](https://valict.com)
+- [Cloud Solutions](https://valict.com)
+- [Cybersecurity](https://valict.com)
+- [Monitoring & Support](https://valict.com)
+- [Web Design & Development](https://valict.com)
