@@ -2,15 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { 
-  FaLaptopCode, 
-  FaNetworkWired, 
-  FaCloud, 
-  FaShieldHalved, 
-  FaHeadset, 
-  FaCode,
-  FaChevronRight
-} from "react-icons/fa6";
+import { FaLaptopCode } from "react-icons/fa6/index.js";
+import { FaNetworkWired } from "react-icons/fa6/index.js";
+import { FaCloud } from "react-icons/fa6/index.js";
+import { FaShieldHalved } from "react-icons/fa6/index.js";
+import { FaHeadset } from "react-icons/fa6/index.js";
+import { FaCode } from "react-icons/fa6/index.js";
+import { FaChevronRight } from "react-icons/fa6/index.js";
 import { motion, Variants } from "framer-motion";
 
 interface ServiceItem {
