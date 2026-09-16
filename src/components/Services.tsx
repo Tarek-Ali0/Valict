@@ -79,7 +79,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
             </h2>
             <h3 className="text-3xl md:text-5xl font-bold text-valict-dark dark:text-white leading-tight tracking-tight">
               {dict.services.title} <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-valict-navy to-valict-cyan">
+              <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
                 {dict.services.highlight}
               </span>
             </h3>
