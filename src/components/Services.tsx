@@ -11,7 +11,6 @@ import {
   FaCode,
   FaChevronRight
 } from "react-icons/fa6";
-
 import { motion, Variants } from "framer-motion";
 
 interface ServiceItem {
