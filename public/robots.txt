@@ -3,4 +3,6 @@ Allow: /
 
 # Sitemaps and AI Directories
 Sitemap: https://valict.com/sitemap.xml
-llms: https://valict.com
+
+# LLMs Directory
+# llms: https://valict.com
