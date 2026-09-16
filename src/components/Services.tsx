@@ -2,7 +2,15 @@
 
 import React from "react";
 import Link from "next/link";
-import { FaLaptopCode } from "react-icons/fa6/index.js";
+import { 
+  FaLaptopCode, 
+  FaNetworkWired, 
+  FaCloud, 
+  FaShieldHalved, 
+  FaHeadset, 
+  FaCode,
+  FaChevronRight
+} from "react-icons/fa6";
 import { FaNetworkWired } from "react-icons/fa6/index.js";
 import { FaCloud } from "react-icons/fa6/index.js";
 import { FaShieldHalved } from "react-icons/fa6/index.js";
