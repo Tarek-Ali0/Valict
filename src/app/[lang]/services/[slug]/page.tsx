@@ -252,18 +252,18 @@ export async function generateMetadata({
       },
     },
 
-    openGraph: {
+        openGraph: {
       title,
       description,
       url,
       siteName: "Valict",
       type: "article",
       locale: currentLang === "ar" ? "ar_EG" : "en_US",
-    images: [
+      images: [
         {
           url: serviceData?.image 
             ? `https://valict.com${serviceData.image}`
-            : "https://valict.com", // صورة احتياطية في حال لم تتوفر صورة الخدمة
+            : "https://valict.com",
           width: 1200,
           height: 630,
           alt: title,
@@ -279,8 +279,10 @@ export async function generateMetadata({
         serviceData?.image 
           ? `https://valict.com${serviceData.image}`
           : "https://valict.com"
+      ],
     },
   };
+}
 
 export default async function ServiceDetailsPage({
   params,
