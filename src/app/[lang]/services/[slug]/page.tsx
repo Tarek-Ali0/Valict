@@ -257,17 +257,30 @@ export async function generateMetadata({
       description,
       url,
       siteName: "Valict",
-      type: "website",
+      type: "article",
       locale: currentLang === "ar" ? "ar_EG" : "en_US",
+    images: [
+        {
+          url: serviceData?.image 
+            ? `https://valict.com${serviceData.image}`
+            : "https://valict.com", // صورة احتياطية في حال لم تتوفر صورة الخدمة
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
 
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [
+        serviceData?.image 
+          ? `https://valict.com${serviceData.image}`
+          : "https://valict.com"
     },
   };
-}
 
 export default async function ServiceDetailsPage({
   params,
