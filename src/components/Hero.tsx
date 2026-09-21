@@ -35,7 +35,7 @@ export function Hero({ dict }: HeroProps) {
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        {/* 1. حاوية الموبايل والتابلت (تم تعديل الوسم لـ h2 لحظر تكرار الـ H1 في الأرشفة) */}
+        {/* 1. حاوية الموبايل والتابلت (تم تغييرها لـ h2 لمنع تكرار الـ H1 في الأرشفة) */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
@@ -45,12 +45,12 @@ export function Hero({ dict }: HeroProps) {
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
           </div>
 
-          <2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
             {dict.hero.title1} <br className="hidden sm:block" />
             <span className="logo-gradient-text leading-relaxed">
               {dict.hero.title2}
             </span>
-          </2>
+          </h2>
           
           {dict.hero.description && (
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
