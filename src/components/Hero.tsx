@@ -24,33 +24,6 @@ export function Hero({ dict }: HeroProps) {
   const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-1vh"]);
 
-  const heroContent = (
-    <>
-      {/* تحسين تباين درجات الألوان للبادج العلوي ليتوافق مع معايير القراءة الصارمة لجوجل */}
-      <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
-        <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-        <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-          {dict.hero.badge}
-        </span>
-        <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-      </div>
-
-      <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-4 text-valict-dark dark:text-white tracking-tight">
-        {dict.hero.title1} <br className="hidden sm:block" />
-        <span className="logo-gradient-text leading-relaxed">
-          {dict.hero.title2}
-        </span>
-      </h1>
-      
-      {/* إضافة وسم فقرة نصية وصفية عالية التباين لملء شجرة السيو ودعم قوارئ الشاشة */}
-      {dict.hero.description && (
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
-          {dict.hero.description}
-        </p>
-      )}
-    </>
-  );
-
   return (
     <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300">
       
@@ -62,9 +35,29 @@ export function Hero({ dict }: HeroProps) {
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        {/* 1. حاوية الموبايل والتابلت */}
+        {/* 1. حاوية الموبايل والتابلت (تم تعديل الوسم لـ h2 لحظر تكرار الـ H1 في الأرشفة) */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
-          {heroContent}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+              {dict.hero.badge}
+            </span>
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+          </div>
+
+          <2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+            {dict.hero.title1} <br className="hidden sm:block" />
+            <span className="logo-gradient-text leading-relaxed">
+              {dict.hero.title2}
+            </span>
+          </2>
+          
+          {dict.hero.description && (
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
+              {dict.hero.description}
+            </p>
+          )}
+
           <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
             <Image
               src="/dashboard-mockup.png"
@@ -87,12 +80,31 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب (العنوان والبادج) */}
+        {/* 2. حاوية الديسكتوب (تحتوي على الـ H1 الوحيد والصريح للموقع بالكامل) */}
         <motion.div
           className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-2"
           style={{ y: textY, opacity: textOpacity }}
         >
-          {heroContent}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+              {dict.hero.badge}
+            </span>
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+          </div>
+
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-4 text-valict-dark dark:text-white tracking-tight">
+            {dict.hero.title1} <br className="hidden sm:block" />
+            <span className="logo-gradient-text leading-relaxed">
+              {dict.hero.title2}
+            </span>
+          </h1>
+          
+          {dict.hero.description && (
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
+              {dict.hero.description}
+            </p>
+          )}
         </motion.div>
 
         {/* Laptop / Dashboard Image للديسكتوب */}
