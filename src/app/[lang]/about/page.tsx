@@ -22,8 +22,8 @@ export async function generateMetadata({
 
   const description =
     currentLang === "ar"
-      ? "تعرف على فالكت (Valict) ونهجنا في تقديم حلول تقنية موثوقة وقائمة على القيمة في مجالات البنية التحتية لتقنية المعلومات والاتصالات، والخدمات المدارة، والحلول السحابية، والأمن السيبراني."
-      : "Learn more about Valict and our approach to delivering reliable, value-driven IT and ICT solutions across infrastructure, managed services, cloud, cybersecurity, and web technologies.";
+      ? "تعرف على فالكت (Valict) وهويتها القائمة على دمج الأنظمة التقنية فائقة الأمان مع الحلول الاستراتيجية الذكية التي تصنع قيمة حقيقية لأعمالك."
+      : "Learn more about Valict, our tech philosophy, and how we deliver advanced, reliable, and value-driven ICT infrastructure solutions for businesses.";
 
   const url = `https://valict.com/${currentLang}/about`;
 
