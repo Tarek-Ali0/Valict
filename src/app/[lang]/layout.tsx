@@ -37,7 +37,7 @@ export async function generateMetadata({
   // تم تقصير الوصف الإنجليزي هنا بدقة متناهية ليطابق الشروط القياسية لمحركات البحث ومنع قصه بنقاط
   const description =
     lang === "ar"
-      ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
+      ? "حلول متكاملة في إدارة تقنية المعلومات، الحوسبة السحابية، والأمن السيبراني المتقدم لحماية أصولك الرقمية وضمان استمرارية أعمالك بكفاءة مطلقة."
       : "Reliable IT solutions and ICT infrastructure. Valict delivers expert managed services, cloud computing, and cybersecurity to secure business continuity.";
 
   return {
