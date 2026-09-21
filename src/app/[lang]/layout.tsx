@@ -34,11 +34,11 @@ export async function generateMetadata({
       ? "فالكت | عزّز رؤيتك"
       : "Valict | Validate Your Vision";
 
-  // الوصف حسب اللغة
+  // تم تقصير الوصف الإنجليزي هنا بدقة متناهية ليطابق الشروط القياسية لمحركات البحث ومنع قصه بنقاط
   const description =
     lang === "ar"
       ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات. نساعدك في تطوير وتأمين أعمالك من خلال خدمات مدارة، أنظمة سحابية، وحلول مبتكرة تضمن استمرارية الأعمال."
-      : "Reliable IT Solutions and ICT Infrastructure Services. At Valict, we specialize in delivering integrated technology solutions, managed IT services, cloud systems, and cybersecurity to optimize performance and drive business growth.";
+      : "Reliable IT solutions and ICT infrastructure. Valict delivers expert managed services, cloud computing, and cybersecurity to secure business continuity.";
 
   return {
     metadataBase: new URL("https://valict.com"),
@@ -47,25 +47,25 @@ export async function generateMetadata({
     description,
 
     alternates: {
-      canonical: `https://valict.com/${lang}`,
+      canonical: `https://valict.com{lang}`,
       languages: {
-        en: "https://valict.com/en",
-        ar: "https://valict.com/ar",
-        "x-default": "https://valict.com/en",
+        en: "https://valict.com",
+        ar: "https://valict.com",
+        "x-default": "https://valict.com",
       },
     },
 
     openGraph: {
       title,
       description,
-      url: `https://valict.com/${lang}`,
+      url: `https://valict.com{lang}`,
       siteName: "Valict",
       locale: lang === "ar" ? "ar_AR" : "en_US",
       type: "website",
 
       images: [
         {
-          url: "https://valict.com/valict-openGraph.png",
+          url: "https://valict.com",
           width: 1200,
           height: 630,
           alt: "Valict Logo",
@@ -77,7 +77,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["https://valict.com/valict-openGraph.png"],
+      images: ["https://valict.com"],
     },
   };
 }
@@ -104,7 +104,7 @@ export default async function RootLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://valict.com/#organization",
+    "@id": "https://valict.com",
 
     name: "Valict",
 
@@ -114,7 +114,7 @@ export default async function RootLayout({
 
     logo: {
       "@type": "ImageObject",
-      url: "https://valict.com/JustV.png",
+      url: "https://valict.com",
       width: 400,
       height: 400,
     },
@@ -124,8 +124,8 @@ export default async function RootLayout({
     : "Reliable IT Solutions and ICT Infrastructure Services.",
   slogan: lang === 'ar' ? "عزّز رؤيتك" : "Validate Your Vision",
   sameAs: 
-    ["https://www.linkedin.com/company/valict",
-     "https://www.facebook.com/ValictOfficial"
+    ["https://linkedin.com",
+     "https://facebook.com"
   ]
 };
 
