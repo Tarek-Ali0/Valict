@@ -226,10 +226,11 @@ export async function generateMetadata({
 
   const serviceData = serviceDetailsContent[slug];
 
-  // استخدام الـ overview التفصيلي كـ Meta Description
-  const description =
-    serviceData?.[currentLang]?.overview ||
-    service.desc;
+    // صياغة وصف مختصر ومثالي بالمليمتر لأبعاد أرشفة محركات البحث لصفحات الخدمات الستة
+  const description = currentLang === "ar"
+    ? `اكتشف خدمات ${service.title} فالكت لتأمين بنيتك التحتية وضمان استمرارية أعمالك بكفاءة.`
+    : `Explore Valict's ${service.title} services designed to optimize infrastructure and secure business growth.`;
+
 
   const title =
     currentLang === "ar"
