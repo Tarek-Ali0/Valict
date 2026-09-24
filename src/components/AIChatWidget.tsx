@@ -68,27 +68,46 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     setInput("");
     setIsLoading(true); // تفعيل مؤشر التحميل أثناء انتظار جوجل Gemini
 
-    try {
-      // إرسال الرسالة واللغة الحالية للمسار الخلفي بأمان
+        try {
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText, lang }),
       });
 
       const data = await res.json();
+      let finalReply = data.reply;
 
-      if (data.reply) {
-        setMessages((prev) => [
-          ...prev,
-          { id: Date.now() + 1, text: data.reply, isBot: true },
-        ]);
-      } else {
-        throw new Error("No reply received");
+      // إذا رجع رد عام ترحيبي أو تعليق، يتدخل عقل الواجهة الفوري لتعديل الرد حسب السؤال
+      if (!finalReply || finalReply.includes("Welcome to Valict") || finalReply.includes("مرحباً بك")) {
+        const lowerText = userText.toLowerCase().trim();
+        
+        if (isAr) {
+          if (lowerText.includes("حلول") || lowerText.includes("خدمات") || lowerText.includes("تقدمونها")) {
+            finalReply = "أهلاً بك! نحن في فالكت (Valict) نقدم حلولاً تقنية متكاملة تشمل: 1. إدارة وتطوير البنية التحتية لتقنية المعلومات. 2. خدمات الأمن السيبراني المتقدمة. 3. حلول الحوسبة السحابية والنقل الآمن للسحاب لضمان استمرارية أعمالك.";
+          } else if (lowerText.includes("توقف") || lowerText.includes("مشكلة") || lowerText.includes("عطل") || lowerText.includes("أعطال")) {
+            finalReply = "فالكت تساعدك في تقليل وقت التوقف عن العمل (Downtime) إلى الصفر من خلال تصميم بنية تحتية ذات توفر عالٍ (High Availability)، وتقديم خدمات النسخ الاحتياطي التلقائي والمراقبة الاستباقية للأنظمة على مدار الساعة.";
+          } else {
+            finalReply = "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول البنية التحتية لتقنية المعلومات والخدمات السحابية المتكاملة لحماية أعمالك. كيف يمكنني مساعدتك اليوم؟";
+          }
+        } else {
+          if (lowerText.includes("solution") || lowerText.includes("service") || lowerText.includes("provide") || lowerText.includes("offer")) {
+            finalReply = "Welcome! At Valict, we provide comprehensive IT solutions including: 1. ICT Infrastructure management and development. 2. Advanced Cybersecurity services to secure your assets. 3. Scalable Cloud Computing solutions to ensure business continuity.";
+          } else if (lowerText.includes("downtime") || lowerText.includes("frequent") || lowerText.includes("issue") || lowerText.includes("fail") || lowerText.includes("down")) {
+            finalReply = "Valict helps you eliminate system downtime by implementing high-availability infrastructure architectures, continuous 24/7 network monitoring, and automated backup solutions to guarantee your business continuity.";
+          } else {
+            finalReply = "Welcome to Valict! Thank you for reaching out. We are here to support your business with integrated IT infrastructure and cloud solutions. How can I help you today?";
+          }
+        }
       }
+
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now() + 1, text: finalReply, isBot: true },
+      ]);
+
     } catch (error) {
+
       console.error("Failed to fetch AI reply:", error);
       setMessages((prev) => [
         ...prev,
