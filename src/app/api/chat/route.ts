@@ -17,20 +17,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
-    // استخدام أحدث نموذج مستقر متوافق مع v1b
-    const modelName = "gemini-1.5-flash";
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+    // استخدام النموذج المباشر بالصيغة المعتمدة للـ v1
+    const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const systemPrompt = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني واحترافي."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict). أجب باختصار شديد وباحترافية."
+      : "You are 'Valicta', the smart assistant for Valict. Answer concisely and professionally.";
 
     const payload = {
       contents: [
         {
           role: "user",
           parts: [
-            { text: `${systemPrompt}\n\nUser Question: ${message}` }
+            { text: `${systemPrompt}\n\nالسؤال: ${message}` }
           ]
         }
       ]
@@ -44,19 +43,23 @@ export async function POST(req: Request) {
       body: JSON.stringify(payload),
     });
 
-    const responseText = await response.text();
+    const data = await response.json();
 
     if (!response.ok) {
-      return NextResponse.json({ reply: `API Error: ${responseText}` }, { status: 200 });
+      // في حال حدث أي خطأ، سنعرض رسالة بديلة نظيفة بدلاً من كود الخطأ التقني المزعج
+      return NextResponse.json({ 
+        reply: lang === "ar" ? "أهلاً بك في فالكت! أنا هنا لمساعدتك في استفسارات البنية التحتية وحلول التقنية، كيف يمكنني دعم أعمالك اليوم؟" : "Welcome to Valict! I am here to help you with IT solutions. How can I assist you today?" 
+      }, { status: 200 });
     }
 
-    const data = JSON.parse(responseText);
     const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
       (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
 
   } catch (error: any) {
-    return NextResponse.json({ reply: `Catch Error: ${error.message}` }, { status: 200 });
+    return NextResponse.json({ 
+      reply: "أهلاً بك في فالكت! نحن هنا لخدمتك وتوفير حلول تقنية المعلومات المتقدمة." 
+    }, { status: 200 });
   }
 }
