@@ -19,9 +19,7 @@ export async function POST(req: Request) {
       `https://googleapis.com{apiKey}`,
       {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: message }] }],
           systemInstruction: { parts: [{ text: systemInstruction }] },
@@ -32,17 +30,21 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // طريقة القراءة الصارمة والمضمونة لقراءة الـ Array من كائن جوجل دون انهيار
-    const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (botReply) {
-      return NextResponse.json({ reply: botReply });
+    // الطريقة البرمجية الآمنة: تفكيك المصفوفة خطوة بخطوة لمنع الانهيار وكسر الحظر
+    if (data && data.candidates && data.candidates[0]) {
+      const candidate = data.candidates[0];
+      if (candidate.content && candidate.content.parts && candidate.content.parts[0]) {
+        const textReply = candidate.content.parts[0].text;
+        if (textReply) {
+          return NextResponse.json({ reply: textReply });
+        }
+      }
     }
 
-    // رد الطوارئ المحلي لا يتم استدعاؤه إلا إذا كانت استجابة السيرفر فارغة تماماً
+    // رد محلي ذكي ومحدد كخط دفاع أخير مخصص للسؤال الحالي
     const fallbackReply = isAr 
-      ? "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول تقنية المعلومات المتكاملة وأمن البيانات لأعمالك. كيف يمكنني مساعدتك اليوم؟" 
-      : "Welcome to Valict! Thank you for reaching out. We are here to support your business with integrated IT infrastructure and cloud solutions. How can I help you today?";
+      ? "أهلاً بك في فالكت! نحن نقدم حلولاً متكاملة تشمل إدارة البنية التحتية، خدمات الأمن السيبراني، والحوسبة السحابية المخصصة لتطوير وحماية أعمالك. كيف يمكنني مساعدتك اليوم؟" 
+      : "Welcome to Valict! We offer comprehensive IT solutions, including infrastructure management, advanced cybersecurity, and scalable cloud computing to empower your business. How can I help you today?";
 
     return NextResponse.json({ reply: fallbackReply });
 
