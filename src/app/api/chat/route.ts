@@ -17,13 +17,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
-    // تعديل اسم النموذج ليستخدم الإصدار المستقر المباشر والمتوافق تماماً
-    const modelName = "gemini-1.5-flash-latest";
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+    // استخدام الإصدار المستقر عبر مسار v1 المباشر
+    const modelName = "gemini-1.5-flash";
+    const endpoint = `https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`;
 
     const systemInstructionText = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد (Punchy)، بدقة، وبأسلوب مهني واحترافي."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely and professionally.";
 
     const payload = {
       contents: [
