@@ -25,10 +25,10 @@ export function Hero({ dict }: HeroProps) {
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-1vh"]);
 
   return (
-    // الجديد: جعل الارتفاع مرن وضبط التمركز التام للـ flex لضمان الثبات عند أي زووم
-    <section ref={containerRef} className="relative w-full min-h-screen lg:py-12 transition-colors duration-300 flex items-center justify-center">
+    // التعديل هنا: جعل الارتفاع تلقائي (h-auto) تماماً لتجنب المطب الرأسي مع الزووم، مع ضبط الـ padding
+    <section ref={containerRef} className="relative w-full h-auto pt-24 sm:pt-28 lg:pt-32 pb-12 lg:pb-16 transition-colors duration-300 flex items-center justify-center">
       
-      <div className="relative w-full max-w-7xl mx-auto overflow-hidden flex flex-col items-center justify-center pt-24 sm:pt-28 lg:pt-20 pb-6 lg:pb-0">
+      <div className="relative w-full max-w-7xl mx-auto overflow-hidden flex flex-col items-center justify-center px-4">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -37,7 +37,7 @@ export function Hero({ dict }: HeroProps) {
         {/* ----------------------------------- */}
 
         {/* 1. حاوية الموبايل والتابلت (تم تغييرها لـ h2 لمنع تكرار الـ H1 في الأرشفة) */}
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-center px-4 w-full max-w-6xl">
+        <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full max-w-6xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -82,7 +82,7 @@ export function Hero({ dict }: HeroProps) {
 
         {/* 2. حاوية الديسكتوب المدمجة بالكامل (تتحرك ككتلة واحدة لحماية أبعاد الزووم) */}
         <motion.div
-          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-4xl mx-auto space-y-6"
+          className="hidden lg:flex relative z-20 flex-col items-center text-center w-full max-w-4xl mx-auto space-y-6"
           style={{ y: textY, opacity: textOpacity }}
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
