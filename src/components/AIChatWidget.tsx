@@ -21,8 +21,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     placeholder: isAr ? "اسأل فاليكتا عن خدماتنا وحلولنا التقنية..." : "Ask Valicta about our IT solutions & services...",
     thinking: isAr ? "فاليكتا تكتب الآن..." : "Valicta is typing...",
     
-    // 2. تحديث الرسالة الترحيبية باسم فاليكتا
-        // 2. تقسيم الرسالة الترحيبية على أسطر مريحة للعين ومبسطة جداً
+    // تقسيم الرسالة الترحيبية على أسطر مريحة للعين ومبسطة جداً
     welcome: isAr 
       ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم؟" 
       : "Welcome to Valict! 👋\nI am 'Valicta', your smart digital assistant.\n\nHow can I help you today with:\n• IT Infrastructure 🌐\n• Cybersecurity Services 🛡️\n• Cloud Computing Solutions ☁️",
@@ -69,7 +68,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     setInput("");
     setIsLoading(true); // تفعيل مؤشر التحميل أثناء انتظار جوجل Gemini
 
-        try {
+    try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -108,13 +107,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       ]);
 
     } catch (error) {
-
       console.error("Failed to fetch AI reply:", error);
       setMessages((prev) => [
         ...prev,
         { id: Date.now() + 1, text: translations.errorMsg, isBot: true },
       ]);
-    } finally {
+    } finalReply {
       setIsLoading(false); // إغلاق مؤشر التحميل فور رجوع الرد
     }
   };
@@ -134,26 +132,26 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
         }`}
       >
-                <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
+        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
-            {/* دائرة الصورة الشخصية (Avatar) لـ فاليكتا */}
+            {/* دائرة الصورة الشخصية (Avatar) لـ فاليكتا بالرابط المصلح كاملاً */}
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 shadow-sm bg-gray-100 flex-shrink-0">
               <img 
                 src="https://unsplash.com" 
                 alt="Valicta" 
                 className="w-full h-full object-cover"
               />
-              {/* نقطة الاتصال الخضراء الحية مدمجة فوق الصورة */}
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
             </div>
             
-            <div>
+            <div className={isAr ? "text-right" : "text-left"}>
               <h3 className="font-bold text-sm tracking-wide">{translations.title}</h3>
               <p className="text-xs opacity-80 font-medium">{translations.subtitle}</p>
             </div>
           </div>
         </div>
 
+        {/* صندوق الرسائل المضاف إليه خاصية whitespace-pre-line لتقسيم السطور ترحيبياً */}
         <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
           {messages.map((msg) => (
             <div
@@ -161,7 +159,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               className={`flex ${msg.isBot ? "justify-start" : "justify-end"}`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed ${isAr ? "text-right" : "text-left"} ${
+                className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed whitespace-pre-line ${isAr ? "text-right" : "text-left"} ${
                   msg.isBot
                     ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-none shadow-sm"
                     : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-none"
@@ -172,7 +170,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             </div>
           ))}
 
-          {/* تأثير لودينج "جاري الكتابة" يظهر أثناء معالجة الذكاء الاصطناعي للرد */}
           {isLoading && (
             <div className="flex justify-start">
               <div className="max-w-[80%] rounded-2xl p-3 text-xs bg-white dark:bg-[#1E293B] text-gray-500 dark:text-gray-400 rounded-bl-none shadow-sm animate-pulse">
