@@ -22,10 +22,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     thinking: isAr ? "فاليكتا تكتب الآن..." : "Valicta is typing...",
     
     // 2. تحديث الرسالة الترحيبية باسم فاليكتا
+        // 2. تقسيم الرسالة الترحيبية على أسطر مريحة للعين ومبسطة جداً
     welcome: isAr 
-      ? "مرحباً بك! أنا 'فاليكتا' مساعدتك الرقمية الذكية في فالكت. 🤖☁️ يسعدني جداً إجابتك على أي استفسار يخص حلول وإدارة تقنية المعلومات، البنية التحتية، الحوسبة السحابية، أو خدمات الأمن السيبراني المتقدمة لتطوير وحماية أعمالك. كيف يمكنني مساعدتك اليوم؟" 
-      : "Welcome! I am 'Valicta', your smart digital assistant at Valict. 🤖☁️ I'm here to assist you with any inquiries regarding IT solutions & management, infrastructure, cloud computing, or advanced cybersecurity services to empower and secure your business. How can I help you today?",
-    
+      ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم؟" 
+      : "Welcome to Valict! 👋\nI am 'Valicta', your smart digital assistant.\n\nHow can I help you today with:\n• IT Infrastructure 🌐\n• Cybersecurity Services 🛡️\n• Cloud Computing Solutions ☁️",
+
     errorMsg: isAr
       ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الذكي. يرجى المحاولة مرة أخرى لاحقاً."
       : "Sorry, I encountered an error connecting to the AI server. Please try again later.",
