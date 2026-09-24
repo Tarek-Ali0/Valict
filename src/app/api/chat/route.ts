@@ -8,7 +8,6 @@ export async function POST(req: Request) {
     // 1. جلب رسالة العميل واللغة المرسلة من واجهة الشات
     const { message, lang } = await req.json();
 
-    // تعريف متغير اللغة هنا في الأعلى ليصبح مقروءاً في كل أجزاء الملف (Try & Catch)
     const isAr = lang === "ar";
 
     // 2. التحقق من وجود مفتاح الأمان السري في البيئة المحلية
@@ -60,7 +59,7 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // 5. استخراج النص النهائي الراجع من ذكاء جوجل الاصطناعي
+    // 5. استخراج النص النهائي الراجع من مصفوفة ذكاء جوجل الاصطناعي بدقة تامة لبيئة الـ Edge
     const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || 
       (isAr ? "عذراً، لم أتمكن من العثور على رد مناسب. يرجى المحاولة مرة أخرى." : "Sorry, no response found. Please try again.");
 
@@ -69,12 +68,8 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error("Chat API Error:", error);
-    
-    // فحص داخلي سريع: إذا فشل الـ try لأي سبب، سنقرأ لغة الطلب من خلال الـ URL أو الافتراضي
-    const isArabicFallback = req.url.includes("lang=ar") || true; 
-    
     return NextResponse.json(
-      { reply: isArabicFallback ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الفعلي." : "Sorry, encountered a server connection error." },
+      { reply: lang === "ar" ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الفعلي." : "Sorry, encountered a server connection error." },
       { status: 200 }
     );
   }
