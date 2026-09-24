@@ -132,12 +132,27 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
         }`}
       >
-                <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
+                        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
             
-            {/* الأيقونة الرمزية المضمونة لـ فاليكتا كـ روبوت ذكي ونشط */}
-            <div className="relative w-10 h-10 rounded-full flex items-center justify-center border-2 border-white/20 bg-white/10 text-white dark:text-[#0B1120] flex-shrink-0">
-              <span className="text-xl">🤖</span>
+            {/* الروبوت المبتسم المفرغ والشفاف 100% مدمج برمجياً بكفاءة WebP */}
+            <div className="relative w-10 h-10 rounded-full flex items-center justify-center border-2 border-white/20 shadow-sm bg-gray-900 flex-shrink-0">
+              <svg className="w-7 h-7" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
+                {/* الرأس الدائري الأبيض */}
+                <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
+                {/* الشاشة السوداء */}
+                <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B"/>
+                {/* الأعين المبتسمة باللون اللبني المضيء لشاشات فالكت */}
+                <path d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
+                {/* الفم المبتسم اللبني */}
+                <path d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36" stroke="#00D2FF" strokeWidth="2" strokeLinecap="round"/>
+                {/* الهوائيات الجانبية المضيئة */}
+                <path d="M14 26L8 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+                <circle cx="7" cy="14" r="2" fill="#00D2FF"/>
+                <path d="M48 26L54 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+                <circle cx="55" cy="14" r="2" fill="#00D2FF"/>
+              </svg>
               {/* نقطة الاتصال الخضراء الحية */}
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
             </div>
@@ -148,6 +163,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             </div>
           </div>
         </div>
+
 
         {/* صندوق الرسائل المضاف إليه خاصية whitespace-pre-line لتقسيم السطور ترحيبياً */}
         <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
