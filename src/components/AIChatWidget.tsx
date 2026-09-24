@@ -52,7 +52,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     };
   }, []);
 
-  // إصلاح شريط التمرير: يعمل التمرير التلقائي لأسفل فقط عند إرسال رسائل جديدة وليس عند فتح البوت لأول مرة
+  // يعمل التمرير التلقائي لأسفل فقط عند إرسال رسائل جديدة وليس عند فتح البوت لأول مرة لكي يرى الزائر الترحيب كاملاً
   useEffect(() => {
     if (messages.length > 1 || isLoading) {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -122,7 +122,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   return (
     <div className="fixed bottom-6 left-6 z-50 font-sans">
-      {/* زر الشات الدائري الخارجي مع تأثير النبض الترحيبي الاحترافي الجاذب للانتباه */}
+      {/* زر الشات الدائري الخارجي مع تأثير النبض الاحترافي الجاذب للانتباه */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Smart Support"
@@ -139,9 +139,9 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       <div
         className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
-        } ${isOpen ? "overflow-visible" : "overflow-hidden"}`}
+        } overflow-visible`} // إلغاء أي قص علوي أو سفلي للسماح بانحناء الحواف بالكامل
       >
-        {/* شريط التصفح (Header) الرفيع المضاف إليه كلاس rounded-t-2xl لإرجاع الحواف مستديرة ناعمة تماماً */}
+        {/* شريط التصفح (Header) الرفيع المضاف إليه كلاس rounded-t-2xl لتلتف الحواف العلوية بنعومة */}
         <div className="bg-valict-navy dark:bg-valict-cyan p-2.5 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10 relative rounded-t-2xl">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
             
@@ -232,7 +232,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           <div ref={chatEndRef} />
         </div>
 
-        <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2">
+        {/* نموذج الإدخال (Form) المضاف إليه كلاس rounded-b-2xl ليلتف ويتطابق مع حواف قاعدة الشات الدائرية تماماً */}
+        <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2 rounded-b-2xl">
           <input
             type="text"
             value={input}
