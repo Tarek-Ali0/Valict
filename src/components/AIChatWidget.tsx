@@ -132,15 +132,13 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
         }`}
       >
-        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
+                <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
-            {/* دائرة الصورة الشخصية (Avatar) لـ فاليكتا بالرابط المصلح كاملاً */}
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 shadow-sm bg-gray-100 flex-shrink-0">
-              <img 
-                src="https://unsplash.com" 
-                alt="Valicta" 
-                className="w-full h-full object-cover"
-              />
+            
+            {/* الأيقونة الرمزية المضمونة لـ فاليكتا كـ روبوت ذكي ونشط */}
+            <div className="relative w-10 h-10 rounded-full flex items-center justify-center border-2 border-white/20 bg-white/10 text-white dark:text-[#0B1120] flex-shrink-0">
+              <span className="text-xl">🤖</span>
+              {/* نقطة الاتصال الخضراء الحية */}
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
             </div>
             
