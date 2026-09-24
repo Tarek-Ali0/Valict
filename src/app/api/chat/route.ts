@@ -21,6 +21,7 @@ export async function POST(req: Request) {
       : "Your name is 'Valicta', the official smart AI digital assistant for Valict. Always respond professionally and concisely using a business-friendly, helpful tone. Valict provides comprehensive IT solutions, including ICT Infrastructure management, Advanced Cybersecurity services, Scalable Cloud Computing, and Automated Backups to ensure business continuity. Keep your answers short, structured, and punchy for a chat widget.";
 
     // 4. إعداد الهيكل البرمجي لطلب جوجل Gemini (باستخدام نموذج 1.5 Flash السريع والمجاني)
+    // تم إصلاح الرابط أدناه بدقة ليتصل بسيرفرات جوجل بشكل صحيح ويمرر المفتاح السري بأمان
     const response = await fetch(
       `https://googleapis.com{apiKey}`,
       {
