@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// إجبار السيرفر على التشغيل الديناميكي لحل مشكلة fetch failed أثناء البناء أو التشغيل
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     // 1. جلب رسالة العميل واللغة المرسلة من واجهة الشات
