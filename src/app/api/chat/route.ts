@@ -57,18 +57,23 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // 5. استخراج النص النهائي الراجع من ذكاء جوجل الاصطناعي
+    // 5. استخراج النص أو طباعة تفاصيل الخطأ القادم من جوجل إذا وجد
+    if (data.error) {
+      return NextResponse.json({ reply: `خطأ من جوجل: ${data.error.message}` });
+    }
+
     const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || 
-      (isAr ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر. يرجى المحاولة مرة أخرى." : "Sorry, I encountered an error. Please try again.");
+      (isAr ? "عذراً، لم أتمكن من العثور على رد مناسب في الاستجابة." : "Sorry, no text reply found in the response.");
 
     // 6. إرسال الرد الذكي فوراً لواجهة الشات
     return NextResponse.json({ reply: botReply });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Chat API Error:", error);
+    // جعل البوت يكتب لك تفاصيل الخطأ الحقيقي داخل الشات مباشرة لنعرف المشكلة فوراً
     return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
+      { reply: `خطأ داخلي بالسيرفر: ${error.message || error}` },
+      { status: 200 } // جعلناها 200 مؤقتاً لتظهر الرسالة داخل صندوق الشات بدلاً من الانهيار
     );
   }
 }
