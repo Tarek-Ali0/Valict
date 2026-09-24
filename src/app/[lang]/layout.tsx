@@ -50,8 +50,8 @@ export async function generateMetadata({
     alternates: {
       canonical: `https://valict.com{lang}`,
       languages: {
-        en: "https://valict.com",
-        ar: "https://valict.com",
+        en: "https://valict.com/en",
+        ar: "https://valict.com/ar",
         "x-default": "https://valict.com",
       },
     },
