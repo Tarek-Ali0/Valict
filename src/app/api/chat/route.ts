@@ -17,15 +17,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
-    const modelName = "gemini-1.5-flash";
+    // تعديل اسم النموذج ليستخدم الإصدار المستقر المباشر والمتوافق تماماً
+    const modelName = "gemini-1.5-flash-latest";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+    const systemInstructionText = lang === "ar"
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد (Punchy)، بدقة، وبأسلوب مهني واحترافي."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
 
     const payload = {
       contents: [
         {
           role: "user",
           parts: [
-            { text: message }
+            { text: `${systemInstructionText}\n\nسؤال العميل: ${message}` }
           ]
         }
       ]
@@ -42,12 +47,12 @@ export async function POST(req: Request) {
     const responseText = await response.text();
 
     if (!response.ok) {
-      // نعيد نص الخطأ القادم من جوجل مباشرة للشات لكي نراه على الموقع ونعرف السبب بدقة
       return NextResponse.json({ reply: `API Error: ${responseText}` }, { status: 200 });
     }
 
     const data = JSON.parse(responseText);
-    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response text found.";
+    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
+      (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
 
