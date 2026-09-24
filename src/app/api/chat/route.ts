@@ -4,9 +4,11 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
+  let isAr = true; // تعريف افتراضي للمتغير ليكون مقروءاً في كل أجزاء الملف
+  
   try {
     const { message, lang } = await req.json();
-    const isAr = lang === "ar";
+    isAr = lang === "ar";
     
     const apiKey = "AQ.Ab8RN6LCwADpP8tbiysMcE57K_roAFCQ58DMSYfW2Dl_mRkiQ";
 
@@ -34,7 +36,6 @@ export async function POST(req: Request) {
       botReply = data.candidates[0].content.parts[0].text;
     }
 
-    // حل أزمة مزامنة وقت المفتاح: إذا لم يرجع رد من جوجل، ستقوم فاليكتا بالرد الذكي فوراً من الذاكرة المحلية
     if (!botReply) {
       const lowerText = message.toLowerCase();
       if (isAr) {
@@ -57,7 +58,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Chat API Error:", error);
     return NextResponse.json(
-      { reply: lang === "ar" ? "أهلاً بك في فالكت! كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict! How can I help you today?" },
+      { reply: isAr ? "أهلاً بك في فالكت! كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict! How can I help you today?" },
       { status: 200 }
     );
   }
