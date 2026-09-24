@@ -52,9 +52,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     };
   }, []);
 
+  // إصلاح شريط التمرير: يعمل التمرير التلقائي لأسفل فقط عند إرسال رسائل جديدة وليس عند فتح البوت لأول مرة
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isOpen, isLoading]);
+    if (messages.length > 1 || isLoading) {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isLoading]);
 
   if (!isLoaded) return null;
 
@@ -86,7 +89,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           if (lowerText.includes("حلول") || lowerText.includes("خدمات") || lowerText.includes("تقدمونها")) {
             finalReply = "أهلاً بك! نحن في فالكت (Valict) نقدم حلولاً تقنية متكاملة تشمل: 1. إدارة وتطوير البنية التحتية لتقنية المعلومات. 2. خدمات الأمن السيبراني المتقدمة. 3. حلول الحوسبة السحابية والنقل الآمن للسحاب لضمان استمرارية أعمالك.";
           } else if (lowerText.includes("توقف") || lowerText.includes("مشكلة") || lowerText.includes("عطل") || lowerText.includes("أعطال")) {
-            finalReply = "فالكت تساعدك في تقليل وقت التوقف عن العمل (Downtime) إلى الصفر من خلال تصميم بنية تحتية ذات توفر عالٍ (High Availability)، وتقديم خدمات النسخ الاحتياطي التلقائي والمراقبة الاستباقية للأنظمة على مدار الساعة.";
+            finalReply = "فالكت تساعدك في تقليل وقت التوقف عن العمل (Downtime) إلى الصفر من خلال تصميم بنية تحتية ذات توفر عالٍ (High Availability), وتقديم خدمات النسخ الاحتياطي التلقائي والمراقبة الاستباقية للأنظمة على مدار الساعة.";
           } else {
             finalReply = "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول البنية التحتية لتقنية المعلومات والخدمات السحابية المتكاملة لحماية أعمالك. كيف يمكنني مساعدتك اليوم؟";
           }
@@ -118,7 +121,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 font-sans">
+    <div class="fixed bottom-6 left-6 z-50 font-sans">
       {/* زر الشات الدائري الخارجي مع تأثير النبض الترحيبي الاحترافي الجاذب للانتباه */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -134,17 +137,17 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       </button>
 
       <div
-        className={`absolute bottom-16 left-0 w-[350px] h-[490px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-left ${
+        className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
-        }`}
+        } ${isOpen ? "overflow-visible" : "overflow-hidden"}`} // تفعيل الـ overflow-visible للسماح بالانبثاق للأعلى
       >
-        {/* رأس النافذة المتناسق مع أيقونة سماعة المساعدة الجانبية الفاخرة المأخوذة من صورتك */}
-        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10">
+        {/* شريط التصفح (Header) الرفيع جداً والعصري مع الهيدر المنبثق */}
+        <div className="bg-valict-navy dark:bg-valict-cyan p-2.5 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10 relative">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
             
-            {/* الروبوت المبتسم المفرغ الشفاف برمجياً بالكامل */}
-            <div className="relative w-10 h-10 rounded-full flex items-center justify-center border-2 border-white/20 shadow-sm bg-gray-900 flex-shrink-0">
-              <svg className="w-7 h-7" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
+            {/* الأفاتار المطور المنبثق والخارج للأعلى متجاوزاً حدود الصندوق (Negative Margin) */}
+            <div className="relative -top-5 w-12 h-12 rounded-full flex items-center justify-center border-4 border-white dark:border-[#0F172A] bg-gray-900 shadow-xl flex-shrink-0 z-20">
+              <svg className="w-8 h-8" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
                 <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
                 <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B"/>
                 <path d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
@@ -155,18 +158,18 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 <path d="M48 26L54 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
                 <circle cx="55" cy="14" r="2" fill="#00D2FF"/>
               </svg>
-              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
+              <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
             </div>
             
             <div className={isAr ? "text-right" : "text-left"}>
-              <h3 className="font-bold text-sm tracking-wide">{translations.title}</h3>
-              <p className="text-xs opacity-80 font-medium">{translations.subtitle}</p>
+              <h3 className="font-bold text-xs tracking-wide">{translations.title}</h3>
+              <p className="text-[10px] opacity-75 font-medium">{translations.subtitle}</p>
             </div>
           </div>
 
-          {/* أيقونة سماعة الدعم الفني الجانبية المستوحاة من لقطة فحص المنصة */}
-          <div className="text-white/60 dark:text-[#0B1120]/60 hover:text-white transition-colors cursor-pointer">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          {/* أيقونة الدعم الجانبية الرفيعة الفاخرة */}
+          <div className="text-white/60 dark:text-[#0B1120]/60 hover:text-white transition-colors cursor-pointer pe-1">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
@@ -193,7 +196,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             </div>
           ))}
 
-          {/* 2. قسم الاستفسارات الشائعة ينزل هنا بالأسفل (تحت الترحيب والتعريف بالظبط تماشياً مع لقطة الشاشة) */}
+          {/* 2. قسم الاستفسارات الشائعة ينزل هنا بالأسفل تحت الترحيب والتعريف بالظبط وببطاقات أنيقة جداً */}
           {messages.length <= 1 && (
             <div className="space-y-2 mt-4 pt-2 border-t border-gray-200/50 dark:border-gray-800/50">
               <div className={`text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 ${isAr ? "text-right" : "text-left"}`}>
