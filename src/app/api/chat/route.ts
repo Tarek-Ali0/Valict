@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
+
+// تهيئة الـ SDK بالطريقة الرسمية الصحيحة
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function POST(req: Request) {
   try {
@@ -12,52 +16,29 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid message payload" }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
+    if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json({ reply: lang === "ar" ? "خطأ في إعدادات الخادم." : "Server configuration error." }, { status: 200 });
     }
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const systemInstruction = lang === "ar"
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد وباحترافية."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely and professionally.";
 
-    const systemPrompt = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني واحترافي باللغة العربية بناءً على سؤال العميل التالي."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally in English based on the following user question.";
-
-    const payload = {
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { text: `${systemPrompt}\n\nسؤال العميل / User Question: ${message}` }
-          ]
-        }
-      ]
-    };
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    // استدعاء النموذج بالطريقة الأحدث والأكثر استقراراً
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: message,
+      config: {
+        systemInstruction: systemInstruction,
       },
-      body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error("Gemini API Error:", data);
-      return NextResponse.json({ 
-        reply: lang === "ar" ? "عذراً، واجهت ضغطاً مؤقتاً في السيرفر، يرجى المحاولة مرة أخرى." : "Sorry, temporary server load, please try again." 
-      }, { status: 200 });
-    }
-
-    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
-      (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
+    const replyText = response.text || (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
 
   } catch (error) {
-    console.error("Chat API Catch Error:", error);
+    console.error("Gemini SDK Error:", error);
     return NextResponse.json({ 
       reply: "أهلاً بك في فالكت! نحن هنا لخدمتك وتوفير حلول تقنية المعلومات المتقدمة." 
     }, { status: 200 });
