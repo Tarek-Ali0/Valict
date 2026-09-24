@@ -23,7 +23,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     
     // تقسيم الرسالة الترحيبية على أسطر مريحة للعين ومبسطة جداً
     welcome: isAr 
-      ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم?" 
+      ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم؟" 
       : "Welcome to Valict! 👋\nI am 'Valicta', your smart digital assistant.\n\nHow can I help you today with:\n• IT Infrastructure 🌐\n• Cybersecurity Services 🛡️\n• Cloud Computing Solutions ☁️",
 
     errorMsg: isAr
@@ -116,7 +116,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       setIsLoading(false); // إغلاق مؤشر التحميل فور رجوع الرد
     }
   };
-  
+
   return (
     <div className="fixed bottom-6 left-6 z-50 font-sans">
       {/* زر الشات الدائري الخارجي مضاف إليه تأثير النبض الاحترافي الجاذب للانتباه */}
@@ -172,12 +172,30 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           </div>
         </div>
 
-        {/* صندوق الرسائل المضاف إليه الاستفسارات الشائعة والأزرار الجاهزة للضغط الفوري */}
+        {/* صندوق الرسائل المطور والمعدل */}
         <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
           
-          {/* قسم الاستفسارات الشائعة المعزول في أزرار نظيفة */}
+          {/* 1. عرض رسالة الترحيب والتعريف أولاً في المقدمة */}
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex ${msg.isBot ? "justify-start" : "justify-end"}`}
+            >
+              <div
+                className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed whitespace-pre-line ${isAr ? "text-right" : "text-left"} ${
+                  msg.isBot
+                    ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-none shadow-sm"
+                    : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-none"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+
+          {/* 2. قسم الاستفسارات الشائعة المعزول يظهر هنا بالأسفل تحت الترحيب مباشرة وبشكل منسق */}
           {messages.length <= 1 && (
-            <div className="space-y-2 mb-4">
+            <div className="space-y-2 mt-4 pt-2 border-t border-gray-100 dark:border-gray-800/50">
               <div className={`text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 ${isAr ? "text-right" : "text-left"}`}>
                 {isAr ? "استفسارات شائعة" : "Common Inquiries"}
               </div>
@@ -207,24 +225,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               </button>
             </div>
           )}
-
-          {/* عرض الرسائل الحية مقسمة بأسطر مريحة للعين */}
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex ${msg.isBot ? "justify-start" : "justify-end"}`}
-            >
-              <div
-                className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed whitespace-pre-line ${isAr ? "text-right" : "text-left"} ${
-                  msg.isBot
-                    ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-none shadow-sm"
-                    : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-none"
-                }`}
-              >
-                {msg.text}
-              </div>
-            </div>
-          ))}
 
           {isLoading && (
             <div className="flex justify-start">
