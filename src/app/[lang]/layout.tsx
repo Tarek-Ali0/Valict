@@ -172,7 +172,7 @@ export default async function RootLayout({
 
           {/* الأزرار العائمة بالأسفل */}
           <ScrollToTop />
-          <AIChatWidget /> {/* إضافة زر الدعم الفني الذكي هنا بالأسفل بجانب زر الصعود */}
+          <AIChatWidget lang={lang} /> {/* إضافة زر الدعم الفني الذكي هنا بالأسفل بجانب زر الصعود */}
         </ThemeProvider>
       </body>
     </html>
