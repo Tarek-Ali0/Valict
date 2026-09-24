@@ -17,22 +17,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
-    // استخدام الإصدار المستقر عبر مسار v1 المباشر
-    const modelName = "gemini-1.5-flash";
-    const endpoint = `https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`;
+    // استخدام الرابط القياسي المباشر لخدمة التوليد
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions?key=${apiKey}`;
 
-    const systemInstructionText = lang === "ar"
+    const systemPrompt = lang === "ar"
       ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني."
       : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely and professionally.";
 
     const payload = {
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { text: `${systemInstructionText}\n\nسؤال العميل: ${message}` }
-          ]
-        }
+      model: "gemini-1.5-flash",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: message }
       ]
     };
 
@@ -51,7 +47,7 @@ export async function POST(req: Request) {
     }
 
     const data = JSON.parse(responseText);
-    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
+    const replyText = data?.choices?.[0]?.message?.content || 
       (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
