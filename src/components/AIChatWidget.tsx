@@ -89,7 +89,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           if (lowerText.includes("حلول") || lowerText.includes("خدمات") || lowerText.includes("تقدمونها")) {
             finalReply = "أهلاً بك! نحن في فالكت (Valict) نقدم حلولاً تقنية متكاملة تشمل: 1. إدارة وتطوير البنية التحتية لتقنية المعلومات. 2. خدمات الأمن السيبراني المتقدمة. 3. حلول الحوسبة السحابية والنقل الآمن للسحاب لضمان استمرارية أعمالك.";
           } else if (lowerText.includes("توقف") || lowerText.includes("مشكلة") || lowerText.includes("عطل") || lowerText.includes("أعطال")) {
-            finalReply = "فالكت تساعدك في تقليل وقت التوقف عن العمل (Downtime) إلى الصفر من خلال تصميم بنية تحتية ذات توفر عالٍ (High Availability), وتقديم خدمات النسخ الاحتياطي التلقائي والمراقبة الاستباقية للأنظمة على مدار الساعة.";
+            finalReply = "فالكت تساعدك في تقليل وقت التوقف عن العمل (Downtime) إلى الصفر من خلال تصميم بنية تحتية ذات توفر عالٍ (High Availability)، وتقديم خدمات النسخ الاحتياطي التلقائي والمراقبة الاستباقية للأنظمة على مدار الساعة.";
           } else {
             finalReply = "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول البنية التحتية لتقنية المعلومات والخدمات السحابية المتكاملة لحماية أعمالك. كيف يمكنني مساعدتك اليوم؟";
           }
@@ -139,13 +139,13 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       <div
         className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
-        } ${isOpen ? "overflow-visible" : "overflow-hidden"}`} // تفعيل الـ overflow-visible للسماح بالانبثاق للأعلى
+        } ${isOpen ? "overflow-visible" : "overflow-hidden"}`}
       >
-        {/* شريط التصفح (Header) الرفيع جداً والعصري مع الهيدر المنبثق */}
-        <div className="bg-valict-navy dark:bg-valict-cyan p-2.5 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10 relative">
+        {/* شريط التصفح (Header) الرفيع المضاف إليه كلاس rounded-t-2xl لإرجاع الحواف مستديرة ناعمة تماماً */}
+        <div className="bg-valict-navy dark:bg-valict-cyan p-2.5 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10 relative rounded-t-2xl">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
             
-            {/* الأفاتار المطور المنبثق والخارج للأعلى متجاوزاً حدود الصندوق (Negative Margin) */}
+            {/* الأفاتار المنبثق والخارج للأعلى متجاوزاً حدود الصندوق بشكل ثلاثي الأبعاد */}
             <div className="relative -top-5 w-12 h-12 rounded-full flex items-center justify-center border-4 border-white dark:border-[#0F172A] bg-gray-900 shadow-xl flex-shrink-0 z-20">
               <svg className="w-8 h-8" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
                 <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
@@ -165,13 +165,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               <h3 className="font-bold text-xs tracking-wide">{translations.title}</h3>
               <p className="text-[10px] opacity-75 font-medium">{translations.subtitle}</p>
             </div>
-          </div>
-
-          {/* أيقونة الدعم الجانبية الرفيعة الفاخرة */}
-          <div className="text-white/60 dark:text-[#0B1120]/60 hover:text-white transition-colors cursor-pointer pe-1">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
           </div>
         </div>
 
