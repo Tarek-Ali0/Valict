@@ -23,7 +23,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     
     // تقسيم الرسالة الترحيبية على أسطر مريحة للعين ومبسطة جداً
     welcome: isAr 
-      ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم؟" 
+      ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية.\n\nيسعدني مساعدتك في استفسارات:\n• إدارة البنية التحتية وIT 🌐\n• خدمات الأمن السيبراني 🛡️\n• حلول الحوسبة السحابية ☁️\n\nكيف يمكنني دعم أعمالك اليوم?" 
       : "Welcome to Valict! 👋\nI am 'Valicta', your smart digital assistant.\n\nHow can I help you today with:\n• IT Infrastructure 🌐\n• Cybersecurity Services 🛡️\n• Cloud Computing Solutions ☁️",
 
     errorMsg: isAr
@@ -116,44 +116,45 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       setIsLoading(false); // إغلاق مؤشر التحميل فور رجوع الرد
     }
   };
-
+  
   return (
     <div className="fixed bottom-6 left-6 z-50 font-sans">
+      {/* زر الشات الدائري الخارجي مضاف إليه تأثير النبض الاحترافي الجاذب للانتباه */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Smart Support"
-        className="h-12 w-12 flex items-center justify-center rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+        className="relative h-12 w-12 flex items-center justify-center rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
       >
-        {isOpen ? <FaXmark className="w-5 h-5" /> : <FaCommentDots className="w-5 h-5" />}
+        {!isOpen && (
+          <span className="absolute inset-0 rounded-full bg-valict-navy dark:bg-valict-cyan opacity-40 animate-ping"></span>
+        )}
+        <span className="relative z-10">
+          {isOpen ? <FaXmark className="w-5 h-5" /> : <FaCommentDots className="w-5 h-5" />}
+        </span>
       </button>
 
       <div
-        className={`absolute bottom-16 left-0 w-[350px] h-[450px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-left ${
+        className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-left ${
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
         }`}
       >
-                        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
+        {/* رأس النافذة الاحترافي المطور على غرار منصة دكتور ياسين العدل */}
+        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10">
           <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
             
-            {/* الروبوت المبتسم المفرغ والشفاف 100% مدمج برمجياً بكفاءة WebP */}
+            {/* الروبوت المبتسم المفرغ والشفاف */}
             <div className="relative w-10 h-10 rounded-full flex items-center justify-center border-2 border-white/20 shadow-sm bg-gray-900 flex-shrink-0">
               <svg className="w-7 h-7" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
-                {/* الرأس الدائري الأبيض */}
                 <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
-                {/* الشاشة السوداء */}
                 <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B"/>
-                {/* الأعين المبتسمة باللون اللبني المضيء لشاشات فالكت */}
                 <path d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
                 <path d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
-                {/* الفم المبتسم اللبني */}
                 <path d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36" stroke="#00D2FF" strokeWidth="2" strokeLinecap="round"/>
-                {/* الهوائيات الجانبية المضيئة */}
                 <path d="M14 26L8 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
                 <circle cx="7" cy="14" r="2" fill="#00D2FF"/>
                 <path d="M48 26L54 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
                 <circle cx="55" cy="14" r="2" fill="#00D2FF"/>
               </svg>
-              {/* نقطة الاتصال الخضراء الحية */}
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
             </div>
             
@@ -162,11 +163,52 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               <p className="text-xs opacity-80 font-medium">{translations.subtitle}</p>
             </div>
           </div>
+
+          {/* أيقونة الدعم الجانبية الفاخرة المستوحاة من صورتك */}
+          <div className="text-white/60 dark:text-[#0B1120]/60 hover:text-white transition-colors cursor-pointer">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
         </div>
 
-
-        {/* صندوق الرسائل المضاف إليه خاصية whitespace-pre-line لتقسيم السطور ترحيبياً */}
+        {/* صندوق الرسائل المضاف إليه الاستفسارات الشائعة والأزرار الجاهزة للضغط الفوري */}
         <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
+          
+          {/* قسم الاستفسارات الشائعة المعزول في أزرار نظيفة */}
+          {messages.length <= 1 && (
+            <div className="space-y-2 mb-4">
+              <div className={`text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 ${isAr ? "text-right" : "text-left"}`}>
+                {isAr ? "استفسارات شائعة" : "Common Inquiries"}
+              </div>
+              
+              <button 
+                onClick={() => setInput(isAr ? "ما هي خدمات شركة فالكت؟" : "What solutions do you offer?")}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+              >
+                <span>{isAr ? "خدمات وحلول شركة فالكت" : "Valict Solutions & Services"}</span>
+                <span className="text-gray-400 text-xs">→</span>
+              </button>
+              
+              <button 
+                onClick={() => setInput(isAr ? "كيف تحمون الأنظمة من الاختراق؟" : "How do you protect systems?")}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+              >
+                <span>{isAr ? "خدمات الأمن السيبراني المتقدمة" : "Advanced Cybersecurity"}</span>
+                <span className="text-gray-400 text-xs">→</span>
+              </button>
+              
+              <button 
+                onClick={() => setInput(isAr ? "كيف تعالجون مشكلة توقف السيرفرات؟" : "How do you eliminate downtime?")}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+              >
+                <span>{isAr ? "حلول توقف النظام (Downtime)" : "System Downtime Solutions"}</span>
+                <span className="text-gray-400 text-xs">→</span>
+              </button>
+            </div>
+          )}
+
+          {/* عرض الرسائل الحية مقسمة بأسطر مريحة للعين */}
           {messages.map((msg) => (
             <div
               key={msg.id}
