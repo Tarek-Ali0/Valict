@@ -31,29 +31,17 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // السطر القياسي والمصلح لقراءة ردود جوجل الحية بدون أي تعارض مع التايب سكريبت
+    // الإصلاح البرمجي الجذري والوحيد: قراءة أدلة المصفوفة القياسية لجوجل بشكل صريح [0]
     const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (botReply) {
       return NextResponse.json({ reply: botReply });
     }
 
-    // إذا لم يرجع رد حي من السيرفر نستخدم الذاكرة المحلية الذكية الشاملة
-    let fallbackReply = "";
-    const lowerText = message.toLowerCase();
-    if (isAr) {
-      if (lowerText.includes("حلول") || lowerText.includes("خدمات") || lowerText.includes("تقدمونها")) {
-        fallbackReply = "أهلاً بك! نحن في فالكت (Valict) نقدم حلولاً متكاملة تشمل إدارة البنية التحتية لتقنية المعلومات والاتصالات، خدمات الأمن السيبراني المتقدمة، وحلول الحوسبة السحابية المخصصة لحماية أصولك الرقمية وضمان استمرارية أعمالك بكفاءة.";
-      } else {
-        fallbackReply = "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم الدعم الفني وحلول تقنية المعلومات المتكاملة لأعمالك. كيف يمكنني مساعدتك اليوم؟";
-      }
-    } else {
-      if (lowerText.includes("solutions") || lowerText.includes("services") || lowerText.includes("offer") || lowerText.includes("provide")) {
-        fallbackReply = "At Valict, we provide comprehensive IT solutions including ICT Infrastructure management, advanced Cybersecurity services, and scalable Cloud Computing tailored to secure and empower your business.";
-      } else {
-        fallbackReply = "Welcome to Valict! Thank you for reaching out. We are here to support your business with integrated IT infrastructure and cloud solutions. How can I help you today?";
-      }
-    }
+    // الرد الافتراضي البديل يعمل فقط كخط دفاع أخير إذا لم ترجع بيانات
+    const fallbackReply = isAr 
+      ? "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول تقنية المعلومات المتكاملة وأمن البيانات لأعمالك. كيف يمكنني مساعدتك اليوم؟" 
+      : "Welcome to Valict! Thank you for reaching out. We are here to support your business with integrated IT infrastructure and cloud solutions. How can I help you today?";
 
     return NextResponse.json({ reply: fallbackReply });
 
