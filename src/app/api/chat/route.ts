@@ -17,18 +17,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
-    // استخدام الرابط القياسي المباشر لخدمة التوليد
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions?key=${apiKey}`;
+    // استخدام أحدث نموذج مستقر متوافق مع v1b
+    const modelName = "gemini-1.5-flash";
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
     const systemPrompt = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely and professionally.";
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني واحترافي."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
 
     const payload = {
-      model: "gemini-1.5-flash",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message }
+      contents: [
+        {
+          role: "user",
+          parts: [
+            { text: `${systemPrompt}\n\nUser Question: ${message}` }
+          ]
+        }
       ]
     };
 
@@ -47,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     const data = JSON.parse(responseText);
-    const replyText = data?.choices?.[0]?.message?.content || 
+    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
       (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
