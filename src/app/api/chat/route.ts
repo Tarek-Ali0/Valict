@@ -14,23 +14,13 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.error("GEMINI_API_KEY is not defined in environment variables.");
-      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+      return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
     }
 
     const modelName = "gemini-1.5-flash";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
-    const systemInstructionText = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد (Punchy)، بدقة، وبأسلوب مهني واحترافي."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
-
     const payload = {
-      system_instruction: {
-        parts: [
-          { text: systemInstructionText }
-        ]
-      },
       contents: [
         {
           role: "user",
@@ -49,24 +39,19 @@ export async function POST(req: Request) {
       body: JSON.stringify(payload),
     });
 
+    const responseText = await response.text();
+
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error("Gemini API Error Response:", errorData);
-      return NextResponse.json({ reply: "عذراً، واجهت ضغطاً مؤقتاً في السيرفر، يرجى المحاولة مرة أخرى." }, { status: 200 });
+      // نعيد نص الخطأ القادم من جوجل مباشرة للشات لكي نراه على الموقع ونعرف السبب بدقة
+      return NextResponse.json({ reply: `API Error: ${responseText}` }, { status: 200 });
     }
 
-    const data = await response.json();
-    
-    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
-      (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
+    const data = JSON.parse(responseText);
+    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response text found.";
 
     return NextResponse.json({ reply: replyText });
 
-  } catch (error) {
-    console.error("Chat API Internal Error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    return NextResponse.json({ reply: `Catch Error: ${error.message}` }, { status: 200 });
   }
 }
