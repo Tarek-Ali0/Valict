@@ -1,68 +1,73 @@
 import { NextResponse } from "next/server";
 
+// 1. تفعيل بيئة الـ Edge لتجاوز قيود Vercel وسرعة الاستجابة المطلقة
 export const runtime = "edge";
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
-    const { message, lang } = await req.json();
-    const isAr = lang === "ar";
-    
-    // المفتاح السري المباشر والمحمي لـ Gemini
-    const apiKey = "AQ.Ab8RN6LCwADpP8tbiysMcE57K_roAFCQ58DMSYfW2Dl_mRkiQ";
+    const body = await req.json();
+    const { message, lang } = body;
 
-    // 1. تحديث الوصف وإضافة أل التعريف كما طلبت ليكون: المساعد الذكي لشركة فالكت
-    const systemInstruction = isAr
-      ? "اسمكِ 'فاليكتا' (Valicta)، المساعد الذكي لشركة فالكت (Valict). أجيبي عن سؤال الزائر بصيغة المؤنث باحترافية وبإيجاز شديد وعلى قد السؤال بالضبط دون رص خدمات أخرى لا يطلبها العميل. إذا سأل عن الأمن السيبراني ركزي عليه فقط، وإذا سأل عن الشبكات أو السحاب ركزي عليه فقط. أسلوبكِ مهني ومختصر جداً."
-      : "Your name is 'Valicta', the smart assistant for Valict. Answer the visitor's query precisely, shortly, and focus only on the specific service they ask about without mentioning other services. Keep your answers brief and professional.";
-
-    // 2. تصحيح رابط الاستدعاء الرسمي ليمرر المفتاح السري بنجاح بجانب المعرف الديناميكي للوقت لكسر الكاش
-    const response = await fetch(
-      `https://googleapis.com{apiKey}&t=${Date.now()}`,
-      {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: message }]
-            }
-          ],
-          systemInstruction: {
-            parts: [{ text: systemInstruction }]
-          },
-          generationConfig: { 
-            temperature: 0.5, 
-            maxOutputTokens: 150 // إجبار المحرك على الاختصار والرد السريع
-          },
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    // قراءة رد جوجل الحي والديناميكي عبر الهيكل البرمجي القياسي للمصفوفات
-    const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (botReply) {
-      return NextResponse.json({ reply: botReply.trim() });
+    if (!message || typeof message !== "string") {
+      return NextResponse.json({ error: "Invalid message payload" }, { status: 400 });
     }
 
-    // خط دفاع أخير ذكي ومختصر جداً ومباشر إذا انقطع الاتصال الخارجي بالسيرفر
-    const fallback = isAr 
-      ? "نعم، نحن في فالكت نقدم خدمات الأمن السيبراني المتكاملة وحماية البيانات. كيف يمكنني مساعدتك اليوم؟"
-      : "Yes, at Valict we provide comprehensive cybersecurity services to secure your business.";
+    // 2. التحقق من اسم متغير الـ API Key بدقة ليتطابق مع Vercel
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("GEMINI_API_KEY is not defined in environment variables.");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
 
-    return NextResponse.json({ reply: fallback });
+    // 3. تحديد نموذج Gemini المستقر والسريع
+    const modelName = "gemini-1.5-flash";
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+    // صياغة الهوية والتوجيهات (System Instruction & Payload)
+    const systemPrompt = lang === "ar"
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد (Punchy)، بدقة، وبأسلوب مهني واحترافي."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
+
+    const payload = {
+      contents: [
+        {
+          role: "user",
+          parts: [
+            { text: `${systemPrompt}\n\nسؤال العميل: ${message}` }
+          ]
+        }
+      ]
+    };
+
+    // تنفيذ طلب الـ Fetch الخارجي لـ جوجل
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Gemini API Error Response:", errorData);
+      return NextResponse.json({ reply: "عذراً، واجهت ضغطاً مؤقتاً في السيرفر، يرجى المحاولة مرة أخرى." }, { status: 200 });
+    }
+
+    const data = await response.json();
+    
+    // الفحص والتفكيك البرمجي الآمن للمصفوفة الراجعة لتجنب الانهيار
+    const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
+      (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
+
+    return NextResponse.json({ reply: replyText });
 
   } catch (error) {
-    console.error("Chat API Error:", error);
+    console.error("Chat API Internal Error:", error);
     return NextResponse.json(
-      { reply: "Welcome to Valict! How can I help you today?" },
-      { status: 200 }
+      { error: "Internal Server Error" },
+      { status: 500 }
     );
   }
 }
