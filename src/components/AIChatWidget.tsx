@@ -112,7 +112,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         ...prev,
         { id: Date.now() + 1, text: translations.errorMsg, isBot: true },
       ]);
-    } finalReply {
+    } finally {
       setIsLoading(false); // إغلاق مؤشر التحميل فور رجوع الرد
     }
   };
