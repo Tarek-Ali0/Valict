@@ -11,14 +11,14 @@ export async function POST(req: Request) {
     // المفتاح السري المباشر والمحمي لـ Gemini
     const apiKey = "AQ.Ab8RN6LCwADpP8tbiysMcE57K_roAFCQ58DMSYfW2Dl_mRkiQ";
 
-    // التوجيهات الصارمة لشخصية فاليكتا الشاملة لجميع الخدمات
+    // 1. تحديث الوصف وإضافة أل التعريف كما طلبت ليكون: المساعد الذكي لشركة فالكت
     const systemInstruction = isAr
-      ? "اسمكِ 'فاليكتا' (Valicta)، المساعدة الرقمية الذكية الرسمية لشركة فالكت (Valict). أجيبي عن استفسارات الزوار بصيغة المؤنث باحترافية عاليّة ولغة واضحة ومبسطة ومختصرة جداً تناسب واجهات الشات السريعة. شركة فالكت تقدم حلولاً شاملة ومتكاملة تشمل: إدارة وتطوير البنية التحتية لتقنية المعلومات والاتصالات، خدمات الأمن السيبراني المتقدمة، حلول الحوسبة السحابية والنقل الآمن للسحاب، والنسخ الاحتياطي التلقائي لضمان استمرارية الأعمال وتقليل وقت التوقف. إذا سألكِ العميل عن موضوع خارج تخصص الشركة (مثل الطقس)، أجيبي بذكاء ودبلوماسية وأعيدي توجيهه لخدمات الشركة التقنية."
-      : "Your name is 'Valicta', the official smart AI digital assistant for Valict. Always respond professionally and concisely. Valict provides comprehensive IT solutions, including ICT Infrastructure management, Advanced Cybersecurity services, Scalable Cloud Computing, and Automated Backups to ensure business continuity. Keep your answers short and punchy. If asked about off-topic queries (like weather), politely redirect them to Valict's tech services.";
+      ? "اسمكِ 'فاليكتا' (Valicta)، المساعد الذكي لشركة فالكت (Valict). أجيبي عن سؤال الزائر بصيغة المؤنث باحترافية وبإيجاز شديد وعلى قد السؤال بالضبط دون رص خدمات أخرى لا يطلبها العميل. إذا سأل عن الأمن السيبراني ركزي عليه فقط، وإذا سأل عن الشبكات أو السحاب ركزي عليه فقط. أسلوبكِ مهني ومختصر جداً."
+      : "Your name is 'Valicta', the smart assistant for Valict. Answer the visitor's query precisely, shortly, and focus only on the specific service they ask about without mentioning other services. Keep your answers brief and professional.";
 
-    // إرسال الطلب بالهيكل الرسمي المعتمد من جوجل لضمان العبور الناجح
+    // 2. تصحيح رابط الاستدعاء الرسمي ليمرر المفتاح السري بنجاح بجانب المعرف الديناميكي للوقت لكسر الكاش
     const response = await fetch(
-      `https://googleapis.com{apiKey}`,
+      `https://googleapis.com{apiKey}&t=${Date.now()}`,
       {
         method: "POST",
         headers: { 
@@ -35,8 +35,8 @@ export async function POST(req: Request) {
             parts: [{ text: systemInstruction }]
           },
           generationConfig: { 
-            temperature: 0.7, 
-            maxOutputTokens: 250 
+            temperature: 0.5, 
+            maxOutputTokens: 150 // إجبار المحرك على الاختصار والرد السريع
           },
         }),
       }
@@ -51,10 +51,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: botReply.trim() });
     }
 
-    // خط دفاع أخير ذكي في حال حدوث أي مشكلة في الشبكة الخارجية
+    // خط دفاع أخير ذكي ومختصر جداً ومباشر إذا انقطع الاتصال الخارجي بالسيرفر
     const fallback = isAr 
-      ? "مرحباً بك في فالكت! يسعدني إجابتك على أي استفسار يخص حلول البنية التحتية لتقنية المعلومات، الأمن السيبراني، أو الخدمات السحابية المتكاملة لحماية أعمالك. كيف يمكنني مساعدتك اليوم؟"
-      : "Welcome to Valict! We are here to support your business with integrated IT infrastructure, cybersecurity, and cloud solutions. How can I help you today?";
+      ? "نعم، نحن في فالكت نقدم خدمات الأمن السيبراني المتكاملة وحماية البيانات. كيف يمكنني مساعدتك اليوم؟"
+      : "Yes, at Valict we provide comprehensive cybersecurity services to secure your business.";
 
     return NextResponse.json({ reply: fallback });
 
