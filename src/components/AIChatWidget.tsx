@@ -133,12 +133,24 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
         }`}
       >
-        <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
-          <div className={isAr ? "text-right" : "text-left"}>
-            <h3 className="font-bold text-sm">{translations.title}</h3>
-            <p className="text-xs opacity-80">{translations.subtitle}</p>
+                <div className="bg-valict-navy dark:bg-valict-cyan p-4 text-white dark:text-[#0B1120] flex items-center justify-between">
+          <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
+            {/* دائرة الصورة الشخصية (Avatar) لـ فاليكتا */}
+            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 shadow-sm bg-gray-100 flex-shrink-0">
+              <img 
+                src="https://unsplash.com" 
+                alt="Valicta" 
+                className="w-full h-full object-cover"
+              />
+              {/* نقطة الاتصال الخضراء الحية مدمجة فوق الصورة */}
+              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
+            </div>
+            
+            <div>
+              <h3 className="font-bold text-sm tracking-wide">{translations.title}</h3>
+              <p className="text-xs opacity-80 font-medium">{translations.subtitle}</p>
+            </div>
           </div>
-          <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
         </div>
 
         <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
