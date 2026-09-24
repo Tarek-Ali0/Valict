@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   let isAr = true;
@@ -20,7 +19,9 @@ export async function POST(req: Request) {
       `https://googleapis.com{apiKey}`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: message }] }],
           systemInstruction: { parts: [{ text: systemInstruction }] },
@@ -31,14 +32,14 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // الإصلاح البرمجي الجذري والوحيد: قراءة أدلة المصفوفة القياسية لجوجل بشكل صريح [0]
+    // طريقة القراءة الصارمة والمضمونة لقراءة الـ Array من كائن جوجل دون انهيار
     const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (botReply) {
       return NextResponse.json({ reply: botReply });
     }
 
-    // الرد الافتراضي البديل يعمل فقط كخط دفاع أخير إذا لم ترجع بيانات
+    // رد الطوارئ المحلي لا يتم استدعاؤه إلا إذا كانت استجابة السيرفر فارغة تماماً
     const fallbackReply = isAr 
       ? "أهلاً بك في فالكت! شكراً لتواصلك معنا، نحن هنا لتقديم حلول تقنية المعلومات المتكاملة وأمن البيانات لأعمالك. كيف يمكنني مساعدتك اليوم؟" 
       : "Welcome to Valict! Thank you for reaching out. We are here to support your business with integrated IT infrastructure and cloud solutions. How can I help you today?";
