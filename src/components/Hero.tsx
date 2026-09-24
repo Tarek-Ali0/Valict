@@ -25,9 +25,10 @@ export function Hero({ dict }: HeroProps) {
   const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-1vh"]);
 
   return (
-    <section ref={containerRef} className="relative h-auto lg:h-[125vh] transition-colors duration-300">
+    // الجديد: جعل الارتفاع مرن وضبط التمركز التام للـ flex لضمان الثبات عند أي زووم
+    <section ref={containerRef} className="relative w-full min-h-screen lg:py-12 transition-colors duration-300 flex items-center justify-center">
       
-      <div className="relative lg:sticky top-0 lg:h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-32 pb-6 lg:pb-0">
+      <div className="relative w-full max-w-7xl mx-auto overflow-hidden flex flex-col items-center justify-center pt-24 sm:pt-28 lg:pt-20 pb-6 lg:pb-0">
         
         {/* --- Premium Background Elements --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -66,7 +67,6 @@ export function Hero({ dict }: HeroProps) {
               height={600}
               className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
               priority
-              fetchPriority="high"
               sizes="(max-width: 640px) 320px, (max-width: 1024px) 450px, 900px"
             />
           </div>
@@ -80,12 +80,12 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب (تحتوي على الـ H1 الوحيد والصريح للموقع بالكامل) */}
+        {/* 2. حاوية الديسكتوب المدمجة بالكامل (تتحرك ككتلة واحدة لحماية أبعاد الزووم) */}
         <motion.div
-          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-6xl mt-2"
+          className="hidden lg:flex relative z-20 flex-col items-center text-center px-4 w-full max-w-4xl mx-auto space-y-6"
           style={{ y: textY, opacity: textOpacity }}
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
               {dict.hero.badge}
@@ -93,7 +93,7 @@ export function Hero({ dict }: HeroProps) {
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
           </div>
 
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] mb-4 text-valict-dark dark:text-white tracking-tight">
+          <h1 className="text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
             {dict.hero.title1} <br className="hidden sm:block" />
             <span className="logo-gradient-text leading-relaxed">
               {dict.hero.title2}
@@ -101,40 +101,40 @@ export function Hero({ dict }: HeroProps) {
           </h1>
           
           {dict.hero.description && (
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
               {dict.hero.description}
             </p>
           )}
-        </motion.div>
 
-        {/* Laptop / Dashboard Image للديسكتوب */}
-        <motion.div
-          className="hidden lg:block relative z-30 w-full max-w-4xl lg:max-w-[880px] px-4 mt-3"
-          style={{ scale: imageScale, y: imageY }}
-        >
-          <Image
-            src="/dashboard-mockup.png"
-            alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
-            width={1050}
-            height={680}
-            className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
-            priority
-            fetchPriority="high"
-            sizes="(min-width: 1024px) 880px, 100vw"
-          />
-        </motion.div>
-
-        {/* الزرار تحت اللابتوب للديسكتوب */}
-        <div className="hidden lg:flex relative z-40 flex-col items-center text-center px-4 w-full max-w-4xl mt-3">
-          <Link
-            href="#contact"
-            aria-label="Navigate to Valict consultation and contact section"
-            className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+          {/* حاوية صورة اللابتوب للديسكتوب */}
+          <motion.div
+            className="w-full max-w-[820px] mx-auto pt-2"
+            style={{ scale: imageScale, y: imageY }}
           >
-            {dict.hero.cta}
-            <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
-          </Link>
-        </div>
+            <Image
+              src="/dashboard-mockup.png"
+              alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
+              width={1050}
+              height={680}
+              className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              priority
+              sizes="(min-width: 1024px) 880px, 100vw"
+            />
+          </motion.div>
+
+          {/* حاوية الزرار تحت اللابتوب للديسكتوب */}
+          <div className="pt-2">
+            <Link
+              href="#contact"
+              aria-label="Navigate to Valict consultation and contact section"
+              className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+            >
+              {dict.hero.cta}
+              <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
+            </Link>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
