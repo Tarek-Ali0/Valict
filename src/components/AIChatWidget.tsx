@@ -11,27 +11,28 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // حالة لمعرفة إذا كان البوت يفكر ويحمل الرد
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // النصوص حسب لغة الصفحة
   const isAr = lang === "ar";
   const translations = {
     title: isAr ? "الدعم الفني للمنصة" : "Platform Technical Support",
     subtitle: isAr ? "بوت ذكي متصل بـ فالكت" : "Smart Bot connected to Valict",
     placeholder: isAr ? "اكتب رسالتك هنا..." : "Type your message here...",
+    thinking: isAr ? "جاري الكتابة..." : "Thinking...",
     welcome: isAr 
       ? "مرحباً بك في فالكت للحلول السحابية وتقنية المعلومات! كيف يمكنني مساعدتك اليوم؟" 
       : "Welcome to Valict for Cloud & IT Solutions! How can I help you today?",
-    fallbackResponse: isAr
-      ? "شكراً لتواصلك معنا. نحن نقوم حالياً بمعالجة استفسارك، أو يمكنك مراسلتنا مباشرة عبر البريد الإلكتروني الخاص بشركتنا."
-      : "Thank you for contacting us. We are currently processing your inquiry, or you can email us directly.",
+    errorMsg: isAr
+      ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الذكي. يرجى المحاولة مرة أخرى لاحقاً."
+      : "Sorry, I encountered an error connecting to the AI server. Please try again later.",
   };
 
   const [messages, setMessages] = useState([
     { id: 1, text: translations.welcome, isBot: true }
   ]);
 
-  // تأخير تفعيل المكون تماماً لحين تفاعل المستخدم لحماية الأداء
+  // تفعيل المكون الذكي بعد أول تفاعل لحماية سرعة وأداء الـ PageSpeed 
   useEffect(() => {
     const enableWidget = () => {
       setIsLoaded(true);
@@ -50,52 +51,49 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isLoading]);
 
   if (!isLoaded) return null;
 
-  // دالة ذكية مبسطة للرد بناءً على الكلمات المفتاحية واللغة
-  const getSmartResponse = (text: string): string => {
-    const lowerText = text.toLowerCase();
-    
-    if (isAr) {
-      if (lowerText.includes("حلول") || lowerText.includes("خدمات") || lowerText.includes("تقدمونها")) {
-        return "نحن في فالكت نقدم حلولاً متكاملة تشمل: 1. إدارة البنية التحتية لتقنية المعلومات، 2. الحوسبة السحابية والنقل الآمن للسحاب، 3. الأمن السيبراني المتقدم لحماية أصولك الرقمية.";
-      }
-      if (lowerText.includes("سحاب") || lowerText.includes("كلاود")) {
-        return "الحلول السحابية لدينا تركز على تصميم بيئات هجينة (Hybrid Cloud)، والنسخ الاحتياطي التلقائي، وضمان استمرارية الأعمال دون انقطاع.";
-      }
-      return translations.fallbackResponse;
-    } else {
-      if (lowerText.includes("solutions") || lowerText.includes("services") || lowerText.includes("offer") || lowerText.includes("provide")) {
-        return "At Valict, we provide comprehensive solutions including: 1. Managed IT Services, 2. Network & Infrastructure, 3. Scalable Cloud Solutions, and 4. Advanced Cybersecurity.";
-      }
-      if (lowerText.includes("cloud")) {
-        return "Our cloud solutions focus on Hybrid Cloud setups, automated backup, high availability, and optimizing your monthly infrastructure costs.";
-      }
-      return translations.fallbackResponse;
-    }
-  };
-
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
-    const userMsg = { id: Date.now(), text: input, isBot: false };
+    const userText = input;
+    const userMsg = { id: Date.now(), text: userText, isBot: false };
     setMessages((prev) => [...prev, userMsg]);
-    const currentInput = input;
     setInput("");
+    setIsLoading(true); // تفعيل مؤشر التحميل أثناء انتظار جوجل Gemini
 
-    // تشغيل الرد التلقائي الفوري بناءً على سؤالك
-    setTimeout(() => {
-      const replyText = getSmartResponse(currentInput);
-      const botMsg = {
-        id: Date.now() + 1,
-        text: replyText,
-        isBot: true
-      };
-      setMessages((prev) => [...prev, botMsg]);
-    }, 800); // الرد سيظهر فوراً بعد أقل من ثانية
+    try {
+      // إرسال الرسالة واللغة الحالية للمسار الخلفي بأمان
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userText, lang }),
+      });
+
+      const data = await res.json();
+
+      if (data.reply) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, text: data.reply, isBot: true },
+        ]);
+      } else {
+        throw new Error("No reply received");
+      }
+    } catch (error) {
+      console.error("Failed to fetch AI reply:", error);
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now() + 1, text: translations.errorMsg, isBot: true },
+      ]);
+    } finally {
+      setIsLoading(false); // إغلاق مؤشر التحميل فور رجوع الرد
+    }
   };
 
   return (
@@ -138,6 +136,15 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               </div>
             </div>
           ))}
+
+          {/* تأثير لودينج "جاري الكتابة" يظهر أثناء معالجة الذكاء الاصطناعي للرد */}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="max-w-[80%] rounded-2xl p-3 text-xs bg-white dark:bg-[#1E293B] text-gray-500 dark:text-gray-400 rounded-bl-none shadow-sm animate-pulse">
+                {translations.thinking}
+              </div>
+            </div>
+          )}
           <div ref={chatEndRef} />
         </div>
 
@@ -146,12 +153,14 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            disabled={isLoading}
             placeholder={translations.placeholder}
-            className={`flex-1 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy ${isAr ? "text-right" : "text-left"}`}
+            className={`flex-1 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy ${isAr ? "text-right" : "text-left"} disabled:opacity-50`}
           />
           <button
             type="submit"
-            className="p-2 rounded-xl bg-gray-100 dark:bg-[#1E293B] text-valict-navy dark:text-valict-cyan hover:bg-valict-navy hover:text-white dark:hover:bg-valict-cyan dark:hover:text-[#0B1120] transition-colors"
+            disabled={isLoading || !input.trim()}
+            className="p-2 rounded-xl bg-gray-100 dark:bg-[#1E293B] text-valict-navy dark:text-valict-cyan hover:bg-valict-navy hover:text-white dark:hover:bg-valict-cyan dark:hover:text-[#0B1120] transition-colors disabled:opacity-30"
           >
             <FaPaperPlane className={`w-3.5 h-3.5 transform ${isAr ? "rotate-180" : ""}`} />
           </button>
