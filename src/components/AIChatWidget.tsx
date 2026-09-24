@@ -121,7 +121,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   };
 
   return (
-    <div class="fixed bottom-6 left-6 z-50 font-sans">
+    <div className="fixed bottom-6 left-6 z-50 font-sans">
       {/* زر الشات الدائري الخارجي مع تأثير النبض الترحيبي الاحترافي الجاذب للانتباه */}
       <button
         onClick={() => setIsOpen(!isOpen)}
