@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { AIChatWidget } from "@/components/AIChatWidget"; // الاستدعاء الجديد لمكون الدعم الذكي
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -169,7 +170,9 @@ export default async function RootLayout({
 
           <Footer lang={lang} dict={dict} />
 
+          {/* الأزرار العائمة بالأسفل */}
           <ScrollToTop />
+          <AIChatWidget /> {/* إضافة زر الدعم الفني الذكي هنا بالأسفل بجانب زر الصعود */}
         </ThemeProvider>
       </body>
     </html>
