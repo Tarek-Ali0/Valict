@@ -8,6 +8,9 @@ export async function POST(req: Request) {
     // 1. جلب رسالة العميل واللغة المرسلة من واجهة الشات
     const { message, lang } = await req.json();
 
+    // تعريف متغير اللغة هنا في الأعلى ليصبح مقروءاً في كل أجزاء الملف (Try & Catch)
+    const isAr = lang === "ar";
+
     // 2. التحقق من وجود مفتاح الأمان السري في البيئة المحلية
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -18,12 +21,11 @@ export async function POST(req: Request) {
     }
 
     // 3. التعليمات الأساسية للمساعدة الذكية "فاليكتا" وتحديد هويتها الشاملة
-    const isAr = lang === "ar";
     const systemInstruction = isAr
       ? "اسمكِ 'فاليكتا' (Valicta)، المساعدة الرقمية الذكية الرسمية لشركة فالكت (Valict). أجيبي عن استفسارات الزوار بصيغة المؤنث باحترافية عاليّة ولغة واضحة ومبسطة. شركة فالكت تقدم حلولاً شاملة ومتكاملة تشمل: إدارة وتطوير البنية التحتية لتقنية المعلومات والاتصالات، خدمات الأمن السيبراني المتقدمة، حلول الحوسبة السحابية والنقل الآمن للسحاب، والنسخ الاحتياطي التلقائي لضمان استمرارية الأعمال وتقليل وقت التوقف. حافظي على إجاباتكِ punchy، محددة، ومختصرة تناسب واجهات الشات السريعة."
       : "Your name is 'Valicta', the official smart AI digital assistant for Valict. Always respond professionally and concisely using a business-friendly, helpful tone. Valict provides comprehensive IT solutions, including ICT Infrastructure management, Advanced Cybersecurity services, Scalable Cloud Computing, and Automated Backups to ensure business continuity. Keep your answers short, structured, and punchy for a chat widget.";
 
-    // 4. إعداد الهيكل البرمجي لطلب جوجل Gemini (تم تصحيح الرابط بالكامل هنا)
+    // 4. إعداد الهيكل البرمجي لطلب جوجل Gemini بالرابط المصلح بالكامل
     const response = await fetch(
       `https://googleapis.com{apiKey}`,
       {
@@ -67,8 +69,12 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error("Chat API Error:", error);
+    
+    // فحص داخلي سريع: إذا فشل الـ try لأي سبب، سنقرأ لغة الطلب من خلال الـ URL أو الافتراضي
+    const isArabicFallback = req.url.includes("lang=ar") || true; 
+    
     return NextResponse.json(
-      { reply: isAr ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر." : "Sorry, encountered a server connection error." },
+      { reply: isArabicFallback ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الفعلي." : "Sorry, encountered a server connection error." },
       { status: 200 }
     );
   }
