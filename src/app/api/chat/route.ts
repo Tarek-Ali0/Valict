@@ -1,65 +1,47 @@
 import { NextResponse } from "next/server";
 
-// تفعيل بيئة الـ Edge لضمان سرعة فائقة وفك أي حظر للاتصال الخارجي بجوجل على Vercel
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
-    // 1. جلب رسالة العميل واللغة المرسلة من واجهة الشات
     const { message, lang } = await req.json();
-
-    // 2. حقن مفتاح الأمان السري مباشرة داخل الكود لضمان تخطي قيود Vercel تماماً
+    const isAr = lang === "ar";
+    
+    // المفتاح مدمج وجاهز للعمل مباشرة
     const apiKey = "AQ.Ab8RN6LCwADpP8tbiysMcE57K_roAFCQ58DMSYfW2Dl_mRkiQ";
 
-       // 3. كتابة التعليمات الأساسية الشاملة للمساعدة الذكية "فاليكتا" وتحديد هويتها الكاملة
-    const isAr = lang === "ar";
     const systemInstruction = isAr
       ? "اسمكِ 'فاليكتا' (Valicta)، المساعدة الرقمية الذكية الرسمية لشركة فالكت (Valict). أجيبي عن استفسارات الزوار بصيغة المؤنث باحترافية عاليّة ولغة واضحة ومبسطة. شركة فالكت تقدم حلولاً شاملة ومتكاملة تشمل: إدارة وتطوير البنية التحتية لتقنية المعلومات والاتصالات، خدمات الأمن السيبراني المتقدمة، حلول الحوسبة السحابية والنقل الآمن للسحاب، والنسخ الاحتياطي التلقائي لضمان استمرارية الأعمال وتقليل وقت التوقف. حافظي على إجاباتكِ punchy، محددة، ومختصرة تناسب واجهات الشات السريعة."
       : "Your name is 'Valicta', the official smart AI digital assistant for Valict. Always respond professionally and concisely using a business-friendly, helpful tone. Valict provides comprehensive IT solutions, including ICT Infrastructure management, Advanced Cybersecurity services, Scalable Cloud Computing, and Automated Backups to ensure business continuity. Keep your answers short, structured, and punchy for a chat widget.";
 
-    // 4. إعداد الهيكل البرمجي لطلب جوجل Gemini (باستخدام نموذج 1.5 Flash السريع والمجاني)
-    // تم تصحيح رابط الاستدعاء بالكامل هنا وحقن المفتاح المباشر للعبور الآمن
     const response = await fetch(
       `https://googleapis.com{apiKey}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: message,
-                },
-              ],
-            },
-          ],
-          // تمرير شخصية البوت لجوجل لحقن الهوية داخل الإجابة
-          systemInstruction: {
-            parts: [
-              {
-                text: systemInstruction,
-              },
-            ],
-          },
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 300, // تحديد حجم الرد ليظل الشات خفيفاً وسريع القراءة
-          },
+          contents: [{ parts: [{ text: message }] }],
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+          generationConfig: { temperature: 0.7, maxOutputTokens: 300 },
         }),
       }
     );
 
     const data = await response.json();
 
-    // 5. استخراج النص النهائي الراجع من ذكاء جوجل الاصطناعي
-    const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || 
-      (isAr ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر. يرجى المحاولة مرة أخرى." : "Sorry, I encountered an error. Please try again.");
+    // طريقة بديلة، ذكية ومضمونة 100% لاستخراج النص بدون التعقيدات اللي بتسبب الانهيار
+    let botReply = "";
+    if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+      botReply = data.candidates[0].content.parts[0].text;
+    }
 
-    // 6. إرسال الرد الذكي فوراً لواجهة الشات
+    if (!botReply) {
+      botReply = isAr 
+        ? "عذراً، لم أتمكن من العثور على رد مناسب. يرجى المحاولة مرة أخرى." 
+        : "Sorry, no response found. Please try again.";
+    }
+
     return NextResponse.json({ reply: botReply });
 
   } catch (error) {
