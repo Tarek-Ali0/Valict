@@ -139,49 +139,52 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       <div
         className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen ? "scale-100 opacity-100 visible" : "scale-75 opacity-0 invisible"
-        } overflow-visible`} // إلغاء أي قص علوي أو سفلي للسماح بانحناء الحواف بالكامل
+        } overflow-visible`}
       >
-        {/* شريط التصفح (Header) الرفيع المضاف إليه كلاس rounded-t-2xl لتلتف الحواف العلوية بنعومة */}
-        <div className="bg-valict-navy dark:bg-valict-cyan p-2.5 text-white dark:text-[#0B1120] flex items-center justify-between border-b border-white/10 relative rounded-t-2xl">
-          <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
-            
-            {/* الأفاتار المنبثق والخارج للأعلى متجاوزاً حدود الصندوق بشكل ثلاثي الأبعاد */}
-            <div className="relative -top-5 w-12 h-12 rounded-full flex items-center justify-center border-4 border-white dark:border-[#0F172A] bg-gray-900 shadow-xl flex-shrink-0 z-20">
-              <svg className="w-8 h-8" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
-                <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
-                <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B"/>
-                <path d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36" stroke="#00D2FF" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M14 26L8 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="7" cy="14" r="2" fill="#00D2FF"/>
-                <path d="M48 26L54 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="55" cy="14" r="2" fill="#00D2FF"/>
-              </svg>
-              <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
-            </div>
-            
-            <div className={isAr ? "text-right" : "text-left"}>
-              <h3 className="font-bold text-xs tracking-wide">{translations.title}</h3>
-              <p className="text-[10px] opacity-75 font-medium">{translations.subtitle}</p>
-            </div>
+        {/* شريط تصفح (Header) نحيف وشفاف لدمج الهوية برقة تامة وبدون أي كتل لونية مصمتة */}
+        <div className="p-2 text-gray-400 dark:text-gray-500 flex items-center justify-between relative rounded-t-2xl bg-transparent h-12">
+          
+          {/* زر إغلاق مخفي ورفيع على غرار الشات المرجعي المرفق */}
+          <button 
+            onClick={() => setIsOpen(false)}
+            className="p-1 hover:text-gray-700 dark:hover:text-gray-300 transition-colors z-30"
+          >
+            <FaXmark className="w-4 h-4" />
+          </button>
+
+          {/* الأفاتار البارز المنبثق والمثبت بالمنتصف الهندسي العلوي للصندوق */}
+          <div className="absolute left-1/2 -translate-x-1/2 -top-5 w-12 h-12 rounded-full flex items-center justify-center border-4 border-white dark:border-[#0F172A] bg-gray-900 shadow-xl flex-shrink-0 z-20">
+            <svg className="w-8 h-8" viewBox="0 0 64 64" fill="none" xmlns="http://w3.org">
+              <circle cx="32" cy="34" r="20" fill="#FFFFFF" stroke="#00D2FF" strokeWidth="2"/>
+              <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B"/>
+              <path d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
+              <path d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30" stroke="#00D2FF" strokeWidth="2.5" strokeLinecap="round"/>
+              <path d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36" stroke="#00D2FF" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M14 26L8 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="7" cy="14" r="2" fill="#00D2FF"/>
+              <path d="M48 26L54 16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="55" cy="14" r="2" fill="#00D2FF"/>
+            </svg>
+            <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse"></span>
           </div>
+
+          <div className="w-4 h-4 pe-1 opacity-0"></div>
         </div>
 
-        {/* صندوق الرسائل المطور والمعدل بالكامل لترتيب المحتوى منطقياً */}
-        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-[#0B1120]">
+        {/* صندوق الرسائل المطور والمضاف إليه كلاسات تهذيب شريط التمرير الجانبي (Scrollbar) ليصبح نحيفاً وجميلاً جداً */}
+        <div className="flex-1 px-4 pb-4 overflow-y-auto space-y-3 bg-white dark:bg-[#0F172A] -mt-2 scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
           
-          {/* 1. عرض الرسائل الحية (بما فيها الرسالة الترحيبية والتعريف أولاً في المقدمة) */}
+          {/* عرض الرسائل الحية (بما فيها الرسالة الترحيبية والتعريف أولاً في المقدمة) */}
           {messages.map((msg) => (
             <div
               key={msg.id}
               className={`flex ${msg.isBot ? "justify-start" : "justify-end"}`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed whitespace-pre-line ${isAr ? "text-right" : "text-left"} ${
+                className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed whitespace-pre-line ${isAr ? "text-right" : "text-left"} ${
                   msg.isBot
-                    ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-none shadow-sm"
-                    : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-none"
+                    ? "bg-gray-50 dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-none shadow-sm border border-gray-100 dark:border-gray-800/40"
+                    : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-none shadow-sm"
                 }`}
               >
                 {msg.text}
@@ -189,16 +192,16 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             </div>
           ))}
 
-          {/* 2. قسم الاستفسارات الشائعة ينزل هنا بالأسفل تحت الترحيب والتعريف بالظبط وببطاقات أنيقة جداً */}
+          {/* قسم الاستفسارات الشائعة ينزل هنا بالأسفل تحت الترحيب والتعريف بالظبط وببطاقات أنيقة جداً */}
           {messages.length <= 1 && (
-            <div className="space-y-2 mt-4 pt-2 border-t border-gray-200/50 dark:border-gray-800/50">
+            <div className="space-y-2 mt-4 pt-4 border-t border-gray-100 dark:border-gray-800/40">
               <div className={`text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 ${isAr ? "text-right" : "text-left"}`}>
                 {isAr ? "استفسارات شائعة" : "Common Inquiries"}
               </div>
               
               <button 
                 onClick={() => setInput(isAr ? "ما هي خدمات شركة فالكت؟" : "What solutions do you offer?")}
-                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
               >
                 <span>{isAr ? "خدمات وحلول شركة فالكت" : "Valict Solutions & Services"}</span>
                 <span className="text-gray-400 text-xs">→</span>
@@ -206,7 +209,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               
               <button 
                 onClick={() => setInput(isAr ? "كيف تحمون الأنظمة من الاختراق؟" : "How do you protect systems?")}
-                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
               >
                 <span>{isAr ? "خدمات الأمن السيبراني المتقدمة" : "Advanced Cybersecurity"}</span>
                 <span className="text-gray-400 text-xs">→</span>
@@ -214,7 +217,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               
               <button 
                 onClick={() => setInput(isAr ? "كيف تعالجون مشكلة توقف السيرفرات؟" : "How do you eliminate downtime?")}
-                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+                className={`w-full p-2.5 text-xs text-gray-700 dark:text-gray-300 bg-white dark:bg-[#1E293B] hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all font-medium flex items-center justify-between ${isAr ? "flex-row-reverse text-right" : "flex-row text-left"}`}
               >
                 <span>{isAr ? "حلول توقف النظام (Downtime)" : "System Downtime Solutions"}</span>
                 <span className="text-gray-400 text-xs">→</span>
@@ -224,7 +227,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
           {isLoading && (
             <div className="flex justify-start">
-              <div className="max-w-[80%] rounded-2xl p-3 text-xs bg-white dark:bg-[#1E293B] text-gray-500 dark:text-gray-400 rounded-bl-none shadow-sm animate-pulse">
+              <div className="max-w-[80%] rounded-2xl p-3 text-xs bg-gray-50 dark:bg-[#1E293B] text-gray-500 dark:text-gray-400 rounded-bl-none shadow-sm animate-pulse">
                 {translations.thinking}
               </div>
             </div>
@@ -232,7 +235,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           <div ref={chatEndRef} />
         </div>
 
-        {/* نموذج الإدخال (Form) المضاف إليه كلاس rounded-b-2xl ليلتف ويتطابق مع حواف قاعدة الشات الدائرية تماماً */}
+        {/* نموذج الإدخال (Form) الملتف بانحناءات دائرية سفلية ناعمة */}
         <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2 rounded-b-2xl">
           <input
             type="text"
