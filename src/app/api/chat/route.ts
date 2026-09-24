@@ -14,22 +14,22 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ reply: "Error: GEMINI_API_KEY is missing." }, { status: 200 });
+      return NextResponse.json({ reply: lang === "ar" ? "خطأ في إعدادات الخادم." : "Server configuration error." }, { status: 200 });
     }
 
-    // استخدام النموذج المباشر بالصيغة المعتمدة للـ v1
+    // رابط الـ API المباشر والمستقر
     const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const systemPrompt = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict). أجب باختصار شديد وباحترافية."
-      : "You are 'Valicta', the smart assistant for Valict. Answer concisely and professionally.";
+      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد، بدقة، وبأسلوب مهني واحترافي باللغة العربية بناءً على سؤال العميل التالي."
+      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally in English based on the following user question.";
 
     const payload = {
       contents: [
         {
           role: "user",
           parts: [
-            { text: `${systemPrompt}\n\nالسؤال: ${message}` }
+            { text: `${systemPrompt}\n\nسؤال العميل / User Question: ${message}` }
           ]
         }
       ]
@@ -46,18 +46,20 @@ export async function POST(req: Request) {
     const data = await response.json();
 
     if (!response.ok) {
-      // في حال حدث أي خطأ، سنعرض رسالة بديلة نظيفة بدلاً من كود الخطأ التقني المزعج
+      console.error("Gemini API Error:", data);
       return NextResponse.json({ 
-        reply: lang === "ar" ? "أهلاً بك في فالكت! أنا هنا لمساعدتك في استفسارات البنية التحتية وحلول التقنية، كيف يمكنني دعم أعمالك اليوم؟" : "Welcome to Valict! I am here to help you with IT solutions. How can I assist you today?" 
+        reply: lang === "ar" ? "عذراً، واجهت ضغطاً مؤقتاً في السيرفر، يرجى المحاولة مرة أخرى." : "Sorry, temporary server load, please try again." 
       }, { status: 200 });
     }
 
+    // استخراج الإجابة بدقة من هيكل استجابة جوجل
     const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 
       (lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?");
 
     return NextResponse.json({ reply: replyText });
 
-  } catch (error: any) {
+  } async (error: any) {
+    console.error("Chat API Catch Error:", error);
     return NextResponse.json({ 
       reply: "أهلاً بك في فالكت! نحن هنا لخدمتك وتوفير حلول تقنية المعلومات المتقدمة." 
     }, { status: 200 });
