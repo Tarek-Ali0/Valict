@@ -1,26 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa6";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const pathRef = useRef(null);
+  const pathLengthRef = useRef(0);
 
-  // مراقبة حركة التمرير في الصفحة
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
+    // 1. حساب طول محيط الدائرة مرة واحدة فقط عند تحميل المكون
+    if (pathRef.current) {
+      const length = pathRef.current.getTotalLength();
+      pathLengthRef.current = length;
+      pathRef.current.style.strokeDasharray = `${length} ${length}`;
+      pathRef.current.style.strokeDashoffset = length;
+    }
+
+    const handleScroll = () => {
+      const scroll = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+
+      // 2. تحديث رسمة الدائرة برمجياً مباشرة (تجنب الـ Re-render للمحافظة على الأداء الفائق)
+      if (pathRef.current && height > 0) {
+        const progress = pathLengthRef.current - (scroll * pathLengthRef.current) / height;
+        pathRef.current.style.strokeDashoffset = progress;
+      }
+
+      // 3. إظهار أو إخفاء الزرار (تعمل فقط عند تجاوز الـ 300 بكسل ولا تتكرر مع كل تمريرة)
+      if (scroll > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // دالة الصعود لأعلى الصفحة بسلاسة
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -29,16 +47,30 @@ export function ScrollToTop() {
   };
 
   return (
-    <>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none"
-        >
-          <FaArrowUp className="w-4 h-4" />
-        </button>
-      )}
-    </>
+    <button
+      onClick={scrollToTop}
+      aria-label="Scroll to top"
+      className={`fixed bottom-6 right-6 z-50 h-11 w-11 flex items-center justify-center rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none ${
+        isVisible ? "opacity-100 visible" : "opacity-0 invisible"
+      }`}
+    >
+      {/* دائرة التحميل SVG المحيطة بالسهم */}
+      <svg
+        className="absolute top-0 left-0 w-full h-full transform -rotate-90 p-[2px]"
+        viewBox="-1 -1 102 102"
+      >
+        <path
+          ref={pathRef}
+          d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+          fill="none"
+          stroke="currentColor" /* ستأخذ لون الأيقونة تلقائياً بناءً على الـ Dark Mode الخاص بك */
+          strokeWidth="6"
+          className="transition-[stroke-dashoffset] duration-75 ease-linear"
+        />
+      </svg>
+
+      {/* أيقونة السهم الحالية كما هي */}
+      <FaArrowUp className="w-4 h-4 relative z-10" />
+    </button>
   );
 }
