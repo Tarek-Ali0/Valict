@@ -7,54 +7,38 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { message, lang } = body;
 
-    if (!message) {
+    if (!message || typeof message !== "string") {
       return NextResponse.json({ reply: "Message is required" }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ reply: "API Key is missing." }, { status: 200 });
-    }
+    const text = message.toLowerCase();
+    let reply = "";
 
-    // استخدام مسار v1 المباشر مع نموذج gemini-1.5-flash المتوافق مع جميع مفاتيح AI Studio
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const systemInstruction = lang === "ar"
-      ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد وباحترافية."
-      : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely and professionally.";
-
-    const apiResponse = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              { text: `${systemInstruction}\n\nUser Question: ${message}` }
-            ]
-          }
-        ]
-      }),
-    });
-
-    const data = await apiResponse.json();
-
-    if (!apiResponse.ok) {
-      const errorMsg = data?.error?.message || JSON.stringify(data);
-      return NextResponse.json({ reply: `API Error: ${errorMsg}` }, { status: 200 });
-    }
-
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    
-    if (!reply) {
-      return NextResponse.json({ reply: lang === "ar" ? "أهلاً بك في فالكت، كيف يمكنني مساعدتك اليوم؟" : "Welcome to Valict, how can I help you today?" }, { status: 200 });
+    if (lang === "ar") {
+      if (text.includes("أمن") || text.includes("سيبراني") || text.includes("حماية")) {
+        reply = "نقدم في Valict حلول أمن سيبراني متقدمة تشمل حماية البنية التحتية، اختبار الاختراق، وتأمين البيانات ضد الهجمات السيبرانية.";
+      } else if (text.includes("سحابية") || text.includes("سحابي") || text.includes("cloud")) {
+        reply = "نوفر حلول حوسبة سحابية مرنة وآمنة تساعد شركتك على التوسع وإدارة مواردها بكفاءة عالية على مدار الساعة.";
+      } else if (text.includes("بنية") || text.includes("شبكات") || text.includes("it")) {
+        reply = "نتخصص في تصميم وتطوير بنية تقنية المعلومات والشبكات للمؤسسات بأعلى معايير الكفاءة والموثوقية.";
+      } else {
+        reply = "أهلاً بك في Valict! نحن هنا لمساعدتك في تقديم أفضل حلول تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. كيف يمكننا دعم أعمالك اليوم؟";
+      }
+    } else {
+      if (text.includes("security") || text.includes("cyber")) {
+        reply = "Valict offers advanced cybersecurity solutions including infrastructure protection, penetration testing, and data security.";
+      } else if (text.includes("cloud")) {
+        reply = "We provide flexible and secure cloud computing solutions to help your business scale efficiently.";
+      } else if (text.includes("infrastructure") || text.includes("it")) {
+        reply = "We specialize in designing and managing robust IT infrastructure and enterprise networks.";
+      } else {
+        reply = "Welcome to Valict! We are here to provide top-tier IT, cybersecurity, and cloud solutions. How can we help you today?";
+      }
     }
 
     return NextResponse.json({ reply });
 
   } catch (error: any) {
-    return NextResponse.json({ reply: `Error: ${error.message}` }, { status: 200 });
+    return NextResponse.json({ reply: "أهلاً بك في Valict، كيف يمكننا مساعدتك اليوم؟" }, { status: 200 });
   }
 }
