@@ -16,13 +16,16 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const isAr = lang === "ar";
   const translations = {
-    title: isAr ? "الدعم الفني للمنصة" : "Platform Technical Support",
-    subtitle: isAr ? "بوت ذكي متصل بـ فالكت" : "Smart Bot connected to Valict",
-    placeholder: isAr ? "اكتب رسالتك هنا..." : "Type your message here...",
-    thinking: isAr ? "جاري الكتابة..." : "Thinking...",
+    title: isAr ? "فاليكتا | المساعد الذكي لـ فالكت" : "Valicta | Valict Smart Assistant",
+    subtitle: isAr ? "خبير حلول تقنية المعلومات المتكاملة" : "Integrated IT Solutions Expert",
+    placeholder: isAr ? "اسأل فاليكتا عن خدماتنا وحلولنا التقنية..." : "Ask Valicta about our IT solutions & services...",
+    thinking: isAr ? "فاليكتا تكتب الآن..." : "Valicta is typing...",
+    
+    // 2. تحديث الرسالة الترحيبية باسم فاليكتا
     welcome: isAr 
-      ? "مرحباً بك في فالكت للحلول السحابية وتقنية المعلومات! كيف يمكنني مساعدتك اليوم؟" 
-      : "Welcome to Valict for Cloud & IT Solutions! How can I help you today?",
+      ? "مرحباً بك! أنا 'فاليكتا' مساعدتك الرقمية الذكية في فالكت. 🤖☁️ يسعدني جداً إجابتك على أي استفسار يخص حلول وإدارة تقنية المعلومات، البنية التحتية، الحوسبة السحابية، أو خدمات الأمن السيبراني المتقدمة لتطوير وحماية أعمالك. كيف يمكنني مساعدتك اليوم؟" 
+      : "Welcome! I am 'Valicta', your smart digital assistant at Valict. 🤖☁️ I'm here to assist you with any inquiries regarding IT solutions & management, infrastructure, cloud computing, or advanced cybersecurity services to empower and secure your business. How can I help you today?",
+    
     errorMsg: isAr
       ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الذكي. يرجى المحاولة مرة أخرى لاحقاً."
       : "Sorry, I encountered an error connecting to the AI server. Please try again later.",
