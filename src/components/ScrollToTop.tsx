@@ -5,8 +5,9 @@ import { FaArrowUp } from "react-icons/fa6";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const pathRef = useRef(null);
-  const pathLengthRef = useRef(0);
+  // تحديد نوع الـ Ref ليكون متوافقاً مع مسارات الـ SVG في TypeScript
+  const pathRef = useRef<SVGPathElement>(null);
+  const pathLengthRef = useRef<number>(0);
 
   useEffect(() => {
     // 1. حساب طول محيط الدائرة مرة واحدة فقط عند تحميل المكون
@@ -14,7 +15,7 @@ export function ScrollToTop() {
       const length = pathRef.current.getTotalLength();
       pathLengthRef.current = length;
       pathRef.current.style.strokeDasharray = `${length} ${length}`;
-      pathRef.current.style.strokeDashoffset = length;
+      pathRef.current.style.strokeDashoffset = `${length}`;
     }
 
     const handleScroll = () => {
@@ -24,10 +25,10 @@ export function ScrollToTop() {
       // 2. تحديث رسمة الدائرة برمجياً مباشرة (تجنب الـ Re-render للمحافظة على الأداء الفائق)
       if (pathRef.current && height > 0) {
         const progress = pathLengthRef.current - (scroll * pathLengthRef.current) / height;
-        pathRef.current.style.strokeDashoffset = progress;
+        pathRef.current.style.strokeDashoffset = `${progress}`;
       }
 
-      // 3. إظهار أو إخفاء الزرار (تعمل فقط عند تجاوز الـ 300 بكسل ولا تتكرر مع كل تمريرة)
+      // 3. إظهار أو إخفاء الزرار
       if (scroll > 300) {
         setIsVisible(true);
       } else {
@@ -63,7 +64,7 @@ export function ScrollToTop() {
           ref={pathRef}
           d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
           fill="none"
-          stroke="currentColor" /* ستأخذ لون الأيقونة تلقائياً بناءً على الـ Dark Mode الخاص بك */
+          stroke="currentColor"
           strokeWidth="6"
           className="transition-[stroke-dashoffset] duration-75 ease-linear"
         />
