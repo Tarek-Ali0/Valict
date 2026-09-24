@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     // استخدام الرابط الأبسط والمباشر كـ POST عادي
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(url, {
       method: "POST",
