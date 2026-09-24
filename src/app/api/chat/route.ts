@@ -21,7 +21,6 @@ export async function POST(req: Request) {
     const modelName = "gemini-1.5-flash";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
-    // فصل التعليمات البرمجية والهوية في حقل مستقل (System Instruction)
     const systemInstructionText = lang === "ar"
       ? "أنت 'فاليكتا'، المساعد الذكي لشركة فالكت (Valict) المتخصصة في حلول وبنية تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. أجب باختصار شديد (Punchy)، بدقة، وبأسلوب مهني واحترافي."
       : "You are 'Valicta', the smart assistant for Valict, specialized in IT infrastructure, cybersecurity, and cloud solutions. Answer concisely, accurately, and professionally.";
@@ -63,7 +62,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ reply: replyText });
 
-  } async (error: any) {
+  } catch (error) {
     console.error("Chat API Internal Error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
