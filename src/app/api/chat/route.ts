@@ -15,24 +15,22 @@ export async function POST(req: Request) {
     let reply = "";
 
     if (lang === "ar") {
-      if (text.includes("أمن") || text.includes("سيبراني") || text.includes("حماية")) {
-        reply = "نقدم في Valict حلول أمن سيبراني متقدمة تشمل حماية البنية التحتية، اختبار الاختراق، وتأمين البيانات ضد الهجمات السيبرانية.";
-      } else if (text.includes("سحابية") || text.includes("سحابي") || text.includes("cloud")) {
-        reply = "نوفر حلول حوسبة سحابية مرنة وآمنة تساعد شركتك على التوسع وإدارة مواردها بكفاءة عالية على مدار الساعة.";
-      } else if (text.includes("بنية") || text.includes("شبكات") || text.includes("it")) {
-        reply = "نتخصص في تصميم وتطوير بنية تقنية المعلومات والشبكات للمؤسسات بأعلى معايير الكفاءة والموثوقية.";
+      if (text.includes("أمن") || text.includes("سيبراني") || text.includes("حماية") || text.includes("اختراق")) {
+        reply = "نحن في Valict نوفر درع حماية متكامل لأصولك الرقمية، يشمل اختبار الاختراق، مراقبة التهديدات، وتأمين البنية التحتية ضد أي هجمات سيبرانية محتملة.";
+      } else if (text.includes("سحابية") || text.includes("سحابي") || text.includes("cloud") || text.includes("استضافة")) {
+        reply = "حلولنا السحابية مصممة خصيصاً لتمنح شركتك مرونة كاملة، سرعة فائقة في معالجة البيانات، واستضافة آمنة وموثوقة على مدار الساعة.";
+      } else if (text.includes("سعر") || text.includes("تكلفة") || text.includes("باقة") || text.includes("اشتراك")) {
+        reply = "تختلف الأسعار بناءً على حجم احتياجات شركتك والبنية التقنية المطلوبة. يمكنك حجز استشارة مجانية عبر موقعنا لنقدم لك عرض سعر مخصص.";
       } else {
-        reply = "أهلاً بك في Valict! نحن هنا لمساعدتك في تقديم أفضل حلول تقنية المعلومات، الأمن السيبراني، والحوسبة السحابية. كيف يمكننا دعم أعمالك اليوم؟";
+        reply = "سؤال مهم جداً! في Valict، نعمل على تصميم بنية تقنية معلومات متكاملة ترفع من كفاءة أعمالك وتضمن استمرارية خدماتك بأعلى معايير الجودة.";
       }
     } else {
       if (text.includes("security") || text.includes("cyber")) {
-        reply = "Valict offers advanced cybersecurity solutions including infrastructure protection, penetration testing, and data security.";
+        reply = "Valict delivers robust cybersecurity frameworks, including vulnerability assessments, threat monitoring, and infrastructure hardening.";
       } else if (text.includes("cloud")) {
-        reply = "We provide flexible and secure cloud computing solutions to help your business scale efficiently.";
-      } else if (text.includes("infrastructure") || text.includes("it")) {
-        reply = "We specialize in designing and managing robust IT infrastructure and enterprise networks.";
+        reply = "Our cloud services provide scalable architecture, high availability, and secure data management tailored to enterprise needs.";
       } else {
-        reply = "Welcome to Valict! We are here to provide top-tier IT, cybersecurity, and cloud solutions. How can we help you today?";
+        reply = "That's a great question! At Valict, we specialize in delivering enterprise-grade IT infrastructure and digital solutions to empower your business.";
       }
     }
 
