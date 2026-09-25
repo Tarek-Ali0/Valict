@@ -14,25 +14,28 @@ export async function POST(req: Request) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ 
-        reply: lang === "ar" ? "أهلاً بك، مفتاح الـ API غير معرّف حالياً." : "API key is missing." 
+        reply: lang === "ar" ? "مفتاح الـ API غير معرّف في إعدادات المنصة." : "API key is missing in platform settings." 
       }, { status: 200 });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // المسار المباشر والمعتمد للـ API
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const systemInstruction = lang === "ar"
-      ? `أنت 'فاليكتا'، المساعد الذكي الرسمي لشركة Valict المتخصصة في البنية التحتية لتقنية المعلومات، إدارة السيرفرات، الأمن السيبراني، والحوسبة السحابية. أجب على السؤال التالي بشكل مباشر، احترافي، ومرتبط بمجال الشركة باللغة العربية:`
-      : `You are 'Valicta', the official smart assistant for Valict (IT infrastructure, cybersecurity, and cloud solutions). Answer the following question professionally and concisely in English:`;
+      ? `أنت 'فاليكتا'، المساعد الذكي الرسمي لشركة Valict. الشركة متخصصة في حلول وبنية تقنية المعلومات، إدارة السيرفرات، الأمن السيبراني، والحوسبة السحابية. مهمتك الإجابة على استفسارات الزوار باحترافية باللغة العربية.`
+      : `You are 'Valicta', the official smart assistant for Valict, a company specialized in IT infrastructure, server management, cybersecurity, and cloud computing. Answer visitor inquiries professionally and concisely in English.`;
 
     const apiResponse = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         contents: [
           {
             role: "user",
             parts: [
-              { text: `${systemInstruction}\n\n${message}` }
+              { text: `${systemInstruction}\n\nUser Question: ${message}` }
             ]
           }
         ]
@@ -42,9 +45,9 @@ export async function POST(req: Request) {
     const data = await apiResponse.json();
 
     if (!apiResponse.ok) {
-      console.error("Gemini API Error details:", data);
+      console.error("Gemini API Error:", JSON.stringify(data));
       return NextResponse.json({ 
-        reply: lang === "ar" ? "نحن في Valict نرحب بك، ونسعد بالإجابة على استفساراتك التقنية عبر حجز استشارة مباشرة." : "Welcome to Valict. How can we assist your business today?" 
+        reply: lang === "ar" ? "أهلاً بك في Valict، نحن هنا لخدمتك وتوفير أحدث حلول تقنية المعلومات." : "Welcome to Valict, how can we help you today?" 
       }, { status: 200 });
     }
 
