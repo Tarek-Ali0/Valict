@@ -142,7 +142,7 @@ Strict rules:
 - Reply in English, professionally and concisely, max 4 lines unless detail is requested.`;
 
     // 6. استدعاء Gemini مع system instruction صح + timeout
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -200,22 +200,13 @@ Strict rules:
 
     // 7. معالجة أخطاء Gemini
    if (!apiResponse.ok) {
-  console.error("=== GEMINI API ERROR ===");
-  console.error("Status:", apiResponse.status);
-  console.error("Body:", JSON.stringify(data, null, 2));
-  console.error("========================");
+  console.error("[chat] Gemini error:", apiResponse.status, data?.error?.message);
 
   return NextResponse.json(
     {
       reply: isAr
-        ? "حدث خطأ مؤقت في الخدمة الذكية، يرجى المحاولة لاحقاً."
-        : "A temporary AI service error occurred. Please try again later.",
-      // 👇 مؤقت للتشخيص - شيله بعد ما نحل المشكلة
-      _debug: {
-        geminiStatus: apiResponse.status,
-        geminiError: data?.error?.message || data?.message || "no message",
-        geminiStatusText: data?.error?.status || "no status",
-      },
+        ? "حدث خطأ مؤقت، يرجى المحاولة لاحقاً."
+        : "A temporary error occurred. Please try again later.",
     },
     { status: 502 }
   );
