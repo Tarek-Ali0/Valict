@@ -199,21 +199,27 @@ Strict rules:
     const data = await apiResponse.json().catch(() => null);
 
     // 7. معالجة أخطاء Gemini
-    if (!apiResponse.ok) {
-      console.error(
-        "[chat] Gemini API error:",
-        apiResponse.status,
-        JSON.stringify(data)
-      );
-      return NextResponse.json(
-        {
-          reply: isAr
-            ? "حدث خطأ مؤقت في الخدمة الذكية، يرجى المحاولة لاحقاً."
-            : "A temporary AI service error occurred. Please try again later.",
-        },
-        { status: 502 }
-      );
-    }
+   if (!apiResponse.ok) {
+  console.error("=== GEMINI API ERROR ===");
+  console.error("Status:", apiResponse.status);
+  console.error("Body:", JSON.stringify(data, null, 2));
+  console.error("========================");
+
+  return NextResponse.json(
+    {
+      reply: isAr
+        ? "حدث خطأ مؤقت في الخدمة الذكية، يرجى المحاولة لاحقاً."
+        : "A temporary AI service error occurred. Please try again later.",
+      // 👇 مؤقت للتشخيص - شيله بعد ما نحل المشكلة
+      _debug: {
+        geminiStatus: apiResponse.status,
+        geminiError: data?.error?.message || data?.message || "no message",
+        geminiStatusText: data?.error?.status || "no status",
+      },
+    },
+    { status: 502 }
+  );
+}
 
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
