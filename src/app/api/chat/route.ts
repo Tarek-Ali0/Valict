@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
-// v2 - with Redis caching
+import Groq from "groq-sdk";
+// v3 - with Groq + Redis caching
+
 // إعدادات عامة
 const MAX_MESSAGE_LENGTH = 1000;
-const REQUEST_TIMEOUT_MS = 15000;
 const RATE_LIMIT_WINDOW_MS = 60_000; // دقيقة
 const RATE_LIMIT_MAX_REQUESTS = 15;  // 15 رسالة في الدقيقة لكل IP
 const MAX_RETRIES = 5;               // عدد محاولات إعادة الطلب
 const CACHE_TTL_SECONDS = 24 * 60 * 60; // مدة الكاش: 24 ساعة
+const GROQ_MODEL = "llama-3.3-70b-versatile"; // الموديل المستخدم
 
 /**
  * Rate limiter بسيط في الذاكرة.
@@ -72,7 +74,6 @@ function getRedis(): Redis | null {
 // Caching Helpers
 // =====================
 function buildCacheKey(message: string, lang: string): string {
-  // تطبيع الرسالة: trim + lowercase عشان "ما هي خدماتكم؟" و "ما هي خدماتكم" يبقوا نفس المفتاح
   const normalized = message.trim().toLowerCase().replace(/\s+/g, " ");
   return `valict:chat:${lang}:${normalized}`;
 }
@@ -87,7 +88,7 @@ async function getCachedReply(message: string, lang: string): Promise<string | n
     return cached ?? null;
   } catch (err) {
     console.error("[chat] Cache GET error:", err);
-    return null; // لو الكاش فشل، كمّل عادي
+    return null;
   }
 }
 
@@ -104,56 +105,69 @@ async function setCachedReply(
     await client.set(key, reply, { ex: CACHE_TTL_SECONDS });
   } catch (err) {
     console.error("[chat] Cache SET error:", err);
-    // مش بنرجّع خطأ، عشان الكاش مش critical
   }
 }
 
-/**
- * استدعاء Gemini مع إعادة المحاولة التلقائية.
- */
-async function callGemini(
-  url: string,
-  body: any,
-  maxRetries = MAX_RETRIES
-): Promise<Response> {
+// =====================
+// Groq Client
+// =====================
+let groqClient: Groq | null = null;
+
+function getGroq(): Groq | null {
+  if (groqClient) return groqClient;
+
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    console.error("[chat] GROQ_API_KEY is missing in environment");
+    return null;
+  }
+
+  groqClient = new Groq({ apiKey });
+  return groqClient;
+}
+
+// =====================
+// Groq API Call with Retry
+// =====================
+async function callGroqWithRetry(
+  client: Groq,
+  systemInstruction: string,
+  userMessage: string
+): Promise<string> {
   let lastError: any = null;
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify(body),
+      const completion = await client.chat.completions.create({
+        model: GROQ_MODEL,
+        messages: [
+          { role: "system", content: systemInstruction },
+          { role: "user", content: userMessage },
+        ],
+        temperature: 0.6,
+        max_tokens: 2048,
       });
 
-      clearTimeout(timeoutId);
+      const reply = completion.choices?.[0]?.message?.content?.trim();
+      if (reply) return reply;
 
-      if ((res.status === 429 || res.status >= 500) && attempt < maxRetries) {
-        const waitMs = attempt * 2000;
-        console.log(
-          `[chat] Attempt ${attempt} failed with ${res.status}, retrying in ${waitMs}ms...`
-        );
-        await new Promise((r) => setTimeout(r, waitMs));
-        continue;
-      }
-
-      return res;
-    } catch (err) {
-      clearTimeout(timeoutId);
+      throw new Error("Empty response from Groq");
+    } catch (err: any) {
       lastError = err;
 
-      if (attempt < maxRetries) {
+      // لو 429 (Rate Limit) أو 5xx، جرّب تاني
+      const status = err?.status || err?.error?.status || err?.response?.status;
+      if ((status === 429 || status >= 500) && attempt < MAX_RETRIES) {
         const waitMs = attempt * 2000;
         console.log(
-          `[chat] Attempt ${attempt} network error, retrying in ${waitMs}ms...`
+          `[chat] Groq attempt ${attempt} failed with ${status}, retrying in ${waitMs}ms...`
         );
         await new Promise((r) => setTimeout(r, waitMs));
         continue;
       }
+
+      // لو مش مشكلة Rate Limit، ارمي الخطأ
+      throw err;
     }
   }
 
@@ -162,7 +176,7 @@ async function callGemini(
 
 export async function POST(req: Request) {
   try {
-    // 1. استخراج IP للـ rate limit
+    // 1. Rate limit
     const ip =
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       req.headers.get("x-real-ip") ||
@@ -232,10 +246,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: cachedReply, _cached: true });
     }
 
-    // 4. مفتاح الـ API
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      console.error("[chat] GEMINI_API_KEY is missing in environment");
+    // 4. Groq Client
+    const groq = getGroq();
+    if (!groq) {
       return NextResponse.json(
         {
           reply: isAr
@@ -280,60 +293,16 @@ Strict rules to always follow:
 7. Don't invent information. If unsure, say you'll forward the question to the right team.
 8. When referring to the company, use "we" and "Valict", not third person.`;
 
-    // 6. استدعاء Gemini
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
-
-    let apiResponse: Response;
+    // 6. استدعاء Groq
+    let reply: string;
     try {
-      apiResponse = await callGemini(url, {
-        systemInstruction: {
-          role: "system",
-          parts: [{ text: systemInstruction }],
-        },
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: trimmed }],
-          },
-        ],
-        generationConfig: {
-          temperature: 0.6,
-          maxOutputTokens: 2048,
-        },
-      });
-    } catch (err: unknown) {
-      if (err instanceof Error && err.name === "AbortError") {
-        console.error("[chat] Gemini request timed out");
-        return NextResponse.json(
-          {
-            reply: isAr
-              ? "استغرق الرد وقتاً أطول من المتوقع، يرجى المحاولة مرة أخرى."
-              : "The response took too long. Please try again.",
-          },
-          { status: 504 }
-        );
-      }
-      console.error("[chat] Gemini fetch failed:", err);
-      return NextResponse.json(
-        {
-          reply: isAr
-            ? "تعذّر الاتصال بالخدمة الذكية حالياً."
-            : "Failed to reach the AI service.",
-        },
-        { status: 502 }
-      );
-    }
-
-    const data = await apiResponse.json().catch(() => null);
-
-    // 7. معالجة أخطاء Gemini
-    if (!apiResponse.ok) {
+      reply = await callGroqWithRetry(groq, systemInstruction, trimmed);
+    } catch (err: any) {
       console.error(
-        "[chat] Gemini error:",
-        apiResponse.status,
-        data?.error?.message
+        "[chat] Groq error:",
+        err?.status || err?.error?.status,
+        err?.message
       );
-
       return NextResponse.json(
         {
           reply: isAr
@@ -343,8 +312,6 @@ Strict rules to always follow:
         { status: 502 }
       );
     }
-
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!reply) {
       return NextResponse.json(
@@ -358,7 +325,7 @@ Strict rules to always follow:
     }
 
     // =====================
-    // 8. خزّن الرد في الكاش قبل ما ترجعه
+    // 7. خزّن الرد في الكاش قبل ما ترجعه
     // =====================
     await setCachedReply(trimmed, lang, reply);
 
