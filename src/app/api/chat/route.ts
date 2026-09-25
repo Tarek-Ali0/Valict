@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
-
+// v2 - with Redis caching
 // إعدادات عامة
 const MAX_MESSAGE_LENGTH = 1000;
 const REQUEST_TIMEOUT_MS = 15000;
