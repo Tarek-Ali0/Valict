@@ -21,13 +21,125 @@ interface ChatMessage {
 
 const MAX_INPUT_LENGTH = 1000;
 
+/**
+ * شخصية فاليكتا (SVG)
+ * @param size - حجم الأيقونة بالبكسل
+ * @param variant - "full" للشكل الكامل، "compact" للنسخة المصغرة
+ */
+function ValictaAvatar({
+  size = 48,
+  variant = "full",
+}: {
+  size?: number;
+  variant?: "full" | "compact";
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Valicta"
+    >
+      {/* هالة خلفية */}
+      <circle cx="50" cy="50" r="48" fill="url(#bgGradient)" />
+      <circle
+        cx="50"
+        cy="50"
+        r="47"
+        stroke="#00D2FF"
+        strokeOpacity="0.4"
+        strokeWidth="1"
+      />
+
+      {/* الرأس (شاشة مدورة) */}
+      <rect
+        x="22"
+        y="28"
+        width="56"
+        height="44"
+        rx="14"
+        fill="#0B1120"
+        stroke="#00D2FF"
+        strokeWidth="1.5"
+      />
+
+      {/* حرف V على الشاشة */}
+      <path
+        d="M38 42 L50 58 L62 42"
+        stroke="#00D2FF"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path
+        d="M42 42 L50 52 L58 42"
+        stroke="#00D2FF"
+        strokeOpacity="0.4"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+
+      {/* هوائي */}
+      <line
+        x1="50"
+        y1="28"
+        x2="50"
+        y2="16"
+        stroke="#00D2FF"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="50" cy="14" r="3" fill="#22C55E">
+        <animate
+          attributeName="opacity"
+          values="1;0.4;1"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      </circle>
+
+      {/* الجسم/قاعدة صغيرة */}
+      {variant === "full" && (
+        <>
+          <rect
+            x="38"
+            y="74"
+            width="24"
+            height="6"
+            rx="3"
+            fill="#0B1120"
+            stroke="#00D2FF"
+            strokeOpacity="0.5"
+            strokeWidth="1"
+          />
+          {/* أزرار صغيرة */}
+          <circle cx="44" cy="77" r="1" fill="#00D2FF" />
+          <circle cx="50" cy="77" r="1" fill="#22C55E" />
+          <circle cx="56" cy="77" r="1" fill="#00D2FF" />
+        </>
+      )}
+
+      <defs>
+        <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#1E3A5F" />
+          <stop offset="100%" stopColor="#0B1120" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
+}
+
 export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isBotTyping, setIsBotTyping] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const isAr = lang === "ar";
@@ -68,9 +180,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   // رسالة الترحيب تظهر بعد ثانية من فتح الشات (سطر بسطر)
   useEffect(() => {
     if (!isOpen) {
-      // لما يقفل الشات، نرجع نجهز لفتح جديد
       setMessages([]);
-      setShowWelcome(false);
       return;
     }
 
@@ -80,15 +190,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     let timer2: ReturnType<typeof setTimeout> | null = null;
     let timer3: ReturnType<typeof setTimeout> | null = null;
 
-    // 1) "فاليكتا بتكتب..." تظهر بعد 300ms
     timer1 = setTimeout(() => {
       setIsBotTyping(true);
     }, 300);
 
-    // 2) الجزء الأول يظهر بعد 1300ms
     timer2 = setTimeout(() => {
       setIsBotTyping(false);
-      setShowWelcome(true);
       setMessages([
         {
           id: crypto.randomUUID(),
@@ -99,7 +206,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       ]);
     }, 1300);
 
-    // 3) الجزء التاني يظهر بعد 2000ms
     timer3 = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -148,9 +254,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const handleClearChat = useCallback(() => {
     if (!confirm(t.clearConfirm)) return;
     setMessages([]);
-    setShowWelcome(false);
-    // إعادة تشغيل أنيميشن الترحيب
-    setTimeout(() => setShowWelcome(true), 100);
   }, [t.clearConfirm]);
 
   const handleSendMessage = useCallback(
@@ -218,7 +321,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     [input, isLoading, lang, t.errorMsg, isAr]
   );
 
-  // تنسيق الوقت
   const formatTime = (ts: number) => {
     const d = new Date(ts);
     const h = d.getHours().toString().padStart(2, "0");
@@ -234,82 +336,51 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       <button
         onClick={() => setIsOpen((v) => !v)}
         aria-label={t.title}
-        className="relative h-12 w-12 flex items-center justify-center rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+        className="relative h-14 w-14 flex items-center justify-center rounded-full bg-white dark:bg-[#0F172A] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-valict-navy/20 dark:border-valict-cyan/30 overflow-hidden"
       >
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-valict-navy dark:bg-valict-cyan opacity-40 animate-ping" />
+          <span className="absolute inset-0 rounded-full bg-valict-cyan opacity-20 animate-ping" />
         )}
-        <span className="relative z-10">
+        <span className="relative z-10 flex items-center justify-center">
           {isOpen ? (
-            <FaXmark className="w-5 h-5" />
+            <FaXmark className="w-5 h-5 text-valict-navy dark:text-valict-cyan" />
           ) : (
-            <FaCommentDots className="w-5 h-5" />
+            <ValictaAvatar size={48} variant="compact" />
           )}
         </span>
       </button>
 
       {/* نافذة الشات */}
       <div
-        className={`absolute bottom-16 left-0 w-[350px] h-[480px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left overflow-hidden ${
+        className={`absolute bottom-20 left-0 w-[350px] h-[520px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left overflow-visible ${
           isOpen
             ? "scale-100 opacity-100 visible"
             : "scale-75 opacity-0 invisible"
         }`}
       >
-        {/* الهيدر الملون */}
-        <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 px-3 py-3 flex items-center justify-between rounded-t-2xl">
-          <div className="flex items-center gap-2">
-            {/* Avatar صغير */}
-            <div className="relative w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0">
-              <svg
-                className="w-6 h-6"
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="32"
-                  cy="34"
-                  r="20"
-                  fill="#FFFFFF"
-                  stroke="#00D2FF"
-                  strokeWidth="2"
-                />
-                <rect x="18" y="24" width="28" height="16" rx="8" fill="#1E293B" />
-                <path
-                  d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30"
-                  stroke="#00D2FF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30"
-                  stroke="#00D2FF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36"
-                  stroke="#00D2FF"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white animate-pulse" />
-            </div>
+        {/* Avatar كبير منبثق فوق الشات */}
+        <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-30">
+          <div className="relative w-full h-full rounded-full flex items-center justify-center">
+            <ValictaAvatar size={72} variant="full" />
+            <span className="absolute bottom-1 right-1 h-4 w-4 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse" />
+          </div>
+        </div>
 
-            <div className="flex flex-col">
-              <span className="text-white text-xs font-bold leading-tight">
-                {isAr ? "فاليكتا" : "Valicta"}
-              </span>
-              <span className="text-white/70 text-[10px] leading-tight">
+        {/* الهيدر الملون - فيه مساحة للـ Avatar المنبثق */}
+        <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 px-3 pt-10 pb-3 flex items-center justify-between rounded-t-2xl">
+          <div className="flex flex-col items-center w-full">
+            <span className="text-white text-sm font-bold leading-tight">
+              {isAr ? "فاليكتا" : "Valicta"}
+            </span>
+            <div className="flex items-center gap-1 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-white/80 text-[10px] leading-tight">
                 {t.status}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
-            {/* زر مسح المحادثة */}
+          <div className="absolute top-2 right-2 flex items-center gap-1">
             <button
               onClick={handleClearChat}
               aria-label={t.clearChat}
@@ -319,7 +390,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               <FaTrash className="w-3.5 h-3.5" />
             </button>
 
-            {/* زر الإغلاق */}
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
@@ -332,65 +402,24 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
         {/* الرسائل */}
         <div className="flex-1 px-4 py-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
-          {messages.map((msg, idx) => (
+          {messages.map((msg) => (
             <div
               key={msg.id}
               className={`flex items-end gap-2 ${
                 msg.isBot ? "justify-start" : "justify-end"
               }`}
-              style={{
-                animation: "msgFadeIn 0.4s ease-out",
-                animationDelay: `${idx === 0 ? 0 : 0.1}s`,
-              }}
             >
-              {/* Avatar للبوت فقط */}
               {msg.isBot && (
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-valict-navy to-blue-600 flex items-center justify-center flex-shrink-0 mb-1">
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 64 64"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="32"
-                      cy="34"
-                      r="20"
-                      fill="#FFFFFF"
-                      stroke="#00D2FF"
-                      strokeWidth="2"
-                    />
-                    <rect
-                      x="18"
-                      y="24"
-                      width="28"
-                      height="16"
-                      rx="8"
-                      fill="#1E293B"
-                    />
-                    <path
-                      d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30"
-                      stroke="#00D2FF"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30"
-                      stroke="#00D2FF"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36"
-                      stroke="#00D2FF"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
+                  <ValictaAvatar size={32} variant="compact" />
                 </div>
               )}
 
-              <div className={`flex flex-col ${msg.isBot ? "items-start" : "items-end"} max-w-[78%]`}>
+              <div
+                className={`flex flex-col ${
+                  msg.isBot ? "items-start" : "items-end"
+                } max-w-[78%]`}
+              >
                 <div
                   className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
                     isAr ? "text-right" : "text-left"
@@ -416,48 +445,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           {/* مؤشر الكتابة بثلاث نقط متحركة */}
           {(isLoading || isBotTyping) && (
             <div className="flex items-end gap-2 justify-start">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-valict-navy to-blue-600 flex items-center justify-center flex-shrink-0 mb-1">
-                <svg
-                  className="w-4 h-4"
-                  viewBox="0 0 64 64"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="32"
-                    cy="34"
-                    r="20"
-                    fill="#FFFFFF"
-                    stroke="#00D2FF"
-                    strokeWidth="2"
-                  />
-                  <rect
-                    x="18"
-                    y="24"
-                    width="28"
-                    height="16"
-                    rx="8"
-                    fill="#1E293B"
-                  />
-                  <path
-                    d="M23 30C23 30 24 28 26 28C28 28 29 30 29 30"
-                    stroke="#00D2FF"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M35 30C35 30 36 28 38 28C40 28 41 30 41 30"
-                    stroke="#00D2FF"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M28 36C29 38 31 39 32 39C33 39 35 38 36 36"
-                    stroke="#00D2FF"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
+                <ValictaAvatar size={32} variant="compact" />
               </div>
               <div className="bg-white dark:bg-[#1E293B] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-800/40 flex items-center gap-1">
                 <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
@@ -473,7 +462,9 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         {/* نموذج الإدخال */}
         <form
           onSubmit={handleSendMessage}
-          className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2"
+          className={`p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2 ${
+            isAr ? "flex-row-reverse" : ""
+          }`}
         >
           <input
             type="text"
@@ -492,28 +483,15 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             type="submit"
             disabled={isLoading || !input.trim()}
             aria-label="Send message"
-            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all disabled:opacity-30"
+            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0"
           >
-            <FaPaperPlane
-              className={`w-3.5 h-3.5 transform ${isAr ? "rotate-180" : ""}`}
-            />
+            <FaPaperPlane className="w-4 h-4" />
           </button>
         </form>
       </div>
 
-      {/* الأنيميشن المخصص */}
+      {/* الأنيميشن */}
       <style jsx>{`
-        @keyframes msgFadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         .dot {
           animation: dotBounce 1.4s infinite ease-in-out;
         }
