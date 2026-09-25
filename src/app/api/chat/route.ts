@@ -77,7 +77,7 @@ async function callGemini(
 
       // لو 429 أو 5xx، جرّب تاني (بس لو لسه فيه محاولات)
       if ((res.status === 429 || res.status >= 500) && attempt < maxRetries) {
-        const waitMs = attempt * 2000; // 1s, 2s, 3s
+        const waitMs = attempt * 2000; // 2s, 4s, 6s, 8s, 10s
         console.log(
           `[chat] Attempt ${attempt} failed with ${res.status}, retrying in ${waitMs}ms...`
         );
