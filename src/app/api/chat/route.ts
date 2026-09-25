@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
 // إعدادات عامة
 const MAX_MESSAGE_LENGTH = 1000;
@@ -6,11 +7,11 @@ const REQUEST_TIMEOUT_MS = 15000;
 const RATE_LIMIT_WINDOW_MS = 60_000; // دقيقة
 const RATE_LIMIT_MAX_REQUESTS = 15;  // 15 رسالة في الدقيقة لكل IP
 const MAX_RETRIES = 5;               // عدد محاولات إعادة الطلب
+const CACHE_TTL_SECONDS = 24 * 60 * 60; // مدة الكاش: 24 ساعة
 
 /**
  * Rate limiter بسيط في الذاكرة.
  * ⚠️ ملاحظة: في Vercel serverless، الذاكرة مش مشتركة بين instances.
- * لو الموقع عليه ضغط، استبدله بـ Upstash Redis أو Vercel KV.
  */
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
@@ -34,7 +35,7 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfterSec?: number 
   return { allowed: true };
 }
 
-// تنظيف دوري للـ store (اختياري)
+// تنظيف دوري للـ store
 if (typeof globalThis !== "undefined") {
   const g = globalThis as any;
   if (!g.__valictRateLimitCleaner) {
@@ -47,12 +48,68 @@ if (typeof globalThis !== "undefined") {
   }
 }
 
+// =====================
+// Redis Client (Upstash)
+// =====================
+let redis: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (redis) return redis;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    console.warn("[chat] Upstash Redis env vars missing - caching disabled");
+    return null;
+  }
+
+  redis = new Redis({ url, token });
+  return redis;
+}
+
+// =====================
+// Caching Helpers
+// =====================
+function buildCacheKey(message: string, lang: string): string {
+  // تطبيع الرسالة: trim + lowercase عشان "ما هي خدماتكم؟" و "ما هي خدماتكم" يبقوا نفس المفتاح
+  const normalized = message.trim().toLowerCase().replace(/\s+/g, " ");
+  return `valict:chat:${lang}:${normalized}`;
+}
+
+async function getCachedReply(message: string, lang: string): Promise<string | null> {
+  try {
+    const client = getRedis();
+    if (!client) return null;
+
+    const key = buildCacheKey(message, lang);
+    const cached = await client.get<string>(key);
+    return cached ?? null;
+  } catch (err) {
+    console.error("[chat] Cache GET error:", err);
+    return null; // لو الكاش فشل، كمّل عادي
+  }
+}
+
+async function setCachedReply(
+  message: string,
+  lang: string,
+  reply: string
+): Promise<void> {
+  try {
+    const client = getRedis();
+    if (!client) return;
+
+    const key = buildCacheKey(message, lang);
+    await client.set(key, reply, { ex: CACHE_TTL_SECONDS });
+  } catch (err) {
+    console.error("[chat] Cache SET error:", err);
+    // مش بنرجّع خطأ، عشان الكاش مش critical
+  }
+}
+
 /**
  * استدعاء Gemini مع إعادة المحاولة التلقائية.
- * بتعيد المحاولة لو:
- *   - الرد كان 429 (Rate Limit من Google)
- *   - الرد كان 5xx (خطأ سيرفر من Google)
- *   - فشل الشبكة أصلاً (Timeout أو Connection Error)
  */
 async function callGemini(
   url: string,
@@ -75,9 +132,8 @@ async function callGemini(
 
       clearTimeout(timeoutId);
 
-      // لو 429 أو 5xx، جرّب تاني (بس لو لسه فيه محاولات)
       if ((res.status === 429 || res.status >= 500) && attempt < maxRetries) {
-        const waitMs = attempt * 2000; // 2s, 4s, 6s, 8s, 10s
+        const waitMs = attempt * 2000;
         console.log(
           `[chat] Attempt ${attempt} failed with ${res.status}, retrying in ${waitMs}ms...`
         );
@@ -90,7 +146,6 @@ async function callGemini(
       clearTimeout(timeoutId);
       lastError = err;
 
-      // لو فشل الشبكة، جرّب تاني
       if (attempt < maxRetries) {
         const waitMs = attempt * 2000;
         console.log(
@@ -127,7 +182,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. قراءة الـ body بشكل آمن
+    // 2. قراءة الـ body
     let body: any;
     try {
       body = await req.json();
@@ -168,6 +223,15 @@ export async function POST(req: Request) {
       );
     }
 
+    // =====================
+    // 3.5 — ابحث في الـ Cache الأول
+    // =====================
+    const cachedReply = await getCachedReply(trimmed, lang);
+    if (cachedReply) {
+      console.log("[chat] Cache HIT for:", trimmed.slice(0, 50));
+      return NextResponse.json({ reply: cachedReply, _cached: true });
+    }
+
     // 4. مفتاح الـ API
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -182,7 +246,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. الـ System Instruction الرسمي
+    // 5. الـ System Instruction
     const systemInstruction = isAr
       ? `أنت "فاليكتا" (Valicta)، المساعد الذكي الرسمي لشركة فالكت (Valict).
 
@@ -216,7 +280,7 @@ Strict rules to always follow:
 7. Don't invent information. If unsure, say you'll forward the question to the right team.
 8. When referring to the company, use "we" and "Valict", not third person.`;
 
-    // 6. استدعاء Gemini مع Retry Logic
+    // 6. استدعاء Gemini
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
 
     let apiResponse: Response;
@@ -292,6 +356,11 @@ Strict rules to always follow:
         { status: 200 }
       );
     }
+
+    // =====================
+    // 8. خزّن الرد في الكاش قبل ما ترجعه
+    // =====================
+    await setCachedReply(trimmed, lang, reply);
 
     return NextResponse.json({ reply });
   } catch (error: unknown) {
