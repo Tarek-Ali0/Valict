@@ -23,8 +23,6 @@ const MAX_INPUT_LENGTH = 1000;
 
 /**
  * شخصية فاليكتا (SVG)
- * @param size - حجم الأيقونة بالبكسل
- * @param variant - "full" للشكل الكامل، "compact" للنسخة المصغرة
  */
 function ValictaAvatar({
   size = 48,
@@ -42,7 +40,6 @@ function ValictaAvatar({
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Valicta"
     >
-      {/* هالة خلفية */}
       <circle cx="50" cy="50" r="48" fill="url(#bgGradient)" />
       <circle
         cx="50"
@@ -52,8 +49,6 @@ function ValictaAvatar({
         strokeOpacity="0.4"
         strokeWidth="1"
       />
-
-      {/* الرأس (شاشة مدورة) */}
       <rect
         x="22"
         y="28"
@@ -64,8 +59,6 @@ function ValictaAvatar({
         stroke="#00D2FF"
         strokeWidth="1.5"
       />
-
-      {/* حرف V على الشاشة */}
       <path
         d="M38 42 L50 58 L62 42"
         stroke="#00D2FF"
@@ -83,8 +76,6 @@ function ValictaAvatar({
         strokeLinejoin="round"
         fill="none"
       />
-
-      {/* هوائي */}
       <line
         x1="50"
         y1="28"
@@ -102,8 +93,6 @@ function ValictaAvatar({
           repeatCount="indefinite"
         />
       </circle>
-
-      {/* الجسم/قاعدة صغيرة */}
       {variant === "full" && (
         <>
           <rect
@@ -117,13 +106,11 @@ function ValictaAvatar({
             strokeOpacity="0.5"
             strokeWidth="1"
           />
-          {/* أزرار صغيرة */}
           <circle cx="44" cy="77" r="1" fill="#00D2FF" />
           <circle cx="50" cy="77" r="1" fill="#22C55E" />
           <circle cx="56" cy="77" r="1" fill="#00D2FF" />
         </>
       )}
-
       <defs>
         <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#1E3A5F" />
@@ -144,7 +131,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const isAr = lang === "ar";
 
-  // الترجمات memoized حسب اللغة
   const t = useMemo(
     () => ({
       title: isAr
@@ -177,7 +163,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  // رسالة الترحيب تظهر بعد ثانية من فتح الشات (سطر بسطر)
+  // ترحيب يظهر سطر بسطر
   useEffect(() => {
     if (!isOpen) {
       setMessages([]);
@@ -186,15 +172,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
     if (messages.length > 0) return;
 
-    let timer1: ReturnType<typeof setTimeout> | null = null;
-    let timer2: ReturnType<typeof setTimeout> | null = null;
-    let timer3: ReturnType<typeof setTimeout> | null = null;
-
-    timer1 = setTimeout(() => {
+    const timer1 = setTimeout(() => {
       setIsBotTyping(true);
     }, 300);
 
-    timer2 = setTimeout(() => {
+    const timer2 = setTimeout(() => {
       setIsBotTyping(false);
       setMessages([
         {
@@ -206,7 +188,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       ]);
     }, 1300);
 
-    timer3 = setTimeout(() => {
+    const timer3 = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
         {
@@ -219,14 +201,13 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }, 2000);
 
     return () => {
-      if (timer1) clearTimeout(timer1);
-      if (timer2) clearTimeout(timer2);
-      if (timer3) clearTimeout(timer3);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, t.welcomePart1, t.welcomePart2]);
 
-  // تفعيل الويدجت بعد أول تفاعل
   useEffect(() => {
     const enableWidget = () => {
       setIsLoaded(true);
@@ -243,14 +224,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     };
   }, []);
 
-  // التمرير التلقائي لآخر رسالة
   useEffect(() => {
     if (messages.length > 0 || isBotTyping || isLoading) {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isBotTyping, isLoading]);
 
-  // مسح المحادثة
   const handleClearChat = useCallback(() => {
     if (!confirm(t.clearConfirm)) return;
     setMessages([]);
@@ -350,148 +329,173 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         </span>
       </button>
 
-      {/* نافذة الشات */}
-      <div
-        className={`absolute bottom-20 left-0 w-[350px] h-[520px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left overflow-visible ${
-          isOpen
-            ? "scale-100 opacity-100 visible"
-            : "scale-75 opacity-0 invisible"
-        }`}
-      >
-        {/* Avatar كبير منبثق فوق الشات */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-30">
+      {/* غلاف للسماح للـ Avatar المنبثق بالظهور فوق الصندوق */}
+      <div className="relative">
+        {/* Avatar فاليكتا الكبير المنبثق */}
+        <div
+          className={`absolute left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-30 transition-all duration-300 ${
+            isOpen
+              ? "scale-100 opacity-100"
+              : "scale-75 opacity-0 pointer-events-none"
+          }`}
+          style={{ bottom: "calc(100% + 340px)" }}
+        >
           <div className="relative w-full h-full rounded-full flex items-center justify-center">
             <ValictaAvatar size={72} variant="full" />
             <span className="absolute bottom-1 right-1 h-4 w-4 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse" />
           </div>
         </div>
 
-        {/* الهيدر الملون - فيه مساحة للـ Avatar المنبثق */}
-        <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 px-3 pt-10 pb-3 flex items-center justify-between rounded-t-2xl">
-          <div className="flex flex-col items-center w-full">
-            <span className="text-white text-sm font-bold leading-tight">
-              {isAr ? "فاليكتا" : "Valicta"}
-            </span>
-            <div className="flex items-center gap-1 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-white/80 text-[10px] leading-tight">
-                {t.status}
+        {/* نافذة الشات */}
+        <div
+          className={`absolute bottom-20 left-0 w-[350px] h-[500px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left overflow-hidden ${
+            isOpen
+              ? "scale-100 opacity-100 visible"
+              : "scale-75 opacity-0 invisible"
+          }`}
+        >
+          {/* الهيدر */}
+          <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 px-3 pt-10 pb-3 flex items-center justify-between">
+            <div className="flex flex-col items-center w-full">
+              <span className="text-white text-sm font-bold leading-tight">
+                {isAr ? "فاليكتا" : "Valicta"}
               </span>
-            </div>
-          </div>
-
-          <div className="absolute top-2 right-2 flex items-center gap-1">
-            <button
-              onClick={handleClearChat}
-              aria-label={t.clearChat}
-              title={t.clearChat}
-              className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <FaTrash className="w-3.5 h-3.5" />
-            </button>
-
-            <button
-              onClick={() => setIsOpen(false)}
-              aria-label="Close chat"
-              className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <FaXmark className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* الرسائل */}
-        <div className="flex-1 px-4 py-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex items-end gap-2 ${
-                msg.isBot ? "justify-start" : "justify-end"
-              }`}
-            >
-              {msg.isBot && (
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
-                  <ValictaAvatar size={32} variant="compact" />
-                </div>
-              )}
-
-              <div
-                className={`flex flex-col ${
-                  msg.isBot ? "items-start" : "items-end"
-                } max-w-[78%]`}
-              >
-                <div
-                  className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
-                    isAr ? "text-right" : "text-left"
-                  } ${
-                    msg.isBot
-                      ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
-                      : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
-                  }`}
-                >
-                  {msg.text}
-                </div>
-                <span
-                  className={`text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 px-1 ${
-                    isAr ? "self-start" : "self-end"
-                  }`}
-                >
-                  {formatTime(msg.timestamp)}
+              <div className="flex items-center gap-1 mt-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-white/80 text-[10px] leading-tight">
+                  {t.status}
                 </span>
               </div>
             </div>
-          ))}
 
-          {/* مؤشر الكتابة بثلاث نقط متحركة */}
-          {(isLoading || isBotTyping) && (
-            <div className="flex items-end gap-2 justify-start">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
-                <ValictaAvatar size={32} variant="compact" />
-              </div>
-              <div className="bg-white dark:bg-[#1E293B] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-800/40 flex items-center gap-1">
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-              </div>
+            <div className="absolute top-2 right-2 flex items-center gap-1">
+              <button
+                onClick={handleClearChat}
+                aria-label={t.clearChat}
+                title={t.clearChat}
+                className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                <FaTrash className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
+                className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                <FaXmark className="w-4 h-4" />
+              </button>
             </div>
-          )}
+          </div>
 
-          <div ref={chatEndRef} />
-        </div>
+          {/* الرسائل */}
+          <div className="flex-1 px-4 py-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex items-end gap-2 msg-fade-in ${
+                  msg.isBot ? "justify-start" : "justify-end"
+                }`}
+              >
+                {msg.isBot && (
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
+                    <ValictaAvatar size={32} variant="compact" />
+                  </div>
+                )}
 
-        {/* نموذج الإدخال */}
-        <form
-          onSubmit={handleSendMessage}
-          className={`p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex gap-2 ${
-            isAr ? "flex-row-reverse" : ""
-          }`}
-        >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) =>
-              setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
-            }
-            disabled={isLoading}
-            maxLength={MAX_INPUT_LENGTH}
-            placeholder={t.placeholder}
-            className={`flex-1 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy ${
-              isAr ? "text-right" : "text-left"
-            } disabled:opacity-50`}
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            aria-label="Send message"
-            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0"
+                <div
+                  className={`flex flex-col ${
+                    msg.isBot ? "items-start" : "items-end"
+                  } max-w-[78%]`}
+                >
+                  <div
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
+                      isAr ? "text-right" : "text-left"
+                    } ${
+                      msg.isBot
+                        ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
+                        : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                  <span
+                    className={`text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 px-1 ${
+                      isAr ? "self-start" : "self-end"
+                    }`}
+                  >
+                    {formatTime(msg.timestamp)}
+                  </span>
+                </div>
+              </div>
+            ))}
+
+            {/* مؤشر الكتابة */}
+            {(isLoading || isBotTyping) && (
+              <div className="flex items-end gap-2 justify-start msg-fade-in">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
+                  <ValictaAvatar size={32} variant="compact" />
+                </div>
+                <div className="bg-white dark:bg-[#1E293B] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-800/40 flex items-center gap-1">
+                  <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
+                  <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
+                  <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
+                </div>
+              </div>
+            )}
+
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* نموذج الإدخال */}
+          <form
+            onSubmit={handleSendMessage}
+            dir={isAr ? "rtl" : "ltr"}
+            className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-center gap-2 rounded-b-2xl"
           >
-            <FaPaperPlane className="w-4 h-4" />
-          </button>
-        </form>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) =>
+                setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
+              }
+              disabled={isLoading}
+              maxLength={MAX_INPUT_LENGTH}
+              placeholder={t.placeholder}
+              dir={isAr ? "rtl" : "ltr"}
+              className={`flex-1 min-w-0 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy ${
+                isAr ? "text-right" : "text-left"
+              } disabled:opacity-50`}
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              aria-label="Send message"
+              className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0"
+            >
+              <FaPaperPlane className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
       </div>
 
       {/* الأنيميشن */}
       <style jsx>{`
+        .msg-fade-in {
+          animation: msgFadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes msgFadeIn {
+          0% {
+            opacity: 0;
+            transform: translateY(6px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
         .dot {
           animation: dotBounce 1.4s infinite ease-in-out;
         }
