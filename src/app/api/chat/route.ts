@@ -9,7 +9,7 @@ const RATE_LIMIT_WINDOW_MS = 60_000; // دقيقة
 const RATE_LIMIT_MAX_REQUESTS = 15;  // 15 رسالة في الدقيقة لكل IP
 const MAX_RETRIES = 5;               // عدد محاولات إعادة الطلب
 const CACHE_TTL_SECONDS = 24 * 60 * 60; // مدة الكاش: 24 ساعة
-const GROQ_MODEL = "llama-3.3-70b-versatile"; // الموديل المستخدم
+const GROQ_MODEL = "openai/gpt-oss-120b"; // الموديل المستخدم
 
 /**
  * Rate limiter بسيط في الذاكرة.
