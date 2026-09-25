@@ -5,7 +5,7 @@ const MAX_MESSAGE_LENGTH = 1000;
 const REQUEST_TIMEOUT_MS = 15000;
 const RATE_LIMIT_WINDOW_MS = 60_000; // دقيقة
 const RATE_LIMIT_MAX_REQUESTS = 15;  // 15 رسالة في الدقيقة لكل IP
-const MAX_RETRIES = 3;               // عدد محاولات إعادة الطلب
+const MAX_RETRIES = 5;               // عدد محاولات إعادة الطلب
 
 /**
  * Rate limiter بسيط في الذاكرة.
@@ -77,7 +77,7 @@ async function callGemini(
 
       // لو 429 أو 5xx، جرّب تاني (بس لو لسه فيه محاولات)
       if ((res.status === 429 || res.status >= 500) && attempt < maxRetries) {
-        const waitMs = attempt * 1000; // 1s, 2s, 3s
+        const waitMs = attempt * 2000; // 1s, 2s, 3s
         console.log(
           `[chat] Attempt ${attempt} failed with ${res.status}, retrying in ${waitMs}ms...`
         );
@@ -92,7 +92,7 @@ async function callGemini(
 
       // لو فشل الشبكة، جرّب تاني
       if (attempt < maxRetries) {
-        const waitMs = attempt * 1000;
+        const waitMs = attempt * 2000;
         console.log(
           `[chat] Attempt ${attempt} network error, retrying in ${waitMs}ms...`
         );
