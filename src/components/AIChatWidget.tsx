@@ -30,6 +30,14 @@ function detectLang(text: string): "ar" | "en" {
 }
 
 /**
+ * كشف اتجاه النص (للرسائل الفردية)
+ */
+function getTextDirection(text: string): "rtl" | "ltr" {
+  const arabicRegex = /[\u0600-\u06FF]/;
+  return arabicRegex.test(text) ? "rtl" : "ltr";
+}
+
+/**
  * شخصية فاليكتا (SVG)
  */
 function ValictaAvatar({
@@ -394,45 +402,49 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
         {/* الرسائل */}
         <div className="flex-1 px-4 py-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex items-end gap-2 msg-fade-in ${
-                msg.isBot ? "justify-start" : "justify-end"
-              }`}
-            >
-              {msg.isBot && (
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
-                  <ValictaAvatar size={32} variant="compact" />
-                </div>
-              )}
-
+          {messages.map((msg) => {
+            const msgDir = getTextDirection(msg.text);
+            return (
               <div
-                className={`flex flex-col ${
-                  msg.isBot ? "items-start" : "items-end"
-                } max-w-[78%]`}
+                key={msg.id}
+                className={`flex items-end gap-2 msg-fade-in ${
+                  msg.isBot ? "justify-start" : "justify-end"
+                }`}
               >
+                {msg.isBot && (
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20">
+                    <ValictaAvatar size={32} variant="compact" />
+                  </div>
+                )}
+
                 <div
-                  className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
-                    isAr ? "text-right" : "text-left"
-                  } ${
-                    msg.isBot
-                      ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
-                      : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
-                  }`}
+                  className={`flex flex-col ${
+                    msg.isBot ? "items-start" : "items-end"
+                  } max-w-[78%]`}
                 >
-                  {msg.text}
+                  <div
+                    dir={msgDir}
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
+                      msgDir === "rtl" ? "text-right" : "text-left"
+                    } ${
+                      msg.isBot
+                        ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
+                        : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                  <span
+                    className={`text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 px-1 ${
+                      msgDir === "rtl" ? "self-start" : "self-end"
+                    }`}
+                  >
+                    {formatTime(msg.timestamp)}
+                  </span>
                 </div>
-                <span
-                  className={`text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 px-1 ${
-                    isAr ? "self-start" : "self-end"
-                  }`}
-                >
-                  {formatTime(msg.timestamp)}
-                </span>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* مؤشر الكتابة */}
           {(isLoading || isBotTyping) && (
