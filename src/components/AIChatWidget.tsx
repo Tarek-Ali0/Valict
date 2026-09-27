@@ -22,6 +22,14 @@ interface ChatMessage {
 const MAX_INPUT_LENGTH = 1000;
 
 /**
+ * كشف اللغة تلقائياً من نص المستخدم
+ */
+function detectLang(text: string): "ar" | "en" {
+  const arabicRegex = /[\u0600-\u06FF]/;
+  return arabicRegex.test(text) ? "ar" : "en";
+}
+
+/**
  * شخصية فاليكتا (SVG)
  */
 function ValictaAvatar({
@@ -156,6 +164,9 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       errorMsg: isAr
         ? "عذراً، واجهت مشكلة في الاتصال بالسيرفر الذكي. يرجى المحاولة مرة أخرى لاحقاً."
         : "Sorry, I encountered an error connecting to the AI server. Please try again later.",
+      rateLimitMsg: isAr
+        ? "عدد الرسائل كبير، يرجى المحاولة بعد قليل."
+        : "Too many messages, please try again shortly.",
     }),
     [isAr]
   );
@@ -239,6 +250,9 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       const text = input.trim();
       if (!text || isLoading) return;
 
+      // كشف لغة النص تلقائياً
+      const detectedLang = detectLang(text);
+
       const userMsg: ChatMessage = {
         id: crypto.randomUUID(),
         text,
@@ -254,7 +268,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, lang }),
+          body: JSON.stringify({ message: text, lang: detectedLang }),
         });
 
         let finalReply = t.errorMsg;
@@ -264,11 +278,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           finalReply = data?.reply || t.errorMsg;
         } else if (res.status === 429) {
           const data = await res.json().catch(() => null);
-          finalReply =
-            data?.reply ||
-            (isAr
-              ? "عدد الرسائل كبير، يرجى المحاولة بعد قليل."
-              : "Too many messages, please try again shortly.");
+          finalReply = data?.reply || t.rateLimitMsg;
         }
 
         setMessages((prev) => [
@@ -295,7 +305,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         setIsLoading(false);
       }
     },
-    [input, isLoading, lang, t.errorMsg, isAr]
+    [input, isLoading, t.errorMsg, t.rateLimitMsg]
   );
 
   const formatTime = (ts: number) => {
@@ -467,7 +477,9 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             aria-label="Send message"
             className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0"
           >
-            <FaPaperPlane className="w-4 h-4" />
+            <FaPaperPlane
+              className={`w-4 h-4 ${!isAr ? "scale-x-[-1]" : ""}`}
+            />
           </button>
         </form>
       </div>
