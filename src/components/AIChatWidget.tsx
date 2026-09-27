@@ -65,7 +65,6 @@ function ValictaAvatar({
 
 export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isBotTyping, setIsBotTyping] = useState(false);
@@ -152,22 +151,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   }, [isOpen, t.welcomePart1, t.welcomePart2]);
 
   useEffect(() => {
-    const enableWidget = () => {
-      setIsLoaded(true);
-      window.removeEventListener("scroll", enableWidget);
-      window.removeEventListener("mousemove", enableWidget);
-    };
-
-    window.addEventListener("scroll", enableWidget, { passive: true });
-    window.addEventListener("mousemove", enableWidget, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", enableWidget);
-      window.removeEventListener("mousemove", enableWidget);
-    };
-  }, []);
-
-  useEffect(() => {
     if (messages.length > 0 || isBotTyping || isLoading) {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -247,8 +230,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     const m = d.getMinutes().toString().padStart(2, "0");
     return `${h}:${m}`;
   };
-
-  if (!isLoaded) return null;
 
   return (
     <div className="fixed bottom-6 left-6 z-50 font-sans">
