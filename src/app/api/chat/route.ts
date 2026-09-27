@@ -284,7 +284,7 @@ export async function POST(req: Request) {
 8. إذا سُئلت عن معلومة غير متوفرة لديك، قل: "لا أملك هذه المعلومة، يرجى التواصل معنا عبر info@valict.com" واذكر رقم الهاتف إن أمكن.
 9. عند الحديث عن الشركة، استخدم "نحن" و"فالكت"، لا تستخدم صيغة الغائب.
 10. إذا طلب المستخدم الدعم الفني، وجّهه إلى support@valict.com.
-11. عند ذكر معلومات التواصل، اكتب كل معلومة في سطر منفصل، بدون أي رموز markdown (لا تستخدم - أو * أو **). استخدم تنسيق نص عادي فقط.`
+11. عند ذكر معلومات التواصل، اكتبها في جمل كاملة ومهنية. ضع كل معلومة في سطر منفصل. لا تستخدم رموز markdown مثل ** أو * أو -.`
       : `You are "Valicta", the official smart assistant for Valict (valict.com).
 
 Company Info:
@@ -307,7 +307,7 @@ Strict rules to always follow:
 8. If asked about information you don't have, say: "I don't have that information. Please contact us at info@valict.com" and mention the phone number if applicable.
 9. When referring to the company, use "we" and "Valict", not third person.
 10. If the user requests technical support, direct them to support@valict.com.
-11. When listing contact information, write each item on a separate line, without any markdown symbols (no dashes, no asterisks, no bold). Use plain text formatting only.`;
+11. When listing contact information, write it in complete, professional sentences. Put each item on a separate line. Do not use markdown symbols like **, *, or dashes.`;
 
     // 6. استدعاء Groq
     let reply: string;
