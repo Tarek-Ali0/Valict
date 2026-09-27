@@ -21,6 +21,8 @@ interface ChatMessage {
 }
 
 const MAX_INPUT_LENGTH = 1000;
+const STORAGE_KEY_MESSAGES = "valict-chat-messages";
+const STORAGE_KEY_OPEN = "valict-chat-open";
 
 /**
  * كشف اللغة تلقائياً من نص المستخدم
@@ -68,6 +70,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isBotTyping, setIsBotTyping] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const isAr = lang === "ar";
@@ -106,11 +109,62 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
+  // =====================
+  // استرجاع المحادثة من sessionStorage عند أول تحميل
+  // =====================
   useEffect(() => {
-    if (!isOpen) {
-      setMessages([]);
-      return;
+    try {
+      const savedMessages = sessionStorage.getItem(STORAGE_KEY_MESSAGES);
+      const savedOpen = sessionStorage.getItem(STORAGE_KEY_OPEN);
+
+      if (savedMessages) {
+        const parsed = JSON.parse(savedMessages) as ChatMessage[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+
+      if (savedOpen === "true") {
+        setIsOpen(true);
+      }
+    } catch (err) {
+      console.error("[chat] Failed to restore session:", err);
+    } finally {
+      setIsHydrated(true);
     }
+  }, []);
+
+  // =====================
+  // حفظ المحادثة في sessionStorage عند أي تغيير
+  // =====================
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      sessionStorage.setItem(
+        STORAGE_KEY_MESSAGES,
+        JSON.stringify(messages)
+      );
+    } catch (err) {
+      console.error("[chat] Failed to save messages:", err);
+    }
+  }, [messages, isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      sessionStorage.setItem(STORAGE_KEY_OPEN, String(isOpen));
+    } catch (err) {
+      console.error("[chat] Failed to save open state:", err);
+    }
+  }, [isOpen, isHydrated]);
+
+  // =====================
+  // رسالة الترحيب - تظهر فقط لو مفيش محادثة محفوظة
+  // =====================
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    if (!isOpen) return;
 
     if (messages.length > 0) return;
 
@@ -148,7 +202,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       clearTimeout(timer3);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, t.welcomePart1, t.welcomePart2]);
+  }, [isOpen, isHydrated, t.welcomePart1, t.welcomePart2]);
 
   useEffect(() => {
     if (messages.length > 0 || isBotTyping || isLoading) {
@@ -159,6 +213,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const handleClearChat = useCallback(() => {
     if (!confirm(t.clearConfirm)) return;
     setMessages([]);
+    try {
+      sessionStorage.removeItem(STORAGE_KEY_MESSAGES);
+    } catch (err) {
+      console.error("[chat] Failed to clear storage:", err);
+    }
   }, [t.clearConfirm]);
 
   const handleSendMessage = useCallback(
@@ -251,7 +310,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         </span>
       </button>
 
-      {/* نافذة الشات - متجاوبة مع الموبايل */}
+      {/* نافذة الشات */}
       <div
         className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[500px] max-h-[calc(100vh-120px)] sm:max-h-[500px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
@@ -261,7 +320,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       >
         {/* الهيدر مع الـ Avatar المنبثق */}
         <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 rounded-t-2xl pt-12 pb-3 px-3">
-          {/* Avatar المنبثق فوق الهيدر */}
           <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-20">
             <div className="relative w-full h-full rounded-full flex items-center justify-center overflow-hidden">
               <ValictaAvatar size={72} />
@@ -269,7 +327,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             <span className="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse z-30" />
           </div>
 
-          {/* محتوى الهيدر */}
           <div className="flex items-center justify-between mt-1">
             <div className="flex-1 flex flex-col items-center">
               <span className="text-white text-sm font-bold leading-tight">
@@ -350,7 +407,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             );
           })}
 
-          {/* مؤشر الكتابة */}
           {(isLoading || isBotTyping) && (
             <div className="flex items-end gap-2 justify-start msg-fade-in">
               <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20 bg-white dark:bg-[#1E293B]">
