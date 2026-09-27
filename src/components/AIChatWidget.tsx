@@ -72,6 +72,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isAr = lang === "ar";
 
@@ -157,6 +158,25 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       console.error("[chat] Failed to save open state:", err);
     }
   }, [isOpen, isHydrated]);
+
+  // =====================
+  // Focus تلقائي على الـ input (ديسكتوب بس)
+  // =====================
+  useEffect(() => {
+    // بس على الأجهزة الكبيرة (مش موبايل)
+    if (typeof window === "undefined") return;
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    if (!isDesktop) return;
+
+    // لما الشات يكون مفتوح ومش بيلود
+    if (isOpen && !isLoading) {
+      // تأخير بسيط للتأكد من إن الـ animation خلص
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, isLoading]);
 
   // =====================
   // رسالة الترحيب - تظهر فقط لو مفيش محادثة محفوظة
@@ -430,6 +450,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-center gap-2 rounded-b-2xl"
         >
           <input
+            ref={inputRef}
             type="text"
             value={input}
             onChange={(e) =>
