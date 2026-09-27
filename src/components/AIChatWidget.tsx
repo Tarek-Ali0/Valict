@@ -327,12 +327,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         </span>
       </button>
 
-      {/* نافذة الشات */}
+      {/* نافذة الشات - متجاوبة مع الموبايل */}
       <div
-        className={`absolute bottom-20 left-0 w-[350px] h-[500px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
+        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[500px] max-h-[calc(100vh-120px)] sm:max-h-[500px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
             ? "scale-100 opacity-100 visible"
-            : "scale-75 opacity-0 invisible"
+            : "scale-75 opacity-0 invisible pointer-events-none"
         }`}
       >
         {/* الهيدر مع الـ Avatar المنبثق */}
