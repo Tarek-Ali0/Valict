@@ -18,19 +18,8 @@ export function Hero({ dict }: HeroProps) {
     offset: ["start start", "end start"],
   });
 
-  // النصوص: حركة بسيطة (ثابتة تقريباً)
-  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-2vh"]);
-
-  // اللابتوب: يختفي تدريجياً + يصغر شوية
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.4], [0.95, 0.85]);
-
-  // الزرار: يظهر تدريجياً (يبدأ من 15% لحد 40%)
-  const buttonOpacity = useTransform(
-  scrollYProgress,
-  [0, 0.4],
-  [0.35, 1]
-);
+  // اللابتوب: يصغر تدريجياً فقط (بدون اختفاء)
+  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.88]);
 
   return (
     <section
@@ -90,11 +79,8 @@ export function Hero({ dict }: HeroProps) {
 
         {/* 2. حاوية الديسكتوب */}
         <div className="hidden lg:flex relative z-20 flex-col items-center text-center w-full max-w-4xl mx-auto space-y-6">
-          {/* Badge + النصوص: حركة بسيطة (شبه ثابتة) */}
-          <motion.div
-            className="flex flex-col items-center w-full space-y-6"
-            style={{ y: textY }}
-          >
+          {/* Badge + النصوص: ثابتة 100% */}
+          <div className="flex flex-col items-center w-full space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -115,12 +101,12 @@ export function Hero({ dict }: HeroProps) {
                 {dict.hero.description}
               </p>
             )}
-          </motion.div>
+          </div>
 
-          {/* حاوية صورة اللابتوب: تختفي تدريجياً + تصغر */}
+          {/* حاوية صورة اللابتوب: تصغر تدريجياً فقط */}
           <motion.div
             className="w-full max-w-[820px] mx-auto pt-2"
-            style={{ scale: imageScale, opacity: imageOpacity }}
+            style={{ scale: imageScale }}
           >
             <Image
               src="/dashboard-mockup.png"
@@ -133,11 +119,8 @@ export function Hero({ dict }: HeroProps) {
             />
           </motion.div>
 
-          {/* حاوية الزرار: تظهر تدريجياً */}
-          <motion.div
-            className="pt-2"
-            style={{ opacity: buttonOpacity }}
-          >
+          {/* حاوية الزرار: ثابت 100% */}
+          <div className="pt-2">
             <Link
               href="#contact"
               aria-label="Navigate to Valict consultation and contact section"
@@ -146,7 +129,7 @@ export function Hero({ dict }: HeroProps) {
               {dict.hero.cta}
               <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
