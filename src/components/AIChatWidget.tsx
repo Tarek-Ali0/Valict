@@ -39,23 +39,26 @@ function getTextDirection(text: string): "rtl" | "ltr" {
 }
 
 /**
- * شخصية فاليكتا (صورة)
+ * شخصية فاليكتا (WebP)
  */
 function ValictaAvatar({
   size = 48,
   className = "",
+  priority = false,
 }: {
   size?: number;
   className?: string;
+  priority?: boolean;
 }) {
   return (
     <Image
-      src="/valicta.png"
+      src="/valicta.webp"
       alt="Valicta"
       width={size}
       height={size}
       className={`object-contain ${className}`}
-      priority
+      priority={priority}
+      sizes={`${size}px`}
     />
   );
 }
@@ -262,7 +265,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           {isOpen ? (
             <FaXmark className="w-5 h-5 text-valict-navy dark:text-valict-cyan" />
           ) : (
-            <ValictaAvatar size={50} />
+            <ValictaAvatar size={50} priority />
           )}
         </span>
       </button>
