@@ -18,18 +18,26 @@ export function Hero({ dict }: HeroProps) {
     offset: ["start start", "end start"],
   });
 
-  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-3vh"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+  // النصوص: حركة بسيطة (ثابتة تقريباً)
+  const textY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-2vh"]);
 
-  const imageScale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
-  const imageY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-1vh"]);
+  // اللابتوب: يختفي تدريجياً + يصغر شوية
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.4], [0.95, 0.85]);
+
+  // الزرار: يظهر تدريجياً (يبدأ من 15% لحد 40%)
+  const buttonOpacity = useTransform(
+    scrollYProgress,
+    [0.15, 0.4],
+    [0, 1]
+  );
 
   return (
     <section
       ref={containerRef}
       className="relative w-full h-auto pt-24 sm:pt-28 lg:pt-32 pb-12 lg:pb-16 transition-colors duration-300 flex items-center justify-center overflow-hidden"
     >
-      {/* --- Premium Background Elements (على مستوى الصفحة كاملة) --- */}
+      {/* --- Premium Background Elements --- */}
       <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
@@ -80,36 +88,39 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب المدمجة بالكامل */}
-        <motion.div
-          className="hidden lg:flex relative z-20 flex-col items-center text-center w-full max-w-4xl mx-auto space-y-6"
-          style={{ y: textY, opacity: textOpacity }}
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-            <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-              {dict.hero.badge}
-            </span>
-            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-          </div>
+        {/* 2. حاوية الديسكتوب */}
+        <div className="hidden lg:flex relative z-20 flex-col items-center text-center w-full max-w-4xl mx-auto space-y-6">
+          {/* Badge + النصوص: حركة بسيطة (شبه ثابتة) */}
+          <motion.div
+            className="flex flex-col items-center w-full space-y-6"
+            style={{ y: textY }}
+          >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+                {dict.hero.badge}
+              </span>
+              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            </div>
 
-          <h1 className="text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-            {dict.hero.title1} <br className="hidden sm:block" />
-            <span className="logo-gradient-text leading-relaxed">
-              {dict.hero.title2}
-            </span>
-          </h1>
+            <h1 className="text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+              {dict.hero.title1} <br className="hidden sm:block" />
+              <span className="logo-gradient-text leading-relaxed">
+                {dict.hero.title2}
+              </span>
+            </h1>
 
-          {dict.hero.description && (
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
-              {dict.hero.description}
-            </p>
-          )}
+            {dict.hero.description && (
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+                {dict.hero.description}
+              </p>
+            )}
+          </motion.div>
 
-          {/* حاوية صورة اللابتوب للديسكتوب */}
+          {/* حاوية صورة اللابتوب: تختفي تدريجياً + تصغر */}
           <motion.div
             className="w-full max-w-[820px] mx-auto pt-2"
-            style={{ scale: imageScale, y: imageY }}
+            style={{ scale: imageScale, opacity: imageOpacity }}
           >
             <Image
               src="/dashboard-mockup.png"
@@ -122,8 +133,11 @@ export function Hero({ dict }: HeroProps) {
             />
           </motion.div>
 
-          {/* حاوية الزرار تحت اللابتوب للديسكتوب */}
-          <div className="pt-2">
+          {/* حاوية الزرار: تظهر تدريجياً */}
+          <motion.div
+            className="pt-2"
+            style={{ opacity: buttonOpacity }}
+          >
             <Link
               href="#contact"
               aria-label="Navigate to Valict consultation and contact section"
@@ -132,8 +146,8 @@ export function Hero({ dict }: HeroProps) {
               {dict.hero.cta}
               <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
             </Link>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
