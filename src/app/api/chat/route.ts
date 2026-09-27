@@ -12,6 +12,22 @@ const CACHE_TTL_SECONDS = 24 * 60 * 60;
 const GROQ_MODEL = "openai/gpt-oss-120b";
 
 /**
+ * إصلاح الأرقام في النص العربي (LRM)
+ * يحل مشكلة اتجاه الأرقام في النص العربي (RTL)
+ */
+function fixPhoneNumbers(text: string): string {
+  // LRM = Left-to-Right Mark
+  const LRM = "\u200E";
+
+  // نضيف LRM حوالين أي رقم فيه + (زي أرقام الهواتف الدولية)
+  // مثال: +20 150 554 4455 → \u200E+20 150 554 4455\u200E
+  return text.replace(
+    /(\+[\d\s\-()]{6,})/g,
+    (match) => `${LRM}${match.trim()}${LRM}`
+  );
+}
+
+/**
  * Rate limiter بسيط في الذاكرة.
  */
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
@@ -428,11 +444,16 @@ Strictly forbidden:
     }
 
     // =====================
+    // 6.5 — إصلاح الأرقام في الرد (LRM)
+    // =====================
+    const fixedReply = fixPhoneNumbers(reply);
+
+    // =====================
     // 7. خزّن الرد في الكاش قبل ما ترجعه
     // =====================
-    await setCachedReply(trimmed, lang, reply);
+    await setCachedReply(trimmed, lang, fixedReply);
 
-    return NextResponse.json({ reply });
+    return NextResponse.json({ reply: fixedReply });
   } catch (error: unknown) {
     console.error("[chat] Unhandled error:", error);
     return NextResponse.json(
