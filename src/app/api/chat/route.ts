@@ -5,11 +5,11 @@ import Groq from "groq-sdk";
 
 // إعدادات عامة
 const MAX_MESSAGE_LENGTH = 1000;
-const RATE_LIMIT_WINDOW_MS = 60_000; // دقيقة
-const RATE_LIMIT_MAX_REQUESTS = 15;  // 15 رسالة في الدقيقة لكل IP
-const MAX_RETRIES = 5;               // عدد محاولات إعادة الطلب
-const CACHE_TTL_SECONDS = 24 * 60 * 60; // مدة الكاش: 24 ساعة
-const GROQ_MODEL = "openai/gpt-oss-120b"; // الموديل المستخدم
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX_REQUESTS = 15;
+const MAX_RETRIES = 5;
+const CACHE_TTL_SECONDS = 24 * 60 * 60;
+const GROQ_MODEL = "openai/gpt-oss-120b";
 
 /**
  * Rate limiter بسيط في الذاكرة.
@@ -289,6 +289,11 @@ export async function POST(req: Request) {
 - لا تستخدم - أو * أو ** أو أي رموز markdown أخرى.
 13. لا تفترض أبداً تفاصيل لم يذكرها العميل. إذا كان السؤال عاماً أو غير واضح، اطلب تفاصيل أكثر بدلاً من افتراض المشكلة.
 14. عند طرح سؤال توضيحي، اجعله سؤالاً واحداً محدداً (مش قائمة أسئلة)، وكن ودوداً ومرحباً.
+15. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
+- كلمة "وقع" قد تعني "سقط على الأرض" أو "توقف عن العمل/باظ".
+- في السياق التقني (سيرفر، هارد، شبكة، نظام)، المعنى المرجح "توقف/باظ".
+- كلمة "طاح" أو "نزل" قد تعني "تعطل" في السياق التقني.
+- إذا كان المعنى غامضاً، اسأل المستخدم للتوضيح بدل افتراض المعنى الحرفي.
 
 قواعد التعامل مع الأسئلة العامة (مهمة جداً):
 - إذا قال المستخدم "ممكن مساعدة؟" أو "محتاج مساعدة" أو أي سؤال عام بدون تفاصيل → رد بترحيب ودود واسأله: "بكل تأكيد! 😊 عشان أقدر أساعدك بشكل أفضل، ممكن تحكيلي إيه التحدي اللي بتواجهه بالظبط؟"
@@ -352,6 +357,11 @@ Strict rules to always follow:
 - Do not use -, *, **, or any other markdown symbols.
 13. Never assume details the client didn't mention. If the question is general or unclear, ask for more details instead of assuming the problem.
 14. When asking a clarifying question, make it ONE specific question (not a list), and be friendly and welcoming.
+15. When handling Arabic terms with multiple meanings, consider the context before interpreting:
+- The Arabic word "waqa'a" (وقع) can mean "fell down" or "stopped working / broke down".
+- In technical context (server, hard drive, network, system), the likely meaning is "stopped working / broke down".
+- The Arabic words "tah" (طاح) or "nazal" (نزل) can mean "broke down" in technical context.
+- If the meaning is ambiguous, ask the user for clarification instead of assuming the literal meaning.
 
 Rules for handling general questions (very important):
 - If the user says "Can you help?" or "I need help" or any general question without details → reply with a warm welcome and ask: "Absolutely! 😊 So I can help you better, could you tell me what specific challenge you're facing?"
