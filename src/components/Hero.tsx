@@ -27,10 +27,10 @@ export function Hero({ dict }: HeroProps) {
 
   // الزرار: يظهر تدريجياً (يبدأ من 15% لحد 40%)
   const buttonOpacity = useTransform(
-    scrollYProgress,
-    [0.15, 0.4],
-    [0, 1]
-  );
+  scrollYProgress,
+  [0, 0.4],
+  [0.35, 1]
+);
 
   return (
     <section
