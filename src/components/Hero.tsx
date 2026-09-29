@@ -33,7 +33,7 @@ export function Hero({ dict }: HeroProps) {
       {/* ----------------------------------- */}
 
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 1. حاوية الموبايل والتابلت — عمودي: نص فوق + صورة تحت */}
+        {/* 1. حاوية الموبايل والتابلت — عمودي */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
@@ -49,6 +49,11 @@ export function Hero({ dict }: HeroProps) {
               {dict.hero.title2}
             </span>
           </h2>
+
+          {/* SVG خط متحرك للموبايل */}
+          <div className="w-24 sm:w-32 mb-5">
+            <AnimatedUnderline />
+          </div>
 
           {(dict.hero.description || dict.about?.text) && (
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
@@ -78,7 +83,7 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-8 xl:gap-12 items-center relative z-20 w-full">
+        <div className="hidden lg:grid lg:grid-cols-[1.5fr_1fr] gap-10 xl:gap-14 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-6 min-w-0">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
@@ -96,6 +101,11 @@ export function Hero({ dict }: HeroProps) {
                 {dict.hero.title2}
               </span>
             </h1>
+
+            {/* SVG خط متحرك — تحت العنوان */}
+            <div className="w-32 lg:w-40 xl:w-48 -mt-2">
+              <AnimatedUnderline />
+            </div>
 
             {(dict.hero.description || dict.about?.text) && (
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
@@ -115,7 +125,7 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          {/* الجانب التاني: صورة اللابتوب (تصغر تدريجياً) */}
+          {/* الجانب التاني: صورة اللابتوب */}
           <motion.div
             className="w-full flex justify-center"
             style={{ scale: imageScale }}
@@ -125,13 +135,46 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[640px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[720px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 640px, 100vw"
+              sizes="(min-width: 1024px) 720px, 100vw"
             />
           </motion.div>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * SVG خط متحرك يظهر تدريجياً من اليسار لليمين
+ */
+function AnimatedUnderline() {
+  return (
+    <svg
+      viewBox="0 0 200 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-full h-auto"
+      preserveAspectRatio="none"
+    >
+      <motion.path
+        d="M2 4 Q 50 1, 100 4 T 198 4"
+        stroke="url(#underline-gradient)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
+      />
+      <defs>
+        <linearGradient id="underline-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#00D2FF" stopOpacity="0" />
+          <stop offset="20%" stopColor="#00D2FF" stopOpacity="1" />
+          <stop offset="100%" stopColor="#00D2FF" stopOpacity="1" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 }
