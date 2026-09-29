@@ -35,13 +35,13 @@ export function Hero({ dict }: HeroProps) {
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. حاوية الموبايل والتابلت — عمودي بالترتيب الجديد */}
         <div className="lg:hidden relative z-20 flex flex-col items-start text-start w-full">
-          {/* 1) Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-6 shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-            <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+          {/* 1) Badge — النسخة الجديدة */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10 mb-6">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
               {dict.hero.badge}
             </span>
-            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
           </div>
 
           {/* 2) صورة اللاب توب */}
@@ -85,14 +85,14 @@ export function Hero({ dict }: HeroProps) {
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
         <div className="hidden lg:block relative z-20 w-full">
-          {/* Badge — في نص الصفحة فوق الـ Grid */}
+          {/* Badge — في نص الصفحة فوق الـ Grid — النسخة الجديدة */}
           <div className="flex justify-center mb-8 -mt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
               </span>
-              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
           </div>
 
