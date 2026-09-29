@@ -19,7 +19,7 @@ export function Hero({ dict }: HeroProps) {
   });
 
   // اللابتوب: يصغر تدريجياً فقط (بدون اختفاء)
-  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.88]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.9]);
 
   return (
     <section
@@ -32,9 +32,9 @@ export function Hero({ dict }: HeroProps) {
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
       {/* ----------------------------------- */}
 
-      <div className="relative w-full max-w-7xl mx-auto flex flex-col items-center justify-center px-4">
-        {/* 1. حاوية الموبايل والتابلت */}
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full max-w-6xl">
+      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 1. حاوية الموبايل والتابلت — عمودي: نص فوق + صورة تحت */}
+        <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -77,11 +77,11 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب */}
-        <div className="hidden lg:flex relative z-20 flex-col items-center text-center w-full max-w-4xl mx-auto space-y-6">
-          {/* Badge + النصوص: ثابتة 100% */}
-          <div className="flex flex-col items-center w-full space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        {/* 2. حاوية الديسكتوب — Split Layout: نص على اليسار + صورة على اليمين */}
+        <div className="hidden lg:grid grid-cols-2 gap-12 xl:gap-16 items-center relative z-20 w-full">
+          {/* الجانب الأول: النص (يتبع اتجاه اللغة تلقائياً) */}
+          <div className="flex flex-col text-start space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
@@ -89,7 +89,7 @@ export function Hero({ dict }: HeroProps) {
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
 
-            <h1 className="text-4xl lg:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
               {dict.hero.title1} <br className="hidden sm:block" />
               <span className="logo-gradient-text leading-relaxed">
                 {dict.hero.title2}
@@ -97,15 +97,26 @@ export function Hero({ dict }: HeroProps) {
             </h1>
 
             {dict.hero.description && (
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
                 {dict.hero.description}
               </p>
             )}
+
+            <div className="pt-2">
+              <Link
+                href="#contact"
+                aria-label="Navigate to Valict consultation and contact section"
+                className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+              >
+                {dict.hero.cta}
+                <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
+              </Link>
+            </div>
           </div>
 
-          {/* حاوية صورة اللابتوب: تصغر تدريجياً فقط */}
+          {/* الجانب التاني: صورة اللابتوب (تصغر تدريجياً) */}
           <motion.div
-            className="w-full max-w-[820px] mx-auto pt-2"
+            className="w-full flex justify-center"
             style={{ scale: imageScale }}
           >
             <Image
@@ -113,23 +124,11 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[640px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 880px, 100vw"
+              sizes="(min-width: 1024px) 640px, 100vw"
             />
           </motion.div>
-
-          {/* حاوية الزرار: ثابت 100% */}
-          <div className="pt-2">
-            <Link
-              href="#contact"
-              aria-label="Navigate to Valict consultation and contact section"
-              className="font-sans btn-gradient text-white px-7 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
-            >
-              {dict.hero.cta}
-              <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
-            </Link>
-          </div>
         </div>
       </div>
     </section>
