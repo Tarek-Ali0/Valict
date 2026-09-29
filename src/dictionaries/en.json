@@ -1,80 +1,137 @@
-{
-  "nav": {
-    "changeLanguage": "Change Language",
-    "toggleTheme": "Toggle Theme",
-    "getStarted": "Get Started",
-    "services": "Services",
-    "whyValict": "Why Valict",
-    "aboutUs": "About Us"
-  },
-  "hero": {
-    "badge": "Where ICT Meets Value",
-    "title1": "Powering your business with",
-    "title2": "Reliable Solutions",
-    "subheadline": "Comprehensive managed IT and security solutions to keep your systems running smoothly.",
-    "cta": "Get Started"
-  },
-  "services": {
-    "subtitle": "Our Core Expertise",
-    "title": "IT & Security Solutions",
-    "highlight": "That Drive Efficiency",
-    "description": "",
-    "learnMore": "Learn more",
-    "items": [
-      { 
-        "slug": "managed-it", 
-        "title": "Managed IT Services", 
-        "desc": "Proactive monitoring and support to keep operations running smoothly." 
-      },
-      { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
-      { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
-      { "slug": "cybersecurity", "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
-      { "slug": "monitoring", "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
-      { "slug": "web-design", "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
-    ]
-  },
-  "why": {
-    "title": "Why Valict?",
-    "uptime": "99.9%",
-    "uptimeLabel": "System Uptime",
-    "headline": "Connecting Technology with Real Business Value",
-    "points": [
-      { "title": "Reduce downtime and keep operations running", "desc": "Keep operations running smoothly with our proactive maintenance and support." },
-      { "title": "Improve performance and system efficiency", "desc": "Optimize your system efficiency for faster, smarter, and scalable operations." },
-      { "title": "Secure your business infrastructure", "desc": "Flexible IT infrastructure designed to grow effortlessly with your business." }
-    ]
-  },
-  "about": {
-    "title": "About Us",
-    "text": "At Valict, we specialize in delivering integrated ICT infrastructure solutions. Our focus is reducing downtime, improving performance, and ensuring continuity. Technology is a tool to create real value."
-  },
-  "how": {
-    "subtitle": "Our Process",
-    "title": "How It Works",
-    "steps": [
-      { "title": "Assess", "desc": "Evaluate your current IT environment and identify technical gaps." },
-      { "title": "Design", "desc": "Create tailored, scalable architecture solutions for your business." },
-      { "title": "Implement", "desc": "Deploy and optimize your new systems seamlessly and securely." },
-      { "title": "Monitor", "desc": "Continuous support and proactive 24/7 maintenance to prevent issues." }
-    ]
-  },
-  "cta": {
-    "headline": "Unlock the full value of your IT",
-    "sub": "Let us help you build a reliable and scalable technology environment.",
-    "button": "Book a Free Consultation"
-  },
-  "contact": {
-    "email": "info@valict.com",
-    "phone": "+20 150 554 4455",
-    "language": "العربية"
-  },
-  "footer": {
-    "about": "At Valict, we deliver integrated ICT infrastructure solutions focused on reducing downtime, improving performance, and ensuring business continuity.",
-    "badge": "Validate Your Vision",
-    "quickLinks": "Quick Links",
-    "contactUs": "Contact Us",
-    "emailLabel": "Email",
-    "phoneLabel": "Phone",
-    "copyright": "Copyright © Valict {year} | All rights reserved"
-  }
+"use client";
+
+import React, { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+interface HeroProps {
+  dict: any;
+}
+
+export function Hero({ dict }: HeroProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  // اللابتوب: يصغر تدريجياً فقط (بدون اختفاء)
+  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.9]);
+
+  return (
+    <section
+      ref={containerRef}
+      className="relative w-full h-auto pt-24 sm:pt-28 lg:pt-32 pb-12 lg:pb-16 transition-colors duration-300 flex items-center justify-center overflow-hidden"
+    >
+      {/* --- Premium Background Elements --- */}
+      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
+      {/* ----------------------------------- */}
+
+      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 1. حاوية الموبايل والتابلت — عمودي: نص فوق + صورة تحت */}
+        <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+              {dict.hero.badge}
+            </span>
+            <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+          </div>
+
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+            {dict.hero.title1} <br className="hidden sm:block" />
+            <span className="logo-gradient-text leading-relaxed">
+              {dict.hero.title2}
+            </span>
+          </h2>
+
+          {(dict.hero.description || dict.about?.text) && (
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
+              {dict.hero.description || dict.about?.text}
+            </p>
+          )}
+
+          <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
+            <Image
+              src="/dashboard-mockup.png"
+              alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
+              width={900}
+              height={600}
+              className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
+              priority
+              sizes="(max-width: 640px) 320px, (max-width: 1024px) 450px, 900px"
+            />
+          </div>
+          <Link
+            href="#contact"
+            aria-label="Navigate to Valict consultation and contact section"
+            className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
+          >
+            {dict.hero.cta}
+            <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
+          </Link>
+        </div>
+
+        {/* 2. حاوية الديسكتوب — Split Layout: نص على اليسار + صورة على اليمين */}
+        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-8 xl:gap-12 items-center relative z-20 w-full">
+          {/* الجانب الأول: النص */}
+          <div className="flex flex-col text-start space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
+              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+                {dict.hero.badge}
+              </span>
+              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+            </div>
+
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+              {dict.hero.title1}
+              <br />
+              <span className="logo-gradient-text leading-relaxed">
+                {dict.hero.title2}
+              </span>
+            </h1>
+
+            {(dict.hero.description || dict.about?.text) && (
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+                {dict.hero.description || dict.about?.text}
+              </p>
+            )}
+
+            <div className="pt-2">
+              <Link
+                href="#contact"
+                aria-label="Navigate to Valict consultation and contact section"
+                className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+              >
+                {dict.hero.cta}
+                <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
+              </Link>
+            </div>
+          </div>
+
+          {/* الجانب التاني: صورة اللابتوب (تصغر تدريجياً) */}
+          <motion.div
+            className="w-full flex justify-center"
+            style={{ scale: imageScale }}
+          >
+            <Image
+              src="/dashboard-mockup.png"
+              alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
+              width={1050}
+              height={680}
+              className="w-full h-auto max-w-[640px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              priority
+              sizes="(min-width: 1024px) 640px, 100vw"
+            />
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }
