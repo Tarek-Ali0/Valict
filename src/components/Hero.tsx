@@ -33,9 +33,10 @@ export function Hero({ dict }: HeroProps) {
       {/* ----------------------------------- */}
 
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 1. حاوية الموبايل والتابلت — عمودي */}
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-center w-full">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-4 shadow-sm">
+        {/* 1. حاوية الموبايل والتابلت — عمودي بالترتيب الجديد */}
+        <div className="lg:hidden relative z-20 flex flex-col items-start text-start w-full">
+          {/* 1) Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-6 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
               {dict.hero.badge}
@@ -43,20 +44,8 @@ export function Hero({ dict }: HeroProps) {
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
           </div>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
-            {dict.hero.title1} <br className="hidden sm:block" />
-            <span className="logo-gradient-text leading-relaxed">
-              {dict.hero.title2}
-            </span>
-          </h2>
-
-          {(dict.hero.description || dict.about?.text) && (
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
-              {dict.hero.description || dict.about?.text}
-            </p>
-          )}
-
-          <div className="w-full max-w-[320px] xs:max-w-xs sm:max-w-md my-2.5">
+          {/* 2) صورة اللاب توب */}
+          <div className="w-full max-w-[400px] xs:max-w-[440px] sm:max-w-[520px] mb-6">
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
@@ -64,9 +53,26 @@ export function Hero({ dict }: HeroProps) {
               height={600}
               className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
               priority
-              sizes="(max-width: 640px) 320px, (max-width: 1024px) 450px, 900px"
+              sizes="(max-width: 640px) 400px, (max-width: 1024px) 520px, 900px"
             />
           </div>
+
+          {/* 3) العنوان */}
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+            {dict.hero.title1} <br />
+            <span className="logo-gradient-text leading-relaxed">
+              {dict.hero.title2}
+            </span>
+          </h2>
+
+          {/* 4) الوصف */}
+          {(dict.hero.description || dict.about?.text) && (
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium">
+              {dict.hero.description || dict.about?.text}
+            </p>
+          )}
+
+          {/* 5) الزرار */}
           <Link
             href="#contact"
             aria-label="Navigate to Valict consultation and contact section"
@@ -78,10 +84,10 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-6 xl:gap-8 items-stretch relative z-20 w-full">
+        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-6 xl:gap-8 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-3 min-w-0">
-            {/* Badge — مرفوع لفوق */}
+            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit -mt-2">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -116,9 +122,9 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          {/* الجانب التاني: صورة اللابتوب — تمتد بنفس ارتفاع العمود */}
+          {/* الجانب التاني: صورة اللابتوب — متوسطة رأسياً */}
           <motion.div
-            className="w-full h-full flex items-center justify-center"
+            className="w-full flex items-center justify-center"
             style={{ scale: imageScale }}
           >
             <Image
