@@ -84,59 +84,64 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.1fr_1fr] gap-4 xl:gap-6 items-center relative z-20 w-full">
-          {/* الجانب الأول: النص */}
-          <div className="flex flex-col text-start space-y-3 min-w-0">
-            {/* Badge — في النص */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit -mt-2 mx-auto">
+        <div className="hidden lg:block relative z-20 w-full">
+          {/* Badge — في نص الصفحة فوق الـ Grid */}
+          <div className="flex justify-center mb-8 -mt-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
               </span>
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
-
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-              <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
-              <br />
-              <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
-                {dict.hero.title2}
-              </span>
-            </h1>
-
-            {(dict.hero.description || dict.about?.text) && (
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-                {dict.hero.description || dict.about?.text}
-              </p>
-            )}
-
-            <div className="pt-2">
-              <Link
-                href="#contact"
-                aria-label="Navigate to Valict consultation and contact section"
-                className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
-              >
-                {dict.hero.cta}
-                <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
-              </Link>
-            </div>
           </div>
 
-          {/* الجانب التاني: صورة اللابتوب — متوسطة رأسياً */}
-          <motion.div
-            className="w-full flex items-center justify-center"
-            style={{ scale: imageScale }}
-          >
-            <Image
-              src="/dashboard-mockup.png"
-              alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
-              width={1050}
-              height={680}
-              className="w-full h-auto max-w-[1200px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
-              priority
-              sizes="(min-width: 1024px) 1200px, 100vw"
-            />
-          </motion.div>
+          {/* الـ Grid — نص + صورة */}
+          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-4 xl:gap-6 items-center w-full">
+            {/* الجانب الأول: النص */}
+            <div className="flex flex-col text-start space-y-3 min-w-0">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+                <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
+                <br />
+                <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
+                  {dict.hero.title2}
+                </span>
+              </h1>
+
+              {(dict.hero.description || dict.about?.text) && (
+                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+                  {dict.hero.description || dict.about?.text}
+                </p>
+              )}
+
+              <div className="pt-2">
+                <Link
+                  href="#contact"
+                  aria-label="Navigate to Valict consultation and contact section"
+                  className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+                >
+                  {dict.hero.cta}
+                  <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
+                </Link>
+              </div>
+            </div>
+
+            {/* الجانب التاني: صورة اللابتوب — متوسطة رأسياً */}
+            <motion.div
+              className="w-full flex items-center justify-center"
+              style={{ scale: imageScale }}
+            >
+              <Image
+                src="/dashboard-mockup.png"
+                alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
+                width={1050}
+                height={680}
+                className="w-full h-auto max-w-[1200px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+                priority
+                sizes="(min-width: 1024px) 1200px, 100vw"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
