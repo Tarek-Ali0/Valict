@@ -43,7 +43,7 @@ export function Hero({ dict }: HeroProps) {
             <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
           </div>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-3 text-valict-dark dark:text-white tracking-tight">
             {dict.hero.title1} <br className="hidden sm:block" />
             <span className="logo-gradient-text leading-relaxed">
               {dict.hero.title2}
@@ -51,7 +51,7 @@ export function Hero({ dict }: HeroProps) {
           </h2>
 
           {/* SVG خط متحرك للموبايل */}
-          <div className="w-24 sm:w-32 mb-5">
+          <div className="w-24 sm:w-32 mb-4">
             <AnimatedUnderline />
           </div>
 
@@ -85,7 +85,7 @@ export function Hero({ dict }: HeroProps) {
         {/* 2. حاوية الديسكتوب — Split Layout */}
         <div className="hidden lg:grid lg:grid-cols-[1.5fr_1fr] gap-10 xl:gap-14 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
-          <div className="flex flex-col text-start space-y-6 min-w-0">
+          <div className="flex flex-col text-start space-y-3 min-w-0">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -94,7 +94,7 @@ export function Hero({ dict }: HeroProps) {
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
               <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
               <br />
               <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
@@ -103,7 +103,7 @@ export function Hero({ dict }: HeroProps) {
             </h1>
 
             {/* SVG خط متحرك — تحت العنوان */}
-            <div className="w-32 lg:w-40 xl:w-48 -mt-2">
+            <div className="w-32 lg:w-40 xl:w-48 -mt-1">
               <AnimatedUnderline />
             </div>
 
@@ -147,34 +147,54 @@ export function Hero({ dict }: HeroProps) {
 }
 
 /**
- * SVG خط متحرك يظهر تدريجياً من اليسار لليمين
+ * SVG خط متحرك يظهر تدريجياً — CSS Animation
  */
 function AnimatedUnderline() {
   return (
-    <svg
-      viewBox="0 0 200 8"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-auto"
-      preserveAspectRatio="none"
-    >
-      <motion.path
-        d="M2 4 Q 50 1, 100 4 T 198 4"
-        stroke="url(#underline-gradient)"
-        strokeWidth="3"
-        strokeLinecap="round"
+    <>
+      <svg
+        viewBox="0 0 200 8"
         fill="none"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
-      />
-      <defs>
-        <linearGradient id="underline-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#00D2FF" stopOpacity="0" />
-          <stop offset="20%" stopColor="#00D2FF" stopOpacity="1" />
-          <stop offset="100%" stopColor="#00D2FF" stopOpacity="1" />
-        </linearGradient>
-      </defs>
-    </svg>
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-auto"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient
+            id="underline-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stopColor="#00D2FF" stopOpacity="0" />
+            <stop offset="20%" stopColor="#00D2FF" stopOpacity="1" />
+            <stop offset="100%" stopColor="#00D2FF" stopOpacity="1" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M2 4 Q 50 1, 100 4 T 198 4"
+          stroke="url(#underline-gradient)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+          className="animated-underline-path"
+        />
+      </svg>
+
+      <style jsx>{`
+        .animated-underline-path {
+          stroke-dasharray: 250;
+          stroke-dashoffset: 250;
+          animation: drawLine 1.5s ease-in-out 0.3s forwards;
+        }
+
+        @keyframes drawLine {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      `}</style>
+    </>
   );
 }
