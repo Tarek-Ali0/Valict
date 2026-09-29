@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook, FaCheckCircle } from "react-icons/fa6";
+import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook, FaCircleCheck } from "react-icons/fa6";
 
 interface FooterProps {
   dict?: any;
@@ -90,7 +90,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                     key={index}
                     className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
                   >
-                    <FaCheckCircle className="text-valict-cyan flex-shrink-0 text-[10px]" />
+                    <FaCircleCheck className="text-valict-cyan flex-shrink-0 text-[10px]" />
                     <span>{value}</span>
                   </li>
                 ))}
