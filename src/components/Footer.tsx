@@ -54,11 +54,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                 />
               </div>
             </Link>
-            {/* تحسين تباين لون نص النبذة التعريفية */}
-            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-w-sm mb-4">
-              {footerDict.about}
-            </p>
-            <div className="flex items-center gap-2">
+
+            <div className="flex items-center gap-2 mt-2">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {footerDict.badge}
@@ -68,7 +65,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
           {/* Column 2: Quick Links */}
           <div>
-            {/* ضبط وسم العنوان إلى h2 لسلامة التسلسل الهيكلي */}
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h2>
             <ul className="space-y-2">
               {[
@@ -94,7 +90,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
           {/* Column 3: Contact Info */}
           <div>
-            {/* ضبط وسم العنوان إلى h2 لسلامة التسلسل الهيكلي */}
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.contactUs}</h2>
             <ul className="space-y-3">
               <li>
@@ -106,7 +101,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                     <FaEnvelope className="text-xs text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col">
-                    {/* تغميق درجات تسميات العناوين الفرعية للاتصال */}
                     <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{footerDict.emailLabel}</span>
                     <span className="text-sm font-medium text-slate-800 dark:text-slate-200">{dict?.contact?.email || "info@valict.com"}</span>
                   </div>
@@ -121,7 +115,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
                     <FaPhone className="text-xs text-valict-navy dark:text-valict-cyan group-hover:text-valict-cyan transition-colors" />
                   </div>
                   <div className="flex flex-col">
-                    {/* تغميق درجات تسميات العناوين الفرعية للاتصال */}
                     <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{footerDict.phoneLabel}</span>
                     <span className="text-sm font-medium text-slate-800 dark:text-slate-200" dir="ltr">{dict?.contact?.phone || "+20 150 554 4455"}</span>
                   </div>
@@ -134,7 +127,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
         {/* Bottom Bar: Copyright & Socials */}
         <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* تحسين تباين نص الحقوق وسيو الوصف */}
           <p dir="rtl" className="text-slate-600 dark:text-slate-400 text-xs text-center md:text-start">
             {footerDict.copyright.replace('{year}', currentYear.toString())}
           </p>
