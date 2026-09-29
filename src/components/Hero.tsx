@@ -51,7 +51,7 @@ export function Hero({ dict }: HeroProps) {
           </h2>
 
           {/* خط متحرك للموبايل */}
-          <div className="w-24 sm:w-32 mb-4">
+          <div className="w-full max-w-[280px] sm:max-w-[360px] mb-4">
             <AnimatedUnderline />
           </div>
 
@@ -103,7 +103,7 @@ export function Hero({ dict }: HeroProps) {
             </h1>
 
             {/* خط متحرك — تحت العنوان */}
-            <div className="w-32 lg:w-40 xl:w-48 -mt-1">
+            <div className="w-full -mt-1">
               <AnimatedUnderline />
             </div>
 
@@ -135,9 +135,9 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[800px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[880px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 800px, 100vw"
+              sizes="(min-width: 1024px) 880px, 100vw"
             />
           </motion.div>
         </div>
@@ -150,15 +150,15 @@ export function Hero({ dict }: HeroProps) {
  * خط متحرك — CSS Animation باستخدام div
  * يتضمن:
  * - خط أساسي باهت (دائماً ظاهر)
- * - خط متوهج بيمشي من اليسار لليمين
+ * - خط متوهج بيمشي من اليسار لليمين — مستمر (loop)
  */
 function AnimatedUnderline() {
   return (
-    <div className="relative w-full h-[3px]">
+    <div className="relative w-full h-[2px]">
       {/* الخط الباهت (دائماً ظاهر) */}
       <div className="absolute inset-0 bg-valict-cyan/20 rounded-full" />
 
-      {/* الخط المتوهج (بيمشي) */}
+      {/* الخط المتوهج (بيمشي بشكل مستمر) */}
       <div className="absolute inset-0 rounded-full overflow-hidden">
         <div className="animated-line absolute inset-y-0 left-0 w-full bg-gradient-to-r from-valict-cyan/0 via-valict-cyan to-valict-cyan rounded-full" />
       </div>
@@ -166,13 +166,18 @@ function AnimatedUnderline() {
       <style jsx>{`
         .animated-line {
           transform: translateX(-100%);
-          animation: slideIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s
-            forwards;
+          animation: slideIn 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
         @keyframes slideIn {
-          to {
+          0% {
+            transform: translateX(-100%);
+          }
+          50% {
             transform: translateX(0);
+          }
+          100% {
+            transform: translateX(100%);
           }
         }
       `}</style>
