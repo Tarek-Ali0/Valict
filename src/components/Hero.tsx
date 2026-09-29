@@ -50,9 +50,9 @@ export function Hero({ dict }: HeroProps) {
             </span>
           </h2>
 
-          {dict.hero.description && (
+          {(dict.hero.description || dict.about?.text) && (
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
-              {dict.hero.description}
+              {dict.hero.description || dict.about?.text}
             </p>
           )}
 
@@ -78,8 +78,8 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout: نص على اليسار + صورة على اليمين */}
-        <div className="hidden lg:grid grid-cols-2 gap-12 xl:gap-16 items-center relative z-20 w-full">
-          {/* الجانب الأول: النص (يتبع اتجاه اللغة تلقائياً) */}
+        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-8 xl:gap-12 items-center relative z-20 w-full">
+          {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
@@ -89,16 +89,17 @@ export function Hero({ dict }: HeroProps) {
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.2] lg:leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-              {dict.hero.title1} <br className="hidden sm:block" />
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+              {dict.hero.title1}
+              <br />
               <span className="logo-gradient-text leading-relaxed">
                 {dict.hero.title2}
               </span>
             </h1>
 
-            {dict.hero.description && (
+            {(dict.hero.description || dict.about?.text) && (
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-                {dict.hero.description}
+                {dict.hero.description || dict.about?.text}
               </p>
             )}
 
