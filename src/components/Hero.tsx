@@ -19,7 +19,7 @@ export function Hero({ dict }: HeroProps) {
   });
 
   // اللابتوب: يصغر تدريجياً فقط (بدون اختفاء)
-  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.9]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.92]);
 
   return (
     <section
@@ -78,10 +78,11 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.4fr_1fr] gap-6 xl:gap-8 items-center relative z-20 w-full">
+        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-6 xl:gap-8 items-stretch relative z-20 w-full">
           {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-3 min-w-0">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
+            {/* Badge — مرفوع لفوق */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit -mt-2">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
@@ -115,9 +116,9 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          {/* الجانب التاني: صورة اللابتوب */}
+          {/* الجانب التاني: صورة اللابتوب — تمتد بنفس ارتفاع العمود */}
           <motion.div
-            className="w-full flex justify-center"
+            className="w-full h-full flex items-center justify-center"
             style={{ scale: imageScale }}
           >
             <Image
@@ -125,9 +126,9 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[900px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[1000px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 900px, 100vw"
+              sizes="(min-width: 1024px) 1000px, 100vw"
             />
           </motion.div>
         </div>
