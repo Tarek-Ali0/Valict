@@ -84,11 +84,11 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-6 xl:gap-8 items-center relative z-20 w-full">
+        <div className="hidden lg:grid lg:grid-cols-[1.1fr_1fr] gap-4 xl:gap-6 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-3 min-w-0">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit -mt-2">
+            {/* Badge — في النص */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit -mt-2 mx-auto">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
@@ -96,7 +96,7 @@ export function Hero({ dict }: HeroProps) {
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
 
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight text-center">
               <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
               <br />
               <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
@@ -105,12 +105,12 @@ export function Hero({ dict }: HeroProps) {
             </h1>
 
             {(dict.hero.description || dict.about?.text) && (
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium text-center mx-auto">
                 {dict.hero.description || dict.about?.text}
               </p>
             )}
 
-            <div className="pt-2">
+            <div className="pt-2 text-center">
               <Link
                 href="#contact"
                 aria-label="Navigate to Valict consultation and contact section"
@@ -132,9 +132,9 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[1500px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[1200px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 1500px, 100vw"
+              sizes="(min-width: 1024px) 1200px, 100vw"
             />
           </motion.div>
         </div>
