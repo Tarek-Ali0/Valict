@@ -77,10 +77,10 @@ export function Hero({ dict }: HeroProps) {
           </Link>
         </div>
 
-        {/* 2. حاوية الديسكتوب — Split Layout: نص على اليسار + صورة على اليمين */}
+        {/* 2. حاوية الديسكتوب — Split Layout */}
         <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-8 xl:gap-12 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
-          <div className="flex flex-col text-start space-y-6">
+          <div className="flex flex-col text-start space-y-6 min-w-0">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm w-fit">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -90,9 +90,9 @@ export function Hero({ dict }: HeroProps) {
             </div>
 
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-              {dict.hero.title1}
+              <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
               <br />
-              <span className="logo-gradient-text leading-relaxed">
+              <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
                 {dict.hero.title2}
               </span>
             </h1>
