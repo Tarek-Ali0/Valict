@@ -59,9 +59,9 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Column 1: Brand + Values Title + Core Values */}
-          <div className="lg:col-span-2">
-            <Link href={`/${lang}`} className="inline-block mb-2 relative group" aria-label="Valict Home">
+          {/* Column 1: Brand + Values Title + Core Values — مرفوع لفوق */}
+          <div className="lg:col-span-2 -mt-2">
+            <Link href={`/${lang}`} className="inline-block mb-3 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/valict-logo.png"
@@ -74,7 +74,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
             </Link>
 
             {/* Values Title — بنفس شكل Badge (بنقطة) */}
-            <div className="flex items-center gap-2 mb-4 mt-2">
+            <div className="flex items-center gap-2 mb-4">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {valuesTitle}
