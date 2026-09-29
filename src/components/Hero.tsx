@@ -34,14 +34,16 @@ export function Hero({ dict }: HeroProps) {
 
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. حاوية الموبايل والتابلت — عمودي بالترتيب الجديد */}
-        <div className="lg:hidden relative z-20 flex flex-col items-start text-start w-full">
-          {/* 1) Badge — النسخة الجديدة */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10 mb-6">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-            <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-              {dict.hero.badge}
-            </span>
-            <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+        <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
+          {/* 1) Badge — في النص */}
+          <div className="w-full flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+                {dict.hero.badge}
+              </span>
+              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+            </div>
           </div>
 
           {/* 2) صورة اللاب توب */}
@@ -58,7 +60,7 @@ export function Hero({ dict }: HeroProps) {
           </div>
 
           {/* 3) العنوان */}
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight">
+          <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
             {dict.hero.title1} <br />
             <span className="logo-gradient-text leading-relaxed">
               {dict.hero.title2}
@@ -67,25 +69,27 @@ export function Hero({ dict }: HeroProps) {
 
           {/* 4) الوصف */}
           {(dict.hero.description || dict.about?.text) && (
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium">
+            <p className="w-full text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium text-start">
               {dict.hero.description || dict.about?.text}
             </p>
           )}
 
           {/* 5) الزرار */}
-          <Link
-            href="#contact"
-            aria-label="Navigate to Valict consultation and contact section"
-            className="font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg shadow-valict-cyan/25"
-          >
-            {dict.hero.cta}
-            <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
-          </Link>
+          <div className="w-full">
+            <Link
+              href="#contact"
+              aria-label="Navigate to Valict consultation and contact section"
+              className="inline-flex font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
+            >
+              {dict.hero.cta}
+              <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
+            </Link>
+          </div>
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
         <div className="hidden lg:block relative z-20 w-full">
-          {/* Badge — في نص الصفحة فوق الـ Grid — النسخة الجديدة */}
+          {/* Badge — في نص الصفحة فوق الـ Grid */}
           <div className="flex justify-center mb-8 -mt-4">
             <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
