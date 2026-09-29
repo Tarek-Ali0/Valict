@@ -46,8 +46,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         "Business value-focused technology",
       ]);
 
-  // Values Title — "Validate Your Vision With" / "عزّز رؤيتك مع"
-  const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع" : "Validate Your Vision With");
+  // Values Title — "Validate Your Vision With:" / "عزّز رؤيتك مع:"
+  const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع:" : "Validate Your Vision With:");
 
   return (
     <footer className="bg-slate-50 dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
@@ -59,9 +59,9 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Column 1: Brand + Badge + Core Values */}
+          {/* Column 1: Brand + Values Title + Core Values */}
           <div className="lg:col-span-2">
-            <Link href={`/${lang}`} className="inline-block mb-4 relative group" aria-label="Valict Home">
+            <Link href={`/${lang}`} className="inline-block mb-2 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/valict-logo.png"
@@ -73,15 +73,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
               </div>
             </Link>
 
-            <div className="flex items-center gap-2 mt-2 mb-3">
-              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
-                {footerDict.badge}
-              </span>
-            </div>
-
             {/* Values Title — بنفس شكل Badge (بنقطة) */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 mt-2">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {valuesTitle}
