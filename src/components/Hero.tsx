@@ -50,7 +50,7 @@ export function Hero({ dict }: HeroProps) {
             </span>
           </h2>
 
-          {/* SVG خط متحرك للموبايل */}
+          {/* خط متحرك للموبايل */}
           <div className="w-24 sm:w-32 mb-4">
             <AnimatedUnderline />
           </div>
@@ -102,7 +102,7 @@ export function Hero({ dict }: HeroProps) {
               </span>
             </h1>
 
-            {/* SVG خط متحرك — تحت العنوان */}
+            {/* خط متحرك — تحت العنوان */}
             <div className="w-32 lg:w-40 xl:w-48 -mt-1">
               <AnimatedUnderline />
             </div>
@@ -135,9 +135,9 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[720px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[800px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 720px, 100vw"
+              sizes="(min-width: 1024px) 800px, 100vw"
             />
           </motion.div>
         </div>
@@ -147,54 +147,35 @@ export function Hero({ dict }: HeroProps) {
 }
 
 /**
- * SVG خط متحرك يظهر تدريجياً — CSS Animation
+ * خط متحرك — CSS Animation باستخدام div
+ * يتضمن:
+ * - خط أساسي باهت (دائماً ظاهر)
+ * - خط متوهج بيمشي من اليسار لليمين
  */
 function AnimatedUnderline() {
   return (
-    <>
-      <svg
-        viewBox="0 0 200 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-auto"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient
-            id="underline-gradient"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="0%"
-          >
-            <stop offset="0%" stopColor="#00D2FF" stopOpacity="0" />
-            <stop offset="20%" stopColor="#00D2FF" stopOpacity="1" />
-            <stop offset="100%" stopColor="#00D2FF" stopOpacity="1" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M2 4 Q 50 1, 100 4 T 198 4"
-          stroke="url(#underline-gradient)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-          className="animated-underline-path"
-        />
-      </svg>
+    <div className="relative w-full h-[3px]">
+      {/* الخط الباهت (دائماً ظاهر) */}
+      <div className="absolute inset-0 bg-valict-cyan/20 rounded-full" />
+
+      {/* الخط المتوهج (بيمشي) */}
+      <div className="absolute inset-0 rounded-full overflow-hidden">
+        <div className="animated-line absolute inset-y-0 left-0 w-full bg-gradient-to-r from-valict-cyan/0 via-valict-cyan to-valict-cyan rounded-full" />
+      </div>
 
       <style jsx>{`
-        .animated-underline-path {
-          stroke-dasharray: 250;
-          stroke-dashoffset: 250;
-          animation: drawLine 1.5s ease-in-out 0.3s forwards;
+        .animated-line {
+          transform: translateX(-100%);
+          animation: slideIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s
+            forwards;
         }
 
-        @keyframes drawLine {
+        @keyframes slideIn {
           to {
-            stroke-dashoffset: 0;
+            transform: translateX(0);
           }
         }
       `}</style>
-    </>
+    </div>
   );
 }
