@@ -132,9 +132,9 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={1050}
               height={680}
-              className="w-full h-auto max-w-[1200px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+              className="w-full h-auto max-w-[1500px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
               priority
-              sizes="(min-width: 1024px) 1200px, 100vw"
+              sizes="(min-width: 1024px) 1500px, 100vw"
             />
           </motion.div>
         </div>
