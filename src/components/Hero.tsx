@@ -24,7 +24,7 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-auto pt-32 sm:pt-36 lg:pt-40 pb-12 lg:pb-16 transition-colors duration-300 flex items-center justify-center overflow-hidden"
+      className="relative w-full h-auto pt-32 sm:pt-36 lg:pt-40 pb-20 transition-colors duration-300 flex items-center justify-center overflow-hidden bg-gradient-to-b from-valict-cyan/[0.04] to-transparent"
     >
       {/* --- Premium Background Elements --- */}
       <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -32,7 +32,7 @@ export function Hero({ dict }: HeroProps) {
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
       {/* ----------------------------------- */}
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
         {/* 1. حاوية الموبايل والتابلت — عمودي بالترتيب الجديد */}
         <div className="lg:hidden relative z-20 flex flex-col items-start text-start w-full">
           {/* 1) Badge */}
@@ -84,7 +84,7 @@ export function Hero({ dict }: HeroProps) {
         </div>
 
         {/* 2. حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-6 xl:gap-8 items-center relative z-20 w-full">
+        <div className="hidden lg:grid lg:grid-cols-[1.3fr_1fr] gap-8 xl:gap-12 items-center relative z-20 w-full">
           {/* الجانب الأول: النص */}
           <div className="flex flex-col text-start space-y-3 min-w-0">
             {/* Badge */}
