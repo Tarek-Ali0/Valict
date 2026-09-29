@@ -22,7 +22,7 @@ export function ScrollToTop() {
       const scroll = window.scrollY;
       const height = document.documentElement.scrollHeight - window.innerHeight;
 
-      // 2. تحديث رسمة الدائرة برمجياً مباشرة (تجنب الـ Re-render للمحافظة على الأداء الفائق)
+      // 2. تحديث رسمة الدائرة برمجياً مباشرة
       if (pathRef.current && height > 0) {
         const progress = pathLengthRef.current - (scroll * pathLengthRef.current) / height;
         pathRef.current.style.strokeDashoffset = `${progress}`;
@@ -51,11 +51,11 @@ export function ScrollToTop() {
     <button
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className={`fixed bottom-6 right-6 z-50 h-11 w-11 flex items-center justify-center rounded-full bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none ${
+      className={`fixed bottom-6 right-6 z-50 h-14 w-14 flex items-center justify-center rounded-full bg-white dark:bg-[#0F172A] text-valict-navy dark:text-valict-cyan shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-valict-navy/20 dark:border-valict-cyan/30 focus:outline-none ${
         isVisible ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
     >
-      {/* دائرة التحميل SVG المحيطة بالسهم */}
+      {/* دائرة التقدم SVG */}
       <svg
         className="absolute top-0 left-0 w-full h-full transform -rotate-90 p-[2px]"
         viewBox="-1 -1 102 102"
@@ -70,8 +70,8 @@ export function ScrollToTop() {
         />
       </svg>
 
-      {/* أيقونة السهم الحالية كما هي */}
-      <FaArrowUp className="w-4 h-4 relative z-10" />
+      {/* أيقونة السهم */}
+      <FaArrowUp className="w-5 h-5 relative z-10" />
     </button>
   );
 }
