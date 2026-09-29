@@ -46,7 +46,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         "Business value-focused technology",
       ]);
 
-  const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "ما نؤمن به" : "What We Stand For");
+  // Values Title — "Validate Your Vision With" / "عزّز رؤيتك مع"
+  const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع" : "Validate Your Vision With");
 
   return (
     <footer className="bg-slate-50 dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
@@ -72,30 +73,33 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
               </div>
             </Link>
 
-            <div className="flex items-center gap-2 mt-2 mb-6">
+            <div className="flex items-center gap-2 mt-2 mb-3">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {footerDict.badge}
               </span>
             </div>
 
-            {/* Core Values Section */}
-            <div>
-              <h3 className="text-xs font-bold text-valict-dark dark:text-white mb-3">
+            {/* Values Title — بنفس شكل Badge (بنقطة) */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
+              <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {valuesTitle}
-              </h3>
-              <ul className="space-y-1.5">
-                {coreValues.map((value: string, index: number) => (
-                  <li
-                    key={index}
-                    className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
-                  >
-                    <FaCircleCheck className="text-valict-cyan flex-shrink-0 text-[10px]" />
-                    <span>{value}</span>
-                  </li>
-                ))}
-              </ul>
+              </span>
             </div>
+
+            {/* Core Values — على صفين (2x2) */}
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+              {coreValues.map((value: string, index: number) => (
+                <li
+                  key={index}
+                  className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
+                >
+                  <FaCircleCheck className="text-valict-cyan flex-shrink-0 text-[10px]" />
+                  <span>{value}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Column 2: Quick Links */}
