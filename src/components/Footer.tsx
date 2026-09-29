@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook } from "react-icons/fa6";
+import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook, FaCheckCircle } from "react-icons/fa6";
 
 interface FooterProps {
   dict?: any;
@@ -31,6 +31,23 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
     title: "How It Works"
   };
 
+  // Core Values
+  const coreValues = dict?.footer?.values || (lang === "ar"
+    ? [
+        "الموثوقية واستمرارية الأعمال",
+        "الأمان وحماية البيانات",
+        "حلول عملية وقابلة للتوسع",
+        "التركيز على قيمة الأعمال",
+      ]
+    : [
+        "Reliability and business continuity",
+        "Security and data protection",
+        "Practical and scalable solutions",
+        "Business value-focused technology",
+      ]);
+
+  const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "ما نؤمن به" : "What We Stand For");
+
   return (
     <footer className="bg-slate-50 dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
       {/* لمسة جمالية في الخلفية */}
@@ -41,7 +58,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Column 1: Brand & About */}
+          {/* Column 1: Brand + Badge + Core Values */}
           <div className="lg:col-span-2">
             <Link href={`/${lang}`} className="inline-block mb-4 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
@@ -55,11 +72,29 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
               </div>
             </Link>
 
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-2 mt-2 mb-6">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
                 {footerDict.badge}
               </span>
+            </div>
+
+            {/* Core Values Section */}
+            <div>
+              <h3 className="text-xs font-bold text-valict-dark dark:text-white mb-3">
+                {valuesTitle}
+              </h3>
+              <ul className="space-y-1.5">
+                {coreValues.map((value: string, index: number) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
+                  >
+                    <FaCheckCircle className="text-valict-cyan flex-shrink-0 text-[10px]" />
+                    <span>{value}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
