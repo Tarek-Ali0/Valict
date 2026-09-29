@@ -96,7 +96,7 @@ export function Hero({ dict }: HeroProps) {
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
             </div>
 
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+            <h1 className="text-3xl lg:text-5xl xl:text-6xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
               <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
               <br />
               <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
@@ -105,7 +105,7 @@ export function Hero({ dict }: HeroProps) {
             </h1>
 
             {(dict.hero.description || dict.about?.text) && (
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
                 {dict.hero.description || dict.about?.text}
               </p>
             )}
