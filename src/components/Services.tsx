@@ -34,12 +34,36 @@ const iconMap: { [key: number]: any } = {
 };
 
 const colorMap: { [key: number]: { bg: string; text: string; blob: string } } = {
-  0: { bg: "bg-blue-50 dark:bg-blue-950/30", text: "text-blue-600 dark:text-blue-400", blob: "bg-blue-500/20 dark:bg-blue-400/15" },
-  1: { bg: "bg-cyan-50 dark:bg-cyan-950/30", text: "text-valict-cyan", blob: "bg-cyan-500/20 dark:bg-cyan-400/15" },
-  2: { bg: "bg-slate-100 dark:bg-slate-800", text: "text-slate-700 dark:text-slate-300", blob: "bg-slate-500/15 dark:bg-slate-400/10" },
-  3: { bg: "bg-red-50 dark:bg-red-950/30", text: "text-red-600 dark:text-red-400", blob: "bg-red-500/20 dark:bg-red-400/15" },
-  4: { bg: "bg-green-50 dark:bg-green-950/30", text: "text-green-600 dark:text-green-400", blob: "bg-green-500/20 dark:bg-green-400/15" },
-  5: { bg: "bg-purple-50 dark:bg-purple-950/30", text: "text-purple-600 dark:text-purple-400", blob: "bg-purple-500/20 dark:bg-purple-400/15" }
+  0: { 
+    bg: "bg-blue-50 dark:bg-blue-950/30", 
+    text: "text-blue-600 dark:text-blue-400", 
+    blob: "bg-blue-500/20 dark:bg-blue-400/15" 
+  },
+  1: { 
+    bg: "bg-emerald-50 dark:bg-emerald-950/30", 
+    text: "text-emerald-600 dark:text-emerald-400", 
+    blob: "bg-emerald-500/20 dark:bg-emerald-400/15" 
+  },
+  2: { 
+    bg: "bg-sky-50 dark:bg-sky-950/30", 
+    text: "text-sky-600 dark:text-sky-400", 
+    blob: "bg-sky-500/20 dark:bg-sky-400/15" 
+  },
+  3: { 
+    bg: "bg-red-50 dark:bg-red-950/30", 
+    text: "text-red-600 dark:text-red-400", 
+    blob: "bg-red-500/20 dark:bg-red-400/15" 
+  },
+  4: { 
+    bg: "bg-lime-50 dark:bg-lime-950/30", 
+    text: "text-lime-600 dark:text-lime-400", 
+    blob: "bg-lime-500/20 dark:bg-lime-400/15" 
+  },
+  5: { 
+    bg: "bg-purple-50 dark:bg-purple-950/30", 
+    text: "text-purple-600 dark:text-purple-400", 
+    blob: "bg-purple-500/20 dark:bg-purple-400/15" 
+  }
 };
 
 const containerVariants: Variants = {
