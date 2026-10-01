@@ -65,10 +65,10 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="pt-12 md:pt-16 pb-24 md:pb-32 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
+      className="bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
     >
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
         
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-12 gap-6">
@@ -143,6 +143,16 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
         </motion.div>
 
       </div>
+
+      {/* ========================= */}
+      {/* Line Separator — تحت     */}
+      {/* ملزوق على الحد بين الأقسام */}
+      {/* ========================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
+      </div>
+      {/* ========================= */}
+
     </section>
   );
 }
