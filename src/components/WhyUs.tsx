@@ -51,12 +51,21 @@ export function WhyUs({ dict }: WhyUsProps) {
   return (
     <section
       id="why-valict"
-      className="pt-12 md:pt-16 pb-24 md:pb-32 bg-white dark:bg-[#0B1120] overflow-hidden relative transition-colors duration-300"
+      className="pb-12 md:pb-16 bg-white dark:bg-[#0B1120] overflow-hidden relative transition-colors duration-300"
     >
       {/* إضاءة خلفية ناعمة لربط التصميم ببعضه */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none translate-y-[-50%]"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+
+        {/* ========================= */}
+        {/* Line Separator — فوق     */}
+        {/* ========================= */}
+        <div className="mb-12 md:mb-16">
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-300/60 to-transparent dark:via-slate-700/60"></div>
+        </div>
+        {/* ========================= */}
+
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           {/* الجانب الأيسر: الصور المتداخلة */}
@@ -162,9 +171,9 @@ export function WhyUs({ dict }: WhyUsProps) {
         </div>
 
         {/* ========================= */}
-        {/* Line Separator — متدرج   */}
+        {/* Line Separator — تحت     */}
         {/* ========================= */}
-        <div className="mt-24 md:mt-32">
+        <div className="mt-12 md:mt-16">
           <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-300/60 to-transparent dark:via-slate-700/60"></div>
         </div>
         {/* ========================= */}
