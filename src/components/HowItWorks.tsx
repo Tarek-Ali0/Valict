@@ -40,13 +40,13 @@ export function HowItWorks({ dict }: HowItWorksProps) {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-slate-50 dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section className="bg-white dark:bg-[#0B1120] relative overflow-hidden transition-colors duration-300">
       
       {/* إضاءة خلفية ناعمة */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-valict-navy/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-24 md:pb-32 text-center">
         
         {/* Header */}
         <motion.div 
@@ -82,15 +82,15 @@ export function HowItWorks({ dict }: HowItWorksProps) {
               <motion.div 
                 key={index} 
                 variants={cardVariants}
-                className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
+                className="group relative bg-[#F1F5F9] dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200/50 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
                 {/* رقم شفاف في الخلفية (Watermark) */}
-                <span className="absolute -right-4 -top-6 text-8xl font-black text-slate-50 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none">
+                <span className="absolute -right-4 -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none">
                   {step.number}
                 </span>
 
                 {/* البادج الخاص برقم الخطوة */}
-                <div className="relative z-10 w-14 h-14 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-cyan group-hover:border-valict-cyan transition-all duration-500">
+                <div className="relative z-10 w-14 h-14 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-cyan group-hover:border-valict-cyan transition-all duration-500">
                   <span className="text-xl font-black text-valict-navy dark:text-valict-cyan group-hover:text-white transition-colors duration-500">
                     {step.number}
                   </span>
