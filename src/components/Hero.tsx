@@ -53,7 +53,7 @@ export function Hero({ dict }: HeroProps) {
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
               width={900}
               height={600}
-              className="w-full h-auto drop-shadow-lg object-contain pointer-events-none"
+              className="w-full h-auto drop-shadow-md object-contain pointer-events-none"
               priority
               sizes="(max-width: 640px) 400px, (max-width: 1024px) 520px, 900px"
             />
@@ -101,7 +101,7 @@ export function Hero({ dict }: HeroProps) {
           </div>
 
           {/* الـ Grid — نص + صورة */}
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-4 xl:gap-6 items-center w-full">
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-4 xl:gap-6 items-center w-full">
             {/* الجانب الأول: النص */}
             <div className="flex flex-col text-start space-y-3 min-w-0">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
@@ -140,9 +140,9 @@ export function Hero({ dict }: HeroProps) {
                 alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
                 width={1050}
                 height={680}
-                className="w-full h-auto max-w-[1200px] drop-shadow-[0_20px_50px_rgba(30,58,138,0.2)] object-contain pointer-events-none"
+                className="w-full h-auto max-w-[1400px] drop-shadow-[0_15px_35px_rgba(30,58,138,0.15)] object-contain pointer-events-none"
                 priority
-                sizes="(min-width: 1024px) 1200px, 100vw"
+                sizes="(min-width: 1024px) 1400px, 100vw"
               />
             </motion.div>
           </div>
