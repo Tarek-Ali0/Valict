@@ -69,9 +69,14 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
     >
       
       {/* --- Premium Background Elements (Blobs) --- */}
-      <div className="absolute top-20 -left-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-cyan/10 dark:bg-valict-cyan/5 rounded-full blur-[100px] md:blur-[140px] -z-10 pointer-events-none"></div>
-      <div className="absolute top-1/3 -right-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[100px] md:blur-[140px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-10 left-1/3 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-valict-cyan/8 dark:bg-valict-cyan/3 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      {/* Blob 1: فوق يمين — كبير وقوي */}
+      <div className="absolute -top-20 -right-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-valict-cyan/20 dark:bg-valict-cyan/10 rounded-full blur-[80px] md:blur-[100px] -z-10 pointer-events-none"></div>
+      
+      {/* Blob 2: وسط شمال — كبير وقوي */}
+      <div className="absolute top-1/2 -left-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-valict-navy/15 dark:bg-valict-cyan/10 rounded-full blur-[80px] md:blur-[100px] -z-10 pointer-events-none"></div>
+      
+      {/* Blob 3: تحت يمين — أصغر */}
+      <div className="absolute -bottom-20 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-cyan/15 dark:bg-valict-cyan/8 rounded-full blur-[70px] md:blur-[90px] -z-10 pointer-events-none"></div>
       {/* ----------------------------------- */}
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
