@@ -84,8 +84,8 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                 variants={cardVariants}
                 className="group relative bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
-                {/* Blob داخلي — بلون valict-navy */}
-                <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/40 dark:bg-valict-navy/25 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
+                {/* Blob داخلي — بلون valict-navy (شدة أقل) */}
+                <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/25 dark:bg-valict-navy/15 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
 
                 {/* رقم شفاف في الخلفية */}
                 <span className="absolute -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none rtl:-left-4 ltr:-right-4">
