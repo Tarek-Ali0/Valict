@@ -168,7 +168,7 @@ const serviceDetailsContent: Record<
 };
 
 /**
- * خريطة الألوان المميزة لكل خدمة (Badge + Accent)
+ * خريطة الألوان المميزة لكل خدمة (Badge + Border + Icon)
  * متوافقة مع نظام الألوان semantic في Services.tsx
  */
 const serviceColors: Record<
@@ -182,52 +182,86 @@ const serviceColors: Record<
   "managed-it": {
     badge:
       "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400",
-    border:
-      "border-blue-100/80 dark:border-blue-500/20",
+    border: "border-blue-100/80 dark:border-blue-500/20",
     icon: "text-blue-500",
   },
   network: {
     badge:
       "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400",
-    border:
-      "border-emerald-100/80 dark:border-emerald-500/20",
+    border: "border-emerald-100/80 dark:border-emerald-500/20",
     icon: "text-emerald-500",
   },
   cloud: {
-    badge:
-      "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
-    border:
-      "border-sky-100/80 dark:border-sky-500/20",
+    badge: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
+    border: "border-sky-100/80 dark:border-sky-500/20",
     icon: "text-sky-500",
   },
   cybersecurity: {
-    badge:
-      "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400",
-    border:
-      "border-red-100/80 dark:border-red-500/20",
+    badge: "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400",
+    border: "border-red-100/80 dark:border-red-500/20",
     icon: "text-red-500",
   },
   monitoring: {
     badge:
       "bg-lime-50 text-lime-600 dark:bg-lime-500/10 dark:text-lime-400",
-    border:
-      "border-lime-100/80 dark:border-lime-500/20",
+    border: "border-lime-100/80 dark:border-lime-500/20",
     icon: "text-lime-500",
   },
   "web-design": {
     badge:
       "bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400",
-    border:
-      "border-purple-100/80 dark:border-purple-500/20",
+    border: "border-purple-100/80 dark:border-purple-500/20",
     icon: "text-purple-500",
   },
 };
 
-// لون افتراضي في حالة عدم وجود slug مطابق
+/**
+ * خريطة ألوان الـ blobs المميزة لكل خدمة
+ * مأخوذة من colorMap في Services.tsx — بنفس درجات الألوان
+ */
+const serviceBlobs: Record<
+  string,
+  {
+    blob1: string;
+    blob2: string;
+  }
+> = {
+  "managed-it": {
+    blob1: "bg-blue-400/[0.15] dark:bg-blue-400/[0.10]",
+    blob2: "bg-blue-600/[0.10] dark:bg-blue-600/[0.07]",
+  },
+  network: {
+    blob1: "bg-emerald-400/[0.15] dark:bg-emerald-400/[0.10]",
+    blob2: "bg-emerald-600/[0.10] dark:bg-emerald-600/[0.07]",
+  },
+  cloud: {
+    blob1: "bg-sky-400/[0.15] dark:bg-sky-400/[0.10]",
+    blob2: "bg-sky-600/[0.10] dark:bg-sky-600/[0.07]",
+  },
+  cybersecurity: {
+    blob1: "bg-red-400/[0.15] dark:bg-red-400/[0.10]",
+    blob2: "bg-red-600/[0.10] dark:bg-red-600/[0.07]",
+  },
+  monitoring: {
+    blob1: "bg-lime-400/[0.15] dark:bg-lime-400/[0.10]",
+    blob2: "bg-lime-600/[0.10] dark:bg-lime-600/[0.07]",
+  },
+  "web-design": {
+    blob1: "bg-purple-400/[0.15] dark:bg-purple-400/[0.10]",
+    blob2: "bg-purple-600/[0.10] dark:bg-purple-600/[0.07]",
+  },
+};
+
+// ألوان افتراضية في حالة عدم وجود slug مطابق
 const defaultColors = {
   badge: "bg-valict-cyan/10 text-valict-cyan",
   border: "border-slate-100 dark:border-slate-800",
   icon: "text-valict-cyan",
+};
+
+const defaultBlobs = {
+  blob1: "bg-valict-navy/[0.10] dark:bg-valict-navy/[0.07]",
+  blob2: "bg-valict-cyan/[0.07] dark:bg-valict-cyan/[0.05]",
 };
 
 /**
@@ -372,12 +406,17 @@ export default async function ServiceDetailsPage({
 
   // ألوان الخدمة الحالية
   const colors = serviceColors[slug] || defaultColors;
+  const blobs = serviceBlobs[slug] || defaultBlobs;
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
-      {/* --- Premium Background Elements (معكوسة عن الرئيسية) --- */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.10] dark:bg-valict-navy/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      {/* --- Premium Background Elements (بلون الخدمة) --- */}
+      <div
+        className={`absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob1} rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none`}
+      ></div>
+      <div
+        className={`absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob2} rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none`}
+      ></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
       {/* ---------------------------------------------------- */}
 
