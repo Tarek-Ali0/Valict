@@ -100,7 +100,7 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          {/* الـ Grid — نص + صورة (مع مسافة أكبر) */}
+          {/* الـ Grid — نص + صورة */}
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
             {/* الجانب الأول: النص */}
             <div className="flex flex-col text-start space-y-3 min-w-0">
@@ -130,7 +130,7 @@ export function Hero({ dict }: HeroProps) {
               </div>
             </div>
 
-            {/* الجانب التاني: صورة اللابتوب — متوسطة رأسياً */}
+            {/* الجانب التاني: صورة اللابتوب */}
             <motion.div
               className="w-full flex items-center justify-center"
               style={{ scale: imageScale }}
@@ -151,10 +151,19 @@ export function Hero({ dict }: HeroProps) {
 
       {/* ========================= */}
       {/* Line Separator — تحت     */}
-      {/* ملزوق على الحد بين الأقسام */}
+      {/* خطين: من الطرفين، فراغ في النص */}
       {/* ========================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
+        <div className="flex items-center gap-4">
+          {/* الخط الأيسر — من الطرف للنص */}
+          <div className="flex-1 h-[1px] bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
+
+          {/* فراغ في النص */}
+          <div className="w-24 md:w-32"></div>
+
+          {/* الخط الأيمن — من النص للطرف */}
+          <div className="flex-1 h-[1px] bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
+        </div>
       </div>
       {/* ========================= */}
 
