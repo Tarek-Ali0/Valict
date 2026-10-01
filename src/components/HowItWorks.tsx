@@ -82,15 +82,15 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                 className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
                 {/* Blob داخلي — بلون valict-navy (نفس لون سكشن التواصل) */}
-                <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/20 dark:bg-valict-navy/15 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
+                <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/40 dark:bg-valict-navy/25 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
 
                 {/* رقم شفاف في الخلفية — ينقل للشمال في العربي */}
                 <span className="absolute -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none rtl:-left-4 ltr:-right-4">
                   {step.number}
                 </span>
 
-                {/* البادج الخاص برقم الخطوة */}
-                <div className="relative z-10 w-14 h-14 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-cyan group-hover:border-valict-cyan transition-all duration-500">
+                {/* البادج الخاص برقم الخطوة — لون التواصل مع الـ hover */}
+                <div className="relative z-10 w-14 h-14 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-navy group-hover:border-valict-navy transition-all duration-500">
                   <span className="text-xl font-black text-valict-navy dark:text-valict-cyan group-hover:text-white transition-colors duration-500">
                     {step.number}
                   </span>
