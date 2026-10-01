@@ -56,15 +56,6 @@ export function WhyUs({ dict }: WhyUsProps) {
       {/* إضاءة خلفية ناعمة لربط التصميم ببعضه */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none translate-y-[-50%]"></div>
 
-      {/* ========================= */}
-      {/* Line Separator — فوق     */}
-      {/* ملزوق على الحد بين الأقسام */}
-      {/* ========================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
-      </div>
-      {/* ========================= */}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
