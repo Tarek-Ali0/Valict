@@ -100,8 +100,8 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          {/* الـ Grid — نص + صورة */}
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-4 xl:gap-6 items-center w-full">
+          {/* الـ Grid — نص + صورة (مع مسافة أكبر) */}
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
             {/* الجانب الأول: النص */}
             <div className="flex flex-col text-start space-y-3 min-w-0">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
