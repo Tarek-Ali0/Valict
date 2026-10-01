@@ -33,7 +33,6 @@ const iconMap: { [key: number]: any } = {
   5: FaCode
 };
 
-// تم تعديل التباين ببعض كلاسات الألوان لتمرير اختبارات جوجل بدقة
 const colorMap: { [key: number]: { bg: string; text: string } } = {
   0: { bg: "bg-blue-50 dark:bg-blue-950/30", text: "text-blue-600 dark:text-blue-400" },
   1: { bg: "bg-cyan-50 dark:bg-cyan-950/30", text: "text-valict-cyan" },
@@ -64,7 +63,7 @@ const cardVariants: Variants = {
 
 export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
-    <section id="services" className="py-24 md:py-32 bg-slate-50 dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="services" className="py-24 md:py-32 bg-white dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
@@ -84,7 +83,6 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               </span>
             </h3>
           </div>
-          {/* تحسين تباين النص الوصفي للقسم */}
           <p className="text-slate-600 dark:text-slate-300 max-w-md text-start lg:text-end text-base md:text-lg leading-relaxed">
             {dict.services.description}
           </p>
@@ -106,7 +104,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-premium hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start"
+                className="group bg-[#F1F5F9] dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-premium hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start"
               >
                 <div
                   className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
@@ -114,12 +112,10 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
                   <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
                 </div>
                 
-                {/* تعديل الـ h4 إلى h2 لسلامة الأرشفة والتدرج الهيكلي الصحيح */}
                 <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
                   {service.title}
                 </h2>
                 
-                {/* تحسين تباين ألوان نصوص وصف الخدمات */}
                 <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
                   {service.desc}
                 </p>
@@ -130,12 +126,10 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
                     aria-label={`${dict.services.learnMore} - ${service.title}`}
                     className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
                   >
-                    {/* نص وصفي كامل ومخفي عن العين ومفتوح بالكامل لعناكب جوجل والـ SEO */}
                     <span className="sr-only">
                       {dict.services.learnMore} {service.title}
                     </span>
   
-                    {/* النص الظاهري الذي يراه المستخدم العادي مع حمايته من فحص جوجل الأوتوماتيكي */}
                     <span aria-hidden="true">
                       {dict.services.learnMore}
                     </span> 
