@@ -67,7 +67,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       className={cn(
         "fixed w-full z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50"
+          ? "bg-warm/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/30 dark:border-slate-800/30"
           : "bg-transparent"
       )}
     >
@@ -111,7 +111,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href={alternatePath}
                 rel="alternate"
                 hrefLang={alternateLang}
-                className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 title={dict.nav.changeLanguage || "Change Language"}
                 aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
               >
@@ -126,7 +126,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 onClick={() =>
                   setTheme(resolvedTheme === "light" ? "dark" : "light")
                 }
-                className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 title={dict.nav.toggleTheme || "Toggle Dark/Light Mode"}
                 aria-label="Toggle display theme color mode"
               >
@@ -145,7 +145,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official LinkedIn Company Profile"
                 title="LinkedIn Profile"
               >
@@ -156,7 +156,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+                className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official Facebook Page"
                 title="Facebook Page"
               >
@@ -173,7 +173,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               href={alternatePath}
               rel="alternate"
               hrefLang={alternateLang}
-              className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
+              className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
               aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
             >
               <FaGlobe className="h-4 w-4" />
@@ -185,7 +185,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
+              className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-warm-darker text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700 dark:border dark:border-slate-700 hover:text-valict-navy dark:hover:text-valict-cyan"
               aria-label="Toggle responsive mobile navigation menu"
             >
               {isMobileMenuOpen ? (
@@ -202,7 +202,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "lg:hidden absolute top-24 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
+          "lg:hidden absolute top-24 left-0 w-full bg-warm/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
           isMobileMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0"
