@@ -63,7 +63,7 @@ const cardVariants: Variants = {
 
 export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
-    <section id="services" className="py-24 md:py-32 bg-white dark:bg-[#0B1120] relative border-t border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="services" className="py-24 md:py-32 bg-[#F1F5F9] dark:bg-[#0B1120] relative border-t border-slate-200/50 dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
@@ -104,7 +104,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group bg-[#F1F5F9] dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-premium hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start"
+                className="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-premium hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200/50 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start"
               >
                 <div
                   className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
