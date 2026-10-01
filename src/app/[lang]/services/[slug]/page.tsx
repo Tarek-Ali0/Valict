@@ -359,6 +359,9 @@ export default async function ServiceDetailsPage({
   const colors = serviceColors[slug] || defaultColors;
   const innerBlob = serviceInnerBlob[slug] || defaultInnerBlob;
 
+  // تحديد اتجاه الـ blob حسب اللغة
+  const isRTL = currentLang === "ar";
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
 
@@ -389,9 +392,11 @@ export default async function ServiceDetailsPage({
         <div
           className={`relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border ${colors.border}`}
         >
-          {/* Blob داخلي في الزاوية — زي Services.tsx بالظبط */}
+          {/* Blob داخلي في الزاوية — يمين في العربي / شمال في الإنجليزي */}
           <div
-            className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none ${innerBlob}`}
+            className={`absolute -top-12 w-40 h-40 rounded-full blur-3xl pointer-events-none ${innerBlob} ${
+              isRTL ? "-right-12" : "-left-12"
+            }`}
           ></div>
 
           {/* المحتوى فوق الـ blob */}
