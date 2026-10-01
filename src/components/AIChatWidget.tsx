@@ -163,14 +163,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   // Focus تلقائي على الـ input (ديسكتوب بس)
   // =====================
   useEffect(() => {
-    // بس على الأجهزة الكبيرة (مش موبايل)
     if (typeof window === "undefined") return;
     const isDesktop = window.matchMedia("(min-width: 768px)").matches;
     if (!isDesktop) return;
 
-    // لما الشات يكون مفتوح ومش بيلود
     if (isOpen && !isLoading) {
-      // تأخير بسيط للتأكد من إن الـ animation خلص
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
@@ -325,7 +322,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           {isOpen ? (
             <FaXmark className="w-5 h-5 text-valict-navy dark:text-valict-cyan" />
           ) : (
-            <ValictaAvatar size={50} priority />
+            <ValictaAvatar size={50} priority className="scale-110" />
           )}
         </span>
       </button>
@@ -342,7 +339,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 rounded-t-2xl pt-12 pb-3 px-3">
           <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-20">
             <div className="relative w-full h-full rounded-full flex items-center justify-center overflow-hidden">
-              <ValictaAvatar size={72} />
+              <ValictaAvatar size={72} className="scale-110" />
             </div>
             <span className="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse z-30" />
           </div>
@@ -393,8 +390,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 }`}
               >
                 {msg.isBot && (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20 bg-white dark:bg-[#1E293B]">
-                    <ValictaAvatar size={30} />
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border-2 border-valict-navy/10 dark:border-valict-cyan/30 bg-white dark:bg-[#1E293B]">
+                    <ValictaAvatar size={30} className="scale-110" />
                   </div>
                 )}
 
@@ -429,8 +426,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
           {(isLoading || isBotTyping) && (
             <div className="flex items-end gap-2 justify-start msg-fade-in">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border border-valict-navy/10 dark:border-valict-cyan/20 bg-white dark:bg-[#1E293B]">
-                <ValictaAvatar size={30} />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border-2 border-valict-navy/10 dark:border-valict-cyan/30 bg-white dark:bg-[#1E293B]">
+                <ValictaAvatar size={30} className="scale-110" />
               </div>
               <div className="bg-white dark:bg-[#1E293B] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-800/40 flex items-center gap-1">
                 <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
