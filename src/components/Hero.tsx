@@ -24,7 +24,7 @@ export function Hero({ dict }: HeroProps) {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-auto pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32 transition-colors duration-300 flex items-center justify-center overflow-hidden"
+      className="relative w-full h-auto transition-colors duration-300 overflow-hidden"
     >
       {/* --- Premium Background Elements --- */}
       <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
@@ -32,7 +32,7 @@ export function Hero({ dict }: HeroProps) {
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
       {/* ----------------------------------- */}
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32">
         {/* 1. حاوية الموبايل والتابلت — عمودي بالترتيب الجديد */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           {/* 1) Badge — في النص */}
@@ -148,6 +148,16 @@ export function Hero({ dict }: HeroProps) {
           </div>
         </div>
       </div>
+
+      {/* ========================= */}
+      {/* Line Separator — تحت     */}
+      {/* ملزوق على الحد بين الأقسام */}
+      {/* ========================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
+      </div>
+      {/* ========================= */}
+
     </section>
   );
 }
