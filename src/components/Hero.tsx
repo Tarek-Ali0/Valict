@@ -158,8 +158,8 @@ export function Hero({ dict }: HeroProps) {
           {/* الخط الأيسر — حاد من الطرف، بيتلاشى في النص */}
           <div className="flex-1 h-[1px] bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
 
-          {/* فراغ في النص */}
-          <div className="w-24 md:w-32"></div>
+          {/* فراغ في النص — زاد 2 سم */}
+          <div className="w-40 md:w-52"></div>
 
           {/* الخط الأيمن — حاد من الطرف، بيتلاشى في النص */}
           <div className="flex-1 h-[1px] bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
