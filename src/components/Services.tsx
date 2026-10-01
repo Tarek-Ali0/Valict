@@ -65,14 +65,9 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="relative py-24 md:py-32 bg-[#F1F5F9] dark:bg-[#0B1120] overflow-hidden transition-colors duration-300"
+      className="py-24 md:py-32 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
     >
       
-      {/* --- Premium Background Elements (نفس الـ Hero) --- */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      {/* ----------------------------------- */}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         
         {/* Header Section */}
