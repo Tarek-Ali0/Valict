@@ -168,56 +168,48 @@ const serviceDetailsContent: Record<
 };
 
 /**
- * خريطة الألوان المميزة لكل خدمة (Badge + Border + Icon)
- * متوافقة مع نظام الألوان semantic في Services.tsx
+ * خريطة الألوان المميزة لكل خدمة (Badge + Border فقط)
  */
 const serviceColors: Record<
   string,
   {
     badge: string;
     border: string;
-    icon: string;
   }
 > = {
   "managed-it": {
     badge:
       "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400",
     border: "border-blue-100/80 dark:border-blue-500/20",
-    icon: "text-blue-500",
   },
   network: {
     badge:
       "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400",
     border: "border-emerald-100/80 dark:border-emerald-500/20",
-    icon: "text-emerald-500",
   },
   cloud: {
     badge: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
     border: "border-sky-100/80 dark:border-sky-500/20",
-    icon: "text-sky-500",
   },
   cybersecurity: {
     badge: "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400",
     border: "border-red-100/80 dark:border-red-500/20",
-    icon: "text-red-500",
   },
   monitoring: {
     badge:
       "bg-lime-50 text-lime-600 dark:bg-lime-500/10 dark:text-lime-400",
     border: "border-lime-100/80 dark:border-lime-500/20",
-    icon: "text-lime-500",
   },
   "web-design": {
     badge:
       "bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400",
     border: "border-purple-100/80 dark:border-purple-500/20",
-    icon: "text-purple-500",
   },
 };
 
 /**
  * خريطة ألوان الـ blobs المميزة لكل خدمة
- * مأخوذة من colorMap في Services.tsx — بنفس درجات الألوان
+ * شدة أعلى شوية عشان تبان ورا الخلفية البيضاء
  */
 const serviceBlobs: Record<
   string,
@@ -227,28 +219,28 @@ const serviceBlobs: Record<
   }
 > = {
   "managed-it": {
-    blob1: "bg-blue-400/[0.15] dark:bg-blue-400/[0.10]",
-    blob2: "bg-blue-600/[0.10] dark:bg-blue-600/[0.07]",
+    blob1: "bg-blue-400/40 dark:bg-blue-400/25",
+    blob2: "bg-blue-600/30 dark:bg-blue-600/20",
   },
   network: {
-    blob1: "bg-emerald-400/[0.15] dark:bg-emerald-400/[0.10]",
-    blob2: "bg-emerald-600/[0.10] dark:bg-emerald-600/[0.07]",
+    blob1: "bg-emerald-400/40 dark:bg-emerald-400/25",
+    blob2: "bg-emerald-600/30 dark:bg-emerald-600/20",
   },
   cloud: {
-    blob1: "bg-sky-400/[0.15] dark:bg-sky-400/[0.10]",
-    blob2: "bg-sky-600/[0.10] dark:bg-sky-600/[0.07]",
+    blob1: "bg-sky-400/40 dark:bg-sky-400/25",
+    blob2: "bg-sky-600/30 dark:bg-sky-600/20",
   },
   cybersecurity: {
-    blob1: "bg-red-400/[0.15] dark:bg-red-400/[0.10]",
-    blob2: "bg-red-600/[0.10] dark:bg-red-600/[0.07]",
+    blob1: "bg-red-400/40 dark:bg-red-400/25",
+    blob2: "bg-red-600/30 dark:bg-red-600/20",
   },
   monitoring: {
-    blob1: "bg-lime-400/[0.15] dark:bg-lime-400/[0.10]",
-    blob2: "bg-lime-600/[0.10] dark:bg-lime-600/[0.07]",
+    blob1: "bg-lime-400/40 dark:bg-lime-400/25",
+    blob2: "bg-lime-600/30 dark:bg-lime-600/20",
   },
   "web-design": {
-    blob1: "bg-purple-400/[0.15] dark:bg-purple-400/[0.10]",
-    blob2: "bg-purple-600/[0.10] dark:bg-purple-600/[0.07]",
+    blob1: "bg-purple-400/40 dark:bg-purple-400/25",
+    blob2: "bg-purple-600/30 dark:bg-purple-600/20",
   },
 };
 
@@ -256,12 +248,11 @@ const serviceBlobs: Record<
 const defaultColors = {
   badge: "bg-valict-cyan/10 text-valict-cyan",
   border: "border-slate-100 dark:border-slate-800",
-  icon: "text-valict-cyan",
 };
 
 const defaultBlobs = {
-  blob1: "bg-valict-navy/[0.10] dark:bg-valict-navy/[0.07]",
-  blob2: "bg-valict-cyan/[0.07] dark:bg-valict-cyan/[0.05]",
+  blob1: "bg-valict-navy/40 dark:bg-valict-navy/25",
+  blob2: "bg-valict-cyan/30 dark:bg-valict-cyan/20",
 };
 
 /**
@@ -410,20 +401,19 @@ export default async function ServiceDetailsPage({
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
-      {/* --- Premium Background Elements (بلون الخدمة) --- */}
+      {/* --- Premium Background Elements (بلون الخدمة) — بدون z سالب --- */}
       <div
-        className={`absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob1} rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none`}
+        className={`absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob1} rounded-full blur-[90px] md:blur-[120px] pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob2} rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none`}
+        className={`absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob2} rounded-full blur-[90px] md:blur-[120px] pointer-events-none`}
       ></div>
-      <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
       {/* ---------------------------------------------------- */}
 
       {/* النافبار ثابت فوق */}
       <Navbar lang={currentLang} dict={dict} />
 
-      {/* محتوى الصفحة مع مساحة علوية كافية */}
+      {/* محتوى الصفحة مع مساحة علوية كافية — فوق الـ blobs */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         {/* زرار الرجوع للخدمات */}
         <Link
@@ -477,10 +467,8 @@ export default async function ServiceDetailsPage({
                   <ul className="grid grid-cols-1 gap-4">
                     {details.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        {/* الأيقونة بلون الخدمة */}
-                        <FaCheckCircle
-                          className={`w-5 h-5 shrink-0 mt-1 ${colors.icon}`}
-                        />
+                        {/* رجعنا الأيقونة زي ما كانت */}
+                        <FaCheckCircle className="w-5 h-5 text-valict-cyan shrink-0 mt-1" />
 
                         <span className="text-slate-600 dark:text-slate-300 font-medium">
                           {feature}
