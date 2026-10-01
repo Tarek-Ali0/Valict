@@ -168,41 +168,30 @@ const serviceDetailsContent: Record<
 };
 
 /**
- * خريطة الألوان المميزة لكل خدمة (Badge + Border فقط)
+ * خريطة الألوان المميزة لكل خدمة (Border فقط)
  */
 const serviceColors: Record<
   string,
   {
-    badge: string;
     border: string;
   }
 > = {
   "managed-it": {
-    badge:
-      "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400",
     border: "border-blue-100/80 dark:border-blue-500/20",
   },
   network: {
-    badge:
-      "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400",
     border: "border-emerald-100/80 dark:border-emerald-500/20",
   },
   cloud: {
-    badge: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
     border: "border-sky-100/80 dark:border-sky-500/20",
   },
   cybersecurity: {
-    badge: "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400",
     border: "border-red-100/80 dark:border-red-500/20",
   },
   monitoring: {
-    badge:
-      "bg-lime-50 text-lime-600 dark:bg-lime-500/10 dark:text-lime-400",
     border: "border-lime-100/80 dark:border-lime-500/20",
   },
   "web-design": {
-    badge:
-      "bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400",
     border: "border-purple-100/80 dark:border-purple-500/20",
   },
 };
@@ -221,7 +210,6 @@ const serviceInnerBlob: Record<string, string> = {
 
 // قيم افتراضية
 const defaultColors = {
-  badge: "bg-valict-cyan/10 text-valict-cyan",
   border: "border-slate-100 dark:border-slate-800",
 };
 
@@ -411,13 +399,6 @@ export default async function ServiceDetailsPage({
 
             {/* عمود النصوص والمميزات (يأخذ 7 أعمدة) */}
             <div className="lg:col-span-7">
-
-              {/* Badge بلون الخدمة */}
-              <div
-                className={`inline-block px-4 py-1.5 rounded-full font-bold text-sm mb-6 ${colors.badge}`}
-              >
-                {dict.services.title}
-              </div>
 
               <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
                 {service.title}
