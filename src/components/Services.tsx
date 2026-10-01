@@ -33,13 +33,13 @@ const iconMap: { [key: number]: any } = {
   5: FaCode
 };
 
-const colorMap: { [key: number]: { bg: string; text: string } } = {
-  0: { bg: "bg-blue-50 dark:bg-blue-950/30", text: "text-blue-600 dark:text-blue-400" },
-  1: { bg: "bg-cyan-50 dark:bg-cyan-950/30", text: "text-valict-cyan" },
-  2: { bg: "bg-slate-100 dark:bg-slate-800", text: "text-slate-700 dark:text-slate-300" },
-  3: { bg: "bg-red-50 dark:bg-red-950/30", text: "text-red-600 dark:text-red-400" },
-  4: { bg: "bg-green-50 dark:bg-green-950/30", text: "text-green-600 dark:text-green-400" },
-  5: { bg: "bg-purple-50 dark:bg-purple-950/30", text: "text-purple-600 dark:text-purple-400" }
+const colorMap: { [key: number]: { bg: string; text: string; blob: string } } = {
+  0: { bg: "bg-blue-50 dark:bg-blue-950/30", text: "text-blue-600 dark:text-blue-400", blob: "bg-blue-500/20 dark:bg-blue-400/15" },
+  1: { bg: "bg-cyan-50 dark:bg-cyan-950/30", text: "text-valict-cyan", blob: "bg-cyan-500/20 dark:bg-cyan-400/15" },
+  2: { bg: "bg-slate-100 dark:bg-slate-800", text: "text-slate-700 dark:text-slate-300", blob: "bg-slate-500/15 dark:bg-slate-400/10" },
+  3: { bg: "bg-red-50 dark:bg-red-950/30", text: "text-red-600 dark:text-red-400", blob: "bg-red-500/20 dark:bg-red-400/15" },
+  4: { bg: "bg-green-50 dark:bg-green-950/30", text: "text-green-600 dark:text-green-400", blob: "bg-green-500/20 dark:bg-green-400/15" },
+  5: { bg: "bg-purple-50 dark:bg-purple-950/30", text: "text-purple-600 dark:text-purple-400", blob: "bg-purple-500/20 dark:bg-purple-400/15" }
 };
 
 const containerVariants: Variants = {
@@ -65,21 +65,10 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="relative bg-white dark:bg-[#0B1120] transition-colors duration-300 overflow-hidden"
+      className="bg-white dark:bg-[#0B1120] transition-colors duration-300"
     >
       
-      {/* --- Premium Background Elements (Blobs) --- */}
-      {/* Blob 1: فوق يمين — كبير وقوي */}
-      <div className="absolute -top-20 -right-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-valict-cyan/20 dark:bg-valict-cyan/10 rounded-full blur-[80px] md:blur-[100px] -z-10 pointer-events-none"></div>
-      
-      {/* Blob 2: وسط شمال — كبير وقوي */}
-      <div className="absolute top-1/2 -left-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-valict-navy/15 dark:bg-valict-cyan/10 rounded-full blur-[80px] md:blur-[100px] -z-10 pointer-events-none"></div>
-      
-      {/* Blob 3: تحت يمين — أصغر */}
-      <div className="absolute -bottom-20 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-cyan/15 dark:bg-valict-cyan/8 rounded-full blur-[70px] md:blur-[90px] -z-10 pointer-events-none"></div>
-      {/* ----------------------------------- */}
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
         
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-12 gap-6">
@@ -110,43 +99,55 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
         >
           {dict.services.items.map((service: ServiceItem, index: number) => {
             const Icon = iconMap[index] || FaLaptopCode;
-            const colors = colorMap[index] || { bg: "bg-blue-50", text: "text-blue-600" };
+            const colors = colorMap[index] || { 
+              bg: "bg-blue-50", 
+              text: "text-blue-600", 
+              blob: "bg-blue-500/20" 
+            };
             
             return (
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start"
+                className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start overflow-hidden"
               >
+                {/* Blob داخلي — في الزاوية */}
                 <div
-                  className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
-                >
-                  <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
-                </div>
-                
-                <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
-                  {service.title}
-                </h2>
-                
-                <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
-                  {service.desc}
-                </p>
-                
-                <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
-                  <Link
-                    href={`/${lang}/services/${service.slug}`}
-                    aria-label={`${dict.services.learnMore} - ${service.title}`}
-                    className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
+                  className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl transition-opacity duration-500 ${colors.blob} group-hover:opacity-0`}
+                ></div>
+
+                {/* المحتوى */}
+                <div className="relative z-10 flex flex-col h-full">
+                  <div
+                    className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
                   >
-                    <span className="sr-only">
-                      {dict.services.learnMore} {service.title}
-                    </span>
-  
-                    <span aria-hidden="true">
-                      {dict.services.learnMore}
-                    </span> 
-                    <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
-                  </Link>
+                    <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
+                  </div>
+                  
+                  <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
+                    {service.title}
+                  </h2>
+                  
+                  <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
+                    {service.desc}
+                  </p>
+                  
+                  <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
+                    <Link
+                      href={`/${lang}/services/${service.slug}`}
+                      aria-label={`${dict.services.learnMore} - ${service.title}`}
+                      className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
+                    >
+                      <span className="sr-only">
+                        {dict.services.learnMore} {service.title}
+                      </span>
+    
+                      <span aria-hidden="true">
+                        {dict.services.learnMore}
+                      </span> 
+                      <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             );
