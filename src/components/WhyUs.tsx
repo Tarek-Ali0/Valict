@@ -62,7 +62,7 @@ export function WhyUs({ dict }: WhyUsProps) {
         {/* Line Separator — فوق     */}
         {/* ========================= */}
         <div className="mb-12 md:mb-16">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-300/60 to-transparent dark:via-slate-700/60"></div>
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
         </div>
         {/* ========================= */}
 
@@ -174,7 +174,7 @@ export function WhyUs({ dict }: WhyUsProps) {
         {/* Line Separator — تحت     */}
         {/* ========================= */}
         <div className="mt-12 md:mt-16">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-300/60 to-transparent dark:via-slate-700/60"></div>
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
         </div>
         {/* ========================= */}
 
