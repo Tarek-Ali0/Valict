@@ -66,11 +66,8 @@ export function HowItWorks({ dict }: HowItWorksProps) {
           </h3>
         </motion.div>
 
-        {/* Steps Grid with Connecting Line */}
+        {/* Steps Grid */}
         <div className="relative">
-          {/* الخط الواصل بين الخطوات (يظهر في الشاشات الكبيرة فقط) */}
-          <div className="hidden lg:block absolute top-8 left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent z-0"></div>
-
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10"
             variants={containerVariants}
@@ -84,6 +81,9 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                 variants={cardVariants}
                 className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
+                {/* Blob داخلي — يمين في العربي / شمال في الإنجليزي */}
+                <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-cyan/20 dark:bg-valict-cyan/15 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
+
                 {/* رقم شفاف في الخلفية (Watermark) */}
                 <span className="absolute -right-4 -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none">
                   {step.number}
