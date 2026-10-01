@@ -67,7 +67,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       className={cn(
         "fixed w-full z-50 transition-all duration-300",
         isScrolled
-          ? "bg-warm/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm"
+          ? "bg-warm/80 dark:bg-[#0B1120]/80 backdrop-blur-xl"
           : "bg-transparent"
       )}
     >
@@ -202,7 +202,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "lg:hidden absolute top-24 left-0 w-full bg-warm/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
+          "lg:hidden absolute top-24 left-0 w-full bg-warm/95 dark:bg-[#0B1120]/95 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
           isMobileMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0"
