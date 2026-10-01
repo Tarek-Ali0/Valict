@@ -37,7 +37,7 @@ export function Hero({ dict }: HeroProps) {
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           {/* 1) Badge — في النص */}
           <div className="w-full flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
@@ -91,7 +91,7 @@ export function Hero({ dict }: HeroProps) {
         <div className="hidden lg:block relative z-20 w-full">
           {/* Badge — في نص الصفحة فوق الـ Grid */}
           <div className="flex justify-center mb-8 -mt-4">
-            <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-gradient-to-r from-valict-cyan/5 via-white to-valict-navy/5 dark:from-valict-cyan/10 dark:via-slate-900 dark:to-valict-navy/10 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+            <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
