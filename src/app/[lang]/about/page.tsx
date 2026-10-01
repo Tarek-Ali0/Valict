@@ -79,31 +79,33 @@ export default async function AboutPage({
 
   const dict = await getDictionary(currentLang);
 
-  // مصفوفة القيم الأساسية للغتين لإكمال الكود المقطوع
-  const coreValues = currentLang === "ar"
-    ? [
-        "الموثوقية واستمرارية الأعمال",
-        "الأمان وحماية البيانات",
-        "حلول عملية وقابلة للتوسع",
-        "التركيز على قيمة الأعمال",
-      ]
-    : [
-        "Reliability and business continuity",
-        "Security and data protection",
-        "Practical and scalable solutions",
-        "Business value-focused technology",
-      ];
+  // تحديد اتجاه الـ blob حسب اللغة
+  const isRTL = currentLang === "ar";
+
+  // مصفوفة القيم الأساسية للغتين
+  const coreValues =
+    currentLang === "ar"
+      ? [
+          "الموثوقية واستمرارية الأعمال",
+          "الأمان وحماية البيانات",
+          "حلول عملية وقابلة للتوسع",
+          "التركيز على قيمة الأعمال",
+        ]
+      : [
+          "Reliability and business continuity",
+          "Security and data protection",
+          "Practical and scalable solutions",
+          "Business value-focused technology",
+        ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-valict-dark transition-colors duration-300">
-
+    <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
       {/* Navbar */}
       <Navbar lang={currentLang} dict={dict} />
 
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
-
-        {/* Back to Home - تم تحسين تباين ألوان النص للـ SEO هنا */}
+        {/* Back to Home */}
         <Link
           href={`/${currentLang}`}
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan mb-8 transition-colors"
@@ -112,23 +114,24 @@ export default async function AboutPage({
             className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
           />
 
-          {currentLang === "ar"
-            ? "العودة إلى الرئيسية"
-            : "Back to Home"}
+          {currentLang === "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
         </Link>
 
         {/* Main About Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
+        <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
+          {/* Blob داخلي في الزاوية — يمين في العربي / شمال في الإنجليزي */}
+          <div
+            className={`absolute -top-12 w-40 h-40 rounded-full blur-3xl pointer-events-none bg-valict-cyan/20 dark:bg-valict-cyan/15 ${
+              isRTL ? "-right-12" : "-left-12"
+            }`}
+          ></div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
+          {/* المحتوى فوق الـ blob */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Text Content */}
             <div className="lg:col-span-7">
-
               <div className="inline-block px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm mb-6">
-                {currentLang === "ar"
-                  ? "من نحن"
-                  : "About Us"}
+                {currentLang === "ar" ? "من نحن" : "About Us"}
               </div>
 
               <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
@@ -139,10 +142,9 @@ export default async function AboutPage({
 
               {/* Introduction */}
               <div className="space-y-5 mb-8">
-
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين Tكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
+                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
                     : "At Valict, we provide reliable and value-driven IT and ICT solutions designed to support the way modern businesses operate. We combine technology, infrastructure, security, and practical expertise to create solutions that are aligned with business needs."}
                 </p>
 
@@ -157,19 +159,15 @@ export default async function AboutPage({
                     ? "بدءًا من البنية التحتية وخدمات تقنية المعلومات المدارة، وصولًا إلى الحلول السحابية والشبكات والأمن السيبراني وتقنيات الويب، نساعد الشركات على تبسيط بيئتها التقنية وتحقيق أقصى استفادة منها."
                     : "From IT infrastructure and managed services to cloud solutions, networking, cybersecurity, and web technologies, we help businesses simplify their technology environment and make better use of it."}
                 </p>
-
               </div>
 
               <div className="w-full h-[1px] bg-slate-100 dark:bg-slate-800 mb-8" />
 
               {/* Vision & Mission */}
               <div className="space-y-6 mb-10">
-
                 <div>
                   <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-2">
-                    {currentLang === "ar"
-                      ? "رؤيتنا"
-                      : "Our Vision"}
+                    {currentLang === "ar" ? "رؤيتنا" : "Our Vision"}
                   </h2>
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -181,9 +179,7 @@ export default async function AboutPage({
 
                 <div>
                   <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-2">
-                    {currentLang === "ar"
-                      ? "مهمتنا"
-                      : "Our Mission"}
+                    {currentLang === "ar" ? "مهمتنا" : "Our Mission"}
                   </h2>
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -192,30 +188,29 @@ export default async function AboutPage({
                       : "To deliver reliable, practical, and scalable technology solutions focused on performance, security, and business continuity, helping businesses achieve tangible value from their technology investments."}
                   </p>
                 </div>
-
               </div>
 
               {/* Core Values */}
               <div>
                 <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
-                  {currentLang === "ar"
-                    ? "ما نؤمن به"
-                    : "What We Stand For"}
+                  {currentLang === "ar" ? "ما نؤمن به" : "What We Stand For"}
                 </h2>
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {coreValues.map((value, index) => (
-                    <li key={index} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                    <li
+                      key={index}
+                      className="flex items-center gap-3 text-slate-700 dark:text-slate-300"
+                    >
                       <FaCheckCircle className="text-valict-cyan flex-shrink-0" />
                       <span className="text-sm font-medium">{value}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-
             </div>
 
-            {/* Right Column: Visual Brand Representation (يمكن إغلاقه بتصميم شعار V للشركة) */}
+            {/* Right Column: Visual Brand */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 opacity-85 dark:opacity-100">
                 <Image
@@ -227,10 +222,8 @@ export default async function AboutPage({
                 />
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   );
