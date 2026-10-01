@@ -50,7 +50,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
   const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع:" : "Validate Your Vision With:");
 
   return (
-    <footer className="bg-slate-50 dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
+    <footer className="bg-white dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
       {/* لمسة جمالية في الخلفية */}
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-valict-navy/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
@@ -59,7 +59,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Column 1: Brand + Values Title + Core Values — مرفوع لفوق */}
+          {/* Column 1: Brand + Values Title + Core Values */}
           <div className="lg:col-span-2 -mt-2">
             <Link href={`/${lang}`} className="inline-block mb-3 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
