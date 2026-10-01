@@ -65,10 +65,16 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="bg-white dark:bg-[#0B1120] transition-colors duration-300"
+      className="relative bg-white dark:bg-[#0B1120] transition-colors duration-300 overflow-hidden"
     >
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
+      {/* --- Premium Background Elements (Blobs) --- */}
+      <div className="absolute top-20 -left-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-cyan/10 dark:bg-valict-cyan/5 rounded-full blur-[100px] md:blur-[140px] -z-10 pointer-events-none"></div>
+      <div className="absolute top-1/3 -right-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-valict-navy/10 dark:bg-valict-cyan/5 rounded-full blur-[100px] md:blur-[140px] -z-10 pointer-events-none"></div>
+      <div className="absolute bottom-10 left-1/3 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-valict-cyan/8 dark:bg-valict-cyan/3 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      {/* ----------------------------------- */}
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
         
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-12 gap-6">
