@@ -63,7 +63,10 @@ const cardVariants: Variants = {
 
 export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
-    <section id="services" className="py-24 md:py-32 bg-[#F1F5F9] dark:bg-[#0B1120] relative border-t border-slate-200/50 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section 
+      id="services" 
+      className="py-24 md:py-32 bg-gradient-to-b from-[#E2E8F0] to-[#F1F5F9] dark:bg-[#0B1120] dark:bg-none relative overflow-hidden transition-colors duration-300"
+    >
       
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
