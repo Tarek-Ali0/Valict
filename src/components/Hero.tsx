@@ -153,7 +153,7 @@ export function Hero({ dict }: HeroProps) {
       {/* Line Separator — تحت     */}
       {/* خطين: من الطرفين، فراغ في النص */}
       {/* ========================= */}
-      <div className="w-full px-4 sm:px-6 md:px-8">
+      <div className="w-full">
         <div className="flex items-center gap-4">
           {/* الخط الأيسر — حاد من الطرف، بيتلاشى في النص */}
           <div className="flex-1 h-[1px] bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
