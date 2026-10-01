@@ -65,13 +65,13 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="pt-12 md:pt-16 pb-24 md:pb-32 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
+      className="pt-4 md:pt-6 pb-20 md:pb-28 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
     >
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         
         {/* Header Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-20 gap-6">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-12 gap-6">
           <div className="max-w-2xl text-start">
             <h2 className="text-cyan-700 dark:text-cyan-400 font-black text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
               <span className="w-8 h-[2px] bg-cyan-600 dark:bg-cyan-400 inline-block rounded-full"></span>
