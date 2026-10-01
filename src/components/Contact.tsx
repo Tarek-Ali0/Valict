@@ -9,7 +9,7 @@ export function Contact({ dict }: ContactProps) {
   return (
     <section id="contact" className="transition-colors duration-300">
       <div className="w-full bg-valict-navy shadow-2xl">
-        <div className="max-w-7xl mx-auto relative px-6 py-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto relative px-6 py-12 md:py-16 overflow-hidden">
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-start">
             <div className="lg:w-2/3">
               <h2 className="text-3xl text-start md:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
