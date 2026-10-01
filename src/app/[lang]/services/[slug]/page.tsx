@@ -208,52 +208,24 @@ const serviceColors: Record<
 };
 
 /**
- * خريطة ألوان الـ blobs المميزة لكل خدمة
- * شدة أعلى شوية عشان تبان ورا الخلفية البيضاء
+ * Blob داخلي في كارت المحتوى — بنفس قيم colorMap في Services.tsx
  */
-const serviceBlobs: Record<
-  string,
-  {
-    blob1: string;
-    blob2: string;
-  }
-> = {
-  "managed-it": {
-    blob1: "bg-blue-400/40 dark:bg-blue-400/25",
-    blob2: "bg-blue-600/30 dark:bg-blue-600/20",
-  },
-  network: {
-    blob1: "bg-emerald-400/40 dark:bg-emerald-400/25",
-    blob2: "bg-emerald-600/30 dark:bg-emerald-600/20",
-  },
-  cloud: {
-    blob1: "bg-sky-400/40 dark:bg-sky-400/25",
-    blob2: "bg-sky-600/30 dark:bg-sky-600/20",
-  },
-  cybersecurity: {
-    blob1: "bg-red-400/40 dark:bg-red-400/25",
-    blob2: "bg-red-600/30 dark:bg-red-600/20",
-  },
-  monitoring: {
-    blob1: "bg-lime-400/40 dark:bg-lime-400/25",
-    blob2: "bg-lime-600/30 dark:bg-lime-600/20",
-  },
-  "web-design": {
-    blob1: "bg-purple-400/40 dark:bg-purple-400/25",
-    blob2: "bg-purple-600/30 dark:bg-purple-600/20",
-  },
+const serviceInnerBlob: Record<string, string> = {
+  "managed-it": "bg-blue-500/20 dark:bg-blue-400/15",
+  network: "bg-emerald-500/20 dark:bg-emerald-400/15",
+  cloud: "bg-sky-500/20 dark:bg-sky-400/15",
+  cybersecurity: "bg-red-500/20 dark:bg-red-400/15",
+  monitoring: "bg-lime-500/20 dark:bg-lime-400/15",
+  "web-design": "bg-purple-500/20 dark:bg-purple-400/15",
 };
 
-// ألوان افتراضية في حالة عدم وجود slug مطابق
+// قيم افتراضية
 const defaultColors = {
   badge: "bg-valict-cyan/10 text-valict-cyan",
   border: "border-slate-100 dark:border-slate-800",
 };
 
-const defaultBlobs = {
-  blob1: "bg-valict-navy/40 dark:bg-valict-navy/25",
-  blob2: "bg-valict-cyan/30 dark:bg-valict-cyan/20",
-};
+const defaultInnerBlob = "bg-valict-cyan/20 dark:bg-valict-cyan/15";
 
 /**
  * Generate static pages for all supported languages and services
@@ -397,24 +369,17 @@ export default async function ServiceDetailsPage({
 
   // ألوان الخدمة الحالية
   const colors = serviceColors[slug] || defaultColors;
-  const blobs = serviceBlobs[slug] || defaultBlobs;
+  const innerBlob = serviceInnerBlob[slug] || defaultInnerBlob;
 
   return (
-    <div className="relative min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
-      {/* --- Premium Background Elements (بلون الخدمة) — بدون z سالب --- */}
-      <div
-        className={`absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob1} rounded-full blur-[90px] md:blur-[120px] pointer-events-none`}
-      ></div>
-      <div
-        className={`absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] ${blobs.blob2} rounded-full blur-[90px] md:blur-[120px] pointer-events-none`}
-      ></div>
-      {/* ---------------------------------------------------- */}
+    <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
 
       {/* النافبار ثابت فوق */}
       <Navbar lang={currentLang} dict={dict} />
 
-      {/* محتوى الصفحة مع مساحة علوية كافية — فوق الـ blobs */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
+      {/* محتوى الصفحة مع مساحة علوية كافية */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
+
         {/* زرار الرجوع للخدمات */}
         <Link
           href={`/${currentLang}/#services`}
@@ -432,13 +397,21 @@ export default async function ServiceDetailsPage({
           {currentLang === "ar" ? "العودة للخدمات" : "Back to Services"}
         </Link>
 
-        {/* كارت محتوى تفاصيل الخدمة مقسم لعمودين (نص وصورة) */}
+        {/* كارت محتوى تفاصيل الخدمة — مع blob داخلي في الزاوية */}
         <div
-          className={`bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border ${colors.border}`}
+          className={`relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border ${colors.border}`}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Blob داخلي في الزاوية — زي Services.tsx بالظبط */}
+          <div
+            className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none ${innerBlob}`}
+          ></div>
+
+          {/* المحتوى فوق الـ blob */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
             {/* عمود النصوص والمميزات (يأخذ 7 أعمدة) */}
             <div className="lg:col-span-7">
+
               {/* Badge بلون الخدمة */}
               <div
                 className={`inline-block px-4 py-1.5 rounded-full font-bold text-sm mb-6 ${colors.badge}`}
@@ -467,7 +440,6 @@ export default async function ServiceDetailsPage({
                   <ul className="grid grid-cols-1 gap-4">
                     {details.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        {/* رجعنا الأيقونة زي ما كانت */}
                         <FaCheckCircle className="w-5 h-5 text-valict-cyan shrink-0 mt-1" />
 
                         <span className="text-slate-600 dark:text-slate-300 font-medium">
@@ -488,6 +460,7 @@ export default async function ServiceDetailsPage({
                   {dict.cta.button}
                 </Link>
               </div>
+
             </div>
 
             {/* عمود الصورة التوضيحية (يأخذ 5 أعمدة) */}
@@ -503,6 +476,7 @@ export default async function ServiceDetailsPage({
                 />
               </div>
             </div>
+
           </div>
         </div>
       </div>
