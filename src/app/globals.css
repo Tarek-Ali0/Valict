@@ -25,12 +25,20 @@
 
   /* Valict Custom Colors */
   --color-valict-navy: #1e3a8a;
-  
+
   /* تم تعديل هذا السطر ليربط لون السايان بمتغير ذكي يتغير أوتوماتيكياً حسب وضع الصفحة لضمان التباين */
   --color-valict-cyan: var(--valict-cyan-dynamic);
-  
+
   --color-valict-dark: #0f172a;
   --color-valict-light: #f8fafc;
+
+  /* ========================= */
+  /* Valict Warm Theme Colors  */
+  /* ========================= */
+  --color-valict-bg-warm: #FAFAF7;
+  --color-valict-bg-warm-darker: #F5F5F0;
+  --color-valict-bg-hero-start: #F0F9FF;
+  --color-valict-bg-hero-end: #FAFAF7;
 
   /* Custom Shadows */
   --shadow-premium: 0 20px 50px -12px rgba(30, 58, 138, 0.1);
@@ -44,7 +52,7 @@
 @layer base {
   :root {
     /* درجة السايان الغامقة المخصصة للتصميم المضيء لتخطي فحص التباين بنجاح */
-    --valict-cyan-dynamic: #0891b2; 
+    --valict-cyan-dynamic: #0891b2;
 
     --background: hsl(0 0% 100%);
     --foreground: hsl(222.2 84% 4.9%);
@@ -69,7 +77,7 @@
   }
   .dark {
     /* درجة السايان المشرقة والنقية المخصصة للتصميم المظلم لتشع بوضوح وفخامة */
-    --valict-cyan-dynamic: #22d3ee; 
+    --valict-cyan-dynamic: #22d3ee;
 
     --background: hsl(222.2 84% 4.9%);
     --foreground: hsl(210 40% 98%);
@@ -149,6 +157,25 @@
     );
     clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
     z-index: -1;
+  }
+
+  /* ========================= */
+  /* Warm Theme Utilities      */
+  /* ========================= */
+  .bg-warm {
+    background-color: var(--color-valict-bg-warm);
+  }
+
+  .bg-warm-darker {
+    background-color: var(--color-valict-bg-warm-darker);
+  }
+
+  .bg-hero-warm {
+    background: linear-gradient(
+      180deg,
+      var(--color-valict-bg-hero-start) 0%,
+      var(--color-valict-bg-hero-end) 100%
+    );
   }
 }
 
