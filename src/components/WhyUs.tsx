@@ -160,6 +160,15 @@ export function WhyUs({ dict }: WhyUsProps) {
           </motion.div>
 
         </div>
+
+        {/* ========================= */}
+        {/* Line Separator — متدرج   */}
+        {/* ========================= */}
+        <div className="mt-24 md:mt-32">
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-300/60 to-transparent dark:via-slate-700/60"></div>
+        </div>
+        {/* ========================= */}
+
       </div>
     </section>
   );
