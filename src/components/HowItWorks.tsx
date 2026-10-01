@@ -68,6 +68,9 @@ export function HowItWorks({ dict }: HowItWorksProps) {
 
         {/* Steps Grid */}
         <div className="relative">
+          {/* الخط الواصل — يمر من ورا الكروت في المنتصف */}
+          <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 left-0 right-0 h-[2px] bg-gradient-to-r rtl:bg-gradient-to-l from-transparent via-valict-navy/30 to-transparent z-0 pointer-events-none"></div>
+
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10"
             variants={containerVariants}
@@ -79,17 +82,17 @@ export function HowItWorks({ dict }: HowItWorksProps) {
               <motion.div 
                 key={index} 
                 variants={cardVariants}
-                className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
+                className="group relative bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
-                {/* Blob داخلي — بلون valict-navy (نفس لون سكشن التواصل) */}
+                {/* Blob داخلي — بلون valict-navy */}
                 <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/40 dark:bg-valict-navy/25 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
 
-                {/* رقم شفاف في الخلفية — ينقل للشمال في العربي */}
+                {/* رقم شفاف في الخلفية */}
                 <span className="absolute -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none rtl:-left-4 ltr:-right-4">
                   {step.number}
                 </span>
 
-                {/* البادج الخاص برقم الخطوة — لون التواصل مع الـ hover */}
+                {/* البادج الخاص برقم الخطوة */}
                 <div className="relative z-10 w-14 h-14 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-navy group-hover:border-valict-navy transition-all duration-500">
                   <span className="text-xl font-black text-valict-navy dark:text-valict-cyan group-hover:text-white transition-colors duration-500">
                     {step.number}
@@ -106,7 +109,7 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                   </p>
                 </div>
 
-                {/* شريط سفلي جمالي يظهر عند الهوفر */}
+                {/* شريط سفلي جمالي */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-valict-navy to-valict-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
               </motion.div>
             ))}
