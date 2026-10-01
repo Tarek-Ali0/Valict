@@ -65,7 +65,7 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
   return (
     <section 
       id="services" 
-      className="py-24 md:py-32 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
+      className="pt-12 md:pt-16 pb-24 md:pb-32 bg-[#F1F5F9] dark:bg-[#0B1120] transition-colors duration-300"
     >
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
