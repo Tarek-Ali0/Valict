@@ -151,7 +151,7 @@ export default async function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "min-h-screen bg-[#E2E8F0] text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
+          "min-h-screen bg-[#F1F5F9] text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
           geist.variable,
           cairo.variable
         )}
