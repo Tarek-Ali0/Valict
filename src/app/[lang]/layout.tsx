@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { AIChatWidget } from "@/components/AIChatWidget"; // الاستدعاء الجديد لمكون الدعم الذكي
+import { AIChatWidget } from "@/components/AIChatWidget";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -29,13 +29,11 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
 
-  // عنوان الصفحة حسب اللغة
   const title =
     lang === "ar"
       ? "فالكت | عزّز رؤيتك"
       : "Valict | Validate Your Vision";
 
-  // تم تقصير الوصف الإنجليزي هنا بدقة متناهية ليطابق الشروط القياسية لمحركات البحث ومنع قصه بنقاط
   const description =
     lang === "ar"
       ? "حلول متكاملة في إدارة تقنية المعلومات، الحوسبة السحابية، والأمن السيبراني المتقدم لحماية أصولك الرقمية وضمان استمرارية أعمالك بكفاءة مطلقة."
@@ -98,10 +96,8 @@ export default async function RootLayout({
   const lang = resolvedParams.lang;
   const dir = lang === "ar" ? "rtl" : "ltr";
 
-  // جلب الترجمة وتمريرها للفوتر
   const dict = await getDictionary(lang as "en" | "ar");
 
-  // بيانات الـ Schema المهيكلة لربط Valict بكلمة "فالكت" ونشاط الشركة
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -155,7 +151,7 @@ export default async function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "min-h-screen bg-white text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
+          "min-h-screen bg-warm text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 antialiased transition-colors duration-300",
           geist.variable,
           cairo.variable
         )}
@@ -170,9 +166,8 @@ export default async function RootLayout({
 
           <Footer lang={lang} dict={dict} />
 
-          {/* الأزرار العائمة بالأسفل */}
           <ScrollToTop />
-          <AIChatWidget lang={lang} /> {/* إضافة زر الدعم الفني الذكي هنا بالأسفل بجانب زر الصعود */}
+          <AIChatWidget lang={lang} />
         </ThemeProvider>
       </body>
     </html>
