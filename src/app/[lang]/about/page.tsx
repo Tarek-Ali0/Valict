@@ -16,9 +16,7 @@ export async function generateMetadata({
   const currentLang = lang === "ar" ? "ar" : "en";
 
   const title =
-    currentLang === "ar"
-      ? "فالكت | من نحن"
-      : "Valict | About Us";
+    currentLang === "ar" ? "فالكت | من نحن" : "Valict | About Us";
 
   const description =
     currentLang === "ar"
@@ -119,10 +117,11 @@ export default async function AboutPage({
 
         {/* Main About Card */}
         <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
-          {/* Blob داخلي في الزاوية — يمين في العربي / شمال في الإنجليزي */}
+          {/* Blob داخلي في الزاوية — حجم أكبر عشان الصفحة أطول */}
+          {/* يمين في العربي / شمال في الإنجليزي */}
           <div
-            className={`absolute -top-12 w-40 h-40 rounded-full blur-3xl pointer-events-none bg-valict-cyan/20 dark:bg-valict-cyan/15 ${
-              isRTL ? "-right-12" : "-left-12"
+            className={`absolute -top-20 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full blur-3xl pointer-events-none bg-valict-cyan/20 dark:bg-valict-cyan/15 ${
+              isRTL ? "-right-20" : "-left-20"
             }`}
           ></div>
 
