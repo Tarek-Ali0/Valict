@@ -30,32 +30,35 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
     const handleScroll = () => {
       if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (window.scrollY > 20) {
-            setIsScrolled(true);
-          } else {
-            setIsScrolled(false);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+      // استخدام requestAnimationFrame لتأجيل الحساب لثانية الرسم القادمة للمتصفح دون تجميد أو إجبار
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 20) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("scroll", handleScroll, { passive: true }); // passive تخبر المتصفح أن السكربت لن يعطل حركات الصفحة
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
+  // حساب المسار البديل للغة الأخرى للأرشفة السليمة وروابط الـ Link الحقيقية
   const alternateLang = lang === "en" ? "ar" : "en";
   const alternatePath = pathname.replace(`/${lang}`, `/${alternateLang}`);
 
   interface NavLink {
     name: string;
     href: string;
-    ariaLabel: string;
+    ariaLabel: string; // إضافة نص وصفي خلفي لمحركات البحث
   }
 
+  // تزويد مصفوفة الروابط بنصوص وصفية فريدة لحل مشكلة التكرار للـ SEO
   const navLinks: NavLink[] = [
     { name: dict.nav.services, href: `/${lang}/#services`, ariaLabel: `${dict.nav.services} services section` },
     { name: dict.nav.whyValict, href: `/${lang}/#why-valict`, ariaLabel: `Why Valict company advantages section` },
@@ -67,14 +70,14 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       className={cn(
         "fixed w-full z-50 transition-all duration-300",
         isScrolled
-          ? "bg-warm/80 dark:bg-[#0B1120]/80 backdrop-blur-xl"
+          ? "bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm"
           : "bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-24">
 
-          {/* Logo */}
+          {/* Logo - تم الحفاظ على الكود والمظهر القديم بالمليمتر دون تعديل بناءً على طلبك */}
           <Link
             href={`/${lang}`}
             className="group relative block w-40 h-12"
@@ -98,6 +101,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 key={link.href}
                 href={link.href}
                 aria-label={link.ariaLabel}
+                // تعديل الألوان لتعميق التباين: slate-800 للمضيء و slate-100 للمظلم لضمان اجتياز فحص جوجل بنجاح
                 className="group relative text-slate-800 dark:text-slate-100 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold transition-colors duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-valict-cyan after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.name}
@@ -107,6 +111,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             {/* Language & Theme */}
             <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
 
+              {/* إضافة علاقة الأرشفة البديلة للمسار اللغوي الآخر المقابل للـ SEO الهيكلي */}
               <Link
                 href={alternatePath}
                 rel="alternate"
@@ -202,7 +207,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "lg:hidden absolute top-24 left-0 w-full bg-warm/95 dark:bg-[#0B1120]/95 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
+          "lg:hidden absolute top-24 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
           isMobileMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0"
