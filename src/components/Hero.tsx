@@ -51,10 +51,11 @@ export function Hero({ dict }: HeroProps) {
             <Image
               src="/dashboard-mockup.png"
               alt="Tech Dashboard Visualizing Valict ICT Infrastructure Solutions"
-              width={900}
-              height={600}
+              width={1050}
+              height={680}
               className="w-full h-auto drop-shadow-md object-contain pointer-events-none"
               priority
+              fetchPriority="high"
               sizes="(max-width: 640px) 400px, (max-width: 1024px) 520px, 900px"
             />
           </div>
@@ -142,6 +143,7 @@ export function Hero({ dict }: HeroProps) {
                 height={680}
                 className="w-full h-auto max-w-[1400px] drop-shadow-[0_15px_35px_rgba(30,58,138,0.15)] object-contain pointer-events-none"
                 priority
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 1400px, 100vw"
               />
             </motion.div>
