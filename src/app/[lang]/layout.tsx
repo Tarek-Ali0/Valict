@@ -36,7 +36,7 @@ export async function generateMetadata({
 
   const description =
     lang === "ar"
-      ? "حلول متكاملة في إدارة تقنية المعلومات، الحوسبة السحابية، والأمن السيبراني المتقدم لحماية أصولك الرقمية وضمان استمرارية أعمالك بكفاءة مطلقة."
+      ? "حلول متكاملة في إدارة تقنية المعلومات، الحوسبة السحابية، والأمن السيبراني المتقدم لحماية أصولك الرقمية وضمان إستمرارية أعمالك بكفاءة مطلقة."
       : "Reliable IT solutions and ICT infrastructure. Valict delivers expert managed services, cloud computing, and cybersecurity to secure business continuity.";
 
   return {
@@ -117,7 +117,7 @@ export default async function RootLayout({
     },
 
     description: lang === 'ar' 
-    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والاتصالات." 
+    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والإتصالات." 
     : "Reliable IT Solutions and ICT Infrastructure Services.",
   slogan: lang === 'ar' ? "عزّز رؤيتك" : "Validate Your Vision",
   sameAs: 
