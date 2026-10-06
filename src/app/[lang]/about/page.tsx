@@ -20,7 +20,7 @@ export async function generateMetadata({
 
   const description =
     currentLang === "ar"
-      ? "تعرف على فالكت (Valict) وهويتها القائمة على دمج الأنظمة التقنية فائقة الأمان مع الحلول الاستراتيجية الذكية التي تصنع قيمة حقيقية لأعمالك."
+      ? "تعرف على فالكت (Valict) وهويتها القائمة على دمج الأنظمة التقنية فائقة الأمان مع الحلول الإستراتيجية الذكية التي تصنع قيمة حقيقية لأعمالك."
       : "Learn more about Valict, our tech philosophy, and how we deliver advanced, reliable, and value-driven ICT infrastructure solutions for businesses.";
 
   const url = `https://valict.com/${currentLang}/about`;
@@ -84,7 +84,7 @@ export default async function AboutPage({
   const coreValues =
     currentLang === "ar"
       ? [
-          "الموثوقية واستمرارية الأعمال",
+          "الموثوقية وإستمرارية الأعمال",
           "الأمان وحماية البيانات",
           "حلول عملية وقابلة للتوسع",
           "التركيز على قيمة الأعمال",
@@ -143,19 +143,19 @@ export default async function AboutPage({
               <div className="space-y-5 mb-8">
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "في فالكت (Valict)، نقدم حلولًا موثوقة وقائمة على القيمة في مجال تقنية المعلومات والاتصالات، مصممة لدعم احتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع احتياجات كل نشاط."
+                    ? "في فالكت (Valict)، نقدم حلولاً موثوقة وقائمة على القيمة في مجال تقنية المعلومات والإتصالات، مصممة لدعم إحتياجات الأعمال الحديثة. نجمع بين التكنولوجيا والبنية التحتية والأمان والخبرة العملية لتقديم حلول تتوافق مع إحتياجات كل نشاط."
                     : "At Valict, we provide reliable and value-driven IT and ICT solutions designed to support the way modern businesses operate. We combine technology, infrastructure, security, and practical expertise to create solutions that are aligned with business needs."}
                 </p>
 
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "منهجنا يتجاوز مجرد تطبيق التكنولوجيا؛ فنحن نركز على بناء بيئات تقنية موثوقة وآمنة وقابلة للتوسع، تساعد على رفع الكفاءة التشغيلية، ودعم استمرارية الأعمال، وتوفير أساس قوي للنمو المستدام."
+                    ? "منهجنا يتجاوز مجرد تطبيق التكنولوجيا؛ فنحن نركز على بناء بيئات تقنية موثوقة وآمنة وقابلة للتوسع، تساعد على رفع الكفاءة التشغيلية، ودعم إستمرارية الأعمال، وتوفير أساس قوي للنمو المستدام."
                     : "Our approach goes beyond implementing technology. We focus on building reliable, secure, and scalable environments that improve operational efficiency, support business continuity, and provide a solid foundation for sustainable growth."}
                 </p>
 
                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                   {currentLang === "ar"
-                    ? "بدءًا من البنية التحتية وخدمات تقنية المعلومات المدارة، وصولًا إلى الحلول السحابية والشبكات والأمن السيبراني وتقنيات الويب، نساعد الشركات على تبسيط بيئتها التقنية وتحقيق أقصى استفادة منها."
+                    ? "بدءاً من البنية التحتية وخدمات تقنية المعلومات المدارة، وصولاً إلى الحلول السحابية والشبكات والأمن السيبراني وتقنيات الويب، نساعد الشركات على تبسيط بيئتها التقنية وتحقيق أقصى استفادة منها."
                     : "From IT infrastructure and managed services to cloud solutions, networking, cybersecurity, and web technologies, we help businesses simplify their technology environment and make better use of it."}
                 </p>
               </div>
@@ -171,7 +171,7 @@ export default async function AboutPage({
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {currentLang === "ar"
-                      ? "أن نكون شريكًا تقنيًا موثوقًا يساعد الشركات على تحويل رؤيتها إلى قيمة حقيقية من خلال التكنولوجيا."
+                      ? "أن نكون شريكاً تقنيًا موثوقاً يساعد الشركات على تحويل رؤيتها إلى قيمة حقيقية من خلال التكنولوجيا."
                       : "To be a trusted technology partner that helps businesses turn their vision into real value through technology."}
                   </p>
                 </div>
@@ -183,7 +183,7 @@ export default async function AboutPage({
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {currentLang === "ar"
-                      ? "تقديم حلول تقنية موثوقة وعملية وقابلة للتوسع، تركز على الأداء والأمان واستمرارية الأعمال، وتساعد الشركات على تحقيق قيمة ملموسة من استثماراتها التقنية."
+                      ? "تقديم حلول تقنية موثوقة وعملية وقابلة للتوسع، تركز على الأداء والأمان وإستمرارية الأعمال، وتساعد الشركات على تحقيق قيمة ملموسة من إستثماراتها التقنية."
                       : "To deliver reliable, practical, and scalable technology solutions focused on performance, security, and business continuity, helping businesses achieve tangible value from their technology investments."}
                   </p>
                 </div>
