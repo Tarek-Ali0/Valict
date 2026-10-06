@@ -86,7 +86,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         : "Integrated IT Solutions Expert",
       status: isAr ? "متصل الآن" : "Online now",
       placeholder: isAr
-        ? "اسأل فاليكتا عن خدماتنا وحلولنا التقنية..."
+        ? "إسأل فاليكتا عن خدماتنا وحلولنا التقنية..."
         : "Ask Valicta about our IT solutions & services...",
       clearChat: isAr ? "مسح المحادثة" : "Clear chat",
       clearConfirm: isAr
