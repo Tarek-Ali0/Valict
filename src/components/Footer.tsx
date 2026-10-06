@@ -34,7 +34,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
   // Core Values
   const coreValues = dict?.footer?.values || (lang === "ar"
     ? [
-        "الموثوقية واستمرارية الأعمال",
+        "الموثوقية وإستمرارية الأعمال",
         "الأمان وحماية البيانات",
         "حلول عملية وقابلة للتوسع",
         "التركيز على قيمة الأعمال",
