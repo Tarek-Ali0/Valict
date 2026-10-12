@@ -157,14 +157,14 @@ export function Hero({ dict }: HeroProps) {
       {/* ========================= */}
       <div className="w-full">
         <div className="flex items-center gap-4">
-          {/* الخط الأيسر — حاد من الطرف، بيتلاشى في النص */}
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
+          {/* الخط الأول — حاد من الطرف، بيتلاشى ناحية النص (مع دعم RTL) */}
+          <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
 
           {/* فراغ في النص — زاد 2 سم */}
           <div className="w-40 md:w-52"></div>
 
-          {/* الخط الأيمن — حاد من الطرف، بيتلاشى في النص */}
-          <div className="flex-1 h-[1px] bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
+          {/* الخط التاني — حاد من الطرف، بيتلاشى ناحية النص (مع دعم RTL) */}
+          <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
         </div>
       </div>
       {/* ========================= */}
