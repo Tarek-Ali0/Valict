@@ -63,6 +63,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
     { name: dict.nav.services, href: `/${lang}/#services`, ariaLabel: `${dict.nav.services} services section` },
     { name: dict.nav.whyValict, href: `/${lang}/#why-valict`, ariaLabel: `Why Valict company advantages section` },
     { name: dict.nav.aboutUs, href: `/${lang}/about`, ariaLabel: `About Valict corporate profile page` },
+    { name: dict.faq.title, href: `/${lang}/faq`, ariaLabel: `Frequently asked questions about Valict services` },
   ];
 
   return (
@@ -209,7 +210,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
         className={cn(
           "lg:hidden absolute top-24 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
           isMobileMenuOpen
-            ? "max-h-96 opacity-100"
+            ? "max-h-[500px] opacity-100"
             : "max-h-0 opacity-0"
         )}
       >
