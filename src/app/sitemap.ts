@@ -4,7 +4,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://valict.com";
 
   // تاريخ ثابت حقيقي للصفحات القديمة (غيره للتاريخ اللي إنت متأكد منه)
-  const oldPagesDate = new Date("2025-01-01"); 
+  const oldPagesDate = new Date("2026-05-01"); 
   
   // تاريخ النهارده للصفحات الجديدة (زي FAQ)
   const newPagesDate = new Date("2026-10-21"); 
