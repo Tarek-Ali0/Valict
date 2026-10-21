@@ -329,14 +329,14 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
       {/* نافذة الشات */}
       <div
-        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[500px] max-h-[calc(100vh-120px)] sm:max-h-[500px] bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
+        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[500px] max-h-[calc(100vh-120px)] sm:max-h-[500px] bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
             ? "scale-100 opacity-100 visible"
             : "scale-75 opacity-0 invisible pointer-events-none"
         }`}
       >
         {/* الهيدر مع الـ Avatar المنبثق */}
-        <div className="relative bg-gradient-to-r from-valict-navy to-blue-600 dark:from-[#0F172A] dark:to-blue-900 rounded-t-2xl pt-12 pb-3 px-3">
+        <div className="relative bg-valict-navy dark:bg-[#0F172A] rounded-t-2xl pt-12 pb-3 px-3">
           <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-20">
             <div className="relative w-full h-full rounded-full flex items-center justify-center overflow-hidden">
               <ValictaAvatar size={72} className="scale-110" />
