@@ -46,18 +46,18 @@ export async function generateMetadata({
     description,
 
     alternates: {
-      canonical: `https://valict.com{lang}`,
+      canonical: `https://valict.com/${lang}`, // ✅ إصلاح السلاش
       languages: {
         en: "https://valict.com/en",
         ar: "https://valict.com/ar",
-        "x-default": "https://valict.com",
+        "x-default": "https://valict.com/en",
       },
     },
 
     openGraph: {
       title,
       description,
-      url: `https://valict.com{lang}`,
+      url: `https://valict.com/${lang}`, // ✅ إصلاح السلاش
       siteName: "Valict",
       locale: lang === "ar" ? "ar_AR" : "en_US",
       type: "website",
@@ -111,7 +111,7 @@ export default async function RootLayout({
 
     logo: {
       "@type": "ImageObject",
-      url: "https://valict.com",
+      url: "https://valict.com/valict-logo.png", // ✅ يفضل يكون لينك مباشر للوجو
       width: 400,
       height: 400,
     },
