@@ -447,6 +447,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-center gap-2 rounded-b-2xl"
         >
           <input
+            id="valicta-chat-input"
+            name="valicta-chat-input"
             ref={inputRef}
             type="text"
             value={input}
