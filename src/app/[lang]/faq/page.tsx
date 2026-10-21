@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/lib/dictionaries";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -104,8 +103,6 @@ export default async function FAQPage({
         {/* Main FAQ Card */}
         <FAQ dict={dict} lang={currentLang} />
       </div>
-
-      <Footer lang={currentLang} dict={dict} />
     </div>
   );
 }
