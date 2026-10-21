@@ -46,11 +46,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 5. تم تعديل هذا الجزء برمجياً للقضاء على تحذير الـ Render-blocking تماماً
-  // إذا كان الزائر يطلب الصفحة الرئيسية المجردة، نعرض له محتوى الإنجليزي فوراً بدون Redirect
+  // 5. توجيه دائم للصفحة الرئيسية للنسخة الإنجليزية (حل مشكلة الـ Canonical)
   if (pathname === "/") {
-    request.nextUrl.pathname = `/${defaultLocale}`;
-    return NextResponse.rewrite(request.nextUrl); // عرض داخلي سريع بدون إعادة توجيه
+    return NextResponse.redirect(new URL(`/${defaultLocale}`, request.url), 301);
   }
 
   // لأي مسارات داخلية أخرى مفقودة اللغة، نترك التوجيه الدائم يعمل كالمعتاد لحماية الـ SEO
