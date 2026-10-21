@@ -19,8 +19,9 @@ export function FAQ({ dict, lang }: FAQProps) {
   const isRTL = lang === "ar";
 
   return (
-    <section className="bg-white dark:bg-slate-900 py-16 md:py-24 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-white dark:bg-slate-900 py-8 md:py-12 transition-colors duration-300">
+      {/* تم تغيير max-w-4xl إلى max-w-6xl ليكون بعرض صفحة "من نحن" */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Card */}
         <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
