@@ -88,23 +88,22 @@ export default async function FAQPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
-        {/* زر الرجوع للرئيسية */}
-        <div className="mb-8">
-          <Link
-            href={`/${currentLang}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan transition-colors"
-          >
-            <FaArrowRightLong
-              className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
-            />
-            {currentLang === "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
-          </Link>
-        </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
+        {/* Back to Home */}
+        <Link
+          href={`/${currentLang}`}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan mb-8 transition-colors"
+        >
+          <FaArrowRightLong
+            className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
+          />
 
-        {/* مكون الـ FAQ */}
+          {currentLang === "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
+        </Link>
+
+        {/* Main FAQ Card */}
         <FAQ dict={dict} lang={currentLang} />
-      </main>
+      </div>
 
       <Footer lang={currentLang} dict={dict} />
     </div>
