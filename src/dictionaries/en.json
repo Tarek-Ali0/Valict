@@ -170,6 +170,27 @@
             "a": "You can reach our support team via our dedicated helpdesk, email, or phone. For managed clients, we also provide a direct escalation path for urgent issues."
           }
         ]
+      },
+      {
+        "title": "Valicta (Smart Assistant)",
+        "items": [
+          {
+            "q": "What is 'Valicta'?",
+            "a": "Valicta is Valict's smart digital assistant, designed to answer your inquiries about our services and tech solutions 24/7. It uses advanced AI technology to provide instant, personalized support."
+          },
+          {
+            "q": "How can I benefit from 'Valicta'?",
+            "a": "You can ask Valicta about any details regarding our services (like Managed IT, Cybersecurity, or Cloud Solutions), and it will direct you to accurate information or assist you in solving simple technical issues."
+          },
+          {
+            "q": "Is 'Valicta' a replacement for human support?",
+            "a": "No, Valicta is a smart assisting tool to speed up access to information and provide instant answers. For complex cases or those requiring human intervention, Valicta seamlessly transfers you to our specialized support team to ensure you get the best solution."
+          },
+          {
+            "q": "Can 'Valicta' solve complex technical problems?",
+            "a": "Currently, Valicta provides initial assistance in solving simple technical issues and guiding you to the right solutions. We are continuously developing its capabilities to solve more complex technical problems and offer broader support in the near future."
+          }
+        ]
       }
     ]
   }
