@@ -76,5 +76,100 @@
     "emailLabel": "Email",
     "phoneLabel": "Phone",
     "copyright": "Copyright © Valict {year} | All rights reserved"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about our services and tech solutions",
+    "categories": [
+      {
+        "title": "About Valict",
+        "items": [
+          {
+            "q": "What is Valict and what do you offer?",
+            "a": "Valict is a specialized ICT solutions provider. We offer managed IT services, network infrastructure, cybersecurity, cloud solutions, and web design to help businesses operate securely and efficiently."
+          },
+          {
+            "q": "What makes Valict different from other IT companies?",
+            "a": "We focus on delivering 'real business value' rather than just technology. Our approach combines proactive monitoring, robust security, and scalable solutions, ensuring your business continuity with minimal downtime."
+          },
+          {
+            "q": "What industries or company sizes do you work with?",
+            "a": "We serve a wide range of clients, from small and medium-sized enterprises (SMEs) to large corporate infrastructures, across various sectors including finance, healthcare, and education."
+          }
+        ]
+      },
+      {
+        "title": "Our Services",
+        "items": [
+          {
+            "q": "How does Valict ensure data security and protection from breaches?",
+            "a": "We implement multi-layered cybersecurity strategies, including next-generation firewalls, 24/7 Security Operations Center (SOC) monitoring, vulnerability assessments, and employee awareness training."
+          },
+          {
+            "q": "Do you provide 24/7 technical support?",
+            "a": "Yes, our Managed IT and Monitoring services include 24/7/365 proactive support and incident response to ensure your operations never stop."
+          },
+          {
+            "q": "How do you help companies transition to the cloud?",
+            "a": "We provide secure cloud migration strategies, hybrid infrastructure setups, and optimized resource management to reduce costs and improve scalability without disrupting your daily operations."
+          },
+          {
+            "q": "What is the difference between your network solutions and traditional networks?",
+            "a": "Our network solutions are designed for high performance, scalability, and advanced security segmentation. We don't just set up hardware; we build a robust infrastructure that grows with your business."
+          },
+          {
+            "q": "How do you approach web design and development?",
+            "a": "We build custom, responsive, and lightning-fast websites using modern frameworks (like Next.js), optimized for SEO and designed to convert visitors into customers. We support both Arabic and English."
+          }
+        ]
+      },
+      {
+        "title": "Pricing & Contracts",
+        "items": [
+          {
+            "q": "How is pricing determined?",
+            "a": "Our pricing is tailored to your specific needs, infrastructure size, and the level of support required. We offer flexible models based on your business goals."
+          },
+          {
+            "q": "Are there mandatory long-term contracts?",
+            "a": "We offer flexible contract terms. Whether you need a short-term project or a long-term managed service agreement, we can structure a plan that fits your business model."
+          }
+        ]
+      },
+      {
+        "title": "SMEs & Startups",
+        "items": [
+          {
+            "q": "We are an SME starting our digital transformation, how can Valict help without breaking our budget?",
+            "a": "We understand that digital transformation can be costly for SMEs. We offer modular, scalable solutions that start with your most critical needs (like basic security or cloud backup) and grow with you. We also provide flexible pricing models to ensure you get high-end IT without breaking the bank."
+          },
+          {
+            "q": "Are your services suitable for startups with limited budgets?",
+            "a": "Absolutely. Our managed IT services are designed to act as your outsourced IT department, saving you the cost of hiring a full in-house team. We focus on ROI-driven solutions that give you enterprise-level capabilities at a fraction of the cost."
+          },
+          {
+            "q": "How do you help companies choose the right solutions instead of wasting money on unused tech?",
+            "a": "We start with a comprehensive 'IT Assessment'. We analyze your current gaps and future goals, then propose a tailored roadmap. We only recommend what you actually need to improve efficiency and security, ensuring every pound spent yields a return."
+          },
+          {
+            "q": "Does digital transformation with Valict require a large in-house team or high technical expertise?",
+            "a": "Not at all. Our managed services handle the technical complexity for you. We provide the expertise and the monitoring, allowing your team to focus on their core business tasks."
+          }
+        ]
+      },
+      {
+        "title": "Support & Response",
+        "items": [
+          {
+            "q": "What is the response time for critical incidents?",
+            "a": "Our Service Level Agreements (SLAs) guarantee rapid response times. For critical incidents, our team is dispatched immediately to minimize downtime."
+          },
+          {
+            "q": "How do I contact technical support if I face an issue?",
+            "a": "You can reach our support team via our dedicated helpdesk, email, or phone. For managed clients, we also provide a direct escalation path for urgent issues."
+          }
+        ]
+      }
+    ]
   }
 }
