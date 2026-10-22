@@ -263,6 +263,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         timestamp: Date.now(),
       };
 
+      // تجهيز تاريخ المحادثة للـ API
+      const history = messages.map((msg) => ({
+        role: msg.isBot ? "assistant" : "user",
+        content: msg.text,
+      }));
+
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
       setIsLoading(true);
@@ -271,7 +277,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, lang: detectedLang }),
+          body: JSON.stringify({
+            message: text,
+            lang: detectedLang,
+            history, // إرسال التاريخ
+          }),
         });
 
         let finalReply = t.errorMsg;
@@ -308,7 +318,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         setIsLoading(false);
       }
     },
-    [input, isLoading, t.errorMsg, t.rateLimitMsg]
+    [input, isLoading, messages, t.errorMsg, t.rateLimitMsg]
   );
 
   const formatTime = (ts: number) => {
