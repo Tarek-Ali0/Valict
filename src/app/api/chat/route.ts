@@ -214,7 +214,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. قراءة الـ body (مع الـ history)
+    // 2. قراءة الـ body
     let body: any;
     try {
       body = await req.json();
@@ -277,7 +277,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. الـ System Instruction (معدل للذاكرة والحلول الأسرع)
+    // 5. الـ System Instruction (مع التحذير من المخاطر)
     const systemInstruction = isAr
       ? `أنت "فاليكتا" (Valicta)، المساعد الذكي الرسمي لشركة فالكت (Valict).
 
@@ -322,6 +322,7 @@ export async function POST(req: Request) {
 - إذا سأل العميل عن مشكلة تقنية (سيرفر، شبكة، أمان، إلخ)، **لازم تستخدم أداة البحث في الإنترنت (browser_search) قبل ما ترد**.
 - **حلل المشكلة بناءً على السياق.** لو عرفت إن النظام ويندوز، ابدأ بحلول ويندوز مباشرة (زي Safe Mode, Reset Password, RDP). متسألش أسئلة عامة.
 - قدم للعميل **خطوات حل عملية وواقعية** بناءً على نتائج البحث (3-5 خطوات كحد أقصى).
+- **لو الحل فيه خطورة (زي تعديل الـ Registry، أو تغيير إعدادات الشبكة، أو حذف ملفات)، لازم تحذر العميل بشكل واضح إن ده حل متقدم وممكن يسبب مشاكل، وإنه الأفضل يتنفذ بواسطة فني متخصص. واذكر إن فريق فالكت موجود للمساعدة.**
 - بعد تقديم الحل، اربطه بخدمات فالكت (مثلاً: "لو المشكلة استمرت، فريقنا المتخصص في فالكت يقدر يساعدك").
 - إذا كان الحل يتطلب تدخلاً بشرياً أو كان معقداً، وجّه العميل للتواصل مع الدعم الفني (support@valict.com أو الهاتف).
 - **ممنوع** اختراع خطوات غير موجودة في نتائج البحث. استخدم فقط المعلومات الموثوقة.
@@ -386,6 +387,7 @@ Rules for handling technical problems (very important):
 - If the client asks about a technical problem (server, network, security, etc.), **you MUST use the browser_search tool before replying**.
 - **Analyze the problem based on context.** If you know it's Windows, start with Windows solutions (e.g., Safe Mode, Reset Password, RDP). Don't ask generic questions.
 - Provide the client with **practical, realistic solution steps** based on search results (3-5 steps max).
+- **If the solution involves risk (e.g., Registry editing, network settings changes, file deletion), you MUST warn the client clearly that it's an advanced solution and may cause issues, and that it's best performed by a specialized technician. Mention that Valict's team is available to help.**
 - After providing the solution, link it to Valict's services (e.g., "If the problem persists, our specialized team at Valict can help").
 - If the solution requires human intervention or is complex, direct the client to contact technical support (support@valict.com or phone).
 - **Forbidden** to invent steps not found in search results. Use only trusted information.
@@ -412,7 +414,6 @@ Strictly forbidden:
     // 6. استدعاء Groq
     let reply: string;
     try {
-      // هنا بنبعت الـ history
       const historyMessages = Array.isArray(history) ? history : [];
       reply = await callGroqWithRetry(groq, systemInstruction, historyMessages, trimmed);
     } catch (err: any) {
