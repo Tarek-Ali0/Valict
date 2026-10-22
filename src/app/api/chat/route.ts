@@ -158,7 +158,7 @@ async function callGroqWithRetry(
         // ✅ تفعيل البحث في الإنترنت (بـ tool_choice: auto لتجنب مشكلة TypeScript)
         tools: [{ type: "browser_search" }] as any,
         tool_choice: "auto",
-        reasoning_effort: "low",
+        reasoning_effort: "low" as any,
       });
 
       const reply = completion.choices?.[0]?.message?.content?.trim();
