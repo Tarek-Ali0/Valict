@@ -72,7 +72,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const isAr = lang === "ar";
 
@@ -444,13 +444,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         <form
           onSubmit={handleSendMessage}
           dir={isAr ? "rtl" : "ltr"}
-          className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-center gap-2 rounded-b-2xl"
+          className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-end gap-2 rounded-b-2xl"
         >
-          <input
+          <textarea
             id="valicta-chat-input"
             name="valicta-chat-input"
             ref={inputRef}
-            type="text"
             value={input}
             onChange={(e) =>
               setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
@@ -459,15 +458,21 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             maxLength={MAX_INPUT_LENGTH}
             placeholder={t.placeholder}
             dir={isAr ? "rtl" : "ltr"}
-            className={`flex-1 min-w-0 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy ${
+            rows={1}
+            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none overflow-y-auto ${
               isAr ? "text-right" : "text-left"
             } disabled:opacity-50`}
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = "auto";
+              target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
+            }}
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
             aria-label="Send message"
-            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0"
+            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0 h-9 w-9 flex items-center justify-center"
           >
             <FaPaperPlane
               className={`w-4 h-4 ${!isAr ? "scale-x-[-1]" : ""}`}
