@@ -22,6 +22,14 @@ function fixPhoneNumbers(text: string): string {
 }
 
 /**
+ * تنظيف الرد من مصادر البحث
+ */
+function cleanReply(text: string): string {
+  // شيل المصادر اللي شكلها 【...】
+  return text.replace(/【[^】]*】/g, "").trim();
+}
+
+/**
  * Rate limiter بسيط في الذاكرة.
  */
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
@@ -155,10 +163,9 @@ async function callGroqWithRetry(
         ],
         temperature: 0.6,
         max_tokens: 2048,
-        // ✅ تفعيل البحث في الإنترنت (بـ as any لتجاوز مشكلة TypeScript)
+        // ✅ تفعيل البحث في الإنترنت
         tools: [{ type: "browser_search" }] as any,
         tool_choice: "auto",
-        // شيلنا reasoning_effort عشان نتجنب مشاكل الـ TypeScript
       } as any);
 
       const reply = completion.choices?.[0]?.message?.content?.trim();
@@ -428,9 +435,10 @@ Strictly forbidden:
     }
 
     // =====================
-    // 6.5 — إصلاح الأرقام في الرد (LRM)
+    // 6.5 — تنظيف الرد + إصلاح الأرقام (LRM)
     // =====================
-    const fixedReply = fixPhoneNumbers(reply);
+    const cleanedReply = cleanReply(reply);
+    const fixedReply = fixPhoneNumbers(cleanedReply);
 
     // =====================
     // 7. خزّن الرد في الكاش قبل ما ترجعه
