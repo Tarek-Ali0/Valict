@@ -148,6 +148,7 @@ function getGroq(): Groq | null {
 async function callGroqWithRetry(
   client: Groq,
   systemInstruction: string,
+  history: { role: string; content: string }[],
   userMessage: string
 ): Promise<string> {
   let lastError: any = null;
@@ -158,6 +159,7 @@ async function callGroqWithRetry(
         model: GROQ_MODEL,
         messages: [
           { role: "system", content: systemInstruction },
+          ...history,
           { role: "user", content: userMessage },
         ],
         temperature: 0.6,
@@ -212,7 +214,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. قراءة الـ body
+    // 2. قراءة الـ body (مع الـ history)
     let body: any;
     try {
       body = await req.json();
@@ -223,7 +225,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { message, lang } = body ?? {};
+    const { message, lang, history } = body ?? {};
     const isAr = lang === "ar";
 
     // 3. التحقق من الرسالة
@@ -275,7 +277,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. الـ System Instruction (معدل للتعامل مع المشاكل التقنية)
+    // 5. الـ System Instruction (معدل للذاكرة والحلول الأسرع)
     const systemInstruction = isAr
       ? `أنت "فاليكتا" (Valicta)، المساعد الذكي الرسمي لشركة فالكت (Valict).
 
@@ -309,7 +311,8 @@ export async function POST(req: Request) {
 13. لا تفترض أبداً تفاصيل لم يذكرها العميل. إذا كان السؤال عاماً أو غير واضح، اطلب تفاصيل أكثر بدلاً من افتراض المشكلة.
 14. عند طرح سؤال توضيحي، اجعله سؤالاً واحداً محدداً (مش قائمة أسئلة)، وكن ودوداً ومرحباً.
 15. **لا تبدأ كل رد بـ "مرحباً" أو "أهلاً". استخدمها فقط في أول رد أو لو المستخدم قال "مرحباً" أو "السلام عليكم". في الردود التالية، ابدأ مباشرة بالإجابة.**
-16. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
+16. **استخدم تاريخ المحادثة (History) اللي مرفق معاك عشان تفتكر السياق. لو العميل قال "ويندوز" قبل كده، اعتبر ده جزء من المشكلة ومتسألوش تاني.**
+17. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
 - كلمة "وقع" قد تعني "سقط على الأرض" أو "توقف عن العمل/باظ".
 - في السياق التقني (سيرفر، هارد، شبكة، نظام)، المعنى المرجح "توقف/باظ".
 - كلمة "طاح" أو "نزل" قد تعني "تعطل" في السياق التقني.
@@ -317,9 +320,8 @@ export async function POST(req: Request) {
 
 قواعد التعامل مع المشاكل التقنية (مهمة جداً):
 - إذا سأل العميل عن مشكلة تقنية (سيرفر، شبكة، أمان، إلخ)، **لازم تستخدم أداة البحث في الإنترنت (browser_search) قبل ما ترد**.
-- **حلل المشكلة قبل ما تدي حل.** اسأل العميل سؤال توضيحي واحد لو المشكلة مش واضحة (مثلاً: "هل السيرفر ويندوز أم لينكس؟").
+- **حلل المشكلة بناءً على السياق.** لو عرفت إن النظام ويندوز، ابدأ بحلول ويندوز مباشرة (زي Safe Mode, Reset Password, RDP). متسألش أسئلة عامة.
 - قدم للعميل **خطوات حل عملية وواقعية** بناءً على نتائج البحث (3-5 خطوات كحد أقصى).
-- **ممنوع** افتراض إن العميل عنده وصول للسيرفر. لو قال "مش عارف أدخل"، ابدأ بحلول الدخول (Console, iLO, Hyper-V).
 - بعد تقديم الحل، اربطه بخدمات فالكت (مثلاً: "لو المشكلة استمرت، فريقنا المتخصص في فالكت يقدر يساعدك").
 - إذا كان الحل يتطلب تدخلاً بشرياً أو كان معقداً، وجّه العميل للتواصل مع الدعم الفني (support@valict.com أو الهاتف).
 - **ممنوع** اختراع خطوات غير موجودة في نتائج البحث. استخدم فقط المعلومات الموثوقة.
@@ -373,7 +375,8 @@ Strict rules to always follow:
 13. Never assume details the client didn't mention. If the question is general or unclear, ask for more details instead of assuming the problem.
 14. When asking a clarifying question, make it ONE specific question (not a list), and be friendly and welcoming.
 15. **Do NOT start every reply with "Hello" or "Hi". Use it only in the first reply or if the user says "Hello" or "Hi". In subsequent replies, start directly with the answer.**
-16. When handling Arabic terms with multiple meanings, consider the context before interpreting:
+16. **Use the attached chat history to remember context. If the client mentioned "Windows" earlier, treat it as part of the problem and don't ask again.**
+17. When handling Arabic terms with multiple meanings, consider the context before interpreting:
 - The Arabic word "waqa'a" (وقع) can mean "fell down" or "stopped working / broke down".
 - In technical context (server, hard drive, network, system), the likely meaning is "stopped working / broke down".
 - The Arabic words "tah" (طاح) or "nazal" (نزل) can mean "broke down" in technical context.
@@ -381,9 +384,8 @@ Strict rules to always follow:
 
 Rules for handling technical problems (very important):
 - If the client asks about a technical problem (server, network, security, etc.), **you MUST use the browser_search tool before replying**.
-- **Analyze the problem before giving a solution.** Ask ONE clarifying question if the problem is unclear (e.g., "Is the server Windows or Linux?").
+- **Analyze the problem based on context.** If you know it's Windows, start with Windows solutions (e.g., Safe Mode, Reset Password, RDP). Don't ask generic questions.
 - Provide the client with **practical, realistic solution steps** based on search results (3-5 steps max).
-- **Forbidden** to assume the client has access to the server. If they say "I can't log in," start with access solutions (Console, iLO, Hyper-V).
 - After providing the solution, link it to Valict's services (e.g., "If the problem persists, our specialized team at Valict can help").
 - If the solution requires human intervention or is complex, direct the client to contact technical support (support@valict.com or phone).
 - **Forbidden** to invent steps not found in search results. Use only trusted information.
@@ -410,7 +412,9 @@ Strictly forbidden:
     // 6. استدعاء Groq
     let reply: string;
     try {
-      reply = await callGroqWithRetry(groq, systemInstruction, trimmed);
+      // هنا بنبعت الـ history
+      const historyMessages = Array.isArray(history) ? history : [];
+      reply = await callGroqWithRetry(groq, systemInstruction, historyMessages, trimmed);
     } catch (err: any) {
       console.error(
         "[chat] Groq error:",
