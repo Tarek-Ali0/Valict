@@ -393,7 +393,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 >
                   <div
                     dir={msgDir}
-                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words ${
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words min-w-0 ${
                       msgDir === "rtl" ? "text-right" : "text-left"
                     } ${
                       msg.isBot
