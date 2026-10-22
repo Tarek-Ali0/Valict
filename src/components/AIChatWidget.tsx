@@ -183,12 +183,10 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     if (!isOpen) return;
     if (messages.length > 0) return;
 
-    // 1. إظهار مؤشر "بتكتب" بعد 300ms
     const timer1 = setTimeout(() => {
       setIsBotTyping(true);
     }, 300);
 
-    // 2. إظهار الرسالة الأولى بعد 1.5 ثانية وإخفاء المؤشر
     const timer2 = setTimeout(() => {
       setIsBotTyping(false);
       setMessages([
@@ -200,12 +198,10 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         },
       ]);
 
-      // 3. إظهار مؤشر "بتكتب" تاني بعد 500ms من الرسالة الأولى
       const timer3 = setTimeout(() => {
         setIsBotTyping(true);
       }, 500);
 
-      // 4. إظهار الرسالة التانية بعد 2 ثانية من الرسالة الأولى
       const timer4 = setTimeout(() => {
         setIsBotTyping(false);
         setMessages((prev) => [
@@ -263,7 +259,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         timestamp: Date.now(),
       };
 
-      // تجهيز تاريخ المحادثة للـ API
       const history = messages.map((msg) => ({
         role: msg.isBot ? "assistant" : "user",
         content: msg.text,
@@ -280,7 +275,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           body: JSON.stringify({
             message: text,
             lang: detectedLang,
-            history, // إرسال التاريخ
+            history,
           }),
         });
 
@@ -423,7 +418,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 >
                   <div
                     dir={msgDir}
-                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line ${
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words ${
                       msgDir === "rtl" ? "text-right" : "text-left"
                     } ${
                       msg.isBot
