@@ -155,11 +155,11 @@ async function callGroqWithRetry(
         ],
         temperature: 0.6,
         max_tokens: 2048,
-        // ✅ تفعيل البحث في الإنترنت (بـ tool_choice: auto لتجنب مشكلة TypeScript)
+        // ✅ تفعيل البحث في الإنترنت (بـ as any لتجاوز مشكلة TypeScript)
         tools: [{ type: "browser_search" }] as any,
         tool_choice: "auto",
-        reasoning_effort: "low" as any,
-      });
+        // شيلنا reasoning_effort عشان نتجنب مشاكل الـ TypeScript
+      } as any);
 
       const reply = completion.choices?.[0]?.message?.content?.trim();
       if (reply) return reply;
