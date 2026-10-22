@@ -393,13 +393,14 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 >
                   <div
                     dir={msgDir}
-                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words min-w-0 ${
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere ${
                       msgDir === "rtl" ? "text-right" : "text-left"
                     } ${
                       msg.isBot
                         ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
                         : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
                     }`}
+                    style={{ overflowWrap: "anywhere" }}
                   >
                     {msg.text}
                   </div>
