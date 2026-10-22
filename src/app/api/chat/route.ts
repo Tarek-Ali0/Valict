@@ -25,7 +25,6 @@ function fixPhoneNumbers(text: string): string {
  * تنظيف الرد من مصادر البحث
  */
 function cleanReply(text: string): string {
-  // شيل المصادر اللي شكلها 【...】
   return text.replace(/【[^】]*】/g, "").trim();
 }
 
@@ -163,7 +162,6 @@ async function callGroqWithRetry(
         ],
         temperature: 0.6,
         max_tokens: 2048,
-        // ✅ تفعيل البحث في الإنترنت
         tools: [{ type: "browser_search" }] as any,
         tool_choice: "auto",
       } as any);
@@ -277,7 +275,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. الـ System Instruction (معدل للسماح بالبحث والحلول)
+    // 5. الـ System Instruction
     const systemInstruction = isAr
       ? `أنت "فاليكتا" (Valicta)، المساعد الذكي الرسمي لشركة فالكت (Valict).
 
@@ -310,7 +308,8 @@ export async function POST(req: Request) {
 - لا تستخدم - أو * أو ** أو أي رموز markdown أخرى.
 13. لا تفترض أبداً تفاصيل لم يذكرها العميل. إذا كان السؤال عاماً أو غير واضح، اطلب تفاصيل أكثر بدلاً من افتراض المشكلة.
 14. عند طرح سؤال توضيحي، اجعله سؤالاً واحداً محدداً (مش قائمة أسئلة)، وكن ودوداً ومرحباً.
-15. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
+15. **لا تبدأ كل رد بـ "مرحباً" أو "أهلاً". استخدمها فقط في أول رد أو لو المستخدم قال "مرحباً" أو "السلام عليكم". في الردود التالية، ابدأ مباشرة بالإجابة.**
+16. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
 - كلمة "وقع" قد تعني "سقط على الأرض" أو "توقف عن العمل/باظ".
 - في السياق التقني (سيرفر، هارد، شبكة، نظام)، المعنى المرجح "توقف/باظ".
 - كلمة "طاح" أو "نزل" قد تعني "تعطل" في السياق التقني.
@@ -371,7 +370,8 @@ Strict rules to always follow:
 - Do not use -, *, **, or any other markdown symbols.
 13. Never assume details the client didn't mention. If the question is general or unclear, ask for more details instead of assuming the problem.
 14. When asking a clarifying question, make it ONE specific question (not a list), and be friendly and welcoming.
-15. When handling Arabic terms with multiple meanings, consider the context before interpreting:
+15. **Do NOT start every reply with "Hello" or "Hi". Use it only in the first reply or if the user says "Hello" or "Hi". In subsequent replies, start directly with the answer.**
+16. When handling Arabic terms with multiple meanings, consider the context before interpreting:
 - The Arabic word "waqa'a" (وقع) can mean "fell down" or "stopped working / broke down".
 - In technical context (server, hard drive, network, system), the likely meaning is "stopped working / broke down".
 - The Arabic words "tah" (طاح) or "nazal" (نزل) can mean "broke down" in technical context.
