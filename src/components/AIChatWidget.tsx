@@ -24,25 +24,16 @@ const MAX_INPUT_LENGTH = 1000;
 const STORAGE_KEY_MESSAGES = "valict-chat-messages";
 const STORAGE_KEY_OPEN = "valict-chat-open";
 
-/**
- * كشف اللغة تلقائياً من نص المستخدم
- */
 function detectLang(text: string): "ar" | "en" {
   const arabicRegex = /[\u0600-\u06FF]/;
   return arabicRegex.test(text) ? "ar" : "en";
 }
 
-/**
- * كشف اتجاه النص (للرسائل الفردية)
- */
 function getTextDirection(text: string): "rtl" | "ltr" {
   const arabicRegex = /[\u0600-\u06FF]/;
   return arabicRegex.test(text) ? "rtl" : "ltr";
 }
 
-/**
- * شخصية فاليكتا (WebP)
- */
 function ValictaAvatar({
   size = 48,
   className = "",
@@ -110,9 +101,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  // =====================
-  // استرجاع المحادثة من sessionStorage عند أول تحميل
-  // =====================
   useEffect(() => {
     try {
       const savedMessages = sessionStorage.getItem(STORAGE_KEY_MESSAGES);
@@ -135,9 +123,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, []);
 
-  // =====================
-  // حفظ المحادثة في sessionStorage عند أي تغيير
-  // =====================
   useEffect(() => {
     if (!isHydrated) return;
     try {
@@ -159,9 +144,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [isOpen, isHydrated]);
 
-  // =====================
-  // Focus تلقائي على الـ input (ديسكتوب بس)
-  // =====================
   useEffect(() => {
     if (typeof window === "undefined") return;
     const isDesktop = window.matchMedia("(min-width: 768px)").matches;
@@ -175,9 +157,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [isOpen, isLoading]);
 
-  // =====================
-  // رسالة الترحيب - رسالتين مع تأخير بينهم
-  // =====================
   useEffect(() => {
     if (!isHydrated) return;
     if (!isOpen) return;
@@ -325,7 +304,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   return (
     <div className="fixed bottom-6 left-6 z-50 font-sans">
-      {/* زر الفتح/الإغلاق */}
       <button
         onClick={() => setIsOpen((v) => !v)}
         aria-label={t.title}
@@ -343,7 +321,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         </span>
       </button>
 
-      {/* نافذة الشات */}
       <div
         className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[500px] max-h-[calc(100vh-120px)] sm:max-h-[500px] bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
@@ -351,7 +328,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             : "scale-75 opacity-0 invisible pointer-events-none"
         }`}
       >
-        {/* الهيدر مع الـ Avatar المنبثق — تدرج فالكت */}
         <div className="relative bg-gradient-to-r from-valict-navy to-valict-cyan dark:from-[#0F172A] dark:to-valict-cyan/70 rounded-t-2xl pt-12 pb-3 px-3">
           <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-20">
             <div className="relative w-full h-full rounded-full flex items-center justify-center overflow-hidden">
@@ -394,8 +370,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           </div>
         </div>
 
-        {/* الرسائل */}
-        <div className="flex-1 px-4 py-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
+        <div className="flex-1 px-4 py-4 overflow-y-auto overflow-x-hidden space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
           {messages.map((msg) => {
             const msgDir = getTextDirection(msg.text);
             return (
@@ -418,7 +393,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
                 >
                   <div
                     dir={msgDir}
-                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words ${
+                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-all ${
                       msgDir === "rtl" ? "text-right" : "text-left"
                     } ${
                       msg.isBot
@@ -456,7 +431,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           <div ref={chatEndRef} />
         </div>
 
-        {/* نموذج الإدخال */}
         <form
           onSubmit={handleSendMessage}
           dir={isAr ? "rtl" : "ltr"}
@@ -503,7 +477,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         </form>
       </div>
 
-      {/* الأنيميشن */}
       <style jsx>{`
         .msg-fade-in {
           animation: msgFadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
