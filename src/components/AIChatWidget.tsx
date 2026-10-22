@@ -176,19 +176,19 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   }, [isOpen, isLoading]);
 
   // =====================
-  // رسالة الترحيب - رسالتين بس في نفس التوقيت
+  // رسالة الترحيب - رسالتين مع تأخير بينهم
   // =====================
   useEffect(() => {
     if (!isHydrated) return;
-
     if (!isOpen) return;
-
     if (messages.length > 0) return;
 
+    // 1. إظهار مؤشر "بتكتب" بعد 300ms
     const timer1 = setTimeout(() => {
       setIsBotTyping(true);
     }, 300);
 
+    // 2. إظهار الرسالة الأولى بعد 1.5 ثانية وإخفاء المؤشر
     const timer2 = setTimeout(() => {
       setIsBotTyping(false);
       setMessages([
@@ -198,13 +198,31 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isBot: true,
           timestamp: Date.now(),
         },
-        {
-          id: crypto.randomUUID(),
-          text: t.welcomePart2,
-          isBot: true,
-          timestamp: Date.now() + 100,
-        },
       ]);
+
+      // 3. إظهار مؤشر "بتكتب" تاني بعد 500ms من الرسالة الأولى
+      const timer3 = setTimeout(() => {
+        setIsBotTyping(true);
+      }, 500);
+
+      // 4. إظهار الرسالة التانية بعد 2 ثانية من الرسالة الأولى
+      const timer4 = setTimeout(() => {
+        setIsBotTyping(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            text: t.welcomePart2,
+            isBot: true,
+            timestamp: Date.now(),
+          },
+        ]);
+      }, 2000);
+
+      return () => {
+        clearTimeout(timer3);
+        clearTimeout(timer4);
+      };
     }, 1500);
 
     return () => {
