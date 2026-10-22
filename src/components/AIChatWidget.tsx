@@ -176,7 +176,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   }, [isOpen, isLoading]);
 
   // =====================
-  // رسالة الترحيب - تظهر فقط لو مفيش محادثة محفوظة
+  // رسالة الترحيب - رسالتين بس في نفس التوقيت
   // =====================
   useEffect(() => {
     if (!isHydrated) return;
@@ -198,25 +198,18 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           isBot: true,
           timestamp: Date.now(),
         },
-      ]);
-    }, 1300);
-
-    const timer3 = setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
         {
           id: crypto.randomUUID(),
           text: t.welcomePart2,
           isBot: true,
-          timestamp: Date.now(),
+          timestamp: Date.now() + 100,
         },
       ]);
-    }, 2000);
+    }, 1500);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(timer3);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, isHydrated, t.welcomePart1, t.welcomePart2]);
@@ -466,6 +459,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
               const target = e.target as HTMLTextAreaElement;
               target.style.height = "auto";
               target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage(e);
+              }
             }}
           />
           <button
