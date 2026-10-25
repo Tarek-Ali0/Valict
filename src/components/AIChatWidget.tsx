@@ -322,7 +322,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       </button>
 
       <div
-        className={`fixed sm:absolute bottom-4 sm:bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100dvh-100px)] sm:h-[calc(100vh-220px)] max-h-none sm:max-h-[calc(100vh-220px)] bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
+        className={`fixed sm:absolute bottom-4 sm:bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100dvh-140px)] sm:h-[calc(100vh-220px)] max-h-none sm:max-h-[calc(100vh-220px)] bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
             ? "scale-100 opacity-100 visible"
             : "scale-75 opacity-0 invisible pointer-events-none"
@@ -435,7 +435,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         <form
           onSubmit={handleSendMessage}
           dir={isAr ? "rtl" : "ltr"}
-          className="p-3 pb-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-end gap-2 rounded-b-2xl"
+          className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-end gap-2 rounded-b-2xl relative"
         >
           <textarea
             id="valicta-chat-input"
@@ -450,7 +450,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             placeholder={t.placeholder}
             dir={isAr ? "rtl" : "ltr"}
             rows={1}
-            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-sm rounded-xl px-3 py-2.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none ${
+            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-sm rounded-xl px-3 py-2.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none overflow-hidden ${
               isAr ? "text-right" : "text-left"
             } disabled:opacity-50`}
             onInput={(e) => {
