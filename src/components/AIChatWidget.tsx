@@ -322,7 +322,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       </button>
 
       <div
-        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[calc(100vh-140px)] max-h-[calc(100vh-120px)] sm:max-h-none bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
+        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[calc(100vh-220px)] max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-220px)] bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
           isOpen
             ? "scale-100 opacity-100 visible"
             : "scale-75 opacity-0 invisible pointer-events-none"
