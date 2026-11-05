@@ -88,12 +88,11 @@ export default function ExperimentPage() {
       ctx.clearRect(0, 0, width, height);
 
       const img = new Image();
-      // استخدام الصورة المطلوبة
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // حجم الصورة (كبرناها شوية عشان تبان)
-        const imgWidth = width * 0.5; 
+        // صغرنا الحجم لـ 30% بدل 50%
+        const imgWidth = width * 0.3; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
         const yOffset = (height - imgHeight) / 2;
@@ -103,8 +102,9 @@ export default function ExperimentPage() {
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
         ctx.clearRect(0, 0, width, height);
 
-        const gap = 3; // قللنا المسافة عشان التفاصيل تبان
-        const colors = ["#00A3E0", "#1E3A8A"]; // سماوي وكحلي
+        const gap = 3; 
+        // شيلنا الكحلي، خلفينا السماوي مع شوية أبيض للإضاءة
+        const colors = ["#00A3E0", "#00A3E0", "#FFFFFF"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
@@ -120,9 +120,8 @@ export default function ExperimentPage() {
       };
 
       img.onerror = () => {
-        // Fallback لو الصورة ملقيتش
         const text = "V";
-        const fontSize = 400;
+        const fontSize = 300; // صغرنا الـ fallback كمان
         ctx.fillStyle = "white";
         ctx.font = `900 ${fontSize}px Arial Black, sans-serif`;
         ctx.textAlign = "center";
@@ -133,7 +132,7 @@ export default function ExperimentPage() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = 4;
-        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"];
+        const colors = ["#00A3E0", "#FFFFFF"];
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
