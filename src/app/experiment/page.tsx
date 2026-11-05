@@ -88,11 +88,12 @@ export default function ExperimentPage() {
       ctx.clearRect(0, 0, width, height);
 
       const img = new Image();
-      img.src = "/JustV.png"; 
+      // الصورة الكاملة للأوبن جراف
+      img.src = "/valict-openGraph.png"; 
 
       img.onload = () => {
-        // صغرنا الحجم لـ 30% بدل 50%
-        const imgWidth = width * 0.3; 
+        // حجم الصورة (عشان تبان مناسبة في الشاشة)
+        const imgWidth = width * 0.4; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
         const yOffset = (height - imgHeight) / 2;
@@ -103,15 +104,21 @@ export default function ExperimentPage() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = 3; 
-        // شيلنا الكحلي، خلفينا السماوي مع شوية أبيض للإضاءة
-        const colors = ["#00A3E0", "#00A3E0", "#FFFFFF"]; 
+        // رجعنا الكحلي والسماوي
+        const colors = ["#1E3A8A", "#00A3E0"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
             const index = (y * width + x) * 4;
+            const r = imgCoordinates.data[index];
+            const g = imgCoordinates.data[index + 1];
+            const b = imgCoordinates.data[index + 2];
             const alpha = imgCoordinates.data[index + 3];
             
-            if (alpha > 128) {
+            // شرط عشان يتجاهل اللون الأبيض (الخلفية) والبكسلات الشفافة
+            const isWhite = r > 240 && g > 240 && b > 240;
+            
+            if (alpha > 128 && !isWhite) {
               const color = colors[Math.floor(Math.random() * colors.length)];
               particles.push(new Particle(x, y, color));
             }
@@ -120,8 +127,9 @@ export default function ExperimentPage() {
       };
 
       img.onerror = () => {
+        // Fallback
         const text = "V";
-        const fontSize = 300; // صغرنا الـ fallback كمان
+        const fontSize = 300;
         ctx.fillStyle = "white";
         ctx.font = `900 ${fontSize}px Arial Black, sans-serif`;
         ctx.textAlign = "center";
@@ -132,7 +140,7 @@ export default function ExperimentPage() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = 4;
-        const colors = ["#00A3E0", "#FFFFFF"];
+        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"];
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
