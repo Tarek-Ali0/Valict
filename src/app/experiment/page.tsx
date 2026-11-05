@@ -88,12 +88,12 @@ export default function ExperimentPage() {
       ctx.clearRect(0, 0, width, height);
 
       const img = new Image();
-      // الصورة الكاملة للأوبن جراف
-      img.src = "/valict-openGraph.png"; 
+      // رجعنا للحرف فقط عشان الوضوح
+      img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // حجم الصورة (عشان تبان مناسبة في الشاشة)
-        const imgWidth = width * 0.4; 
+        // حجم مناسب للحرف
+        const imgWidth = width * 0.3; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
         const yOffset = (height - imgHeight) / 2;
@@ -103,22 +103,17 @@ export default function ExperimentPage() {
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
         ctx.clearRect(0, 0, width, height);
 
+        // ظبطنا المسافة بين النقط
         const gap = 3; 
-        // رجعنا الكحلي والسماوي
+        // رجعنا اللونين بتوع فالكت (كحلي غامق وسماوي)
         const colors = ["#1E3A8A", "#00A3E0"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
             const index = (y * width + x) * 4;
-            const r = imgCoordinates.data[index];
-            const g = imgCoordinates.data[index + 1];
-            const b = imgCoordinates.data[index + 2];
             const alpha = imgCoordinates.data[index + 3];
             
-            // شرط عشان يتجاهل اللون الأبيض (الخلفية) والبكسلات الشفافة
-            const isWhite = r > 240 && g > 240 && b > 240;
-            
-            if (alpha > 128 && !isWhite) {
+            if (alpha > 128) {
               const color = colors[Math.floor(Math.random() * colors.length)];
               particles.push(new Particle(x, y, color));
             }
