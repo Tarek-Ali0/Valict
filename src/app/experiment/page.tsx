@@ -16,8 +16,7 @@ export default function ExperimentPage() {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    // شيلنا الـ radius من هنا عشان هنحدده في الدالة
-    const mouse = { x: -1000, y: -1000, isOnV: false }; 
+    const mouse = { x: -1000, y: -1000, isOnV: false };
 
     class Particle {
       x: number;
@@ -52,9 +51,7 @@ export default function ExperimentPage() {
       }
 
       update() {
-        // لو الماوس مش على الحرف، متعملش أي تفاعل
         if (!mouse.isOnV) {
-           // رجع النقطة لمكانها
            if (this.x !== this.baseX) {
             let dx = this.x - this.baseX;
             this.vx = dx * -0.05;
@@ -75,7 +72,7 @@ export default function ExperimentPage() {
         let forceDirectionX = dx / distance;
         let forceDirectionY = dy / distance;
 
-        let maxDistance = 60; // الـ radius بتاع الدائرة
+        let maxDistance = 60;
         let force = (maxDistance - distance) / maxDistance;
         let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
@@ -147,7 +144,6 @@ export default function ExperimentPage() {
         particles[i].draw();
         particles[i].update();
 
-        // التأثير بيظهر بس لو الماوس على الحرف
         if (mouse.isOnV) {
           let dx = mouse.x - particles[i].x;
           let dy = mouse.y - particles[i].y;
@@ -180,11 +176,9 @@ export default function ExperimentPage() {
       mouse.x = e.x;
       mouse.y = e.y;
 
-      // نتحقق لو الماوس على الحرف ولا لأ
-      // بنقرب نلاقي أقرب نقطة للماوس
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
-        let dx = mouse.x - particles[i].baseX; // بنشيك على المكان الأصلي
+        let dx = mouse.x - particles[i].baseX;
         let dy = mouse.y - particles[i].baseY;
         let distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < minDistance) {
@@ -192,8 +186,6 @@ export default function ExperimentPage() {
         }
       }
 
-      // لو أقرب نقطة قريبة أوي (أقل من 15 بكسل مثلاً)، يبقى إحنا على الحرف
-      // ممكن تزود الرقم ده لو حاسس إنه صعب يلتقط
       mouse.isOnV = minDistance < 20; 
     };
 
@@ -224,7 +216,13 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0B1120] relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen bg-white dark:bg-[#0B1120] relative overflow-hidden flex items-center justify-center transition-colors duration-300">
+      
+      {/* خلفية الهيرو (الـ Blobs) */}
+      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-20 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-20 pointer-events-none"></div>
+
+      {/* الكانفس فوق الخلفية */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
