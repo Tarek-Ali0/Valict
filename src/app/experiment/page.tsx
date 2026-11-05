@@ -16,7 +16,8 @@ export default function ExperimentPage() {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    const mouse = { x: -1000, y: -1000, radius: 60 };
+    // شيلنا الـ radius من هنا عشان هنحدده في الدالة
+    const mouse = { x: -1000, y: -1000, isOnV: false }; 
 
     class Particle {
       x: number;
@@ -51,6 +52,22 @@ export default function ExperimentPage() {
       }
 
       update() {
+        // لو الماوس مش على الحرف، متعملش أي تفاعل
+        if (!mouse.isOnV) {
+           // رجع النقطة لمكانها
+           if (this.x !== this.baseX) {
+            let dx = this.x - this.baseX;
+            this.vx = dx * -0.05;
+            this.x += this.vx;
+          }
+          if (this.y !== this.baseY) {
+            let dy = this.y - this.baseY;
+            this.vy = dy * -0.05;
+            this.y += this.vy;
+          }
+          return;
+        }
+
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
@@ -58,12 +75,12 @@ export default function ExperimentPage() {
         let forceDirectionX = dx / distance;
         let forceDirectionY = dy / distance;
 
-        let maxDistance = mouse.radius;
+        let maxDistance = 60; // الـ radius بتاع الدائرة
         let force = (maxDistance - distance) / maxDistance;
         let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
 
-        if (distance < mouse.radius) {
+        if (distance < maxDistance) {
           this.x += directionX;
           this.y += directionY;
         } else {
@@ -130,26 +147,31 @@ export default function ExperimentPage() {
         particles[i].draw();
         particles[i].update();
 
-        let dx = mouse.x - particles[i].x;
-        let dy = mouse.y - particles[i].y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
+        // التأثير بيظهر بس لو الماوس على الحرف
+        if (mouse.isOnV) {
+          let dx = mouse.x - particles[i].x;
+          let dy = mouse.y - particles[i].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < mouse.radius) {
-          nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
+          if (distance < 60) {
+            nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
+          }
         }
       }
 
-      nearbyParticles.sort((a, b) => a.distance - b.distance);
-      const closest = nearbyParticles.slice(0, 10);
+      if (mouse.isOnV) {
+        nearbyParticles.sort((a, b) => a.distance - b.distance);
+        const closest = nearbyParticles.slice(0, 10);
 
-      closest.forEach((p) => {
-        ctx.beginPath();
-        ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
-        ctx.lineWidth = 0.8;
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-      });
+        closest.forEach((p) => {
+          ctx.beginPath();
+          ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
+          ctx.lineWidth = 0.8;
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        });
+      }
       
       requestAnimationFrame(animate);
     };
@@ -157,11 +179,28 @@ export default function ExperimentPage() {
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.x;
       mouse.y = e.y;
+
+      // نتحقق لو الماوس على الحرف ولا لأ
+      // بنقرب نلاقي أقرب نقطة للماوس
+      let minDistance = Infinity;
+      for (let i = 0; i < particles.length; i++) {
+        let dx = mouse.x - particles[i].baseX; // بنشيك على المكان الأصلي
+        let dy = mouse.y - particles[i].baseY;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < minDistance) {
+          minDistance = distance;
+        }
+      }
+
+      // لو أقرب نقطة قريبة أوي (أقل من 15 بكسل مثلاً)، يبقى إحنا على الحرف
+      // ممكن تزود الرقم ده لو حاسس إنه صعب يلتقط
+      mouse.isOnV = minDistance < 20; 
     };
 
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
+      mouse.isOnV = false;
     };
 
     const handleResize = () => {
