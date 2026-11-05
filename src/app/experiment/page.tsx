@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useRef } from "react";
 
-export default function ExperimentPage() {
+export default function TestPage() {
   const [isIntro, setIsIntro] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const introCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  // تأثير تحميل الإنترو
+  // شريط التحميل
   useEffect(() => {
     if (!isIntro) return;
 
@@ -21,12 +21,12 @@ export default function ExperimentPage() {
         }
         return prev + 2; 
       });
-    }, 30);
+    }, 20);
 
     return () => clearInterval(interval);
   }, [isIntro]);
 
-  // حركة النقط
+  // دالة رسم النقط
   const initParticles = (canvas: HTMLCanvasElement, isIntroCanvas: boolean) => {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
@@ -103,13 +103,12 @@ export default function ExperimentPage() {
     const img = new Image();
     img.src = "/JustV.png";
     img.onload = () => {
-      // تصغير اللوجو في الإنترو شوية
-      const imgWidth = width * (isIntroCanvas ? 0.15 : 0.3); 
+      const imgWidth = width * (isIntroCanvas ? 0.2 : 0.3); 
       const imgHeight = (img.height / img.width) * imgWidth;
       
       const xOffset = (width - imgWidth) / 2;
-      // رفع اللوجو شوية لفوق عشان ندي مساحة للتحت
-      const yOffset = (height - imgHeight) / 2 - (isIntroCanvas ? 50 : 0); 
+      // رفعنا اللوجو شوية لفوق عشان ندي مساحة للتحت
+      const yOffset = (height - imgHeight) / 2 - (isIntroCanvas ? 80 : 0); 
 
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
       const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -171,7 +170,6 @@ export default function ExperimentPage() {
     };
   };
 
-  // تشغيل الحركة للإنترو
   useEffect(() => {
     if (introCanvasRef.current && isIntro) {
       const cleanup = initParticles(introCanvasRef.current, true);
@@ -179,7 +177,6 @@ export default function ExperimentPage() {
     }
   }, [isIntro]);
 
-  // تشغيل الحركة للصفحة العادية
   useEffect(() => {
     if (canvasRef.current && !isIntro) {
       const cleanup = initParticles(canvasRef.current, false);
@@ -200,19 +197,15 @@ export default function ExperimentPage() {
       {/* صفحة الإنترو */}
       {isIntro && (
         <div
-          className={`absolute inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-700 ${
+          className={`absolute inset-0 z-50 transition-opacity duration-700 ${
             isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
-          {/* الكانفس بياخد الشاشة كلها */}
+          {/* الكانفس في الخلفية */}
           <canvas ref={introCanvasRef} className="absolute inset-0 z-0" />
           
-          {/* المحتوى اللي فوق الكانفس (متمركز في النص) */}
-          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-            
-            {/* مسافة عشان اللوجو يبان في النص (الكانفس بيرسمه فوق شوية) */}
-            <div className="h-32"></div> 
-
+          {/* المحتوى الثابت (شريط التحميل والزرارين) بيبقى فوق الكانفس في نص الشاشة بالظبط */}
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center mt-20">
             {/* شريط التحميل */}
             <div className="w-64 h-1 bg-slate-700 rounded-full mb-6 overflow-hidden">
               <div
@@ -221,7 +214,7 @@ export default function ExperimentPage() {
               />
             </div>
 
-            {/* زرار اللغة (بتظهر بعد اكتمال التحميل) */}
+            {/* زرار اللغة */}
             {loadingProgress >= 100 && (
               <div className="flex gap-4 animate-fade-in mt-2">
                 <button
@@ -242,7 +235,7 @@ export default function ExperimentPage() {
         </div>
       )}
 
-      {/* صفحة الـ Experiment العادية */}
+      {/* صفحة الاختبار العادية */}
       {!isIntro && (
         <div className="relative w-full h-screen">
           <canvas ref={canvasRef} className="absolute inset-0 z-0" />
