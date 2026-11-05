@@ -103,13 +103,13 @@ export default function ExperimentPage() {
     const img = new Image();
     img.src = "/JustV.png";
     img.onload = () => {
-      // حجم اللوجو (أصغر في الإنترو)
-      const imgWidth = width * (isIntroCanvas ? 0.2 : 0.3);
+      // تصغير اللوجو في الإنترو شوية
+      const imgWidth = width * (isIntroCanvas ? 0.15 : 0.3); 
       const imgHeight = (img.height / img.width) * imgWidth;
       
-      // مكان اللوجو (في الإنترو نرفعه لفوق شوية عشان شريط التحميل)
       const xOffset = (width - imgWidth) / 2;
-      const yOffset = (height - imgHeight) / (isIntroCanvas ? 3 : 2); // 1/3 من فوق للإنترو
+      // رفع اللوجو شوية لفوق عشان ندي مساحة للتحت
+      const yOffset = (height - imgHeight) / 2 - (isIntroCanvas ? 50 : 0); 
 
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
       const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -171,23 +171,19 @@ export default function ExperimentPage() {
     };
   };
 
-  // تشغيل الحركة للإنترو (لما الصفحة تحمل)
+  // تشغيل الحركة للإنترو
   useEffect(() => {
     if (introCanvasRef.current && isIntro) {
       const cleanup = initParticles(introCanvasRef.current, true);
-      return () => {
-        if (typeof cleanup === 'function') cleanup();
-      };
+      return () => { if (typeof cleanup === 'function') cleanup(); };
     }
   }, [isIntro]);
 
-  // تشغيل الحركة للصفحة العادية (لما ندخل)
+  // تشغيل الحركة للصفحة العادية
   useEffect(() => {
     if (canvasRef.current && !isIntro) {
       const cleanup = initParticles(canvasRef.current, false);
-      return () => {
-        if (typeof cleanup === 'function') cleanup();
-      };
+      return () => { if (typeof cleanup === 'function') cleanup(); };
     }
   }, [isIntro]);
 
@@ -208,12 +204,17 @@ export default function ExperimentPage() {
             isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
+          {/* الكانفس بياخد الشاشة كلها */}
           <canvas ref={introCanvasRef} className="absolute inset-0 z-0" />
           
-          {/* محتوى الإنترو (شريط التحميل والأزرار) */}
-          <div className="relative z-10 flex flex-col items-center mt-[40vh]">
+          {/* المحتوى اللي فوق الكانفس (متمركز في النص) */}
+          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+            
+            {/* مسافة عشان اللوجو يبان في النص (الكانفس بيرسمه فوق شوية) */}
+            <div className="h-32"></div> 
+
             {/* شريط التحميل */}
-            <div className="w-64 h-1 bg-slate-700 rounded-full mb-8 overflow-hidden">
+            <div className="w-64 h-1 bg-slate-700 rounded-full mb-6 overflow-hidden">
               <div
                 className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
                 style={{ width: `${loadingProgress}%` }}
@@ -222,16 +223,16 @@ export default function ExperimentPage() {
 
             {/* زرار اللغة (بتظهر بعد اكتمال التحميل) */}
             {loadingProgress >= 100 && (
-              <div className="flex gap-4 animate-fade-in">
+              <div className="flex gap-4 animate-fade-in mt-2">
                 <button
                   onClick={() => handleEnterSite("ar")}
-                  className="px-6 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors"
+                  className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors"
                 >
                   عربي
                 </button>
                 <button
                   onClick={() => handleEnterSite("en")}
-                  className="px-6 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors"
+                  className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors"
                 >
                   English
                 </button>
