@@ -216,11 +216,12 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0B1120] relative overflow-hidden flex items-center justify-center transition-colors duration-300">
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
+      {/* خلفية الهيرو (Blobs) بنفس طريقة الصفحة الرئيسية */}
+      <div className="absolute inset-0 bg-white dark:bg-[#0B1120] transition-colors duration-300 -z-10"></div>
       
-      {/* خلفية الهيرو (الـ Blobs) - ألوان أوضح شوية */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.15] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-20 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.12] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-20 pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/20 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/15 dark:bg-valict-cyan/10 rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
 
       {/* الكانفس فوق الخلفية */}
       <canvas
