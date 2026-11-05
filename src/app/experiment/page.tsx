@@ -19,7 +19,7 @@ export default function ExperimentPage() {
           clearInterval(interval);
           return 100;
         }
-        return prev + 2;
+        return prev + 2; 
       });
     }, 30);
 
@@ -27,7 +27,7 @@ export default function ExperimentPage() {
   }, [isIntro]);
 
   // حركة النقط
-  const initParticles = (canvas: HTMLCanvasElement) => {
+  const initParticles = (canvas: HTMLCanvasElement, isIntroCanvas: boolean) => {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
@@ -37,7 +37,6 @@ export default function ExperimentPage() {
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, radius: 60 };
 
-    // تعريف الكلاس بشكل صحيح
     class Particle {
       x: number;
       y: number;
@@ -104,10 +103,13 @@ export default function ExperimentPage() {
     const img = new Image();
     img.src = "/JustV.png";
     img.onload = () => {
-      const imgWidth = width * (isIntro ? 0.25 : 0.3);
+      // حجم اللوجو (أصغر في الإنترو)
+      const imgWidth = width * (isIntroCanvas ? 0.2 : 0.3);
       const imgHeight = (img.height / img.width) * imgWidth;
+      
+      // مكان اللوجو (في الإنترو نرفعه لفوق شوية عشان شريط التحميل)
       const xOffset = (width - imgWidth) / 2;
-      const yOffset = (height - imgHeight) / 2;
+      const yOffset = (height - imgHeight) / (isIntroCanvas ? 3 : 2); // 1/3 من فوق للإنترو
 
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
       const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -169,17 +171,23 @@ export default function ExperimentPage() {
     };
   };
 
-  // تشغيل الحركة للإنترو
+  // تشغيل الحركة للإنترو (لما الصفحة تحمل)
   useEffect(() => {
     if (introCanvasRef.current && isIntro) {
-      initParticles(introCanvasRef.current);
+      const cleanup = initParticles(introCanvasRef.current, true);
+      return () => {
+        if (typeof cleanup === 'function') cleanup();
+      };
     }
   }, [isIntro]);
 
-  // تشغيل الحركة للصفحة العادية
+  // تشغيل الحركة للصفحة العادية (لما ندخل)
   useEffect(() => {
     if (canvasRef.current && !isIntro) {
-      initParticles(canvasRef.current);
+      const cleanup = initParticles(canvasRef.current, false);
+      return () => {
+        if (typeof cleanup === 'function') cleanup();
+      };
     }
   }, [isIntro]);
 
@@ -202,7 +210,9 @@ export default function ExperimentPage() {
         >
           <canvas ref={introCanvasRef} className="absolute inset-0 z-0" />
           
-          <div className="relative z-10 flex flex-col items-center mt-64">
+          {/* محتوى الإنترو (شريط التحميل والأزرار) */}
+          <div className="relative z-10 flex flex-col items-center mt-[40vh]">
+            {/* شريط التحميل */}
             <div className="w-64 h-1 bg-slate-700 rounded-full mb-8 overflow-hidden">
               <div
                 className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
@@ -210,6 +220,7 @@ export default function ExperimentPage() {
               />
             </div>
 
+            {/* زرار اللغة (بتظهر بعد اكتمال التحميل) */}
             {loadingProgress >= 100 && (
               <div className="flex gap-4 animate-fade-in">
                 <button
