@@ -1,33 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function ExperimentPage() {
-  const [isIntro, setIsIntro] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const introCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  // شريط التحميل
   useEffect(() => {
-    if (!isIntro) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const interval = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2; 
-      });
-    }, 20);
-
-    return () => clearInterval(interval);
-  }, [isIntro]);
-
-  // دالة رسم النقط
-  const initParticles = (canvas: HTMLCanvasElement, isIntroCanvas: boolean) => {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
@@ -100,150 +81,115 @@ export default function ExperimentPage() {
       }
     }
 
-    const img = new Image();
-    img.src = "/JustV.png";
-    img.onload = () => {
-      const imgWidth = width * (isIntroCanvas ? 0.2 : 0.3); 
-      const imgHeight = (img.height / img.width) * imgWidth;
-      
-      const xOffset = (width - imgWidth) / 2;
-      const yOffset = (height - imgHeight) / 2; 
-
-      ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
-      const imgCoordinates = ctx.getImageData(0, 0, width, height);
+    const init = () => {
+      particles.length = 0;
       ctx.clearRect(0, 0, width, height);
 
-      const gap = 3;
-      for (let y = 0; y < height; y += gap) {
-        for (let x = 0; x < width; x += gap) {
-          const index = (y * width + x) * 4;
-          const alpha = imgCoordinates.data[index + 3];
-          if (alpha > 128) {
-            const random = Math.random();
-            let color;
-            if (random < 0.6) color = "#00A3E0";
-            else if (random < 0.85) color = "#FFFFFF";
-            else color = "#1E3A8A";
-            particles.push(new Particle(x, y, color));
+      const img = new Image();
+      img.src = "/JustV.png"; 
+
+      img.onload = () => {
+        const imgWidth = width * 0.3; 
+        const imgHeight = (img.height / img.width) * imgWidth;
+        const xOffset = (width - imgWidth) / 2;
+        const yOffset = (height - imgHeight) / 2;
+
+        ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
+
+        const imgCoordinates = ctx.getImageData(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
+
+        const gap = 3; 
+        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"]; 
+
+        for (let y = 0; y < height; y += gap) {
+          for (let x = 0; x < width; x += gap) {
+            const index = (y * width + x) * 4;
+            const alpha = imgCoordinates.data[index + 3];
+            
+            if (alpha > 128) {
+              const random = Math.random();
+              let color;
+              if (random < 0.6) color = "#00A3E0";
+              else if (random < 0.85) color = "#FFFFFF";
+              else color = "#1E3A8A"; 
+
+              particles.push(new Particle(x, y, color));
+            }
           }
         }
-      }
+      };
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      const nearbyParticles: { x: number; y: number; distance: number }[] = [];
+      
+      const nearbyParticles = [];
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
+
         let dx = mouse.x - particles[i].x;
         let dy = mouse.y - particles[i].y;
         let distance = Math.sqrt(dx * dx + dy * dy);
+
         if (distance < mouse.radius) {
           nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
         }
       }
+
       nearbyParticles.sort((a, b) => a.distance - b.distance);
       const closest = nearbyParticles.slice(0, 10);
+
       closest.forEach((p) => {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(0, 163, 224, 0.15)`;
+        ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
         ctx.lineWidth = 0.8;
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(mouse.x, mouse.y);
         ctx.stroke();
       });
+      
       requestAnimationFrame(animate);
     };
 
-    const handleMouseMove = (e: MouseEvent) => { mouse.x = e.x; mouse.y = e.y; };
-    const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; };
-    
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      init();
+    };
+
+    init();
+    animate();
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseleave", handleMouseLeave);
-    animate();
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("resize", handleResize);
     };
-  };
-
-  useEffect(() => {
-    if (introCanvasRef.current && isIntro) {
-      const cleanup = initParticles(introCanvasRef.current, true);
-      return () => { if (typeof cleanup === 'function') cleanup(); };
-    }
-  }, [isIntro]);
-
-  useEffect(() => {
-    if (canvasRef.current && !isIntro) {
-      const cleanup = initParticles(canvasRef.current, false);
-      return () => { if (typeof cleanup === 'function') cleanup(); };
-    }
-  }, [isIntro]);
-
-  const handleEnterSite = (lang: string) => {
-    setIsFadingOut(true);
-    setTimeout(() => {
-      setIsIntro(false);
-    }, 800);
-  };
+  }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#0B1120] overflow-hidden">
-      
-      {/* صفحة الإنترو */}
-      {isIntro && (
-        <div
-          className={`absolute inset-0 z-50 transition-opacity duration-700 ${
-            isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-        >
-          {/* الكانفس في الخلفية */}
-          <canvas ref={introCanvasRef} className="absolute inset-0 z-0" />
-          
-          {/* الطبقة اللي فيها الزرارين وشريط التحميل - في نص الشاشة بالظبط */}
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
-            
-            {/* مسافة عشان ننزل بالزرارين تحت اللوجو اللي في الكانفس */}
-            <div className="mt-32 flex flex-col items-center">
-              {/* شريط التحميل */}
-              <div className="w-64 h-1 bg-slate-700 rounded-full mb-6 overflow-hidden">
-                <div
-                  className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-
-              {/* زرار اللغة */}
-              {loadingProgress >= 100 && (
-                <div className="flex gap-4 animate-fade-in mt-2">
-                  <button
-                    onClick={() => handleEnterSite("ar")}
-                    className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors"
-                  >
-                    عربي
-                  </button>
-                  <button
-                    onClick={() => handleEnterSite("en")}
-                    className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors"
-                  >
-                    English
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* صفحة الـ Experiment العادية */}
-      {!isIntro && (
-        <div className="relative w-full h-screen">
-          <canvas ref={canvasRef} className="absolute inset-0 z-0" />
-        </div>
-      )}
+    <div className="min-h-screen bg-[#0B1120] relative overflow-hidden flex items-center justify-center">
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+      />
     </div>
   );
 }
