@@ -16,7 +16,8 @@ export default function ExperimentPage() {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    const mouse = { x: -1000, y: -1000, radius: 100 };
+    // صغرنا الـ radius لـ 60 عشان الدائرة تبقى أصغر
+    const mouse = { x: -1000, y: -1000, radius: 60 };
 
     class Particle {
       x: number;
@@ -100,7 +101,6 @@ export default function ExperimentPage() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = 3; 
-        // رجعنا الأبيض، وخليط عشوائي بين السماوي والكحلي والأبيض
         const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"]; 
 
         for (let y = 0; y < height; y += gap) {
@@ -109,41 +109,12 @@ export default function ExperimentPage() {
             const alpha = imgCoordinates.data[index + 3];
             
             if (alpha > 128) {
-              // نسبة عشوائية عشان السماوي يبقى أكتر
               const random = Math.random();
               let color;
-              if (random < 0.6) color = "#00A3E0"; // 60% سماوي
-              else if (random < 0.85) color = "#FFFFFF"; // 25% أبيض
-              else color = "#1E3A8A"; // 15% كحلي
+              if (random < 0.6) color = "#00A3E0";
+              else if (random < 0.85) color = "#FFFFFF";
+              else color = "#1E3A8A"; 
 
-              particles.push(new Particle(x, y, color));
-            }
-          }
-        }
-      };
-
-      img.onerror = () => {
-        const text = "V";
-        const fontSize = 300;
-        ctx.fillStyle = "white";
-        ctx.font = `900 ${fontSize}px Arial Black, sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(text, width / 2, height / 2);
-
-        const textCoordinates = ctx.getImageData(0, 0, width, height);
-        ctx.clearRect(0, 0, width, height);
-
-        const gap = 4;
-        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"];
-
-        for (let y = 0; y < height; y += gap) {
-          for (let x = 0; x < width; x += gap) {
-            const index = (y * width + x) * 4;
-            const alpha = textCoordinates.data[index + 3];
-            
-            if (alpha > 128) {
-              const color = colors[Math.floor(Math.random() * colors.length)];
               particles.push(new Particle(x, y, color));
             }
           }
@@ -153,10 +124,27 @@ export default function ExperimentPage() {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
+      
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
+
+        // رسم الأشعة (الخطوط) لما الماوس يقرب من النقطة
+        let dx = mouse.x - particles[i].x;
+        let dy = mouse.y - particles[i].y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouse.radius) {
+          ctx.beginPath();
+          // لون الخط (سماوي شفاف)
+          ctx.strokeStyle = "rgba(0, 163, 224, 0.4)"; 
+          ctx.lineWidth = 1;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
       }
+      
       requestAnimationFrame(animate);
     };
 
