@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 
-export default function TestPage() {
+export default function ExperimentPage() {
   const [isIntro, setIsIntro] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -107,8 +107,7 @@ export default function TestPage() {
       const imgHeight = (img.height / img.width) * imgWidth;
       
       const xOffset = (width - imgWidth) / 2;
-      // رفعنا اللوجو شوية لفوق عشان ندي مساحة للتحت
-      const yOffset = (height - imgHeight) / 2 - (isIntroCanvas ? 80 : 0); 
+      const yOffset = (height - imgHeight) / 2; 
 
       ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
       const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -204,38 +203,42 @@ export default function TestPage() {
           {/* الكانفس في الخلفية */}
           <canvas ref={introCanvasRef} className="absolute inset-0 z-0" />
           
-          {/* المحتوى الثابت (شريط التحميل والزرارين) بيبقى فوق الكانفس في نص الشاشة بالظبط */}
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center mt-20">
-            {/* شريط التحميل */}
-            <div className="w-64 h-1 bg-slate-700 rounded-full mb-6 overflow-hidden">
-              <div
-                className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
-                style={{ width: `${loadingProgress}%` }}
-              />
-            </div>
-
-            {/* زرار اللغة */}
-            {loadingProgress >= 100 && (
-              <div className="flex gap-4 animate-fade-in mt-2">
-                <button
-                  onClick={() => handleEnterSite("ar")}
-                  className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors"
-                >
-                  عربي
-                </button>
-                <button
-                  onClick={() => handleEnterSite("en")}
-                  className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors"
-                >
-                  English
-                </button>
+          {/* الطبقة اللي فيها الزرارين وشريط التحميل - في نص الشاشة بالظبط */}
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
+            
+            {/* مسافة عشان ننزل بالزرارين تحت اللوجو اللي في الكانفس */}
+            <div className="mt-32 flex flex-col items-center">
+              {/* شريط التحميل */}
+              <div className="w-64 h-1 bg-slate-700 rounded-full mb-6 overflow-hidden">
+                <div
+                  className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
+                  style={{ width: `${loadingProgress}%` }}
+                />
               </div>
-            )}
+
+              {/* زرار اللغة */}
+              {loadingProgress >= 100 && (
+                <div className="flex gap-4 animate-fade-in mt-2">
+                  <button
+                    onClick={() => handleEnterSite("ar")}
+                    className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors"
+                  >
+                    عربي
+                  </button>
+                  <button
+                    onClick={() => handleEnterSite("en")}
+                    className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors"
+                  >
+                    English
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* صفحة الاختبار العادية */}
+      {/* صفحة الـ Experiment العادية */}
       {!isIntro && (
         <div className="relative w-full h-screen">
           <canvas ref={canvasRef} className="absolute inset-0 z-0" />
