@@ -16,7 +16,7 @@ export default function ExperimentPage() {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    // صغرنا الـ radius لـ 60 عشان الدائرة تبقى أصغر
+    // radius 60 زي ما هو
     const mouse = { x: -1000, y: -1000, radius: 60 };
 
     class Particle {
@@ -125,25 +125,36 @@ export default function ExperimentPage() {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       
+      // نجمع النقط القريبة من الماوس بس
+      const nearbyParticles = [];
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
 
-        // رسم الأشعة (الخطوط) لما الماوس يقرب من النقطة
         let dx = mouse.x - particles[i].x;
         let dy = mouse.y - particles[i].y;
         let distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouse.radius) {
-          ctx.beginPath();
-          // لون الخط (سماوي شفاف)
-          ctx.strokeStyle = "rgba(0, 163, 224, 0.4)"; 
-          ctx.lineWidth = 1;
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.stroke();
+          nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
         }
       }
+
+      // نرتبهم حسب المسافة وناخد أقرب 10 بس
+      nearbyParticles.sort((a, b) => a.distance - b.distance);
+      const closest = nearbyParticles.slice(0, 10);
+
+      // نرسم خطوط لأقرب 10 نقط بس، بشفافية خفيفة جداً
+      closest.forEach((p) => {
+        ctx.beginPath();
+        // لون خط شفاف جداً
+        ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
+        ctx.lineWidth = 0.8;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      });
       
       requestAnimationFrame(animate);
     };
