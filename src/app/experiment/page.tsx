@@ -36,8 +36,8 @@ export default function ExperimentPage() {
         this.y = y;
         this.baseX = x;
         this.baseY = y;
-        this.size = Math.random() * 2 + 1; // حجم النقطة
-        this.density = Math.random() * 30 + 1; // كثافة النقطة (بتأثر على سرعة الرجوع)
+        this.size = Math.random() * 2 + 1;
+        this.density = Math.random() * 30 + 1;
         this.color = color;
         this.vx = 0;
         this.vy = 0;
@@ -53,7 +53,6 @@ export default function ExperimentPage() {
       }
 
       update() {
-        // حساب المسافة بين الماوس والنقطة
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
@@ -61,18 +60,15 @@ export default function ExperimentPage() {
         let forceDirectionX = dx / distance;
         let forceDirectionY = dy / distance;
 
-        // أقصى مسافة تأثير الماوس
         let maxDistance = mouse.radius;
         let force = (maxDistance - distance) / maxDistance;
-        let directionX = forceDirectionX * force * this.density * -1; // -1 عشان يبعد
+        let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
 
         if (distance < mouse.radius) {
-          // لو الماوس قريب، النقطة تبعد
           this.x += directionX;
           this.y += directionY;
         } else {
-          // لو الماوس بعيد، النقطة ترجع لمكانها الأساسي
           if (this.x !== this.baseX) {
             let dx = this.x - this.baseX;
             this.vx = dx * -0.05;
@@ -87,65 +83,81 @@ export default function ExperimentPage() {
       }
     }
 
-    // دالة رسم النص وتحويله لنقط
     const init = () => {
       particles.length = 0;
-      
-      // إعدادات النص
-      const text = "V";
-      const fontSize = 400; // حجم الحرف
-      const fontFamily = "Arial Black, sans-serif";
-      
-      // رسم النص مؤقتاً في الكانفس عشان نقرأ البكسلات
-      ctx.fillStyle = "white";
-      ctx.font = `900 ${fontSize}px ${fontFamily}`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      
-      // مسح الكانفس
-      ctx.clearRect(0, 0, width, height);
-      
-      // رسم النص في النص
-      ctx.fillText(text, width / 2, height / 2);
-
-      // قراءة بيانات الصورة
-      const textCoordinates = ctx.getImageData(0, 0, width, height);
-      
-      // مسح الكانفس تاني عشان نرسم النقط
       ctx.clearRect(0, 0, width, height);
 
-      // تحليل البكسلات
-      const gap = 4; // المسافة بين النقط (كل ما تقل، النقط تزيد)
-      const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF", "#0284c7"]; // ألوان فالكت
+      const img = new Image();
+      // استخدام الصورة المطلوبة
+      img.src = "/JustV.png"; 
 
-      for (let y = 0; y < height; y += gap) {
-        for (let x = 0; x < width; x += gap) {
-          const index = (y * width + x) * 4;
-          const alpha = textCoordinates.data[index + 3];
-          
-          // لو البكسل ده فيه جزء من النص (مش شفاف)
-          if (alpha > 128) {
-            // اختيار لون عشوائي
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            particles.push(new Particle(x, y, color));
+      img.onload = () => {
+        // حجم الصورة (كبرناها شوية عشان تبان)
+        const imgWidth = width * 0.5; 
+        const imgHeight = (img.height / img.width) * imgWidth;
+        const xOffset = (width - imgWidth) / 2;
+        const yOffset = (height - imgHeight) / 2;
+
+        ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
+
+        const imgCoordinates = ctx.getImageData(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
+
+        const gap = 3; // قللنا المسافة عشان التفاصيل تبان
+        const colors = ["#00A3E0", "#1E3A8A"]; // سماوي وكحلي
+
+        for (let y = 0; y < height; y += gap) {
+          for (let x = 0; x < width; x += gap) {
+            const index = (y * width + x) * 4;
+            const alpha = imgCoordinates.data[index + 3];
+            
+            if (alpha > 128) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              particles.push(new Particle(x, y, color));
+            }
           }
         }
-      }
+      };
+
+      img.onerror = () => {
+        // Fallback لو الصورة ملقيتش
+        const text = "V";
+        const fontSize = 400;
+        ctx.fillStyle = "white";
+        ctx.font = `900 ${fontSize}px Arial Black, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, width / 2, height / 2);
+
+        const textCoordinates = ctx.getImageData(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
+
+        const gap = 4;
+        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"];
+
+        for (let y = 0; y < height; y += gap) {
+          for (let x = 0; x < width; x += gap) {
+            const index = (y * width + x) * 4;
+            const alpha = textCoordinates.data[index + 3];
+            
+            if (alpha > 128) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              particles.push(new Particle(x, y, color));
+            }
+          }
+        }
+      };
     };
 
-    // دالة التحريك
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
       }
-      
       requestAnimationFrame(animate);
     };
 
-    // التعامل مع حركة الماوس
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.x;
       mouse.y = e.y;
@@ -162,7 +174,6 @@ export default function ExperimentPage() {
       init();
     };
 
-    // تشغيل كل حاجة
     init();
     animate();
 
@@ -170,7 +181,6 @@ export default function ExperimentPage() {
     window.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("resize", handleResize);
 
-    // تنظيف
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
