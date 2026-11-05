@@ -12,11 +12,9 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // إعدادات الكانفس
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // إعدادات النقط
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, radius: 100 };
 
@@ -88,11 +86,9 @@ export default function ExperimentPage() {
       ctx.clearRect(0, 0, width, height);
 
       const img = new Image();
-      // رجعنا للحرف فقط عشان الوضوح
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // حجم مناسب للحرف
         const imgWidth = width * 0.3; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
@@ -103,10 +99,9 @@ export default function ExperimentPage() {
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
         ctx.clearRect(0, 0, width, height);
 
-        // ظبطنا المسافة بين النقط
         const gap = 3; 
-        // رجعنا اللونين بتوع فالكت (كحلي غامق وسماوي)
-        const colors = ["#1E3A8A", "#00A3E0"]; 
+        // رجعنا الأبيض، وخليط عشوائي بين السماوي والكحلي والأبيض
+        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
@@ -114,7 +109,13 @@ export default function ExperimentPage() {
             const alpha = imgCoordinates.data[index + 3];
             
             if (alpha > 128) {
-              const color = colors[Math.floor(Math.random() * colors.length)];
+              // نسبة عشوائية عشان السماوي يبقى أكتر
+              const random = Math.random();
+              let color;
+              if (random < 0.6) color = "#00A3E0"; // 60% سماوي
+              else if (random < 0.85) color = "#FFFFFF"; // 25% أبيض
+              else color = "#1E3A8A"; // 15% كحلي
+
               particles.push(new Particle(x, y, color));
             }
           }
@@ -122,7 +123,6 @@ export default function ExperimentPage() {
       };
 
       img.onerror = () => {
-        // Fallback
         const text = "V";
         const fontSize = 300;
         ctx.fillStyle = "white";
