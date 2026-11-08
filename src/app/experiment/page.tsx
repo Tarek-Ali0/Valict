@@ -7,21 +7,18 @@ export default function ExperimentPage() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // أنيميشن شريط التحميل
   useEffect(() => {
     if (!isLoading) return;
-
     const interval = setInterval(() => {
       setLoadingProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setIsLoading(false); 
+          setIsLoading(false);
           return 100;
         }
         return prev + 2;
       });
     }, 30);
-
     return () => clearInterval(interval);
   }, [isLoading]);
 
@@ -32,7 +29,6 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // استخدام window.innerWidth/Height
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -51,15 +47,10 @@ export default function ExperimentPage() {
       vy: number;
 
       constructor(x: number, y: number, color: string) {
-        this.x = x;
-        this.y = y;
-        this.baseX = x;
-        this.baseY = y;
+        this.x = x; this.y = y; this.baseX = x; this.baseY = y;
         this.size = Math.random() * 2 + 1;
         this.density = Math.random() * 30 + 1;
-        this.color = color;
-        this.vx = 0;
-        this.vy = 0;
+        this.color = color; this.vx = 0; this.vy = 0;
       }
 
       draw() {
@@ -74,80 +65,56 @@ export default function ExperimentPage() {
       update() {
         if (!mouse.isOnV) {
            if (this.x !== this.baseX) {
-            let dx = this.x - this.baseX;
-            this.vx = dx * -0.05;
-            this.x += this.vx;
+            let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx;
           }
           if (this.y !== this.baseY) {
-            let dy = this.y - this.baseY;
-            this.vy = dy * -0.05;
-            this.y += this.vy;
+            let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy;
           }
           return;
         }
-
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
+        let dx = mouse.x - this.x; let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        
-        let forceDirectionX = dx / distance;
-        let forceDirectionY = dy / distance;
-
+        let forceDirectionX = dx / distance; let forceDirectionY = dy / distance;
         let maxDistance = 60;
         let force = (maxDistance - distance) / maxDistance;
         let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
 
         if (distance < maxDistance) {
-          this.x += directionX;
-          this.y += directionY;
+          this.x += directionX; this.y += directionY;
         } else {
-          if (this.x !== this.baseX) {
-            let dx = this.x - this.baseX;
-            this.vx = dx * -0.05;
-            this.x += this.vx;
-          }
-          if (this.y !== this.baseY) {
-            let dy = this.y - this.baseY;
-            this.vy = dy * -0.05;
-            this.y += this.vy;
-          }
+          if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
+          if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
         }
       }
     }
 
     const drawBackground = () => {
       if (!ctx) return;
-      
       const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, Math.max(width, height));
       grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)");
       grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
-      ctx.fillStyle = grad1;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = grad1; ctx.fillRect(0, 0, width, height);
 
       const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, Math.max(width, height));
       grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)");
       grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
-      ctx.fillStyle = grad2;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = grad2; ctx.fillRect(0, 0, width, height);
     };
 
     const init = () => {
       particles.length = 0;
       ctx.clearRect(0, 0, width, height);
-
       const img = new Image();
       img.src = "/JustV.png"; 
 
       img.onload = () => {
         drawBackground();
-
-        const logoScale = width < 768 ? 0.45 : 0.25; 
+        const logoScale = width < 768 ? 0.4 : 0.25; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        // رفعنا اللوجو لفوق شوية عشان ندي مساحة للتحميل والزرارين تحت
         const yOffset = (height - imgHeight) / 2 - (height * 0.15); 
 
         ctx.clearRect(0, 0, width, height);
@@ -163,14 +130,12 @@ export default function ExperimentPage() {
           for (let x = 0; x < width; x += gap) {
             const index = (y * width + x) * 4;
             const alpha = imgCoordinates.data[index + 3];
-            
             if (alpha > 128) {
               const random = Math.random();
               let color;
               if (random < 0.6) color = "#00A3E0";
               else if (random < 0.85) color = "#FFFFFF";
               else color = "#1E3A8A"; 
-
               particles.push(new Particle(x, y, color));
             }
           }
@@ -183,16 +148,12 @@ export default function ExperimentPage() {
       drawBackground(); 
       
       const nearbyParticles = [];
-
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
-
         if (mouse.isOnV) {
-          let dx = mouse.x - particles[i].x;
-          let dy = mouse.y - particles[i].y;
+          let dx = mouse.x - particles[i].x; let dy = mouse.y - particles[i].y;
           let distance = Math.sqrt(dx * dx + dy * dy);
-
           if (distance < 60) {
             nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
           }
@@ -202,7 +163,6 @@ export default function ExperimentPage() {
       if (mouse.isOnV) {
         nearbyParticles.sort((a, b) => a.distance - b.distance);
         const closest = nearbyParticles.slice(0, 10);
-
         closest.forEach((p) => {
           ctx.beginPath();
           ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
@@ -212,33 +172,21 @@ export default function ExperimentPage() {
           ctx.stroke();
         });
       }
-      
       requestAnimationFrame(animate);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.x;
-      mouse.y = e.y;
-
+      mouse.x = e.x; mouse.y = e.y;
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
-        let dx = mouse.x - particles[i].baseX;
-        let dy = mouse.y - particles[i].baseY;
+        let dx = mouse.x - particles[i].baseX; let dy = mouse.y - particles[i].baseY;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < minDistance) {
-          minDistance = distance;
-        }
+        if (distance < minDistance) minDistance = distance;
       }
-
       mouse.isOnV = minDistance < 20; 
     };
 
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-      mouse.isOnV = false;
-    };
-
+    const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
@@ -268,18 +216,18 @@ export default function ExperimentPage() {
         className="absolute inset-0 z-0 w-full h-full"
       />
 
-      {/* شريط التحميل والزرارين فوق الكانفس - بـ fixed ومحاذاة مضمونة */}
-      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
+      {/* شريط التحميل والزرارين - z-50 عشان يبقوا فوق أي حاجة */}
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
         
         {/* شريط التحميل */}
-        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden">
+        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden shadow-sm">
           <div
             className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
             style={{ width: `${loadingProgress}%` }}
           />
         </div>
 
-        {/* الزرارين (بتظهروا لما التحميل يخلص) */}
+        {/* الزرارين */}
         <div
           className={`flex gap-4 transition-opacity duration-500 ${
             isLoading ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
