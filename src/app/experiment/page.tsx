@@ -95,6 +95,25 @@ export default function ExperimentPage() {
       }
     }
 
+    // دالة رسم الخلفية (الـ Blobs) جوه الكانفس
+    const drawBackground = () => {
+      if (!ctx) return;
+      
+      // Blob علوي يمين (سماوي)
+      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 600);
+      grad1.addColorStop(0, "rgba(0, 163, 224, 0.15)"); // 15% سماوي
+      grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, width, height);
+
+      // Blob سفلي شمال (كحلي)
+      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 600);
+      grad2.addColorStop(0, "rgba(30, 58, 138, 0.12)"); // 12% كحلي
+      grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, width, height);
+    };
+
     const init = () => {
       particles.length = 0;
       ctx.clearRect(0, 0, width, height);
@@ -103,11 +122,20 @@ export default function ExperimentPage() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
+        // نرسم الخلفية الأول (Blobs)
+        drawBackground();
+
+        // نرسم النص عشان نقرأ البكسلات
         const imgWidth = width * 0.3; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
         const yOffset = (height - imgHeight) / 2;
 
+        // مسح الشاشة قبل رسم الصورة (بس نسيب الخلفية)
+        // بنستخدم clearRect هنا عشان نمسح بس النص القديم لو موجود
+        // لكن الخلفية هتترسم من جديد في الـ animate
+        ctx.clearRect(0, 0, width, height);
+        
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
 
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -136,7 +164,9 @@ export default function ExperimentPage() {
     };
 
     const animate = () => {
+      // هنمسح الشاشة كلها ونعيد رسم الخلفية عشان مفيش تراكم
       ctx.clearRect(0, 0, width, height);
+      drawBackground(); 
       
       const nearbyParticles = [];
 
@@ -216,20 +246,7 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-white dark:bg-[#0B1120] transition-colors duration-300 overflow-hidden">
-      
-      {/* --- Premium Background Elements (Fixed عشان تغطي كل الصفحة) --- */}
-      <div 
-        className="fixed top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"
-        style={{ backgroundColor: "rgba(0, 163, 224, 0.1)" }}
-      ></div>
-      <div 
-        className="fixed bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"
-        style={{ backgroundColor: "rgba(30, 58, 138, 0.07)" }}
-      ></div>
-      {/* ----------------------------------- */}
-
-      {/* الكانفس فوق الخلفية */}
+    <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
