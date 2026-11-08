@@ -129,8 +129,8 @@ export default function ExperimentPage() {
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        // رفعنا اللوجو لفوق عشان ندي مساحة للتحميل والزرارين تحت
-        const yOffset = (height - imgHeight) / 2 - (height * 0.1); // رفع بنسبة 10% من الشاشة
+        // اللوجو في النص بالظبط (شيلنا الرفع)
+        const yOffset = (height - imgHeight) / 2; 
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
