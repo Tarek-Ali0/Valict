@@ -6,7 +6,6 @@ export default function ExperimentPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -25,14 +24,13 @@ export default function ExperimentPage() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const container = canvasContainerRef.current;
-    if (!canvas || !container) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    let width = (canvas.width = container.clientWidth);
-    let height = (canvas.height = container.clientHeight);
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
@@ -99,12 +97,13 @@ export default function ExperimentPage() {
 
       img.onload = () => {
         drawBackground();
-        const logoScale = width < 768 ? 0.5 : 0.35;
+        const logoScale = width < 768 ? 0.45 : 0.3;
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        const yOffset = (height - imgHeight) / 2; 
+        // رفع اللوجو لفوق عشان ندي مساحة للزرارين تحت
+        const yOffset = (height - imgHeight) / 2 - 50; 
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -165,9 +164,7 @@ export default function ExperimentPage() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left; 
-      mouse.y = e.clientY - rect.top;
+      mouse.x = e.clientX; mouse.y = e.clientY;
       
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
@@ -180,8 +177,8 @@ export default function ExperimentPage() {
 
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
     const handleResize = () => {
-      width = canvas.width = container.clientWidth;
-      height = canvas.height = container.clientHeight;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
       init();
     };
 
@@ -200,22 +197,19 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    // الحاوية الرئيسية flex-col عشان نرتب العناصر عمودياً
-    <div className="w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300 flex flex-col">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
       
-      {/* حاوية الكانفس - بتاخد المساحة المتبقية (flex-1) */}
-      <div ref={canvasContainerRef} className="relative w-full flex-1">
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 z-0 w-full h-full"
-        />
-      </div>
+      {/* الكانفس في الخلفية - واخد الشاشة كلها */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0 w-full h-full"
+      />
 
-      {/* شريط التحميل والزرارين - تحت الكانفس مباشرة (في مساحة ثابتة) */}
-      <div className="relative z-10 flex flex-col items-center justify-center pb-8 pt-4 bg-transparent">
+      {/* شريط التحميل والزرارين - absolute ومحاذاة في النص تحت */}
+      <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
         
         {/* شريط التحميل */}
-        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-6 overflow-hidden shadow-sm">
+        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden shadow-sm">
           <div
             className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
             style={{ width: `${loadingProgress}%` }}
