@@ -100,7 +100,6 @@ function LetterCanvas() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // صغرنا الحرف هنا
         const logoScale = 0.5; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
@@ -218,23 +217,31 @@ export default function ExperimentPage() {
   const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.92]);
 
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120]">
+    <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <Navbar lang="en" dict={dict} />
 
       <section
         ref={containerRef}
         className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden"
       >
-        {/* --- Premium Background Elements --- */}
-        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-        <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
+        {/* --- Premium Background Elements (z-0 عشان تظهر فوق الخلفية البيضاء) --- */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.15] dark:bg-valict-cyan/[0.10] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.12] dark:bg-valict-navy/[0.08] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
+          <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] pointer-events-none"></div>
+        </div>
         {/* ----------------------------------- */}
 
-        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+        {/* الكانفس فوق البلوبس (z-10) */}
+        <div className="absolute inset-0 z-10">
+          <LetterCanvas />
+        </div>
+
+        {/* المحتوى فوق الكل (z-20) */}
+        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
           
           {/* حاوية الديسكتوب — Split Layout */}
-          <div className="hidden lg:block relative z-20 w-full">
+          <div className="hidden lg:block relative w-full">
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
@@ -270,12 +277,8 @@ export default function ExperimentPage() {
                 </div>
               </div>
 
-              <motion.div
-                className="w-full h-[400px] flex items-center justify-center"
-                style={{ scale: imageScale }}
-              >
-                <LetterCanvas />
-              </motion.div>
+              {/* المساحة الفارغة اللي الكانفس بياخدها */}
+              <div className="w-full h-[400px]"></div>
             </div>
           </div>
 
@@ -291,9 +294,7 @@ export default function ExperimentPage() {
               </div>
             </div>
 
-            <div className="w-full h-[300px] mb-6 flex items-center justify-center">
-              <LetterCanvas />
-            </div>
+            <div className="w-full h-[300px] mb-6"></div>
 
             <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
               {dict.hero.title1} <br />
