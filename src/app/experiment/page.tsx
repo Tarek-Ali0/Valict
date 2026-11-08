@@ -32,7 +32,7 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // استخدام window.innerWidth/Height عشان نتفادى مشكلة الـ 0
+    // استخدام window.innerWidth/Height
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -260,7 +260,7 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
+    <div className="fixed inset-0 w-full h-screen overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
       
       {/* الكانفس في الخلفية */}
       <canvas
@@ -268,11 +268,11 @@ export default function ExperimentPage() {
         className="absolute inset-0 z-0 w-full h-full"
       />
 
-      {/* شريط التحميل والزرارين فوق الكانفس */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-20 pointer-events-none">
+      {/* شريط التحميل والزرارين فوق الكانفس - بـ fixed ومحاذاة مضمونة */}
+      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
         
         {/* شريط التحميل */}
-        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden pointer-events-auto">
+        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden">
           <div
             className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
             style={{ width: `${loadingProgress}%` }}
