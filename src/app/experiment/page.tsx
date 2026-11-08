@@ -1,26 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function ExperimentPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (!isLoading) return;
-    const interval = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsLoading(false);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 30);
-    return () => clearInterval(interval);
-  }, [isLoading]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,6 +12,7 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
+    // استخدام أبعاد الشاشة عشان نضمن الريسبونسيف
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -97,13 +81,13 @@ export default function ExperimentPage() {
 
       img.onload = () => {
         drawBackground();
-        const logoScale = width < 768 ? 0.45 : 0.3;
+        // اللوجو هيكون في النص بالظبط
+        const logoScale = width < 768 ? 0.5 : 0.3; // نسبة عرض اللوجو
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        // رفع اللوجو لفوق عشان ندي مساحة للزرارين تحت
-        const yOffset = (height - imgHeight) / 2 - 50; 
+        const yOffset = (height - imgHeight) / 2; // في النص بالظبط
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -164,6 +148,7 @@ export default function ExperimentPage() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      // بنستخدم clientX و clientY عشان نضمن دقة الماوس مع الكانفس
       mouse.x = e.clientX; mouse.y = e.clientY;
       
       let minDistance = Infinity;
@@ -176,6 +161,7 @@ export default function ExperimentPage() {
     };
 
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
+    
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
@@ -197,45 +183,12 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
-      
-      {/* الكانفس في الخلفية - واخد الشاشة كلها */}
+    // fixed inset-0 عشان تاخد الشاشة كلها من غير سكرول
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-0 w-full h-full"
+        className="absolute inset-0 w-full h-full z-0"
       />
-
-      {/* شريط التحميل والزرارين - absolute ومحاذاة في النص تحت */}
-      <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
-        
-        {/* شريط التحميل */}
-        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden shadow-sm">
-          <div
-            className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
-            style={{ width: `${loadingProgress}%` }}
-          />
-        </div>
-
-        {/* الزرارين */}
-        <div
-          className={`flex gap-4 transition-all duration-500 ${
-            isLoading ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"
-          }`}
-        >
-          <button
-            onClick={() => window.location.href = "/ar"}
-            className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors shadow-lg"
-          >
-            عربي
-          </button>
-          <button
-            onClick={() => window.location.href = "/en"}
-            className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors shadow-lg"
-          >
-            English
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
