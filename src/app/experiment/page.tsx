@@ -12,9 +12,12 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // استخدام أبعاد الشاشة عشان نضمن الريسبونسيف
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    // استخدام المساحة الفعلية للحاوية عشان نتفادى شريط المتصفح
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    let width = (canvas.width = parent.clientWidth);
+    let height = (canvas.height = parent.clientHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
@@ -81,13 +84,13 @@ export default function ExperimentPage() {
 
       img.onload = () => {
         drawBackground();
-        // اللوجو هيكون في النص بالظبط
-        const logoScale = width < 768 ? 0.5 : 0.3; // نسبة عرض اللوجو
+        // اللوجو في النص بالظبط
+        const logoScale = width < 768 ? 0.5 : 0.35;
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        const yOffset = (height - imgHeight) / 2; // في النص بالظبط
+        const yOffset = (height - imgHeight) / 2;
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -148,8 +151,9 @@ export default function ExperimentPage() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      // بنستخدم clientX و clientY عشان نضمن دقة الماوس مع الكانفس
-      mouse.x = e.clientX; mouse.y = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; 
+      mouse.y = e.clientY - rect.top;
       
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
@@ -163,8 +167,8 @@ export default function ExperimentPage() {
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
     
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = canvas.width = parent.clientWidth;
+      height = canvas.height = parent.clientHeight;
       init();
     };
 
@@ -183,8 +187,8 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    // fixed inset-0 عشان تاخد الشاشة كلها من غير سكرول
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
+    // 100dvh عشان نتفادى شريط المتصفح
+    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120]">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full z-0"
