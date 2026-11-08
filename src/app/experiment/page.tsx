@@ -100,7 +100,7 @@ function LetterCanvas() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        const logoScale = 0.7; 
+        const logoScale = 0.8; // كبرنا الحرف شوية عشان يبان
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
@@ -219,12 +219,12 @@ export default function ExperimentPage() {
     <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <Navbar lang="en" dict={dict} />
 
-      {/* الحاوية الرئيسية للهيرو مع نفس كلاسات الكود الأصلي */}
+      {/* الحاوية الرئيسية للهيرو */}
       <section
         ref={containerRef}
         className="relative w-full h-auto transition-colors duration-300 overflow-hidden"
       >
-        {/* --- Premium Background Elements --- */}
+        {/* --- Premium Background Elements (زي الهيرو الأصلي) --- */}
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
         <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
@@ -269,12 +269,10 @@ export default function ExperimentPage() {
                 </div>
               </div>
 
-              <motion.div
-                className="w-full h-[400px] flex items-center justify-center"
-                style={{ scale: imageScale }}
-              >
+              {/* الكانفس جوه مساحة ثابتة، وشيلنا الـ motion.div اللي كان بيعمل scale */}
+              <div className="w-full h-[400px] flex items-center justify-center">
                 <LetterCanvas />
-              </motion.div>
+              </div>
             </div>
           </div>
 
