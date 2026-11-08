@@ -114,7 +114,6 @@ function LetterCanvas() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = width < 768 ? 4 : 3; 
-        // شيلنا الأبيض عشان النقط البيضاء مش حلوة
         const colors = ["#00A3E0", "#1E3A8A"]; 
 
         for (let y = 0; y < height; y += gap) {
@@ -220,23 +219,22 @@ export default function ExperimentPage() {
     <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <Navbar lang="en" dict={dict} />
 
+      {/* الحاوية الرئيسية للهيرو مع نفس كلاسات الكود الأصلي */}
       <section
         ref={containerRef}
-        className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden pt-32 sm:pt-36 lg:pt-40"
+        className="relative w-full h-auto transition-colors duration-300 overflow-hidden"
       >
         {/* --- Premium Background Elements --- */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.15] dark:bg-valict-cyan/[0.10] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.12] dark:bg-valict-navy/[0.08] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
-          <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] pointer-events-none"></div>
-        </div>
+        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+        <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
         {/* ----------------------------------- */}
 
-        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32">
           
           {/* حاوية الديسكتوب — Split Layout */}
-          <div className="hidden lg:block relative w-full">
-            <div className="flex justify-center mb-8">
+          <div className="hidden lg:block relative z-20 w-full">
+            <div className="flex justify-center mb-8 -mt-4">
               <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
                 <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -318,6 +316,19 @@ export default function ExperimentPage() {
             </div>
           </div>
         </div>
+
+        {/* ========================= */}
+        {/* Line Separator — تحت     */}
+        {/* ========================= */}
+        <div className="w-full">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
+            <div className="w-40 md:w-52"></div>
+            <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
+          </div>
+        </div>
+        {/* ========================= */}
+
       </section>
     </div>
   );
