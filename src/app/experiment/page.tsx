@@ -5,8 +5,19 @@ import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Navbar } from "@/components/Navbar";
 
+// ==================== الـ dict ====================
 const dict = {
+  nav: {
+    changeLanguage: "Change Language",
+    toggleTheme: "Toggle Theme",
+    getStarted: "Get Started",
+    services: "Services",
+    whyValict: "Why Valict",
+    aboutUs: "About Us",
+    faq: "FAQ",
+  },
   hero: {
     badge: "Where ICT Meets Value",
     title1: "Powering your business with",
@@ -16,8 +27,12 @@ const dict = {
   about: {
     text: "At Valict, we specialize in delivering integrated ICT infrastructure solutions. Our focus is reducing downtime, improving performance, and ensuring continuity. Technology is a tool to create real value.",
   },
+  footer: {
+    contactUs: "Contact Us",
+  },
 };
 
+// ==================== مكون الكانفس ====================
 function LetterCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -85,7 +100,8 @@ function LetterCanvas() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        const logoScale = 0.8; 
+        // صغرنا الحرف هنا
+        const logoScale = 0.5; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
@@ -190,6 +206,7 @@ function LetterCanvas() {
   return <canvas ref={canvasRef} className="w-full h-full" />;
 }
 
+// ==================== الصفحة ====================
 export default function ExperimentPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -201,102 +218,106 @@ export default function ExperimentPage() {
   const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.92]);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden bg-white dark:bg-[#0B1120]"
-    >
-      {/* --- Premium Background Elements --- */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
-      {/* ----------------------------------- */}
+    <div className="relative w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120]">
+      <Navbar lang="en" dict={dict} />
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
-        
-        {/* حاوية الديسكتوب — Split Layout */}
-        <div className="hidden lg:block relative z-20 w-full">
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-                {dict.hero.badge}
-              </span>
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-            </div>
-          </div>
+      <section
+        ref={containerRef}
+        className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden"
+      >
+        {/* --- Premium Background Elements --- */}
+        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+        <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
+        {/* ----------------------------------- */}
 
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
-            <div className="flex flex-col text-start space-y-3 min-w-0">
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-                <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
-                <br />
-                <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
-                  {dict.hero.title2}
+        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+          
+          {/* حاوية الديسكتوب — Split Layout */}
+          <div className="hidden lg:block relative z-20 w-full">
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+                <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+                <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+                  {dict.hero.badge}
                 </span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-                {dict.about.text}
-              </p>
-
-              <div className="pt-2">
-                <Link
-                  href="#contact"
-                  className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
-                >
-                  {dict.hero.cta}
-                  <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
-                </Link>
+                <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               </div>
             </div>
 
-            <motion.div
-              className="w-full h-[400px] flex items-center justify-center"
-              style={{ scale: imageScale }}
-            >
-              <LetterCanvas />
-            </motion.div>
-          </div>
-        </div>
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
+              <div className="flex flex-col text-start space-y-3 min-w-0">
+                <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
+                  <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
+                  <br />
+                  <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
+                    {dict.hero.title2}
+                  </span>
+                </h1>
 
-        {/* حاوية الموبايل والتابلت */}
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
-          <div className="w-full flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-                {dict.hero.badge}
-              </span>
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+                  {dict.about.text}
+                </p>
+
+                <div className="pt-2">
+                  <Link
+                    href="#contact"
+                    className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+                  >
+                    {dict.hero.cta}
+                    <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
+                  </Link>
+                </div>
+              </div>
+
+              <motion.div
+                className="w-full h-[400px] flex items-center justify-center"
+                style={{ scale: imageScale }}
+              >
+                <LetterCanvas />
+              </motion.div>
             </div>
           </div>
 
-          <div className="w-full h-[300px] mb-6 flex items-center justify-center">
-            <LetterCanvas />
-          </div>
+          {/* حاوية الموبايل والتابلت */}
+          <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
+            <div className="w-full flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+                <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+                <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
+                  {dict.hero.badge}
+                </span>
+                <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
+              </div>
+            </div>
 
-          <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
-            {dict.hero.title1} <br />
-            <span className="logo-gradient-text leading-relaxed">
-              {dict.hero.title2}
-            </span>
-          </h2>
+            <div className="w-full h-[300px] mb-6 flex items-center justify-center">
+              <LetterCanvas />
+            </div>
 
-          <p className="w-full text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium text-start">
-            {dict.about.text}
-          </p>
+            <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
+              {dict.hero.title1} <br />
+              <span className="logo-gradient-text leading-relaxed">
+                {dict.hero.title2}
+              </span>
+            </h2>
 
-          <div className="w-full">
-            <Link
-              href="#contact"
-              className="inline-flex font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
-            >
-              {dict.hero.cta}
-              <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
-            </Link>
+            <p className="w-full text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium text-start">
+              {dict.about.text}
+            </p>
+
+            <div className="w-full">
+              <Link
+                href="#contact"
+                className="inline-flex font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
+              >
+                {dict.hero.cta}
+                <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
