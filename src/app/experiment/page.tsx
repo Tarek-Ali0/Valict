@@ -1,11 +1,11 @@
 "use client";
 
+import "@/app/globals.css";
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// ==================== الـ dict ====================
 const dict = {
   hero: {
     badge: "Where ICT Meets Value",
@@ -18,7 +18,6 @@ const dict = {
   },
 };
 
-// ==================== مكون الكانفس ====================
 function LetterCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -191,7 +190,6 @@ function LetterCanvas() {
   return <canvas ref={canvasRef} className="w-full h-full" />;
 }
 
-// ==================== الصفحة ====================
 export default function ExperimentPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -217,7 +215,6 @@ export default function ExperimentPage() {
         
         {/* حاوية الديسكتوب — Split Layout */}
         <div className="hidden lg:block relative z-20 w-full">
-          {/* Badge */}
           <div className="flex justify-center mb-8">
             <div className="inline-flex items-center gap-2 px-5 py-2 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
@@ -228,9 +225,7 @@ export default function ExperimentPage() {
             </div>
           </div>
 
-          {/* الـ Grid — نص + حرف */}
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
-            {/* النص */}
             <div className="flex flex-col text-start space-y-3 min-w-0">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
                 <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
@@ -255,7 +250,6 @@ export default function ExperimentPage() {
               </div>
             </div>
 
-            {/* الحرف (بدل اللابتوب) */}
             <motion.div
               className="w-full h-[400px] flex items-center justify-center"
               style={{ scale: imageScale }}
