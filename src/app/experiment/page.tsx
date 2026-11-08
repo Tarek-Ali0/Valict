@@ -100,7 +100,6 @@ function LetterCanvas() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // صغرنا الحرف عشان ميبقاش ضخم
         const logoScale = 0.7; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
@@ -115,7 +114,8 @@ function LetterCanvas() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = width < 768 ? 4 : 3; 
-        const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"]; 
+        // شيلنا الأبيض عشان النقط البيضاء مش حلوة
+        const colors = ["#00A3E0", "#1E3A8A"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
@@ -124,9 +124,8 @@ function LetterCanvas() {
             if (alpha > 128) {
               const random = Math.random();
               let color;
-              if (random < 0.6) color = "#00A3E0";
-              else if (random < 0.85) color = "#FFFFFF";
-              else color = "#1E3A8A"; 
+              if (random < 0.7) color = "#00A3E0";
+              else color = "#1E3A8A";
               particles.push(new Particle(x, y, color));
             }
           }
@@ -223,7 +222,7 @@ export default function ExperimentPage() {
 
       <section
         ref={containerRef}
-        className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden"
+        className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden pt-32 sm:pt-36 lg:pt-40"
       >
         {/* --- Premium Background Elements --- */}
         <div className="absolute inset-0 z-0">
@@ -272,7 +271,6 @@ export default function ExperimentPage() {
                 </div>
               </div>
 
-              {/* الكانفس جوه مساحة محددة عشان حجمه يظبط */}
               <motion.div
                 className="w-full h-[400px] flex items-center justify-center"
                 style={{ scale: imageScale }}
