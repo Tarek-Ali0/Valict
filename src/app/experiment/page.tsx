@@ -6,6 +6,7 @@ export default function ExperimentPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -24,27 +25,21 @@ export default function ExperimentPage() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = canvasContainerRef.current;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = (canvas.width = container.clientWidth);
+    let height = (canvas.height = container.clientHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
 
     class Particle {
-      x: number;
-      y: number;
-      baseX: number;
-      baseY: number;
-      size: number;
-      density: number;
-      color: string;
-      vx: number;
-      vy: number;
+      x: number; y: number; baseX: number; baseY: number;
+      size: number; density: number; color: string; vx: number; vy: number;
 
       constructor(x: number, y: number, color: string) {
         this.x = x; this.y = y; this.baseX = x; this.baseY = y;
@@ -58,19 +53,14 @@ export default function ExperimentPage() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
+        ctx.closePath(); ctx.fill();
       }
 
       update() {
         if (!mouse.isOnV) {
-           if (this.x !== this.baseX) {
-            let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx;
-          }
-          if (this.y !== this.baseY) {
-            let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy;
-          }
-          return;
+           if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
+           if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
+           return;
         }
         let dx = mouse.x - this.x; let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
@@ -80,9 +70,8 @@ export default function ExperimentPage() {
         let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
 
-        if (distance < maxDistance) {
-          this.x += directionX; this.y += directionY;
-        } else {
+        if (distance < maxDistance) { this.x += directionX; this.y += directionY; } 
+        else {
           if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
           if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
         }
@@ -110,12 +99,12 @@ export default function ExperimentPage() {
 
       img.onload = () => {
         drawBackground();
-        const logoScale = width < 768 ? 0.4 : 0.25; 
+        const logoScale = width < 768 ? 0.5 : 0.35;
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        const yOffset = (height - imgHeight) / 2 - (height * 0.15); 
+        const yOffset = (height - imgHeight) / 2; 
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -176,7 +165,10 @@ export default function ExperimentPage() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.x; mouse.y = e.y;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; 
+      mouse.y = e.clientY - rect.top;
+      
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
         let dx = mouse.x - particles[i].baseX; let dy = mouse.y - particles[i].baseY;
@@ -188,8 +180,8 @@ export default function ExperimentPage() {
 
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = canvas.width = container.clientWidth;
+      height = canvas.height = container.clientHeight;
       init();
     };
 
@@ -208,19 +200,22 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-screen overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
+    // الحاوية الرئيسية flex-col عشان نرتب العناصر عمودياً
+    <div className="w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300 flex flex-col">
       
-      {/* الكانفس في الخلفية */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-0 w-full h-full"
-      />
+      {/* حاوية الكانفس - بتاخد المساحة المتبقية (flex-1) */}
+      <div ref={canvasContainerRef} className="relative w-full flex-1">
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 z-0 w-full h-full"
+        />
+      </div>
 
-      {/* شريط التحميل والزرارين - z-50 عشان يبقوا فوق أي حاجة */}
-      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+      {/* شريط التحميل والزرارين - تحت الكانفس مباشرة (في مساحة ثابتة) */}
+      <div className="relative z-10 flex flex-col items-center justify-center pb-8 pt-4 bg-transparent">
         
         {/* شريط التحميل */}
-        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden shadow-sm">
+        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-6 overflow-hidden shadow-sm">
           <div
             className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
             style={{ width: `${loadingProgress}%` }}
@@ -229,8 +224,8 @@ export default function ExperimentPage() {
 
         {/* الزرارين */}
         <div
-          className={`flex gap-4 transition-opacity duration-500 ${
-            isLoading ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+          className={`flex gap-4 transition-all duration-500 ${
+            isLoading ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"
           }`}
         >
           <button
