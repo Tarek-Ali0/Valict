@@ -15,7 +15,7 @@ export default function ExperimentPage() {
       setLoadingProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setIsLoading(false); // بعد التحميل، نظهر الزرارين
+          setIsLoading(false); 
           return 100;
         }
         return prev + 2;
@@ -32,9 +32,9 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // ضبط الأبعاد باستخدام clientWidth/Height عشان نتفادى السكرول
-    let width = (canvas.width = canvas.clientWidth);
-    let height = (canvas.height = canvas.clientHeight);
+    // استخدام window.innerWidth/Height عشان نتفادى مشكلة الـ 0
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
@@ -147,8 +147,8 @@ export default function ExperimentPage() {
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        // رفعنا اللوجو لفوق عشان ندي مساحة للتحميل والزرارين تحت
-        const yOffset = (height - imgHeight) / 2 - (height * 0.1); 
+        // رفعنا اللوجو لفوق شوية عشان ندي مساحة للتحميل والزرارين تحت
+        const yOffset = (height - imgHeight) / 2 - (height * 0.15); 
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -240,8 +240,8 @@ export default function ExperimentPage() {
     };
 
     const handleResize = () => {
-      width = canvas.width = canvas.clientWidth;
-      height = canvas.height = canvas.clientHeight;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
       init();
     };
 
@@ -260,7 +260,7 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
+    <div className="fixed inset-0 w-full h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
       
       {/* الكانفس في الخلفية */}
       <canvas
