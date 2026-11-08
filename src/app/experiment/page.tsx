@@ -12,6 +12,7 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
+    // ضبط الأبعاد عشان نمنع السكرول
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -95,20 +96,18 @@ export default function ExperimentPage() {
       }
     }
 
-    // دالة رسم الخلفية (الـ Blobs) جوه الكانفس
+    // دالة رسم الخلفية (الـ Blobs)
     const drawBackground = () => {
       if (!ctx) return;
       
-      // Blob علوي يمين (سماوي) - زودنا الشفافية والمساحة
       const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 800);
-      grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)"); // زودنا الشفافية لـ 35%
+      grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)");
       grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
 
-      // Blob سفلي شمال (كحلي) - زودنا الشفافية والمساحة
       const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 800);
-      grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)"); // زودنا الشفافية لـ 30%
+      grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)");
       grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
       ctx.fillStyle = grad2;
       ctx.fillRect(0, 0, width, height);
@@ -122,13 +121,16 @@ export default function ExperimentPage() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        // نرسم الخلفية الأول (Blobs)
         drawBackground();
 
-        const imgWidth = width * 0.3; 
+        // حجم اللوجو ريسبونسيف (بيتصغر في الشاشات الصغيرة)
+        const logoScale = width < 768 ? 0.4 : 0.25; 
+        const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
+        
         const xOffset = (width - imgWidth) / 2;
-        const yOffset = (height - imgHeight) / 2;
+        // رفعنا اللوجو لفوق عشان ندي مساحة للتحميل والزرارين تحت
+        const yOffset = (height - imgHeight) / 2 - (height * 0.1); // رفع بنسبة 10% من الشاشة
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -136,7 +138,7 @@ export default function ExperimentPage() {
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
         ctx.clearRect(0, 0, width, height);
 
-        const gap = 3; 
+        const gap = width < 768 ? 4 : 3; 
         const colors = ["#00A3E0", "#1E3A8A", "#FFFFFF"]; 
 
         for (let y = 0; y < height; y += gap) {
@@ -220,6 +222,7 @@ export default function ExperimentPage() {
     };
 
     const handleResize = () => {
+      // تحديث الأبعاد عشان نمنع السكرول
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       init();
@@ -240,11 +243,19 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
+    <div className="relative w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
       />
+      
+      {/* هنا هنحط شريط التحميل والزرارين بعدين */}
+      {/* 
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-20">
+          <div>Loading Bar Here</div>
+          <div>Buttons Here</div>
+      </div> 
+      */}
     </div>
   );
 }
