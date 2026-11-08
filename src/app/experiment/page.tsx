@@ -218,9 +218,15 @@ export default function ExperimentPage() {
   return (
     <div className="relative w-full min-h-screen bg-white dark:bg-[#0B1120] transition-colors duration-300 overflow-hidden">
       
-      {/* --- Premium Background Elements (نفس الهيرو) - fixed عشان تغطي كل الصفحة --- */}
-      <div className="fixed top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="fixed bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      {/* --- Premium Background Elements (Fixed عشان تغطي كل الصفحة) --- */}
+      <div 
+        className="fixed top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"
+        style={{ backgroundColor: "rgba(0, 163, 224, 0.1)" }}
+      ></div>
+      <div 
+        className="fixed bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"
+        style={{ backgroundColor: "rgba(30, 58, 138, 0.07)" }}
+      ></div>
       {/* ----------------------------------- */}
 
       {/* الكانفس فوق الخلفية */}
