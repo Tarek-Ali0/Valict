@@ -1,9 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function ExperimentPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // أنيميشن شريط التحميل
+  useEffect(() => {
+    if (!isLoading) return;
+
+    const interval = setInterval(() => {
+      setLoadingProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsLoading(false); // بعد التحميل، نظهر الزرارين
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -12,9 +32,9 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // ضبط الأبعاد عشان نمنع السكرول
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    // ضبط الأبعاد باستخدام clientWidth/Height عشان نتفادى السكرول
+    let width = (canvas.width = canvas.clientWidth);
+    let height = (canvas.height = canvas.clientHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
@@ -96,17 +116,16 @@ export default function ExperimentPage() {
       }
     }
 
-    // دالة رسم الخلفية (الـ Blobs)
     const drawBackground = () => {
       if (!ctx) return;
       
-      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 800);
+      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, Math.max(width, height));
       grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)");
       grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
 
-      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 800);
+      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, Math.max(width, height));
       grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)");
       grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
       ctx.fillStyle = grad2;
@@ -123,14 +142,13 @@ export default function ExperimentPage() {
       img.onload = () => {
         drawBackground();
 
-        // حجم اللوجو ريسبونسيف (بيتصغر في الشاشات الصغيرة)
-        const logoScale = width < 768 ? 0.4 : 0.25; 
+        const logoScale = width < 768 ? 0.45 : 0.25; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
         // رفعنا اللوجو لفوق عشان ندي مساحة للتحميل والزرارين تحت
-        const yOffset = (height - imgHeight) / 2 - (height * 0.1); // رفع بنسبة 10% من الشاشة
+        const yOffset = (height - imgHeight) / 2 - (height * 0.1); 
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -222,9 +240,8 @@ export default function ExperimentPage() {
     };
 
     const handleResize = () => {
-      // تحديث الأبعاد عشان نمنع السكرول
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = canvas.width = canvas.clientWidth;
+      height = canvas.height = canvas.clientHeight;
       init();
     };
 
@@ -243,19 +260,45 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
+    <div className="fixed inset-0 w-full h-full overflow-hidden bg-white dark:bg-[#0B1120] transition-colors duration-300">
+      
+      {/* الكانفس في الخلفية */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 w-full h-full"
       />
-      
-      {/* هنا هنحط شريط التحميل والزرارين بعدين */}
-      {/* 
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-20">
-          <div>Loading Bar Here</div>
-          <div>Buttons Here</div>
-      </div> 
-      */}
+
+      {/* شريط التحميل والزرارين فوق الكانفس */}
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-20 pointer-events-none">
+        
+        {/* شريط التحميل */}
+        <div className="w-64 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-8 overflow-hidden pointer-events-auto">
+          <div
+            className="h-full bg-[#00A3E0] transition-all duration-100 ease-linear"
+            style={{ width: `${loadingProgress}%` }}
+          />
+        </div>
+
+        {/* الزرارين (بتظهروا لما التحميل يخلص) */}
+        <div
+          className={`flex gap-4 transition-opacity duration-500 ${
+            isLoading ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+          }`}
+        >
+          <button
+            onClick={() => window.location.href = "/ar"}
+            className="px-8 py-2 bg-[#00A3E0] text-white rounded-lg font-bold hover:bg-[#1E3A8A] transition-colors shadow-lg"
+          >
+            عربي
+          </button>
+          <button
+            onClick={() => window.location.href = "/en"}
+            className="px-8 py-2 bg-[#1E3A8A] text-white rounded-lg font-bold hover:bg-[#00A3E0] transition-colors shadow-lg"
+          >
+            English
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
