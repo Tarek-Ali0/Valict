@@ -99,16 +99,16 @@ export default function ExperimentPage() {
     const drawBackground = () => {
       if (!ctx) return;
       
-      // Blob علوي يمين (سماوي)
-      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 600);
-      grad1.addColorStop(0, "rgba(0, 163, 224, 0.15)"); // 15% سماوي
+      // Blob علوي يمين (سماوي) - زودنا الشفافية والمساحة
+      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 800);
+      grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)"); // زودنا الشفافية لـ 35%
       grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
 
-      // Blob سفلي شمال (كحلي)
-      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 600);
-      grad2.addColorStop(0, "rgba(30, 58, 138, 0.12)"); // 12% كحلي
+      // Blob سفلي شمال (كحلي) - زودنا الشفافية والمساحة
+      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 800);
+      grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)"); // زودنا الشفافية لـ 30%
       grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
       ctx.fillStyle = grad2;
       ctx.fillRect(0, 0, width, height);
@@ -125,17 +125,12 @@ export default function ExperimentPage() {
         // نرسم الخلفية الأول (Blobs)
         drawBackground();
 
-        // نرسم النص عشان نقرأ البكسلات
         const imgWidth = width * 0.3; 
         const imgHeight = (img.height / img.width) * imgWidth;
         const xOffset = (width - imgWidth) / 2;
         const yOffset = (height - imgHeight) / 2;
 
-        // مسح الشاشة قبل رسم الصورة (بس نسيب الخلفية)
-        // بنستخدم clearRect هنا عشان نمسح بس النص القديم لو موجود
-        // لكن الخلفية هتترسم من جديد في الـ animate
         ctx.clearRect(0, 0, width, height);
-        
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
 
         const imgCoordinates = ctx.getImageData(0, 0, width, height);
@@ -164,7 +159,6 @@ export default function ExperimentPage() {
     };
 
     const animate = () => {
-      // هنمسح الشاشة كلها ونعيد رسم الخلفية عشان مفيش تراكم
       ctx.clearRect(0, 0, width, height);
       drawBackground(); 
       
