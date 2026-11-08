@@ -100,7 +100,8 @@ function LetterCanvas() {
       img.src = "/JustV.png"; 
 
       img.onload = () => {
-        const logoScale = 0.5; 
+        // صغرنا الحرف عشان ميبقاش ضخم
+        const logoScale = 0.7; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
@@ -224,7 +225,7 @@ export default function ExperimentPage() {
         ref={containerRef}
         className="relative w-full h-[100dvh] transition-colors duration-300 overflow-hidden"
       >
-        {/* --- Premium Background Elements (z-0 عشان تظهر فوق الخلفية البيضاء) --- */}
+        {/* --- Premium Background Elements --- */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.15] dark:bg-valict-cyan/[0.10] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.12] dark:bg-valict-navy/[0.08] rounded-full blur-[90px] md:blur-[120px] pointer-events-none"></div>
@@ -232,12 +233,6 @@ export default function ExperimentPage() {
         </div>
         {/* ----------------------------------- */}
 
-        {/* الكانفس فوق البلوبس (z-10) */}
-        <div className="absolute inset-0 z-10">
-          <LetterCanvas />
-        </div>
-
-        {/* المحتوى فوق الكل (z-20) */}
         <div className="relative z-20 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
           
           {/* حاوية الديسكتوب — Split Layout */}
@@ -277,8 +272,13 @@ export default function ExperimentPage() {
                 </div>
               </div>
 
-              {/* المساحة الفارغة اللي الكانفس بياخدها */}
-              <div className="w-full h-[400px]"></div>
+              {/* الكانفس جوه مساحة محددة عشان حجمه يظبط */}
+              <motion.div
+                className="w-full h-[400px] flex items-center justify-center"
+                style={{ scale: imageScale }}
+              >
+                <LetterCanvas />
+              </motion.div>
             </div>
           </div>
 
@@ -294,7 +294,9 @@ export default function ExperimentPage() {
               </div>
             </div>
 
-            <div className="w-full h-[300px] mb-6"></div>
+            <div className="w-full h-[300px] mb-6 flex items-center justify-center">
+              <LetterCanvas />
+            </div>
 
             <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
               {dict.hero.title1} <br />
