@@ -12,25 +12,34 @@ export default function ExperimentPage() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // استخدام المساحة الفعلية للحاوية عشان نتفادى شريط المتصفح
-    const parent = canvas.parentElement;
-    if (!parent) return;
-
-    let width = (canvas.width = parent.clientWidth);
-    let height = (canvas.height = parent.clientHeight);
+    // ضبط الأبعاد عشان نمنع السكرول
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000, isOnV: false };
 
     class Particle {
-      x: number; y: number; baseX: number; baseY: number;
-      size: number; density: number; color: string; vx: number; vy: number;
+      x: number;
+      y: number;
+      baseX: number;
+      baseY: number;
+      size: number;
+      density: number;
+      color: string;
+      vx: number;
+      vy: number;
 
       constructor(x: number, y: number, color: string) {
-        this.x = x; this.y = y; this.baseX = x; this.baseY = y;
+        this.x = x;
+        this.y = y;
+        this.baseX = x;
+        this.baseY = y;
         this.size = Math.random() * 2 + 1;
         this.density = Math.random() * 30 + 1;
-        this.color = color; this.vx = 0; this.vy = 0;
+        this.color = color;
+        this.vx = 0;
+        this.vy = 0;
       }
 
       draw() {
@@ -38,59 +47,90 @@ export default function ExperimentPage() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath(); ctx.fill();
+        ctx.closePath();
+        ctx.fill();
       }
 
       update() {
         if (!mouse.isOnV) {
-           if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
-           if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
-           return;
+           if (this.x !== this.baseX) {
+            let dx = this.x - this.baseX;
+            this.vx = dx * -0.05;
+            this.x += this.vx;
+          }
+          if (this.y !== this.baseY) {
+            let dy = this.y - this.baseY;
+            this.vy = dy * -0.05;
+            this.y += this.vy;
+          }
+          return;
         }
-        let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        let forceDirectionX = dx / distance; let forceDirectionY = dy / distance;
+        
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+
         let maxDistance = 60;
         let force = (maxDistance - distance) / maxDistance;
         let directionX = forceDirectionX * force * this.density * -1;
         let directionY = forceDirectionY * force * this.density * -1;
 
-        if (distance < maxDistance) { this.x += directionX; this.y += directionY; } 
-        else {
-          if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
-          if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
+        if (distance < maxDistance) {
+          this.x += directionX;
+          this.y += directionY;
+        } else {
+          if (this.x !== this.baseX) {
+            let dx = this.x - this.baseX;
+            this.vx = dx * -0.05;
+            this.x += this.vx;
+          }
+          if (this.y !== this.baseY) {
+            let dy = this.y - this.baseY;
+            this.vy = dy * -0.05;
+            this.y += this.vy;
+          }
         }
       }
     }
 
+    // دالة رسم الخلفية (الـ Blobs)
     const drawBackground = () => {
       if (!ctx) return;
-      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, Math.max(width, height));
+      
+      const grad1 = ctx.createRadialGradient(width, 0, 0, width, 0, 800);
       grad1.addColorStop(0, "rgba(0, 163, 224, 0.35)");
       grad1.addColorStop(1, "rgba(0, 163, 224, 0)");
-      ctx.fillStyle = grad1; ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, width, height);
 
-      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, Math.max(width, height));
+      const grad2 = ctx.createRadialGradient(0, height, 0, 0, height, 800);
       grad2.addColorStop(0, "rgba(30, 58, 138, 0.30)");
       grad2.addColorStop(1, "rgba(30, 58, 138, 0)");
-      ctx.fillStyle = grad2; ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, width, height);
     };
 
     const init = () => {
       particles.length = 0;
       ctx.clearRect(0, 0, width, height);
+
       const img = new Image();
       img.src = "/JustV.png"; 
 
       img.onload = () => {
         drawBackground();
-        // اللوجو في النص بالظبط
-        const logoScale = width < 768 ? 0.5 : 0.35;
+
+        // حجم اللوجو ريسبونسيف (بيتصغر في الشاشات الصغيرة)
+        const logoScale = width < 768 ? 0.4 : 0.25; 
         const imgWidth = width * logoScale;
         const imgHeight = (img.height / img.width) * imgWidth;
         
         const xOffset = (width - imgWidth) / 2;
-        const yOffset = (height - imgHeight) / 2;
+        // رفعنا اللوجو لفوق عشان ندي مساحة للتحميل والزرارين تحت
+        const yOffset = (height - imgHeight) / 2 - (height * 0.1); // رفع بنسبة 10% من الشاشة
 
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, xOffset, yOffset, imgWidth, imgHeight);
@@ -105,12 +145,14 @@ export default function ExperimentPage() {
           for (let x = 0; x < width; x += gap) {
             const index = (y * width + x) * 4;
             const alpha = imgCoordinates.data[index + 3];
+            
             if (alpha > 128) {
               const random = Math.random();
               let color;
               if (random < 0.6) color = "#00A3E0";
               else if (random < 0.85) color = "#FFFFFF";
               else color = "#1E3A8A"; 
+
               particles.push(new Particle(x, y, color));
             }
           }
@@ -123,12 +165,16 @@ export default function ExperimentPage() {
       drawBackground(); 
       
       const nearbyParticles = [];
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].update();
+
         if (mouse.isOnV) {
-          let dx = mouse.x - particles[i].x; let dy = mouse.y - particles[i].y;
+          let dx = mouse.x - particles[i].x;
+          let dy = mouse.y - particles[i].y;
           let distance = Math.sqrt(dx * dx + dy * dy);
+
           if (distance < 60) {
             nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
           }
@@ -138,6 +184,7 @@ export default function ExperimentPage() {
       if (mouse.isOnV) {
         nearbyParticles.sort((a, b) => a.distance - b.distance);
         const closest = nearbyParticles.slice(0, 10);
+
         closest.forEach((p) => {
           ctx.beginPath();
           ctx.strokeStyle = "rgba(0, 163, 224, 0.15)"; 
@@ -147,28 +194,37 @@ export default function ExperimentPage() {
           ctx.stroke();
         });
       }
+      
       requestAnimationFrame(animate);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left; 
-      mouse.y = e.clientY - rect.top;
-      
+      mouse.x = e.x;
+      mouse.y = e.y;
+
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
-        let dx = mouse.x - particles[i].baseX; let dy = mouse.y - particles[i].baseY;
+        let dx = mouse.x - particles[i].baseX;
+        let dy = mouse.y - particles[i].baseY;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < minDistance) minDistance = distance;
+        if (distance < minDistance) {
+          minDistance = distance;
+        }
       }
+
       mouse.isOnV = minDistance < 20; 
     };
 
-    const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.isOnV = false; };
-    
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+      mouse.isOnV = false;
+    };
+
     const handleResize = () => {
-      width = canvas.width = parent.clientWidth;
-      height = canvas.height = parent.clientHeight;
+      // تحديث الأبعاد عشان نمنع السكرول
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
       init();
     };
 
@@ -187,12 +243,19 @@ export default function ExperimentPage() {
   }, []);
 
   return (
-    // 100dvh عشان نتفادى شريط المتصفح
-    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden bg-white dark:bg-[#0B1120]">
+    <div className="relative w-screen h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-0"
+        className="absolute inset-0 z-0"
       />
+      
+      {/* هنا هنحط شريط التحميل والزرارين بعدين */}
+      {/* 
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-20">
+          <div>Loading Bar Here</div>
+          <div>Buttons Here</div>
+      </div> 
+      */}
     </div>
   );
 }
