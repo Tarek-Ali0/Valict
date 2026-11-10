@@ -49,6 +49,9 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
   // Values Title — "Validate Your Vision With:" / "عزّز رؤيتك مع:"
   const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع:" : "Validate Your Vision With:");
 
+  // اسم الصفحة الرئيسية حسب اللغة
+  const homeLabel = lang === "ar" ? "الرئيسية" : "Home";
+
   return (
     <footer className="bg-white dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
       {/* لمسة جمالية في الخلفية */}
@@ -100,6 +103,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h2>
             <ul className="space-y-2">
               {[
+                // إضافة Home كأول لينك
+                { name: homeLabel, href: `/${lang}` },
                 { name: navDict.services, href: `/${lang}/#services` },
                 { name: navDict.whyValict, href: `/${lang}/#why-valict` },
                 { name: howDict.title, href: `/${lang}/#how-it-works` },
