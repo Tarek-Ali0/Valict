@@ -179,27 +179,27 @@ const serviceColors: Record<
 > = {
   "managed-it": {
     border: "border-blue-100/80 dark:border-blue-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-blue-50 dark:from-slate-900 dark:to-blue-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-blue-50 dark:from-slate-900 dark:to-blue-900/20",
   },
   network: {
     border: "border-emerald-100/80 dark:border-emerald-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-emerald-50 dark:from-slate-900 dark:to-emerald-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-emerald-50 dark:from-slate-900 dark:to-emerald-900/20",
   },
   cloud: {
     border: "border-sky-100/80 dark:border-sky-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-sky-50 dark:from-slate-900 dark:to-sky-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-sky-50 dark:from-slate-900 dark:to-sky-900/20",
   },
   cybersecurity: {
     border: "border-red-100/80 dark:border-red-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-red-50 dark:from-slate-900 dark:to-red-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-red-50 dark:from-slate-900 dark:to-red-900/20",
   },
   monitoring: {
     border: "border-lime-100/80 dark:border-lime-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-lime-50 dark:from-slate-900 dark:to-lime-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-lime-50 dark:from-slate-900 dark:to-lime-900/20",
   },
   "web-design": {
     border: "border-purple-100/80 dark:border-purple-500/20",
-    breadcrumbBg: "bg-gradient-to-r from-white to-purple-50 dark:from-slate-900 dark:to-purple-900/20",
+    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-purple-50 dark:from-slate-900 dark:to-purple-900/20",
   },
 };
 
@@ -218,7 +218,7 @@ const serviceInnerBlob: Record<string, string> = {
 // قيم افتراضية
 const defaultColors = {
   border: "border-slate-100 dark:border-slate-800",
-  breadcrumbBg: "bg-gradient-to-r from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10",
+  breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10",
 };
 
 const defaultInnerBlob = "bg-valict-cyan/20 dark:bg-valict-cyan/15";
@@ -383,7 +383,7 @@ export default async function ServiceDetailsPage({
       {/* محتوى الصفحة مع مساحة علوية كافية */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
 
-        {/* Breadcrumb (تدرج لوني من الأبيض للون الخدمة) */}
+        {/* Breadcrumb (تدرج لوني مع دعم RTL) */}
         <nav aria-label="Breadcrumb" className="mb-6">
           <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-valict-cyan font-bold text-sm ${colors.breadcrumbBg}`}>
             <Link 
@@ -459,35 +459,4 @@ export default async function ServiceDetailsPage({
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href={`/${currentLang}/#contact`}
-                  aria-label={`${dict.cta.button} - ${service.title}`}
-                  className="btn-gradient text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg hover:shadow-valict-cyan/40 transition-all inline-block"
-                >
-                  {dict.cta.button}
-                </Link>
-              </div>
-
-            </div>
-
-            {/* عمود الصورة التوضيحية (يأخذ 5 أعمدة) */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50">
-                <Image
-                  src={serviceData.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 500px"
-                  priority
-                />
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+              <div className="flex flex-col sm:
