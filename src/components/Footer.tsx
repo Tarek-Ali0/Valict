@@ -101,7 +101,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
           {/* Column 2: Quick Links */}
           <div>
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h2>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {[
                 // إضافة Home كأول لينك
                 { name: homeLabel, href: `/${lang}` },
