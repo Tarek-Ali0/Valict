@@ -11,6 +11,12 @@ import {
 
 interface AIChatWidgetProps {
   lang: string;
+  quickReplies?: {
+    services: string;
+    technicalIssue: string;
+    consultation: string;
+    pricing: string;
+  };
 }
 
 interface ChatMessage {
@@ -56,7 +62,7 @@ function ValictaAvatar({
   );
 }
 
-export function AIChatWidget({ lang }: AIChatWidgetProps) {
+export function AIChatWidget({ lang, quickReplies }: AIChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -98,6 +104,19 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }),
     [isAr]
   );
+
+  // Quick Replies (fallback لو مش موجودة)
+  const defaultQuickReplies = useMemo(
+    () => ({
+      services: isAr ? "إيه هي خدماتكم؟" : "What are your services?",
+      technicalIssue: isAr ? "عندي مشكلة تقنية" : "I have a technical issue",
+      consultation: isAr ? "عايز أحجز استشارة مجانية" : "Book a free consultation",
+      pricing: isAr ? "إيه هي أسعاركم؟" : "What is your pricing?",
+    }),
+    [isAr]
+  );
+
+  const replies = quickReplies || defaultQuickReplies;
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
@@ -181,344 +200,4 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         setIsBotTyping(true);
       }, 500);
 
-      const timer4 = setTimeout(() => {
-        setIsBotTyping(false);
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            text: t.welcomePart2,
-            isBot: true,
-            timestamp: Date.now(),
-          },
-        ]);
-      }, 2000);
-
-      return () => {
-        clearTimeout(timer3);
-        clearTimeout(timer4);
-      };
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, isHydrated, t.welcomePart1, t.welcomePart2]);
-
-  useEffect(() => {
-    if (messages.length > 0 || isBotTyping || isLoading) {
-      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, isBotTyping, isLoading]);
-
-  const handleClearChat = useCallback(() => {
-    if (!confirm(t.clearConfirm)) return;
-    setMessages([]);
-    try {
-      sessionStorage.removeItem(STORAGE_KEY_MESSAGES);
-    } catch (err) {
-      console.error("[chat] Failed to clear storage:", err);
-    }
-  }, [t.clearConfirm]);
-
-  const handleSendMessage = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      const text = input.trim();
-      if (!text || isLoading) return;
-
-      const detectedLang = detectLang(text);
-
-      const userMsg: ChatMessage = {
-        id: crypto.randomUUID(),
-        text,
-        isBot: false,
-        timestamp: Date.now(),
-      };
-
-      const history = messages.map((msg) => ({
-        role: msg.isBot ? "assistant" : "user",
-        content: msg.text,
-      }));
-
-      setMessages((prev) => [...prev, userMsg]);
-      setInput("");
-      setIsLoading(true);
-
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: text,
-            lang: detectedLang,
-            history,
-          }),
-        });
-
-        let finalReply = t.errorMsg;
-
-        if (res.ok) {
-          const data = await res.json().catch(() => null);
-          finalReply = data?.reply || t.errorMsg;
-        } else if (res.status === 429) {
-          const data = await res.json().catch(() => null);
-          finalReply = data?.reply || t.rateLimitMsg;
-        }
-
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            text: finalReply,
-            isBot: true,
-            timestamp: Date.now(),
-          },
-        ]);
-      } catch (error) {
-        console.error("Failed to fetch AI reply:", error);
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            text: t.errorMsg,
-            isBot: true,
-            timestamp: Date.now(),
-          },
-        ]);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [input, isLoading, messages, t.errorMsg, t.rateLimitMsg]
-  );
-
-  const formatTime = (ts: number) => {
-    const d = new Date(ts);
-    const h = d.getHours().toString().padStart(2, "0");
-    const m = d.getMinutes().toString().padStart(2, "0");
-    return `${h}:${m}`;
-  };
-
-  return (
-    <div className="fixed bottom-6 left-6 z-50 font-sans">
-      <button
-        onClick={() => setIsOpen((v) => !v)}
-        aria-label={t.title}
-        className="relative h-14 w-14 flex items-center justify-center rounded-full bg-white dark:bg-[#0F172A] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-valict-navy/20 dark:border-valict-cyan/30"
-      >
-        {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-valict-cyan opacity-20 animate-ping" />
-        )}
-        <span className="relative z-10 flex items-center justify-center w-full h-full rounded-full overflow-hidden">
-          {isOpen ? (
-            <FaXmark className="w-5 h-5 text-valict-navy dark:text-valict-cyan" />
-          ) : (
-            <ValictaAvatar size={50} priority className="scale-110" />
-          )}
-        </span>
-      </button>
-
-      <div
-        className={`fixed sm:absolute bottom-20 left-2 right-2 sm:left-0 sm:right-auto w-auto sm:w-[350px] h-[calc(100vh-140px)] sm:h-[calc(100vh-220px)] max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-220px)] bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/50 dark:border-gray-800/50 flex flex-col transition-all duration-300 origin-bottom-left ${
-          isOpen
-            ? "scale-100 opacity-100 visible"
-            : "scale-75 opacity-0 invisible pointer-events-none"
-        }`}
-      >
-        <div className="relative bg-gradient-to-r from-valict-navy to-valict-cyan dark:from-[#0F172A] dark:to-valict-cyan/70 rounded-t-2xl pt-12 pb-3 px-3">
-          <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 rounded-full bg-white dark:bg-[#0F172A] border-4 border-white dark:border-[#0F172A] shadow-2xl flex items-center justify-center z-20">
-            <div className="relative w-full h-full rounded-full flex items-center justify-center overflow-hidden">
-              <ValictaAvatar size={72} className="scale-110" />
-            </div>
-            <span className="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-green-400 border-2 border-white dark:border-[#0F172A] animate-pulse z-30" />
-          </div>
-
-          <div className="flex items-center justify-between mt-1">
-            <div className="flex-1 flex flex-col items-center">
-              <span className="text-white text-sm font-bold leading-tight">
-                {isAr ? "فاليكتا" : "Valicta"}
-              </span>
-              <div className="flex items-center gap-1 mt-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-white/80 text-[10px] leading-tight">
-                  {t.status}
-                </span>
-              </div>
-            </div>
-
-            <div className="absolute top-2 right-2 flex items-center gap-1">
-              <button
-                onClick={handleClearChat}
-                aria-label={t.clearChat}
-                title={t.clearChat}
-                className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                <FaTrash className="w-3.5 h-3.5" />
-              </button>
-
-              <button
-                onClick={() => setIsOpen(false)}
-                aria-label="Close chat"
-                className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                <FaXmark className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 px-4 py-4 overflow-y-auto overflow-x-hidden space-y-3 bg-gray-50/50 dark:bg-[#0F172A] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/80 dark:[&::-webkit-scrollbar-thumb]:bg-gray-800/80 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-700">
-          {messages.map((msg) => {
-            const msgDir = getTextDirection(msg.text);
-            return (
-              <div
-                key={msg.id}
-                className={`flex items-end gap-2 msg-fade-in ${
-                  msg.isBot ? "justify-start" : "justify-end"
-                }`}
-              >
-                {msg.isBot && (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border-2 border-valict-navy/10 dark:border-valict-cyan/30 bg-white dark:bg-[#1E293B]">
-                    <ValictaAvatar size={30} className="scale-110" />
-                  </div>
-                )}
-
-                <div
-                  className={`flex flex-col ${
-                    msg.isBot ? "items-start" : "items-end"
-                  } max-w-[78%]`}
-                >
-                  <div
-                    dir={msgDir}
-                    className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere ${
-                      msgDir === "rtl" ? "text-right" : "text-left"
-                    } ${
-                      msg.isBot
-                        ? "bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200 rounded-bl-sm shadow-sm border border-gray-100 dark:border-gray-800/40"
-                        : "bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] rounded-br-sm shadow-sm"
-                    }`}
-                    style={{ overflowWrap: "anywhere" }}
-                  >
-                    {msg.text}
-                  </div>
-                  <span
-                    className={`text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 px-1 ${
-                      msgDir === "rtl" ? "self-start" : "self-end"
-                    }`}
-                  >
-                    {formatTime(msg.timestamp)}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-
-          {(isLoading || isBotTyping) && (
-            <div className="flex items-end gap-2 justify-start msg-fade-in">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mb-1 overflow-hidden border-2 border-valict-navy/10 dark:border-valict-cyan/30 bg-white dark:bg-[#1E293B]">
-                <ValictaAvatar size={30} className="scale-110" />
-              </div>
-              <div className="bg-white dark:bg-[#1E293B] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-800/40 flex items-center gap-1">
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-                <span className="dot w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-              </div>
-            </div>
-          )}
-
-          <div ref={chatEndRef} />
-        </div>
-
-        <form
-          onSubmit={handleSendMessage}
-          dir={isAr ? "rtl" : "ltr"}
-          className="p-3 bg-white dark:bg-[#0F172A] border-t border-gray-100 dark:border-gray-800 flex items-end gap-2 rounded-b-2xl"
-        >
-          <textarea
-            id="valicta-chat-input"
-            name="valicta-chat-input"
-            ref={inputRef}
-            value={input}
-            onChange={(e) =>
-              setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
-            }
-            disabled={isLoading}
-            maxLength={MAX_INPUT_LENGTH}
-            placeholder={t.placeholder}
-            dir={isAr ? "rtl" : "ltr"}
-            rows={1}
-            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none overflow-y-auto ${
-              isAr ? "text-right" : "text-left"
-            } disabled:opacity-50`}
-            onInput={(e) => {
-              const target = e.target as HTMLTextAreaElement;
-              target.style.height = "auto";
-              target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage(e);
-              }
-            }}
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            aria-label="Send message"
-            className="p-2 rounded-xl bg-valict-navy dark:bg-valict-cyan text-white dark:text-[#0B1120] hover:opacity-90 transition-all disabled:opacity-30 flex-shrink-0 h-9 w-9 flex items-center justify-center"
-          >
-            <FaPaperPlane
-              className={`w-4 h-4 ${!isAr ? "scale-x-[-1]" : ""}`}
-            />
-          </button>
-        </form>
-      </div>
-
-      <style jsx>{`
-        .msg-fade-in {
-          animation: msgFadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-
-        @keyframes msgFadeIn {
-          0% {
-            opacity: 0;
-            transform: translateY(6px) scale(0.98);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .dot {
-          animation: dotBounce 1.4s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) {
-          animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-          animation-delay: 0.4s;
-        }
-
-        @keyframes dotBounce {
-          0%,
-          60%,
-          100% {
-            transform: translateY(0);
-            opacity: 0.5;
-          }
-          30% {
-            transform: translateY(-4px);
-            opacity: 1;
-          }
-        }
-      `}</style>
-    </div>
-  );
-}
+      const timer4 = setTimeout(()
