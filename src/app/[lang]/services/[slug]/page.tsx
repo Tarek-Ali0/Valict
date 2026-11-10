@@ -168,49 +168,45 @@ const serviceDetailsContent: Record<
 };
 
 /**
- * خريطة الألوان المميزة لكل خدمة (Border فقط)
+ * خريطة الألوان المميزة لكل خدمة (Border + Breadcrumb Color)
  */
 const serviceColors: Record<
   string,
   {
     border: string;
+    breadcrumbBg: string;
   }
 > = {
   "managed-it": {
     border: "border-blue-100/80 dark:border-blue-500/20",
+    breadcrumbBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
   },
   network: {
     border: "border-emerald-100/80 dark:border-emerald-500/20",
+    breadcrumbBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
   cloud: {
     border: "border-sky-100/80 dark:border-sky-500/20",
+    breadcrumbBg: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
   },
   cybersecurity: {
     border: "border-red-100/80 dark:border-red-500/20",
+    breadcrumbBg: "bg-red-500/10 text-red-600 dark:text-red-400",
   },
   monitoring: {
     border: "border-lime-100/80 dark:border-lime-500/20",
+    breadcrumbBg: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
   },
   "web-design": {
     border: "border-purple-100/80 dark:border-purple-500/20",
+    breadcrumbBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
   },
-};
-
-/**
- * Blob داخلي في كارت المحتوى — بنفس قيم colorMap في Services.tsx
- */
-const serviceInnerBlob: Record<string, string> = {
-  "managed-it": "bg-blue-500/20 dark:bg-blue-400/15",
-  network: "bg-emerald-500/20 dark:bg-emerald-400/15",
-  cloud: "bg-sky-500/20 dark:bg-sky-400/15",
-  cybersecurity: "bg-red-500/20 dark:bg-red-400/15",
-  monitoring: "bg-lime-500/20 dark:bg-lime-400/15",
-  "web-design": "bg-purple-500/20 dark:bg-purple-400/15",
 };
 
 // قيم افتراضية
 const defaultColors = {
   border: "border-slate-100 dark:border-slate-800",
+  breadcrumbBg: "bg-valict-cyan/10 text-valict-cyan",
 };
 
 const defaultInnerBlob = "bg-valict-cyan/20 dark:bg-valict-cyan/15";
@@ -375,12 +371,12 @@ export default async function ServiceDetailsPage({
       {/* محتوى الصفحة مع مساحة علوية كافية */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
 
-        {/* Breadcrumb (شكل شريط سماوي) */}
+        {/* Breadcrumb (بلون الخدمة) */}
         <nav aria-label="Breadcrumb" className="mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm">
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-sm ${colors.breadcrumbBg}`}>
             <Link 
               href={`/${currentLang}`} 
-              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+              className="hover:opacity-70 transition-opacity"
             >
               {homeLabel}
             </Link>
@@ -389,14 +385,14 @@ export default async function ServiceDetailsPage({
             </span>
             <Link 
               href={`/${currentLang}/#services`} 
-              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+              className="hover:opacity-70 transition-opacity"
             >
               {servicesLabel}
             </Link>
             <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
               <FaArrowRightLong className="w-3 h-3" />
             </span>
-            <span className="text-valict-navy dark:text-white">
+            <span className="opacity-80">
               {service.title}
             </span>
           </div>
