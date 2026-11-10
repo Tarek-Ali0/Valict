@@ -107,19 +107,19 @@ export default async function AboutPage({
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         
-        {/* Breadcrumb (نفس ستايل الـ Badge القديم) */}
-        <nav aria-label="Breadcrumb" className="mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm">
+        {/* Breadcrumb (شكل كارت صغير) */}
+        <nav aria-label="Breadcrumb" className="mb-4">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
             <Link 
               href={`/${currentLang}`} 
-              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+              className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-valict-cyan dark:hover:text-valict-cyan transition-colors"
             >
               {homeLabel}
             </Link>
-            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+            <span className={`mx-1 text-slate-400 dark:text-slate-500 ${isRTL ? "rotate-180" : ""} inline-block`}>
               <FaArrowRightLong className="w-3 h-3" />
             </span>
-            <span className="text-valict-navy dark:text-white">
+            <span className="text-sm font-bold text-valict-navy dark:text-valict-cyan">
               {aboutLabel}
             </span>
           </div>
