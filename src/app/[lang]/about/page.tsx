@@ -99,8 +99,34 @@ export default async function AboutPage({
           "Business value-focused technology",
         ];
 
+  // *** Breadcrumb Schema ***
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: homeLabel,
+        item: `https://valict.com/${currentLang}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: aboutLabel,
+        item: `https://valict.com/${currentLang}/about`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       {/* Navbar */}
       <Navbar lang={currentLang} dict={dict} />
 
