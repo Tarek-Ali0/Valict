@@ -168,6 +168,14 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [isOpen, isLoading]);
 
+  // *** التعديل الجديد: إرجاع مربع الكتابة لحجمه الأصلي لما يكون فاضي ***
+  useEffect(() => {
+    if (input === "" && inputRef.current) {
+      inputRef.current.style.height = "auto";
+      inputRef.current.style.height = "36px"; // أو القيمة الافتراضية اللي تناسبك
+    }
+  }, [input]);
+
   useEffect(() => {
     if (!isHydrated) return;
     if (!isOpen) return;
@@ -314,7 +322,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   };
 
   // هل نعرض الـ Quick Replies؟
-  // نعرضها بس لما تكون رسالة الترحيب ظهرت (messages.length === 2) ومفيش رسائل تانية، ومفيش تحميل
   const showQuickReplies =
     messages.length === 2 && !isLoading && !isBotTyping;
 
@@ -448,7 +455,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
           <div ref={chatEndRef} />
         </div>
 
-        {/* Quick Replies — بتظهر تحت رسالة الترحيب */}
         {showQuickReplies && (
           <div
             dir={isAr ? "rtl" : "ltr"}
