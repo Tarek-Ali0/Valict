@@ -168,11 +168,11 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [isOpen, isLoading]);
 
-  // *** التعديل الجديد: إرجاع مربع الكتابة لحجمه الأصلي لما يكون فاضي ***
+  // إرجاع مربع الكتابة لحجمه الأصلي لما يكون فاضي
   useEffect(() => {
     if (input === "" && inputRef.current) {
       inputRef.current.style.height = "auto";
-      inputRef.current.style.height = "36px"; // أو القيمة الافتراضية اللي تناسبك
+      inputRef.current.style.height = "36px";
     }
   }, [input]);
 
@@ -321,7 +321,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     return `${h}:${m}`;
   };
 
-  // هل نعرض الـ Quick Replies؟
   const showQuickReplies =
     messages.length === 2 && !isLoading && !isBotTyping;
 
@@ -494,7 +493,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
             placeholder={t.placeholder}
             dir={isAr ? "rtl" : "ltr"}
             rows={1}
-            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none overflow-y-auto ${
+            className={`flex-1 min-w-0 max-h-32 bg-gray-50 dark:bg-[#1E293B] border-none text-xs rounded-xl px-3 py-2 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-valict-navy resize-none overflow-hidden ${
               isAr ? "text-right" : "text-left"
             } disabled:opacity-50`}
             onInput={(e) => {
