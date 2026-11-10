@@ -60,6 +60,11 @@ export default async function FAQPage({
   const { lang } = await params;
   const currentLang = lang === "ar" ? "ar" : "en";
   const dict = await getDictionary(currentLang);
+  const isRTL = currentLang === "ar";
+
+  // Breadcrumb Labels
+  const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
+  const faqLabel = currentLang === "ar" ? "الأسئلة الشائعة" : "FAQ";
 
   // توليد الـ FAQ Schema لكل الأسئلة في كل الأقسام
   const faqSchema = {
@@ -88,17 +93,24 @@ export default async function FAQPage({
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
-        {/* Back to Home */}
-        <Link
-          href={`/${currentLang}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan mb-8 transition-colors"
-        >
-          <FaArrowRightLong
-            className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
-          />
-
-          {currentLang === "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
-        </Link>
+        
+        {/* Breadcrumb (نفس ستايل صفحة About) */}
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm">
+            <Link 
+              href={`/${currentLang}`} 
+              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+            >
+              {homeLabel}
+            </Link>
+            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+              <FaArrowRightLong className="w-3 h-3" />
+            </span>
+            <span className="text-valict-navy dark:text-white">
+              {faqLabel}
+            </span>
+          </div>
+        </nav>
 
         {/* Main FAQ Card */}
         <FAQ dict={dict} lang={currentLang} />
