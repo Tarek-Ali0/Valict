@@ -189,5 +189,11 @@
         ]
       }
     ]
+  },
+  "quickReplies": {
+    "services": "إيه هي خدماتكم؟",
+    "technicalIssue": "عندي مشكلة تقنية",
+    "consultation": "عايز أحجز استشارة مجانية",
+    "pricing": "إيه هي أسعاركم؟"
   }
 }
