@@ -145,6 +145,28 @@ export default async function RootLayout({
     inLanguage: lang === "ar" ? "ar" : "en",
   };
 
+  // *** LocalBusiness Schema ***
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://valict.com/#localbusiness",
+    name: "Valict",
+    image: "https://valict.com/valict-logo.png",
+    telephone: "+20 150 554 4455",
+    email: "info@valict.com",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "EG",
+      addressLocality: "Cairo",
+    },
+    url: "https://valict.com",
+    priceRange: "EGP",
+    currenciesAccepted: "EGP",
+    parentOrganization: {
+      "@id": "https://valict.com/#organization",
+    },
+  };
+
   return (
     <html
       lang={lang}
@@ -164,6 +186,13 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
+          }}
+        />
+        {/* LocalBusiness Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
           }}
         />
       </head>
