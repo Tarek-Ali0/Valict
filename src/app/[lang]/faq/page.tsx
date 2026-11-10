@@ -82,6 +82,26 @@ export default async function FAQPage({
     ),
   };
 
+  // *** Breadcrumb Schema ***
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: homeLabel,
+        item: `https://valict.com/${currentLang}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: faqLabel,
+        item: `https://valict.com/${currentLang}/faq`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
       <Navbar lang={currentLang} dict={dict} />
@@ -90,6 +110,10 @@ export default async function FAQPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
