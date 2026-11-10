@@ -75,7 +75,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
       subtitle: isAr
         ? "خبير حلول تقنية المعلومات المتكاملة"
         : "Integrated IT Solutions Expert",
-      status: isAr ? "متصل الآن" : "Online now",
+      status: isAr ? "متصل 24/7" : "Online 24/7",
       placeholder: isAr
         ? "إسأل فاليكتا..."
         : "Ask Valicta...",
