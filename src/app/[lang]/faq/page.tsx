@@ -94,9 +94,9 @@ export default async function FAQPage({
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         
-        {/* Breadcrumb (نفس ستايل صفحة About) */}
+        {/* Breadcrumb (تدرج لوني من الأبيض للسماوي) */}
         <nav aria-label="Breadcrumb" className="mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10 text-valict-cyan font-bold text-sm">
             <Link 
               href={`/${currentLang}`} 
               className="hover:text-valict-navy dark:hover:text-white transition-colors"
