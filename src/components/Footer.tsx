@@ -31,7 +31,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
     title: "How It Works"
   };
 
-  // Core Values
   const coreValues = dict?.footer?.values || (lang === "ar"
     ? [
         "الموثوقية وإستمرارية الأعمال",
@@ -46,29 +45,24 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
         "Business value-focused technology",
       ]);
 
-  // Values Title — "Validate Your Vision With:" / "عزّز رؤيتك مع:"
   const valuesTitle = dict?.footer?.valuesTitle || (lang === "ar" ? "عزّز رؤيتك مع:" : "Validate Your Vision With:");
 
-  // اسم الصفحة الرئيسية حسب اللغة
   const homeLabel = lang === "ar" ? "الرئيسية" : "Home";
 
   return (
     <footer className="bg-white dark:bg-[#0B1120] pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
-      {/* لمسة جمالية في الخلفية */}
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-valict-navy/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Column 1: Brand + Values Title + Core Values */}
           <div className="lg:col-span-2 -mt-2">
             <Link href={`/${lang}`} className="inline-block mb-3 relative group" aria-label="Valict Home">
               <div className="relative w-36 h-16 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/valict-logo.png"
-                  alt="Valict Logo"
+                  alt="Valict - IT Solutions Company Logo"
                   fill
                   sizes="(max-width: 768px) 150px, 200px"
                   className="object-contain object-left filter dark:brightness-0 dark:invert"
@@ -76,7 +70,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
               </div>
             </Link>
 
-            {/* Values Title — بنفس شكل Badge (بنقطة) */}
             <div className="flex items-center gap-2 mb-4">
               <span className="flex h-2 w-2 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-xs font-bold text-valict-navy dark:text-valict-cyan tracking-widest uppercase">
@@ -84,7 +77,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
               </span>
             </div>
 
-            {/* Core Values — على صفين (2x2) */}
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
               {coreValues.map((value: string, index: number) => (
                 <li
@@ -98,12 +90,10 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
             </ul>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.quickLinks}</h2>
             <ul className="space-y-1">
               {[
-                // إضافة Home كأول لينك
                 { name: homeLabel, href: `/${lang}` },
                 { name: navDict.services, href: `/${lang}/#services` },
                 { name: navDict.whyValict, href: `/${lang}/#why-valict` },
@@ -125,7 +115,6 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
             </ul>
           </div>
 
-          {/* Column 3: Contact Info */}
           <div>
             <h2 className="text-base font-bold text-valict-dark dark:text-white mb-4">{footerDict.contactUs}</h2>
             <ul className="space-y-3">
@@ -162,9 +151,7 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
         </div>
 
-        {/* Bottom Bar: Copyright & Socials */}
         <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* التعديل: dir ديناميكي حسب اللغة */}
           <p dir={lang === "ar" ? "rtl" : "ltr"} className="text-slate-600 dark:text-slate-400 text-xs text-center md:text-start">
             {footerDict.copyright.replace('{year}', currentYear.toString())}
           </p>
