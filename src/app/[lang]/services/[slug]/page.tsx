@@ -203,6 +203,18 @@ const serviceColors: Record<
   },
 };
 
+/**
+ * Blob داخلي في كارت المحتوى — بنفس قيم colorMap في Services.tsx
+ */
+const serviceInnerBlob: Record<string, string> = {
+  "managed-it": "bg-blue-500/20 dark:bg-blue-400/15",
+  network: "bg-emerald-500/20 dark:bg-emerald-400/15",
+  cloud: "bg-sky-500/20 dark:bg-sky-400/15",
+  cybersecurity: "bg-red-500/20 dark:bg-red-400/15",
+  monitoring: "bg-lime-500/20 dark:bg-lime-400/15",
+  "web-design": "bg-purple-500/20 dark:bg-purple-400/15",
+};
+
 // قيم افتراضية
 const defaultColors = {
   border: "border-slate-100 dark:border-slate-800",
