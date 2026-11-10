@@ -77,8 +77,11 @@ export default async function AboutPage({
 
   const dict = await getDictionary(currentLang);
 
-  // تحديد اتجاه الـ blob حسب اللغة
   const isRTL = currentLang === "ar";
+
+  // Breadcrumb Labels
+  const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
+  const aboutLabel = currentLang === "ar" ? "من نحن" : "About Us";
 
   // مصفوفة القيم الأساسية للغتين
   const coreValues =
@@ -103,6 +106,29 @@ export default async function AboutPage({
 
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
+        
+        {/* Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="mb-4">
+          <ol className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+            <li>
+              <Link 
+                href={`/${currentLang}`} 
+                className="hover:text-valict-cyan transition-colors"
+              >
+                {homeLabel}
+              </Link>
+            </li>
+            <li>
+              <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block`}>
+                <FaArrowRightLong className="w-3 h-3" />
+              </span>
+            </li>
+            <li aria-current="page" className="font-semibold text-valict-navy dark:text-valict-cyan">
+              {aboutLabel}
+            </li>
+          </ol>
+        </nav>
+
         {/* Back to Home */}
         <Link
           href={`/${currentLang}`}
@@ -117,8 +143,7 @@ export default async function AboutPage({
 
         {/* Main About Card */}
         <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
-          {/* Blob داخلي في الزاوية — حجم أكبر عشان الصفحة أطول */}
-          {/* يمين في العربي / شمال في الإنجليزي */}
+          {/* Blob داخلي في الزاوية */}
           <div
             className={`absolute -top-20 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full blur-3xl pointer-events-none bg-valict-cyan/20 dark:bg-valict-cyan/15 ${
               isRTL ? "-right-20" : "-left-20"
