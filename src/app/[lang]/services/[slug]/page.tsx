@@ -169,7 +169,6 @@ const serviceDetailsContent: Record<
 
 /**
  * خريطة الألوان المميزة لكل خدمة (Border + Breadcrumb Gradient)
- * تم إضافة rtl:bg-gradient-to-l لدعم الاتجاه العربي
  */
 const serviceColors: Record<
   string,
@@ -376,8 +375,35 @@ export default async function ServiceDetailsPage({
   const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
   const servicesLabel = currentLang === "ar" ? "خدماتنا" : "Services";
 
+  // *** Service Schema (JSON-LD) ***
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: details.overview,
+    provider: {
+      "@type": "Organization",
+      name: "Valict",
+      url: "https://valict.com",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Egypt",
+    },
+    image: serviceData.image
+      ? `https://valict.com${serviceData.image}`
+      : "https://valict.com",
+    url: `https://valict.com/${currentLang}/services/${slug}`,
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+
       <Navbar lang={currentLang} dict={dict} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
