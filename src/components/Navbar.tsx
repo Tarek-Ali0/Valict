@@ -123,7 +123,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 rel="alternate"
                 hrefLang={alternateLang}
                 className="cursor-pointer px-3 h-10 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.changeLanguage || "Change Language"}
                 aria-label={`Switch page language to ${alternateLang.toUpperCase()}`}
               >
                 <FaGlobe className="h-4 w-4" />
@@ -137,7 +136,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                   setTheme(resolvedTheme === "light" ? "dark" : "light")
                 }
                 className="cursor-pointer w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
-                title={dict.nav.toggleTheme || "Toggle Dark/Light Mode"}
                 aria-label="Toggle display theme color mode"
               >
                 {mounted && resolvedTheme === "dark" ? (
@@ -149,26 +147,24 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             </div>
 
             <div className="flex items-center gap-3">
-              {/* LinkedIn - تم التعديل */}
+              {/* LinkedIn - شيلنا title */}
               <a
                 href="https://www.linkedin.com/company/valict"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official LinkedIn Company Profile"
-                title="LinkedIn Profile"
               >
                 <FaLinkedinIn className="w-4 h-4" />
               </a>
 
-              {/* Facebook - تم التعديل */}
+              {/* Facebook - شيلنا title */}
               <a
                 href="https://www.facebook.com/ValictOfficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
                 aria-label="Visit Valict Official Facebook Page"
-                title="Facebook Page"
               >
                 <FaFacebook className="w-4 h-4" />
               </a>
