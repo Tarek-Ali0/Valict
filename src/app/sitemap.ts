@@ -2,12 +2,9 @@ import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://valict.com";
-
-  // تاريخ ثابت حقيقي للصفحات القديمة (غيره للتاريخ اللي إنت متأكد منه)
-  const oldPagesDate = new Date("2026-05-01"); 
   
-  // تاريخ النهارده للصفحات الجديدة (زي FAQ)
-  const newPagesDate = new Date("2026-10-21"); 
+  // تاريخ اليوم (بيتحدث تلقائياً مع كل Build)
+  const currentDate = new Date().toISOString();
 
   // قائمة الـ Slugs الخاصة بخدماتك
   const services = [
@@ -22,40 +19,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // اللغات المدعومة في الموقع
   const languages = ["en", "ar"];
 
-  // 1. الصفحات الثابتة القديمة (about + home)
-  const oldStaticRoutes = [
+  // 1. الصفحات الثابتة (home + about + faq)
+  const staticRoutes = [
     "/en", "/ar",
-    "/en/about", "/ar/about"
-  ];
-
-  const mapOldStaticRoutes = oldStaticRoutes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: oldPagesDate,
-    changeFrequency: "monthly" as const,
-    priority: route.endsWith("/about") ? 0.8 : 1.0,
-  }));
-
-  // 2. الصفحة الجديدة (FAQ)
-  const newStaticRoutes = [
+    "/en/about", "/ar/about",
     "/en/faq", "/ar/faq"
   ];
 
-  const mapNewStaticRoutes = newStaticRoutes.map((route) => ({
+  const mapStaticRoutes = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: newPagesDate,
+    lastModified: currentDate,
     changeFrequency: "monthly" as const,
-    priority: 0.8,
+    priority: route.includes("/about") || route.includes("/faq") ? 0.8 : 1.0,
   }));
 
-  // 3. توليد روابط الخدمات ديناميكياً (برضه هنستخدم تاريخ الصفحات القديمة)
+  // 2. توليد روابط الخدمات ديناميكياً
   const serviceRoutes = languages.flatMap((lang) =>
     services.map((slug) => ({
       url: `${baseUrl}/${lang}/services/${slug}`,
-      lastModified: oldPagesDate,
+      lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }))
   );
 
-  return [...mapOldStaticRoutes, ...mapNewStaticRoutes, ...serviceRoutes];
+  return [...mapStaticRoutes, ...serviceRoutes];
 }
