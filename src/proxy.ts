@@ -58,6 +58,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next|api|.*\\..*|experiment).*)",
+    "/((?!_next|api|.*\\.).*)",
   ],
 };
