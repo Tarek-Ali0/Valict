@@ -396,12 +396,42 @@ export default async function ServiceDetailsPage({
     url: `https://valict.com/${currentLang}/services/${slug}`,
   };
 
+  // *** Breadcrumb Schema (JSON-LD) ***
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: homeLabel,
+        item: `https://valict.com/${currentLang}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: servicesLabel,
+        item: `https://valict.com/${currentLang}/#services`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: service.title,
+        item: `https://valict.com/${currentLang}/services/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
       {/* Schema JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <Navbar lang={currentLang} dict={dict} />
