@@ -193,11 +193,5 @@
         ]
       }
     ]
-  },
-  "quickReplies": {
-    "services": "What are your services?",
-    "technicalIssue": "I have a technical issue",
-    "consultation": "Book a free consultation",
-    "pricing": "What is your pricing?"
   }
 }
