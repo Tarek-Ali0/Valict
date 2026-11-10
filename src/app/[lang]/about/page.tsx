@@ -107,39 +107,23 @@ export default async function AboutPage({
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         
-        {/* Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="mb-4">
-          <ol className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-            <li>
-              <Link 
-                href={`/${currentLang}`} 
-                className="hover:text-valict-cyan transition-colors"
-              >
-                {homeLabel}
-              </Link>
-            </li>
-            <li>
-              <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block`}>
-                <FaArrowRightLong className="w-3 h-3" />
-              </span>
-            </li>
-            <li aria-current="page" className="font-semibold text-valict-navy dark:text-valict-cyan">
+        {/* Breadcrumb Card (كارت صغير فوق الكارت الرئيسي) */}
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <Link 
+              href={`/${currentLang}`} 
+              className="text-sm text-slate-600 dark:text-slate-300 hover:text-valict-cyan dark:hover:text-valict-cyan transition-colors font-medium"
+            >
+              {homeLabel}
+            </Link>
+            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block text-slate-400 dark:text-slate-500`}>
+              <FaArrowRightLong className="w-3 h-3" />
+            </span>
+            <span className="text-sm font-semibold text-valict-navy dark:text-valict-cyan">
               {aboutLabel}
-            </li>
-          </ol>
+            </span>
+          </div>
         </nav>
-
-        {/* Back to Home */}
-        <Link
-          href={`/${currentLang}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-valict-cyan dark:text-slate-300 dark:hover:text-valict-cyan mb-8 transition-colors"
-        >
-          <FaArrowRightLong
-            className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
-          />
-
-          {currentLang === "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
-        </Link>
 
         {/* Main About Card */}
         <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
@@ -154,10 +138,6 @@ export default async function AboutPage({
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Text Content */}
             <div className="lg:col-span-7">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm mb-6">
-                {currentLang === "ar" ? "من نحن" : "About Us"}
-              </div>
-
               <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
                 {currentLang === "ar"
                   ? "فالكت | عزّز رؤيتك"
