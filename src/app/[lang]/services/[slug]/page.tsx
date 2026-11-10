@@ -169,6 +169,7 @@ const serviceDetailsContent: Record<
 
 /**
  * خريطة الألوان المميزة لكل خدمة (Border + Breadcrumb Gradient)
+ * تم إضافة rtl:bg-gradient-to-l لدعم الاتجاه العربي
  */
 const serviceColors: Record<
   string,
@@ -179,32 +180,38 @@ const serviceColors: Record<
 > = {
   "managed-it": {
     border: "border-blue-100/80 dark:border-blue-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-blue-50 dark:from-slate-900 dark:to-blue-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-blue-50 dark:from-slate-900 dark:to-blue-900/20",
   },
   network: {
     border: "border-emerald-100/80 dark:border-emerald-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-emerald-50 dark:from-slate-900 dark:to-emerald-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-emerald-50 dark:from-slate-900 dark:to-emerald-900/20",
   },
   cloud: {
     border: "border-sky-100/80 dark:border-sky-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-sky-50 dark:from-slate-900 dark:to-sky-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-sky-50 dark:from-slate-900 dark:to-sky-900/20",
   },
   cybersecurity: {
     border: "border-red-100/80 dark:border-red-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-red-50 dark:from-slate-900 dark:to-red-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-red-50 dark:from-slate-900 dark:to-red-900/20",
   },
   monitoring: {
     border: "border-lime-100/80 dark:border-lime-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-lime-50 dark:from-slate-900 dark:to-lime-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-lime-50 dark:from-slate-900 dark:to-lime-900/20",
   },
   "web-design": {
     border: "border-purple-100/80 dark:border-purple-500/20",
-    breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-purple-50 dark:from-slate-900 dark:to-purple-900/20",
+    breadcrumbBg:
+      "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-purple-50 dark:from-slate-900 dark:to-purple-900/20",
   },
 };
 
 /**
- * Blob داخلي في كارت المحتوى — بنفس قيم colorMap في Services.tsx
+ * Blob داخلي في كارت المحتوى
  */
 const serviceInnerBlob: Record<string, string> = {
   "managed-it": "bg-blue-500/20 dark:bg-blue-400/15",
@@ -218,7 +225,8 @@ const serviceInnerBlob: Record<string, string> = {
 // قيم افتراضية
 const defaultColors = {
   border: "border-slate-100 dark:border-slate-800",
-  breadcrumbBg: "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10",
+  breadcrumbBg:
+    "bg-gradient-to-r rtl:bg-gradient-to-l from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10",
 };
 
 const defaultInnerBlob = "bg-valict-cyan/20 dark:bg-valict-cyan/15";
@@ -259,7 +267,6 @@ export async function generateMetadata({
     (item: any) => item.slug === slug
   );
 
-  // في حالة عدم وجود الخدمة
   if (!service) {
     return {
       title: "Valict | Validate Your Vision",
@@ -270,7 +277,6 @@ export async function generateMetadata({
 
   const serviceData = serviceDetailsContent[slug];
 
-  // صياغة وصف مختصر ومثالي لأرشفة محركات البحث لصفحات الخدمات الستة
   const description =
     currentLang === "ar"
       ? `إكتشف خدمات ${service.title} فالكت لتأمين بنيتك التحتية وضمان إستمرارية أعمالك بكفاءة.`
@@ -348,7 +354,6 @@ export default async function ServiceDetailsPage({
     notFound();
   }
 
-  // جلب المحتوى التفصيلي مع مسار الصورة أو الاعتماد على قيم افتراضية
   const serviceData = serviceDetailsContent[slug] || {
     image: "/images/services/managed-it.webp",
     en: {
@@ -363,45 +368,47 @@ export default async function ServiceDetailsPage({
 
   const details = serviceData[currentLang];
 
-  // ألوان الخدمة الحالية
   const colors = serviceColors[slug] || defaultColors;
   const innerBlob = serviceInnerBlob[slug] || defaultInnerBlob;
 
-  // تحديد اتجاه الـ blob حسب اللغة
   const isRTL = currentLang === "ar";
 
-  // Breadcrumb Labels
   const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
   const servicesLabel = currentLang === "ar" ? "خدماتنا" : "Services";
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
-
-      {/* النافبار ثابت فوق */}
       <Navbar lang={currentLang} dict={dict} />
 
-      {/* محتوى الصفحة مع مساحة علوية كافية */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
-
-        {/* Breadcrumb (تدرج لوني مع دعم RTL) */}
         <nav aria-label="Breadcrumb" className="mb-6">
-          <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-valict-cyan font-bold text-sm ${colors.breadcrumbBg}`}>
-            <Link 
-              href={`/${currentLang}`} 
+          <div
+            className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-valict-cyan font-bold text-sm ${colors.breadcrumbBg}`}
+          >
+            <Link
+              href={`/${currentLang}`}
               className="hover:text-valict-navy dark:hover:text-white transition-colors"
             >
               {homeLabel}
             </Link>
-            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+            <span
+              className={`mx-1 ${
+                isRTL ? "rotate-180" : ""
+              } inline-block opacity-70`}
+            >
               <FaArrowRightLong className="w-3 h-3" />
             </span>
-            <Link 
-              href={`/${currentLang}/#services`} 
+            <Link
+              href={`/${currentLang}/#services`}
               className="hover:text-valict-navy dark:hover:text-white transition-colors"
             >
               {servicesLabel}
             </Link>
-            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+            <span
+              className={`mx-1 ${
+                isRTL ? "rotate-180" : ""
+              } inline-block opacity-70`}
+            >
               <FaArrowRightLong className="w-3 h-3" />
             </span>
             <span className="text-valict-navy dark:text-white">
@@ -410,23 +417,17 @@ export default async function ServiceDetailsPage({
           </div>
         </nav>
 
-        {/* كارت محتوى تفاصيل الخدمة — مع blob داخلي في الزاوية */}
         <div
           className={`relative overflow-hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none border ${colors.border}`}
         >
-          {/* Blob داخلي في الزاوية — يمين في العربي / شمال في الإنجليزي */}
           <div
             className={`absolute -top-12 w-40 h-40 rounded-full blur-3xl pointer-events-none ${innerBlob} ${
               isRTL ? "-right-12" : "-left-12"
             }`}
           ></div>
 
-          {/* المحتوى فوق الـ blob */}
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-            {/* عمود النصوص والمميزات (يأخذ 7 أعمدة) */}
             <div className="lg:col-span-7">
-
               <h1 className="text-3xl sm:text-4xl font-black text-valict-navy dark:text-white mb-6 leading-tight">
                 {service.title}
               </h1>
@@ -459,4 +460,32 @@ export default async function ServiceDetailsPage({
                 </div>
               )}
 
-              <div className="flex flex-col sm:
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href={`/${currentLang}/#contact`}
+                  aria-label={`${dict.cta.button} - ${service.title}`}
+                  className="btn-gradient text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg hover:shadow-valict-cyan/40 transition-all inline-block"
+                >
+                  {dict.cta.button}
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50">
+                <Image
+                  src={serviceData.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
