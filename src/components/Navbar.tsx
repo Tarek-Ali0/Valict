@@ -30,22 +30,22 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
     const handleScroll = () => {
       if (!ticking) {
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 20) {
-          setIsScrolled(true);
-        } else {
-          setIsScrolled(false);
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  };
+        window.requestAnimationFrame(() => {
+          if (window.scrollY > 20) {
+            setIsScrolled(true);
+          } else {
+            setIsScrolled(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
-  window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const alternateLang = lang === "en" ? "ar" : "en";
   const alternatePath = pathname.replace(`/${lang}`, `/${alternateLang}`);
@@ -57,10 +57,26 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   }
 
   const navLinks: NavLink[] = [
-    { name: dict.nav.services, href: `/${lang}/#services`, ariaLabel: `${dict.nav.services} services section` },
-    { name: dict.nav.whyValict, href: `/${lang}/#why-valict`, ariaLabel: `Why Valict company advantages section` },
-    { name: dict.nav.aboutUs, href: `/${lang}/about`, ariaLabel: `About Valict corporate profile page` },
-    { name: dict.nav.faq, href: `/${lang}/faq`, ariaLabel: `Frequently asked questions about Valict services` },
+    {
+      name: dict.nav.services,
+      href: `/${lang}/#services`,
+      ariaLabel: `${dict.nav.services} services section`,
+    },
+    {
+      name: dict.nav.whyValict,
+      href: `/${lang}/#why-valict`,
+      ariaLabel: `Why Valict company advantages section`,
+    },
+    {
+      name: dict.nav.aboutUs,
+      href: `/${lang}/about`,
+      ariaLabel: `About Valict corporate profile page`,
+    },
+    {
+      name: dict.nav.faq,
+      href: `/${lang}/faq`,
+      ariaLabel: `Frequently asked questions about Valict services`,
+    },
   ];
 
   return (
@@ -74,7 +90,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-24">
-
           <Link
             href={`/${lang}`}
             className="group relative block w-40 h-12"
@@ -91,7 +106,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
           </Link>
 
           <div className="hidden lg:flex items-center gap-6">
-
             {navLinks.map((link: NavLink) => (
               <Link
                 key={link.href}
@@ -104,7 +118,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             ))}
 
             <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
-
               <Link
                 href={alternatePath}
                 rel="alternate"
@@ -136,9 +149,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             </div>
 
             <div className="flex items-center gap-3">
-
+              {/* LinkedIn - تم التعديل */}
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/valict"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
@@ -148,8 +161,9 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 <FaLinkedinIn className="w-4 h-4" />
               </a>
 
+              {/* Facebook - تم التعديل */}
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/ValictOfficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-[1px] bg-slate-100/80 backdrop-blur-md text-slate-800 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-valict-cyan dark:border dark:border-slate-700"
@@ -158,12 +172,10 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
               >
                 <FaFacebook className="w-4 h-4" />
               </a>
-
             </div>
           </div>
 
           <div className="lg:hidden flex items-center gap-4">
-
             <Link
               href={alternatePath}
               rel="alternate"
@@ -188,7 +200,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 <FaBarsStaggered size={24} />
               )}
             </button>
-
           </div>
         </div>
       </div>
@@ -202,7 +213,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
         )}
       >
         <div className="p-6 flex flex-col gap-4">
-
           {navLinks.map((link: NavLink) => (
             <Link
               key={link.href}
@@ -223,7 +233,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
           >
             {dict.footer.contactUs || "Contact Us"}
           </Link>
-          
         </div>
       </div>
     </nav>
