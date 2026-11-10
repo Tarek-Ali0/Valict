@@ -97,7 +97,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
           >
             <Image
               src="/valict-logo.png"
-              alt="Valict Logo"
+              alt="Valict - IT Solutions Company Logo"
               fill
               sizes="(max-width: 768px) 150px, 200px"
               className="filter dark:brightness-0 dark:invert"
@@ -147,7 +147,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             </div>
 
             <div className="flex items-center gap-3">
-              {/* LinkedIn - شيلنا title */}
               <a
                 href="https://www.linkedin.com/company/valict"
                 target="_blank"
@@ -158,7 +157,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
                 <FaLinkedinIn className="w-4 h-4" />
               </a>
 
-              {/* Facebook - شيلنا title */}
               <a
                 href="https://www.facebook.com/ValictOfficial"
                 target="_blank"
