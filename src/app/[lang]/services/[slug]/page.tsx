@@ -374,6 +374,8 @@ export default async function ServiceDetailsPage({
 
   const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
   const servicesLabel = currentLang === "ar" ? "خدماتنا" : "Services";
+  const relatedLabel =
+    currentLang === "ar" ? "خدمات ذات صلة" : "Related Services";
 
   // *** Service Schema (JSON-LD) ***
   const serviceSchema = {
@@ -421,6 +423,12 @@ export default async function ServiceDetailsPage({
       },
     ],
   };
+
+  // *** Related Services ***
+  const allServices = dict.services.items;
+  const relatedServices = allServices.filter(
+    (item: any) => item.slug !== slug
+  );
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
@@ -541,6 +549,31 @@ export default async function ServiceDetailsPage({
             </div>
           </div>
         </div>
+
+        {/* Related Services */}
+        {relatedServices.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-xl font-bold text-valict-navy dark:text-white mb-6">
+              {relatedLabel}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedServices.map((related: any) => (
+                <Link
+                  key={related.slug}
+                  href={`/${currentLang}/services/${related.slug}`}
+                  className="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-valict-cyan/50 dark:hover:border-valict-cyan/50 transition-all duration-300 hover:shadow-lg"
+                >
+                  <h3 className="text-base font-bold text-valict-navy dark:text-white group-hover:text-valict-cyan transition-colors mb-1">
+                    {related.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                    {related.desc}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
