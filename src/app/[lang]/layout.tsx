@@ -46,7 +46,7 @@ export async function generateMetadata({
     description,
 
     alternates: {
-      canonical: `https://valict.com/${lang}`, // ✅ إصلاح السلاش
+      canonical: `https://valict.com/${lang}`,
       languages: {
         en: "https://valict.com/en",
         ar: "https://valict.com/ar",
@@ -57,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://valict.com/${lang}`, // ✅ إصلاح السلاش
+      url: `https://valict.com/${lang}`,
       siteName: "Valict",
       locale: lang === "ar" ? "ar_AR" : "en_US",
       type: "website",
@@ -98,10 +98,11 @@ export default async function RootLayout({
 
   const dict = await getDictionary(lang as "en" | "ar");
 
-  const structuredData = {
+  // *** Organization Schema ***
+  const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://valict.com",
+    "@id": "https://valict.com/#organization",
 
     name: "Valict",
 
@@ -111,20 +112,38 @@ export default async function RootLayout({
 
     logo: {
       "@type": "ImageObject",
-      url: "https://valict.com/valict-logo.png", // ✅ يفضل يكون لينك مباشر للوجو
+      url: "https://valict.com/valict-logo.png",
       width: 400,
       height: 400,
     },
 
-    description: lang === 'ar' 
-    ? "نقدم حلول تقنية وبنية تحتية متكاملة لتقنية المعلومات والإتصالات." 
-    : "Reliable IT Solutions and ICT Infrastructure Services.",
-  slogan: lang === 'ar' ? "عزّز رؤيتك" : "Validate Your Vision",
-  sameAs: 
-    ["https://linkedin.com",
-     "https://facebook.com"
-  ]
-};
+    description:
+      lang === "ar"
+        ? "حلول متكاملة في إدارة تقنية المعلومات، الحوسبة السحابية، والأمن السيبراني المتقدم لحماية أصولك الرقمية وضمان إستمرارية أعمالك بكفاءة مطلقة."
+        : "Reliable IT solutions and ICT infrastructure. Valict delivers expert managed services, cloud computing, and cybersecurity to secure business continuity.",
+    slogan: lang === "ar" ? "عزّز رؤيتك" : "Validate Your Vision",
+    sameAs: [
+      "https://www.linkedin.com/company/valict",
+      "https://www.facebook.com/ValictOfficial",
+    ],
+  };
+
+  // *** WebSite Schema ***
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://valict.com/#website",
+    url: "https://valict.com",
+    name: lang === "ar" ? "فالكت" : "Valict",
+    description:
+      lang === "ar"
+        ? "الموقع الرسمي لشركة فالكت لحلول تقنية المعلومات."
+        : "Official website of Valict IT solutions company.",
+    publisher: {
+      "@id": "https://valict.com/#organization",
+    },
+    inLanguage: lang === "ar" ? "ar" : "en",
+  };
 
   return (
     <html
@@ -133,17 +152,18 @@ export default async function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
-        <link
-  rel="preload"
-  href="/_next/static/media/d41831e24743a3c1-s.02r-fjhi~6g_a.woff2"
-  as="font"
-  type="font/woff2"
-  crossOrigin="anonymous"
-/>
+        {/* Organization Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        {/* WebSite Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
           }}
         />
       </head>
