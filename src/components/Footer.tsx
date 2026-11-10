@@ -164,7 +164,8 @@ export function Footer({ dict, lang = "en" }: FooterProps) {
 
         {/* Bottom Bar: Copyright & Socials */}
         <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p dir="rtl" className="text-slate-600 dark:text-slate-400 text-xs text-center md:text-start">
+          {/* التعديل: dir ديناميكي حسب اللغة */}
+          <p dir={lang === "ar" ? "rtl" : "ltr"} className="text-slate-600 dark:text-slate-400 text-xs text-center md:text-start">
             {footerDict.copyright.replace('{year}', currentYear.toString())}
           </p>
 
