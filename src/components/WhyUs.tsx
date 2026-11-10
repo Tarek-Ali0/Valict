@@ -28,13 +28,11 @@ export function WhyUs({ dict }: WhyUsProps) {
     icon: icons[index] || FaArrowTrendDown
   }));
 
-  // إعدادات حركة دخول السكشن والصور
   const fadeUpVariant: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
-  // إعدادات حركة القائمة (تظهر بالتدريج)
   const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -56,7 +54,6 @@ export function WhyUs({ dict }: WhyUsProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
-          {/* الجانب الأيسر: الصور المتداخلة */}
           <motion.div 
             className="lg:w-1/2 relative w-full h-[450px] md:h-[600px] flex items-center"
             initial="hidden"
@@ -64,42 +61,35 @@ export function WhyUs({ dict }: WhyUsProps) {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeUpVariant}
           >
-            {/* ===== بلوبس ورا الصور ===== */}
-            {/* بلوب أساسي — يمين (قريب من الصورة الرئيسية) */}
             <div className="absolute top-[10%] right-0 w-[70%] h-[70%] bg-valict-cyan/15 dark:bg-valict-cyan/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            {/* بلوب ثانوي — يسار (قريب من الصورة الفرعية) */}
             <div className="absolute bottom-[5%] left-0 w-[60%] h-[60%] bg-valict-navy/10 dark:bg-valict-cyan/7 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            {/* عناصر ديكور في الخلفية لملء الفراغ */}
             <div className="absolute top-10 left-0 w-32 h-32 border-4 border-slate-100 dark:border-slate-800 rounded-full -z-10 opacity-50"></div>
             <div className="absolute bottom-10 right-10 w-24 h-24 bg-valict-cyan/10 rounded-full blur-xl -z-10"></div>
 
-            {/* الصورة الرئيسية — مع بوردر */}
             <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl border-[6px] md:border-[8px] border-white dark:border-slate-900 group">
               <div className="absolute inset-0 bg-valict-navy/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
                 src="/why-server-room.webp"
-                alt="IT Monitoring"
+                alt="Valict IT Monitoring Services - Server Room Infrastructure"
                 fill
                 sizes="(max-width: 768px) 75vw, (max-width: 1200px) 38vw, 480px"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
-            {/* الصورة الفرعية — مع بوردر أخف */}
             <div className="absolute bottom-0 left-0 w-[60%] h-[60%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[6px] md:border-[8px] border-white dark:border-slate-900 z-20 group">
               <div className="absolute inset-0 bg-valict-cyan/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
                 src="/why-monitoring.webp"
-                alt="Server Room"
+                alt="Valict Server Room Monitoring - IT Infrastructure Services"
                 fill
                 sizes="(max-width: 768px) 60vw, (max-width: 1200px) 30vw, 380px"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
-            {/* Premium Glassmorphism Floating Badge */}
             <motion.div 
               className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 bg-valict-navy/75 backdrop-blur-md px-5 py-4 rounded-2xl text-center shadow-[0_15px_30px_rgba(0,0,0,0.25)] border border-white/20 z-30 w-auto whitespace-nowrap"
               initial={{ scale: 0.8, opacity: 0 }}
@@ -116,7 +106,6 @@ export function WhyUs({ dict }: WhyUsProps) {
             </motion.div>
           </motion.div>
 
-          {/* الجانب الأيمن: النصوص والمميزات */}
           <motion.div 
             className="lg:w-1/2 text-start w-full"
             initial="hidden"
@@ -135,7 +124,6 @@ export function WhyUs({ dict }: WhyUsProps) {
               {dict.about.text}
             </p>
 
-            {/* List with Staggered Animation */}
             <motion.div 
               className="space-y-6 md:space-y-8"
               variants={staggerContainer}
@@ -146,12 +134,9 @@ export function WhyUs({ dict }: WhyUsProps) {
                   variants={pointVariant}
                   className="flex items-start gap-4 md:gap-5 group"
                 >
-                  {/* الأيقونة داخل مربع احترافي — مع Blob داخلي */}
                   <div className="relative flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:bg-valict-navy dark:group-hover:bg-valict-navy group-hover:shadow-lg group-hover:-translate-y-1 group-hover:border-valict-navy overflow-hidden">
-                    {/* Blob داخلي في الزاوية */}
                     <div className="absolute -top-3 -right-3 w-10 h-10 bg-valict-cyan/20 dark:bg-valict-cyan/15 rounded-full blur-xl pointer-events-none transition-opacity duration-300 group-hover:opacity-0"></div>
 
-                    {/* الأيقونة فوق البلوب */}
                     <point.icon className="relative z-10 w-5 h-5 md:w-6 md:h-6 text-valict-navy dark:text-valict-cyan transition-colors duration-300 group-hover:text-valict-cyan" />
                   </div>
                   <div className="mt-1">
@@ -170,14 +155,9 @@ export function WhyUs({ dict }: WhyUsProps) {
         </div>
       </div>
 
-      {/* ========================= */}
-      {/* Line Separator — تحت     */}
-      {/* ملزوق على الحد بين الأقسام */}
-      {/* ========================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent dark:via-slate-600"></div>
       </div>
-      {/* ========================= */}
 
     </section>
   );
