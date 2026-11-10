@@ -362,6 +362,10 @@ export default async function ServiceDetailsPage({
   // تحديد اتجاه الـ blob حسب اللغة
   const isRTL = currentLang === "ar";
 
+  // Breadcrumb Labels
+  const homeLabel = currentLang === "ar" ? "الرئيسية" : "Home";
+  const servicesLabel = currentLang === "ar" ? "خدماتنا" : "Services";
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
 
@@ -371,22 +375,32 @@ export default async function ServiceDetailsPage({
       {/* محتوى الصفحة مع مساحة علوية كافية */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
 
-        {/* زرار الرجوع للخدمات */}
-        <Link
-          href={`/${currentLang}/#services`}
-          aria-label={
-            currentLang === "ar"
-              ? "العودة إلى قسم الخدمات الرئيسي"
-              : "Back to main services section"
-          }
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-valict-cyan dark:text-slate-400 mb-8 transition-colors"
-        >
-          <FaArrowRightLong
-            className={currentLang === "ar" ? "rotate-0" : "rotate-180"}
-          />
-
-          {currentLang === "ar" ? "العودة للخدمات" : "Back to Services"}
-        </Link>
+        {/* Breadcrumb (شكل شريط سماوي) */}
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-valict-cyan/10 text-valict-cyan font-bold text-sm">
+            <Link 
+              href={`/${currentLang}`} 
+              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+            >
+              {homeLabel}
+            </Link>
+            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+              <FaArrowRightLong className="w-3 h-3" />
+            </span>
+            <Link 
+              href={`/${currentLang}/#services`} 
+              className="hover:text-valict-navy dark:hover:text-white transition-colors"
+            >
+              {servicesLabel}
+            </Link>
+            <span className={`mx-1 ${isRTL ? "rotate-180" : ""} inline-block opacity-70`}>
+              <FaArrowRightLong className="w-3 h-3" />
+            </span>
+            <span className="text-valict-navy dark:text-white">
+              {service.title}
+            </span>
+          </div>
+        </nav>
 
         {/* كارت محتوى تفاصيل الخدمة — مع blob داخلي في الزاوية */}
         <div
