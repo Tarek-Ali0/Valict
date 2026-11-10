@@ -32,10 +32,7 @@ const nextConfig: NextConfig = {
   // 4. إخفاء هيدر X-Powered-By لتحسين الأمان
   poweredByHeader: false,
 
-  // 5. تفعيل ضغط الـ JS باستخدام SWC (أسرع من Terser)
-  swcMinify: true,
-
-  // 6. إزالة الـ redirects من هنا لأن proxy.ts هو اللي بيتعامل مع التوجيه
+  // 5. إزالة الـ redirects من هنا لأن proxy.ts هو اللي بيتعامل مع التوجيه
   // redirects: async () => { ... },
 };
 
