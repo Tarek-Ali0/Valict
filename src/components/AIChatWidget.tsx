@@ -46,7 +46,7 @@ function ValictaAvatar({
   return (
     <Image
       src="/valicta.webp"
-      alt="Valicta"
+      alt="Valicta - Valict Smart Assistant"
       width={size}
       height={size}
       className={`object-contain ${className}`}
@@ -99,7 +99,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     [isAr]
   );
 
-  // Quick Replies (مدمجة جوه الكومبوننت)
   const quickReplies = useMemo(
     () => [
       { label: isAr ? "إيه هي خدماتكم؟" : "What are your services?", value: isAr ? "إيه هي خدماتكم؟" : "What are your services?" },
@@ -168,7 +167,6 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [isOpen, isLoading]);
 
-  // إرجاع مربع الكتابة لحجمه الأصلي لما يكون فاضي
   useEffect(() => {
     if (input === "" && inputRef.current) {
       inputRef.current.style.height = "auto";
