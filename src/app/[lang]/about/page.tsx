@@ -107,9 +107,9 @@ export default async function AboutPage({
       {/* Page Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-20">
         
-        {/* Breadcrumb (تدرج لوني من الأبيض للسماوي) */}
+        {/* Breadcrumb (تدرج لوني من الأبيض للسماوي مع دعم RTL) */}
         <nav aria-label="Breadcrumb" className="mb-6">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10 text-valict-cyan font-bold text-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r rtl:bg-gradient-to-l from-white to-valict-cyan/10 dark:from-slate-900 dark:to-valict-cyan/10 text-valict-cyan font-bold text-sm">
             <Link 
               href={`/${currentLang}`} 
               className="hover:text-valict-navy dark:hover:text-white transition-colors"
