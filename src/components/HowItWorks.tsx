@@ -25,7 +25,6 @@ export function HowItWorks({ dict }: HowItWorksProps) {
     desc: step.desc
   }));
 
-  // إعدادات حركة دخول السكشن
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,13 +41,12 @@ export function HowItWorks({ dict }: HowItWorksProps) {
   return (
     <section className="bg-white dark:bg-[#0B1120] relative overflow-hidden transition-colors duration-300">
       
-      {/* إضاءة خلفية ناعمة */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-valict-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-valict-navy/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-24 md:pb-32 text-center">
+      {/* قللنا الـ pb من هنا */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 text-center">
         
-        {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,9 +64,7 @@ export function HowItWorks({ dict }: HowItWorksProps) {
           </h3>
         </motion.div>
 
-        {/* Steps Grid */}
         <div className="relative">
-          {/* الخط الواصل — يمر من ورا الكروت في المنتصف */}
           <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 left-0 right-0 h-[2px] bg-gradient-to-r rtl:bg-gradient-to-l from-transparent via-valict-navy/30 to-transparent z-0 pointer-events-none"></div>
 
           <motion.div 
@@ -84,22 +80,18 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                 variants={cardVariants}
                 className="group relative bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 transition-all duration-500 hover:-translate-y-2 flex flex-col text-start overflow-hidden"
               >
-                {/* Blob داخلي — بلون valict-navy (شدة أقل) */}
                 <div className="absolute -top-12 rtl:-right-12 ltr:-left-12 w-40 h-40 rounded-full blur-3xl bg-valict-navy/25 dark:bg-valict-navy/15 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"></div>
 
-                {/* رقم شفاف في الخلفية */}
                 <span className="absolute -top-6 text-8xl font-black text-slate-100 dark:text-slate-800/50 transition-colors duration-500 group-hover:text-valict-cyan/5 select-none pointer-events-none rtl:-left-4 ltr:-right-4">
                   {step.number}
                 </span>
 
-                {/* البادج الخاص برقم الخطوة */}
                 <div className="relative z-10 w-14 h-14 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-valict-navy group-hover:border-valict-navy transition-all duration-500">
                   <span className="text-xl font-black text-valict-navy dark:text-valict-cyan group-hover:text-white transition-colors duration-500">
                     {step.number}
                   </span>
                 </div>
 
-                {/* المحتوى */}
                 <div className="relative z-10">
                   <h4 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-valict-navy transition-colors duration-300">
                     {step.title}
@@ -109,7 +101,6 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                   </p>
                 </div>
 
-                {/* شريط سفلي جمالي */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-valict-navy to-valict-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
               </motion.div>
             ))}
