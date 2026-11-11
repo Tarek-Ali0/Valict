@@ -71,7 +71,7 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
               <div className="lg:col-span-3 flex justify-center lg:justify-end w-full">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="group relative bg-white text-valict-navy text-center py-3 px-7 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-navy hover:text-white transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden"
+                  className="group relative bg-white text-valict-navy text-center py-3 px-7 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-navy hover:text-white transition-all duration-300 inline-flex items-center justify-center gap-1.5 whitespace-nowrap overflow-hidden"
                 >
                   {/* تأثير المراية */}
                   <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-[-20deg] transition-all duration-700 group-hover:left-[100%]"></span>
@@ -80,7 +80,7 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
                   <span className="relative z-10">{dict.cta.button}</span>
 
                   {/* 3 نقط (محاذية للنص) */}
-                  <span className="relative z-10 flex items-center gap-[2px] mt-[2px] font-black">
+                  <span className="relative z-10 flex items-center gap-[2px] mt-[1px] font-black">
                     <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
                     <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
                     <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
