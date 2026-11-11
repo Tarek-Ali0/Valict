@@ -14,10 +14,10 @@ export function Contact({ dict }: ContactProps) {
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* الشريط */}
-          <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-cyan rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
+          <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
             
-            {/* الـ Watermark (صورة JustV) */}
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[350px] h-[350px] opacity-[0.04] pointer-events-none">
+            {/* الـ Watermark (صورة JustV) على الشمال */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[350px] h-[350px] opacity-[0.04] pointer-events-none">
               <Image
                 src="/JustV.png"
                 alt=""
@@ -45,7 +45,7 @@ export function Contact({ dict }: ContactProps) {
                 <div className="flex flex-col gap-2 mt-1">
                   <a
                     href={`mailto:${dict.contact.email}`}
-                    className="group flex items-center gap-3 text-white hover:text-valict-navy transition-colors"
+                    className="group flex items-center gap-3 text-white hover:text-valict-cyan transition-colors"
                     aria-label={`Send an email to ${dict.contact.email}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
@@ -55,7 +55,7 @@ export function Contact({ dict }: ContactProps) {
                   </a>
                   <a
                     href={`tel:${dict.contact.phone}`}
-                    className="group flex items-center gap-3 text-white hover:text-valict-navy transition-colors"
+                    className="group flex items-center gap-3 text-white hover:text-valict-cyan transition-colors"
                     aria-label={`Call Valict support team at ${dict.contact.phone}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
@@ -66,15 +66,11 @@ export function Contact({ dict }: ContactProps) {
                 </div>
               </div>
 
-              {/* 3. الزرار (متوازي أضلاع بحواف دائرية) */}
+              {/* 3. الزرار (مستطيل بزوايا مدورة) */}
               <div className="lg:col-span-3 flex justify-center lg:justify-end w-full">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="group relative bg-white text-valict-navy text-center py-3 px-7 font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap"
-                  style={{
-                    clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)",
-                    borderRadius: "8px",
-                  }}
+                  className="group relative bg-white text-valict-navy text-center py-3 px-7 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap transform hover:-translate-y-1"
                 >
                   {dict.cta.button}
                   <span className="transition-transform duration-300 group-hover:translate-x-1 font-black">
