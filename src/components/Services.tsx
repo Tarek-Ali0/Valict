@@ -130,50 +130,50 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
             };
             
             return (
-              <motion.div
+              <Link
                 key={index}
-                variants={cardVariants}
-                className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start overflow-hidden"
+                href={`/${lang}/services/${service.slug}`}
+                aria-label={`${dict.services.learnMore} - ${service.title}`}
+                className="block h-full"
               >
-                {/* Blob داخلي — في الزاوية */}
-                <div
-                  className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl transition-opacity duration-500 ${colors.blob} group-hover:opacity-0`}
-                ></div>
-
-                {/* المحتوى */}
-                <div className="relative z-10 flex flex-col h-full">
+                <motion.div
+                  variants={cardVariants}
+                  className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start overflow-hidden"
+                >
+                  {/* Blob داخلي — في الزاوية */}
                   <div
-                    className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
-                  >
-                    <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
-                  </div>
-                  
-                  <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
-                    {service.title}
-                  </h2>
-                  
-                  <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
-                    {service.desc}
-                  </p>
-                  
-                  <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
-                    <Link
-                      href={`/${lang}/services/${service.slug}`}
-                      aria-label={`${dict.services.learnMore} - ${service.title}`}
-                      className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
+                    className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl transition-opacity duration-500 ${colors.blob} group-hover:opacity-0`}
+                  ></div>
+
+                  {/* المحتوى */}
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div
+                      className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110 ${colors.bg}`}
                     >
-                      <span className="sr-only">
-                        {dict.services.learnMore} {service.title}
+                      <Icon className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 group-hover:text-valict-cyan ${colors.text}`} />
+                    </div>
+                    
+                    <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-white transition-colors duration-300">
+                      {service.title}
+                    </h2>
+                    
+                    <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow group-hover:text-slate-200 transition-colors duration-300">
+                      {service.desc}
+                    </p>
+                    
+                    <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700/50 group-hover:border-white/10 transition-colors duration-300">
+                      <span
+                        className="inline-flex items-center gap-2 text-valict-navy dark:text-valict-cyan font-bold text-sm group-hover:text-valict-cyan transition-colors"
+                      >
+                        <span aria-hidden="true">
+                          {dict.services.learnMore}
+                        </span> 
+                        <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
                       </span>
-    
-                      <span aria-hidden="true">
-                        {dict.services.learnMore}
-                      </span> 
-                      <FaChevronRight className="text-[10px] transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform duration-300" />
-                    </Link>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             );
           })}
         </motion.div>
