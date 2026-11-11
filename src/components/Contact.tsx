@@ -8,6 +8,8 @@ interface ContactProps {
 }
 
 export function Contact({ dict, lang = "en" }: ContactProps) {
+  const isRTL = lang === "ar";
+
   return (
     <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
       
@@ -17,8 +19,12 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
           {/* الشريط (إرتفاع ثابت) */}
           <div className="relative w-full h-[200px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl px-8 md:px-10 shadow-xl overflow-hidden flex items-center">
             
-            {/* الـ Watermark (صورة JustV) ثابت على الشمال في اللغتين */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none">
+            {/* الـ Watermark (صورة JustV) - ديناميكي حسب اللغة */}
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none ${
+                isRTL ? "right-0" : "left-0"
+              }`}
+            >
               <Image
                 src="/JustV.png"
                 alt=""
