@@ -152,7 +152,7 @@ export default async function RootLayout({
     "@id": "https://valict.com/#localbusiness",
     name: "Valict",
     image: "https://valict.com/valict-logo.png",
-    telephone: "+20 150 554 4455",
+    telephone: "+201505544455",
     email: "info@valict.com",
     address: {
       "@type": "PostalAddress",
