@@ -76,15 +76,8 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
                   {/* تأثير المراية */}
                   <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-[-20deg] transition-all duration-700 group-hover:left-[100%]"></span>
                   
-                  {/* النص + 3 نقط في نهايته */}
-                  <span className="relative z-10">
-                    {dict.cta.button}
-                    <span className="inline-flex items-center gap-[2px] ml-1 align-middle font-black">
-                      <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
-                      <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
-                      <span className="w-[3px] h-[3px] rounded-full bg-current"></span>
-                    </span>
-                  </span>
+                  {/* النص */}
+                  <span className="relative z-10">{dict.cta.button}</span>
                 </a>
               </div>
 
