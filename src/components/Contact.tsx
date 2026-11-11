@@ -8,23 +8,17 @@ interface ContactProps {
 }
 
 export function Contact({ dict, lang = "en" }: ContactProps) {
-  const isRTL = lang === "ar";
-
   return (
     <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
       
       <div className="w-full pt-0 pb-6 md:pb-8">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* الشريط (بارتفاع ثابت بناءً على العربي) */}
-          <div className="relative w-full min-h-[280px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden flex items-center">
+          {/* الشريط (حجمه ثابت حسب الـ padding) */}
+          <div className="relative w-full bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
             
-            {/* الـ Watermark (صورة JustV) ديناميكي حسب اللغة */}
-            <div
-              className={`absolute top-1/2 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none ${
-                isRTL ? "right-0" : "left-0"
-              }`}
-            >
+            {/* الـ Watermark (صورة JustV) ثابت على الشمال في اللغتين */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none">
               <Image
                 src="/JustV.png"
                 alt=""
@@ -34,7 +28,7 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
               />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-start w-full">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-start">
               
               {/* 1. العنوان */}
               <div className="lg:col-span-5">
