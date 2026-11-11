@@ -10,15 +10,14 @@ export function Contact({ dict }: ContactProps) {
   return (
     <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
       
-      {/* قللت المسافة من فوق خالص */}
       <div className="w-full pt-0 pb-6 md:pb-8">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* الشريط */}
           <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
             
-            {/* الـ Watermark (صورة JustV) على الشمال - أكبر وأوضح */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none">
+            {/* الـ Watermark (صورة JustV) على الشمال - صغرناه شوية */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[350px] h-[350px] opacity-[0.08] pointer-events-none">
               <Image
                 src="/JustV.png"
                 alt=""
