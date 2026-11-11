@@ -7,46 +7,68 @@ interface ContactProps {
 
 export function Contact({ dict }: ContactProps) {
   return (
-    <section id="contact" className="transition-colors duration-300">
-      <div className="w-full bg-valict-navy shadow-2xl">
-        <div className="max-w-7xl mx-auto relative px-6 py-12 md:py-16 overflow-hidden">
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-start">
-            <div className="lg:w-2/3">
-              <h2 className="text-3xl text-start md:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
+    <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
+      
+      {/* --- Premium Background Elements (نفس الهيرو) --- */}
+      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
+      {/* ----------------------------------- */}
+
+      <div className="w-full bg-gradient-to-br from-valict-navy to-valict-dark relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative px-6 py-16 md:py-24 overflow-hidden">
+          
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-12 items-center text-start">
+            
+            {/* 1. العنوان */}
+            <div className="lg:col-span-1">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
                 {dict.cta.headline}
               </h2>
-              {/* تم تحسين التباين هنا من blue-100 إلى blue-50 لضمان القراءة المثالية */}
-              <p className="text-blue-50 text-start text-xl font-light">
+            </div>
+
+            {/* 2. النص + معلومات التواصل */}
+            <div className="lg:col-span-1 flex flex-col gap-6">
+              <p className="text-blue-50 text-lg md:text-xl font-light leading-relaxed">
                 {dict.cta.sub}
               </p>
-            </div>
-            <div className="lg:w-1/3 flex flex-col gap-4 w-full">
-              <a
-                href={`mailto:${dict.contact.email}`}
-                className="bg-white dark:bg-slate-900 text-valict-navy dark:text-white text-center py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 transform hover:-translate-y-1"
-              >
-                {dict.cta.button}
-              </a>
-              <div className="mt-4 flex flex-col items-start gap-2.5 w-full" dir="ltr">
-                {/* تم تعديل الشفافية من white/80 إلى slate-100 لزيادة قوة تباين الألوان أمام محركات البحث */}
+              
+              <div className="flex flex-col gap-4">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="flex items-center gap-3 text-slate-100 hover:text-white font-medium transition-colors group"
+                  className="group flex items-center gap-4 text-white hover:text-valict-cyan transition-colors"
                   aria-label={`Send an email to ${dict.contact.email}`}
                 >
-                  <FaEnvelope className="w-5 h-5 text-valict-cyan shrink-0" />
-                  <span>{dict.contact.email}</span>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-valict-cyan/20 group-hover:border-valict-cyan transition-all">
+                    <FaEnvelope className="w-5 h-5 text-valict-cyan" />
+                  </div>
+                  <span className="font-medium">{dict.contact.email}</span>
                 </a>
                 <a
                   href={`tel:${dict.contact.phone}`}
-                  className="flex items-center gap-3 text-slate-100 hover:text-white font-medium transition-colors group"
+                  className="group flex items-center gap-4 text-white hover:text-valict-cyan transition-colors"
                   aria-label={`Call Valict support team at ${dict.contact.phone}`}
                 >
-                  <FaPhone className="w-5 h-5 text-valict-cyan shrink-0" />
-                  <span>{dict.contact.phone}</span>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-valict-cyan/20 group-hover:border-valict-cyan transition-all">
+                    <FaPhone className="w-5 h-5 text-valict-cyan" />
+                  </div>
+                  <span className="font-medium" dir="ltr">{dict.contact.phone}</span>
                 </a>
               </div>
             </div>
+
+            {/* 3. الزرار (Call to Action) */}
+            <div className="lg:col-span-1 flex justify-center lg:justify-end w-full">
+              <a
+                href={`mailto:${dict.contact.email}`}
+                className="group relative bg-white dark:bg-slate-900 text-valict-navy dark:text-white text-center py-5 px-10 rounded-2xl font-black text-xl shadow-xl hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 transform hover:-translate-y-1 w-full lg:w-auto inline-flex items-center justify-center gap-2"
+              >
+                {dict.cta.button}
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
