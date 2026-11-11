@@ -15,19 +15,19 @@ export function Contact({ dict }: ContactProps) {
       {/* ----------------------------------- */}
 
       <div className="w-full bg-gradient-to-br from-valict-navy to-valict-dark relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative px-6 py-8 md:py-12 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto relative px-4 sm:px-6 lg:px-8 py-8 md:py-12 overflow-hidden">
           
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-start">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-start">
             
-            {/* 1. العنوان (أخذ 4 أعمدة) */}
-            <div className="lg:col-span-4">
+            {/* 1. العنوان (أخذ 5 أعمدة) */}
+            <div className="lg:col-span-5">
               <h2 className="text-2xl md:text-4xl font-black text-white mb-4 leading-tight tracking-tight">
                 {dict.cta.headline}
               </h2>
             </div>
 
-            {/* 2. النص + معلومات التواصل (أخذ 5 أعمدة) */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
+            {/* 2. النص + معلومات التواصل (أخذ 4 أعمدة) */}
+            <div className="lg:col-span-4 flex flex-col gap-4">
               <p className="text-blue-50 text-base md:text-lg font-light leading-relaxed">
                 {dict.cta.sub}
               </p>
@@ -60,7 +60,7 @@ export function Contact({ dict }: ContactProps) {
             <div className="lg:col-span-3 flex justify-center lg:justify-end w-full">
               <a
                 href={`mailto:${dict.contact.email}`}
-                className="group relative bg-white dark:bg-slate-900 text-valict-navy dark:text-white text-center py-4 px-8 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 transform hover:-translate-y-1 w-full lg:w-auto inline-flex items-center justify-center gap-2"
+                className="group relative bg-white dark:bg-slate-900 text-valict-navy dark:text-white text-center py-4 px-8 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 transform hover:-translate-y-1 w-full lg:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 {dict.cta.button}
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
