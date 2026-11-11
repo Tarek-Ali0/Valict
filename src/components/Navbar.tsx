@@ -89,7 +89,8 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
       )}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-24">
+        {/* الارتفاع الجديد: h-16 بدل h-24 */}
+        <div className="flex justify-between items-center h-16">
           <Link
             href={`/${lang}`}
             className="group relative block w-40 h-12"
@@ -198,9 +199,10 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
         </div>
       </div>
 
+      {/* المنيو المنسدلة للموبايل: ظبطنا top-16 عشان يتماشى مع الارتفاع الجديد */}
       <div
         className={cn(
-          "lg:hidden absolute top-24 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
+          "lg:hidden absolute top-16 left-0 w-full bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out",
           isMobileMenuOpen
             ? "max-h-[500px] opacity-100"
             : "max-h-0 opacity-0"
