@@ -289,7 +289,7 @@ export async function POST(req: Request) {
 معلومات التواصل الرسمية (هذه هي الوحيدة المعتمدة):
 - للاستفسارات العامة والمبيعات: info@valict.com
 - للدعم الفني: support@valict.com
-- رقم الهاتف: +20 150 554 4455
+- رقم الهاتف: +201505544455
 
 قواعد صارمة يجب اتباعها دائماً:
 1. **استخدم لغة عربية سهلة ومبسطة. متستخدمش كلمات قديمة زي "عتاد" (Hardware) أو "سائق" (Driver). استخدم المصطلحات الإنجليزية المتعارف عليها (Hardware, Driver, Command Prompt) لأنها هي اللي هتظهر على شاشة العميل.**
@@ -359,7 +359,7 @@ Company Info:
 Official Contact Information (these are the ONLY valid contacts):
 - General inquiries & sales: info@valict.com
 - Technical support: support@valict.com
-- Phone: +20 150 554 4455
+- Phone: +201505544455
 
 Strict rules to always follow:
 1. Reply in clear, professional English only.
