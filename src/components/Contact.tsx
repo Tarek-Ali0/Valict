@@ -4,20 +4,27 @@ import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
 interface ContactProps {
   dict: any;
+  lang?: string;
 }
 
-export function Contact({ dict }: ContactProps) {
+export function Contact({ dict, lang = "en" }: ContactProps) {
+  const isRTL = lang === "ar";
+
   return (
     <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
       
       <div className="w-full pt-0 pb-6 md:pb-8">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* الشريط */}
-          <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
+          {/* الشريط (بارتفاع ثابت بناءً على العربي) */}
+          <div className="relative w-full min-h-[280px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden flex items-center">
             
-            {/* الـ Watermark (صورة JustV) على الشمال */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none">
+            {/* الـ Watermark (صورة JustV) ديناميكي حسب اللغة */}
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none ${
+                isRTL ? "right-0" : "left-0"
+              }`}
+            >
               <Image
                 src="/JustV.png"
                 alt=""
@@ -27,7 +34,7 @@ export function Contact({ dict }: ContactProps) {
               />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-start">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-start w-full">
               
               {/* 1. العنوان */}
               <div className="lg:col-span-5">
