@@ -16,7 +16,7 @@ export function Contact({ dict }: ContactProps) {
           {/* الشريط */}
           <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-dark rounded-2xl p-8 md:p-10 shadow-xl overflow-hidden">
             
-            {/* الـ Watermark (صورة JustV) على الشمال - رجعناه كبير */}
+            {/* الـ Watermark (صورة JustV) على الشمال */}
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[450px] h-[450px] opacity-[0.08] pointer-events-none">
               <Image
                 src="/JustV.png"
@@ -49,7 +49,6 @@ export function Contact({ dict }: ContactProps) {
                     aria-label={`Send an email to ${dict.contact.email}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
-                      {/* أيقونة الإيميل: رجعت سماوية */}
                       <FaEnvelope className="w-4 h-4 text-valict-cyan" />
                     </div>
                     <span className="text-sm md:text-base font-medium">{dict.contact.email}</span>
@@ -60,7 +59,6 @@ export function Contact({ dict }: ContactProps) {
                     aria-label={`Call Valict support team at ${dict.contact.phone}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
-                      {/* أيقونة التليفون: رجعت سماوية */}
                       <FaPhone className="w-4 h-4 text-valict-cyan" />
                     </div>
                     <span className="text-sm md:text-base font-medium" dir="ltr">{dict.contact.phone}</span>
@@ -68,15 +66,23 @@ export function Contact({ dict }: ContactProps) {
                 </div>
               </div>
 
-              {/* 3. الزرار */}
+              {/* 3. الزرار (مع 3 نقط + تأثير المراية) */}
               <div className="lg:col-span-3 flex justify-center lg:justify-end w-full">
                 <a
                   href={`mailto:${dict.contact.email}`}
-                  className="group relative bg-white text-valict-navy text-center py-3 px-7 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap transform hover:-translate-y-1"
+                  className="group relative bg-white text-valict-navy text-center py-3 px-7 rounded-xl font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden"
                 >
-                  {dict.cta.button}
-                  <span className="transition-transform duration-300 group-hover:translate-x-1 font-black">
-                    →
+                  {/* تأثير المراية (Shine Effect) */}
+                  <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-[-20deg] transition-all duration-700 group-hover:left-[100%]"></span>
+                  
+                  {/* النص */}
+                  <span className="relative z-10">{dict.cta.button}</span>
+
+                  {/* 3 نقط */}
+                  <span className="relative z-10 flex items-center gap-0.5 font-black">
+                    <span className="w-1 h-1 rounded-full bg-current"></span>
+                    <span className="w-1 h-1 rounded-full bg-current"></span>
+                    <span className="w-1 h-1 rounded-full bg-current"></span>
                   </span>
                 </a>
               </div>
