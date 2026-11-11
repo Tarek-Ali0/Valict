@@ -44,9 +44,10 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
                 </p>
                 
                 <div className="flex flex-col gap-2 mt-1">
+                  {/* لينك الإيميل - inline-flex عشان ياخد مساحة المحتوى بس */}
                   <a
                     href={`mailto:${dict.contact.email}`}
-                    className="group flex items-center gap-3 text-white hover:text-valict-cyan transition-colors"
+                    className="group inline-flex items-center gap-3 text-white hover:text-valict-cyan transition-colors w-fit"
                     aria-label={`Send an email to ${dict.contact.email}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
@@ -54,9 +55,10 @@ export function Contact({ dict, lang = "en" }: ContactProps) {
                     </div>
                     <span className="text-sm md:text-base font-medium">{dict.contact.email}</span>
                   </a>
+                  {/* لينك التليفون - inline-flex عشان ياخد مساحة المحتوى بس */}
                   <a
                     href={`tel:${dict.contact.phone}`}
-                    className="group flex items-center gap-3 text-white hover:text-valict-cyan transition-colors"
+                    className="group inline-flex items-center gap-3 text-white hover:text-valict-cyan transition-colors w-fit"
                     aria-label={`Call Valict support team at ${dict.contact.phone}`}
                   >
                     <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
