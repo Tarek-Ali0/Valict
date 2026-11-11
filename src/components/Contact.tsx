@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
 interface ContactProps {
@@ -17,13 +18,20 @@ export function Contact({ dict }: ContactProps) {
       <div className="w-full py-12 md:py-20">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* الشريط الهندسي بتدرج لوني */}
-          <div 
-            className="relative w-full bg-gradient-to-r from-valict-navy to-valict-cyan p-8 md:p-12 shadow-2xl"
-            style={{
-              clipPath: "polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%)",
-            }}
-          >
+          {/* الشريط (مستطيل بحواف دائرية وتدرج لوني) */}
+          <div className="relative w-full bg-gradient-to-r from-valict-navy to-valict-cyan rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden">
+            
+            {/* الـ Watermark (صورة JustV) */}
+            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.05] pointer-events-none">
+              <Image
+                src="/JustV.png"
+                alt=""
+                fill
+                className="object-contain"
+                aria-hidden="true"
+              />
+            </div>
+
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-start">
               
               {/* 1. العنوان */}
@@ -63,13 +71,14 @@ export function Contact({ dict }: ContactProps) {
                 </div>
               </div>
 
-              {/* 3. الزرار الهندسي */}
+              {/* 3. الزرار (متوازي أضلاع بحواف دائرية) */}
               <div className="lg:col-span-3 flex justify-center lg:justify-end w-full">
                 <a
                   href={`mailto:${dict.contact.email}`}
                   className="group relative bg-white text-valict-navy text-center py-4 px-8 font-bold text-base md:text-lg shadow-lg hover:bg-valict-cyan hover:text-valict-dark transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap"
                   style={{
-                    clipPath: "polygon(0 0, 100% 0, 95% 100%, 5% 100%)", // شكل هندسي (شبه متوازي أضلاع)
+                    clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)",
+                    borderRadius: "12px",
                   }}
                 >
                   {dict.cta.button}
