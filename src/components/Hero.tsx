@@ -29,8 +29,8 @@ export function Hero({ dict }: HeroProps) {
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
 
-      {/* الـ Watermark (صورة JustV) - في الركن الأيمن، ملفوف 30 درجة عكس عقارب الساعة */}
-      <div className="hidden lg:block absolute top-0 right-0 w-[500px] h-[500px] opacity-[0.05] pointer-events-none -z-0">
+      {/* الـ Watermark (صورة JustV) - في الركن الأيمن السفلي، ملفوف 30 درجة عكس عقارب الساعة */}
+      <div className="hidden lg:block absolute bottom-0 right-0 w-[500px] h-[500px] opacity-[0.05] pointer-events-none -z-0">
         <Image
           src="/JustV.png"
           alt=""
