@@ -65,10 +65,9 @@ export function WhyUs({ dict }: WhyUsProps) {
 
             <div className="absolute bottom-[5%] left-0 w-[60%] h-[60%] bg-valict-navy/10 dark:bg-valict-cyan/7 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            {/* شبكة الموصلات - أصغر، وبشكل الدوائر الإلكترونية */}
+            {/* شبكة الموصلات - في الركن اليسار فوق */}
             <div className="absolute top-6 left-0 w-48 h-48 opacity-[0.15] z-0 pointer-events-none">
               <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                {/* خطوط متعرجة */}
                 <path d="M20 20 H60 V60 H100 V100" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
                 <path d="M180 20 H140 V60 H100 V100" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
                 <path d="M100 100 V140 H60 V180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
@@ -78,7 +77,30 @@ export function WhyUs({ dict }: WhyUsProps) {
                 <path d="M60 60 H80 V80" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
                 <path d="M140 60 H120 V80" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
 
-                {/* نقط (خلايا) */}
+                <circle cx="20" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="180" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="100" cy="100" r="5" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="20" cy="100" r="3" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="180" cy="100" r="3" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="60" cy="180" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="140" cy="180" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="80" cy="80" r="3" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="120" cy="80" r="3" fill="currentColor" className="text-valict-cyan" />
+              </svg>
+            </div>
+
+            {/* شبكة الموصلات - نسخة تانية في الركن اليمين تحت */}
+            <div className="absolute bottom-0 right-0 w-40 h-40 opacity-[0.15] z-0 pointer-events-none">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M20 20 H60 V60 H100 V100" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M180 20 H140 V60 H100 V100" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M100 100 V140 H60 V180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M100 100 V140 H140 V180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M20 100 H60 V140" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M180 100 H140 V140" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M60 60 H80 V80" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <path d="M140 60 H120 V80" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+
                 <circle cx="20" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
                 <circle cx="180" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
                 <circle cx="100" cy="100" r="5" fill="currentColor" className="text-valict-cyan" />
