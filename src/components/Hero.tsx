@@ -29,6 +29,17 @@ export function Hero({ dict }: HeroProps) {
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
 
+      {/* الـ Watermark (صورة JustV) - في الركن الأيمن، ملفوف 30 درجة عكس عقارب الساعة */}
+      <div className="hidden lg:block absolute top-0 right-0 w-[500px] h-[500px] opacity-[0.05] pointer-events-none -z-0">
+        <Image
+          src="/JustV.png"
+          alt=""
+          fill
+          className="object-contain -rotate-30"
+          aria-hidden="true"
+        />
+      </div>
+
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32">
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           <div className="w-full flex justify-center mb-6">
