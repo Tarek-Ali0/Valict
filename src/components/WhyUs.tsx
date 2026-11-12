@@ -65,8 +65,28 @@ export function WhyUs({ dict }: WhyUsProps) {
 
             <div className="absolute bottom-[5%] left-0 w-[60%] h-[60%] bg-valict-navy/10 dark:bg-valict-cyan/7 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            {/* الدائرة: شيلنا -z-10 وحطينا z-0 عشان تبان */}
-            <div className="absolute top-10 left-0 w-32 h-32 border-4 border-slate-100 dark:border-slate-800 rounded-full z-0 pointer-events-none"></div>
+            {/* شبكة الموصلات (بدل الدائرة القديمة) */}
+            <div className="absolute top-0 left-0 w-64 h-64 opacity-[0.15] z-0 pointer-events-none">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                {/* خطوط */}
+                <line x1="20" y1="20" x2="100" y2="80" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="100" y1="80" x2="180" y2="20" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="100" y1="80" x2="100" y2="180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="20" y1="20" x2="20" y2="140" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="20" y1="140" x2="100" y2="180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="180" y1="20" x2="180" y2="120" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                <line x1="180" y1="120" x2="100" y2="180" stroke="currentColor" strokeWidth="1" className="text-valict-cyan" />
+                
+                {/* نقط */}
+                <circle cx="20" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="100" cy="80" r="5" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="180" cy="20" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="20" cy="140" r="3" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="100" cy="180" r="4" fill="currentColor" className="text-valict-cyan" />
+                <circle cx="180" cy="120" r="3" fill="currentColor" className="text-valict-cyan" />
+              </svg>
+            </div>
+
             <div className="absolute bottom-10 right-10 w-24 h-24 bg-valict-cyan/10 rounded-full blur-xl -z-10 pointer-events-none"></div>
 
             <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl border-[6px] md:border-[8px] border-white dark:border-slate-900 group z-10">
