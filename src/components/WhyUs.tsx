@@ -65,10 +65,11 @@ export function WhyUs({ dict }: WhyUsProps) {
 
             <div className="absolute bottom-[5%] left-0 w-[60%] h-[60%] bg-valict-navy/10 dark:bg-valict-cyan/7 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            <div className="absolute top-10 left-0 w-32 h-32 border-4 border-slate-100 dark:border-slate-800 rounded-full -z-10 opacity-50"></div>
-            <div className="absolute bottom-10 right-10 w-24 h-24 bg-valict-cyan/10 rounded-full blur-xl -z-10"></div>
+            {/* الدائرة: شيلنا -z-10 وحطينا z-0 عشان تبان */}
+            <div className="absolute top-10 left-0 w-32 h-32 border-4 border-slate-100 dark:border-slate-800 rounded-full z-0 pointer-events-none"></div>
+            <div className="absolute bottom-10 right-10 w-24 h-24 bg-valict-cyan/10 rounded-full blur-xl -z-10 pointer-events-none"></div>
 
-            <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl border-[6px] md:border-[8px] border-white dark:border-slate-900 group">
+            <div className="absolute top-0 right-0 w-[75%] h-[75%] rounded-[2rem] overflow-hidden shadow-2xl border-[6px] md:border-[8px] border-white dark:border-slate-900 group z-10">
               <div className="absolute inset-0 bg-valict-navy/10 z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
               <Image
                 src="/why-server-room.webp"
