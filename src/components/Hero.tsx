@@ -71,7 +71,7 @@ export function Hero({ dict }: HeroProps) {
             <Link
               href="#contact"
               aria-label="Navigate to Valict consultation and contact section"
-              className="inline-flex font-sans btn-gradient text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
+              className="inline-flex font-sans bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-cyan text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
             >
               {dict.hero.cta}
               <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
@@ -110,7 +110,7 @@ export function Hero({ dict }: HeroProps) {
                 <Link
                   href="#contact"
                   aria-label="Navigate to Valict consultation and contact section"
-                  className="inline-flex font-sans btn-gradient text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
+                  className="inline-flex font-sans bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-cyan text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
                 >
                   {dict.hero.cta}
                   <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
