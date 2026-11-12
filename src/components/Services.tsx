@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   FaLaptopCode, 
   FaNetworkWired, 
@@ -138,11 +139,25 @@ export function Services({ dict, lang = "ar" }: ServicesProps) {
               >
                 <motion.div
                   variants={cardVariants}
-                  className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 hover:bg-valict-navy dark:hover:bg-valict-navy hover:-translate-y-2 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start overflow-hidden"
+                  className="group relative bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-valict-navy/10 transition-all duration-500 border border-slate-200 dark:border-slate-800 hover:border-valict-cyan/30 dark:hover:border-valict-cyan/30 flex flex-col h-full text-start overflow-hidden"
                 >
+                  {/* الخلفية المتدرجة عند الـ Hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ltr:from-valict-navy ltr:to-valict-dark rtl:from-valict-dark rtl:to-valict-navy -z-0"></div>
+
+                  {/* الـ Watermark (صورة JustV) - ديناميكي حسب اللغة، في الركن المقابل لـ Learn more */}
+                  <div className="absolute bottom-0 opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500 pointer-events-none w-[200px] h-[200px] ltr:right-0 rtl:left-0 -z-0">
+                    <Image
+                      src="/JustV.png"
+                      alt=""
+                      fill
+                      className="object-contain"
+                      aria-hidden="true"
+                    />
+                  </div>
+
                   {/* Blob داخلي — في الزاوية */}
                   <div
-                    className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl transition-opacity duration-500 ${colors.blob} group-hover:opacity-0`}
+                    className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl transition-opacity duration-500 ${colors.blob} group-hover:opacity-0 -z-0`}
                   ></div>
 
                   {/* المحتوى */}
