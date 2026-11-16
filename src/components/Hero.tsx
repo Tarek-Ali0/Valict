@@ -36,7 +36,7 @@ export function Hero({ dict }: HeroProps) {
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
               style={{ 
-                borderRadius: "2rem",
+                borderRadius: "1rem",
                 display: "inline-flex"
               }}
             >
@@ -92,7 +92,7 @@ export function Hero({ dict }: HeroProps) {
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
               style={{ 
-                borderRadius: "2rem",
+                borderRadius: "1rem",
                 display: "inline-flex"
               }}
             >
