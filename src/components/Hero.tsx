@@ -105,9 +105,9 @@ export function Hero({ dict }: HeroProps) {
           </div>
 
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
-            <div className="flex flex-col text-start space-y-3 min-w-0">
-              {/* اسم الشركة - الجملة الجديدة */}
-              <span className="text-sm md:text-base font-bold text-valict-navy dark:text-valict-cyan tracking-wide">
+            <div className="flex flex-col text-start space-y-4 min-w-0">
+              {/* اسم الشركة - الجملة الجديدة (تم تكبيرها وتغميقها) */}
+              <span className="text-lg lg:text-xl font-black text-valict-dark dark:text-white tracking-wide">
                 {dict.hero.companyName}
               </span>
 
