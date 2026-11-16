@@ -25,11 +25,11 @@ export function StripBanner({ lang }: StripBannerProps) {
 
   return (
     <section className="relative w-full transition-colors duration-300 hidden lg:block">
-      {/* قللنا العرض من 1600px لـ 1200px */}
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      {/* رجعنا العرض لـ 1600px */}
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
-        {/* الشريط */}
-        <div className="relative w-full h-[100px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl px-8 md:px-10 shadow-2xl overflow-hidden flex items-center justify-center">
+        {/* الشريط (زودنا التدوير لـ rounded-[2rem]) */}
+        <div className="relative w-full h-[100px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-[2rem] px-8 md:px-10 shadow-2xl overflow-hidden flex items-center justify-center">
           
           {/* الـ Watermark */}
           <div className="absolute top-1/2 -translate-y-1/2 w-[300px] h-[300px] opacity-[0.08] pointer-events-none ltr:left-0 rtl:right-0">
