@@ -195,6 +195,14 @@ export default async function RootLayout({
             __html: JSON.stringify(localBusinessSchema),
           }}
         />
+
+        {/* Favicons and Touch Icons */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+
+        {/* Theme Color */}
+        <meta name="theme-color" content="#0B1120" />
       </head>
 
       <body
