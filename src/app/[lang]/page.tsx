@@ -1,6 +1,7 @@
 import { getDictionary } from "@/lib/dictionaries";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { StripBanner } from "@/components/StripBanner";
 import dynamic from "next/dynamic";
 
 // 1. حل مشكلة Network dependency tree: تحميل المكونات مع عزل كامل لحزم الجافا سكريبت والأيقونات الخاصة بها
@@ -32,6 +33,9 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       
       {/* المكونات الرئيسية العلوية تظل ثابتة لتحميل أسرع (LCP) */}
       <Hero dict={dict} />
+      
+      {/* الشريط الجديد (فاضي مؤقتاً) */}
+      <StripBanner lang={lang} />
       
       {/* المكونات السفلية المحملة ديناميكياً بذكاء لتفتيت شجرة الاعتماديات */}
       <Services dict={dict} lang={lang} />
