@@ -24,9 +24,9 @@ export function StripBanner({ lang }: StripBannerProps) {
       ];
 
   return (
-    // إضافة hidden lg:block عشان يظهر في الديسكتوب بس
     <section className="relative w-full transition-colors duration-300 hidden lg:block">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      {/* قللنا العرض من 1600px لـ 1200px */}
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
         {/* الشريط */}
         <div className="relative w-full h-[100px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl px-8 md:px-10 shadow-2xl overflow-hidden flex items-center justify-center">
