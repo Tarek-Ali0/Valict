@@ -11,7 +11,6 @@ interface StripBannerProps {
 export function StripBanner({ lang }: StripBannerProps) {
   const isAr = lang === "ar";
 
-  // العناوين مع الأيقونات
   const highlights = isAr
     ? [
         { text: "أمن سيبراني متقدم", icon: FaShieldHalved },
@@ -25,7 +24,8 @@ export function StripBanner({ lang }: StripBannerProps) {
       ];
 
   return (
-    <section className="relative w-full transition-colors duration-300">
+    // إضافة hidden lg:block عشان يظهر في الديسكتوب بس
+    <section className="relative w-full transition-colors duration-300 hidden lg:block">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
         {/* الشريط */}
