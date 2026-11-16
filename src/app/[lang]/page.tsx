@@ -4,10 +4,9 @@ import { Hero } from "@/components/Hero";
 import { StripBanner } from "@/components/StripBanner";
 import dynamic from "next/dynamic";
 
-// 1. حل مشكلة Network dependency tree: تحميل المكونات مع عزل كامل لحزم الجافا سكريبت والأيقونات الخاصة بها
 const Services = dynamic(() => import("@/components/Services").then((mod) => mod.Services), {
   ssr: true,
-  loading: () => <div className="min-h-[400px] bg-slate-50 dark:bg-[#0B1120] animate-pulse" /> // مساحة محجوزة تمنع تشتت المتصفح أثناء البناء
+  loading: () => <div className="min-h-[400px] bg-slate-50 dark:bg-[#0B1120] animate-pulse" />
 });
 
 const WhyUs = dynamic(() => import("@/components/WhyUs").then((mod) => mod.WhyUs), {
@@ -31,13 +30,13 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
     <main className="w-full selection:bg-valict-cyan selection:text-valict-navy transition-colors duration-300">
       <Navbar lang={lang} dict={dict} />
       
-      {/* المكونات الرئيسية العلوية تظل ثابتة لتحميل أسرع (LCP) */}
       <Hero dict={dict} />
       
-      {/* الشريط الجديد (فاضي مؤقتاً) */}
-      <StripBanner lang={lang} />
+      {/* الشريط: بنرفعه لفوق عشان يتداخل مع الـ Hero، وننزله لتحت عشان يتداخل مع الـ Services */}
+      <div className="relative -mt-16 z-30">
+        <StripBanner lang={lang} />
+      </div>
       
-      {/* المكونات السفلية المحملة ديناميكياً بذكاء لتفتيت شجرة الاعتماديات */}
       <Services dict={dict} lang={lang} />
       
       <WhyUs dict={dict} />
