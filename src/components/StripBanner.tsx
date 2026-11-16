@@ -15,7 +15,8 @@ export function StripBanner({ lang }: StripBannerProps) {
     : ["Advanced Cybersecurity", "Reliable Infrastructure", "24/7 Technical Support"];
 
   return (
-    <section className="relative w-full overflow-hidden transition-colors duration-300">
+    // شيلنا overflow-hidden من هنا
+    <section className="relative w-full transition-colors duration-300">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
         {/* الشريط (مع ظل قوي) */}
