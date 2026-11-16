@@ -32,8 +32,11 @@ export function Hero({ dict }: HeroProps) {
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32">
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           <div className="w-full flex justify-center mb-6">
-            {/* البادج (موبايل) - مع تدوير 2rem */}
-            <div className="inline-flex items-center gap-2 px-6 py-2.5 text-base rounded-[2rem] bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+            {/* البادج (موبايل) - مع Style مباشر لضمان التدوير */}
+            <div 
+              className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
+              style={{ borderRadius: "2rem" }}
+            >
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-base font-black text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
@@ -82,8 +85,11 @@ export function Hero({ dict }: HeroProps) {
 
         <div className="hidden lg:block relative z-20 w-full">
           <div className="flex justify-center mb-8 -mt-4">
-            {/* البادج (ديسكتوب) - مع تدوير 2rem */}
-            <div className="inline-flex items-center gap-2 px-6 py-2.5 text-base rounded-[2rem] bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
+            {/* البادج (ديسكتوب) - مع Style مباشر لضمان التدوير */}
+            <div 
+              className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
+              style={{ borderRadius: "2rem" }}
+            >
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-base font-black text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
                 {dict.hero.badge}
