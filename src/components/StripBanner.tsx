@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { FaShieldHalved, FaServer, FaHeadset } from "react-icons/fa6";
 
 interface StripBannerProps {
   lang: string;
@@ -10,16 +11,24 @@ interface StripBannerProps {
 export function StripBanner({ lang }: StripBannerProps) {
   const isAr = lang === "ar";
 
+  // العناوين مع الأيقونات
   const highlights = isAr
-    ? ["أمن سيبراني متقدم", "بنية تحتية موثوقة", "دعم فني 24/7"]
-    : ["Advanced Cybersecurity", "Reliable Infrastructure", "24/7 Technical Support"];
+    ? [
+        { text: "أمن سيبراني متقدم", icon: FaShieldHalved },
+        { text: "بنية تحتية موثوقة", icon: FaServer },
+        { text: "دعم فني 24/7", icon: FaHeadset },
+      ]
+    : [
+        { text: "Advanced Cybersecurity", icon: FaShieldHalved },
+        { text: "Reliable Infrastructure", icon: FaServer },
+        { text: "24/7 Technical Support", icon: FaHeadset },
+      ];
 
   return (
-    // شيلنا overflow-hidden من هنا
     <section className="relative w-full transition-colors duration-300">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
-        {/* الشريط (مع ظل قوي) */}
+        {/* الشريط */}
         <div className="relative w-full h-[100px] bg-gradient-to-r rtl:bg-gradient-to-l from-valict-navy to-valict-dark rounded-2xl px-8 md:px-10 shadow-2xl overflow-hidden flex items-center justify-center">
           
           {/* الـ Watermark */}
@@ -33,11 +42,18 @@ export function StripBanner({ lang }: StripBannerProps) {
             />
           </div>
 
-          {/* المحتوى (النص بنفس تنسيق Reliable Solutions بس أصغر) */}
-          <div className="relative z-10 w-full flex items-center justify-center gap-8 md:gap-16">
-            {highlights.map((text, index) => (
-              <div key={index} className="text-white font-black text-lg md:text-xl whitespace-nowrap">
-                {text}
+          {/* المحتوى (النص + الأيقونات) */}
+          <div className="relative z-10 w-full flex items-center justify-center gap-8 md:gap-16 flex-wrap">
+            {highlights.map((item, index) => (
+              <div key={index} className="flex items-center gap-3">
+                {/* الأيقونة داخل مربع */}
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                  <item.icon className="w-5 h-5 text-valict-cyan" />
+                </div>
+                {/* النص */}
+                <span className="text-white font-black text-lg md:text-xl whitespace-nowrap">
+                  {item.text}
+                </span>
               </div>
             ))}
           </div>
