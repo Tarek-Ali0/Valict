@@ -32,8 +32,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'en' | 
       
       <Hero dict={dict} />
       
-      {/* الشريط: بنرفعه لفوق عشان يتداخل مع الـ Hero، وننزله لتحت عشان يتداخل مع الـ Services */}
-      <div className="relative -mt-16 z-30">
+      {/* الشريط: بنرفعه لفوق عشان يتداخل مع الـ Hero، والظل يبان */}
+      <div className="relative -mt-20 z-30">
         <StripBanner lang={lang} />
       </div>
       
