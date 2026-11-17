@@ -32,13 +32,10 @@ export function Hero({ dict }: HeroProps) {
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-24 lg:pb-40">
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           <div className="w-full flex justify-center mb-6">
-            {/* البادج (موبايل) - مع Style مباشر */}
+            {/* البادج (موبايل) */}
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-sm bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
-              style={{ 
-                borderRadius: "1rem",
-                display: "inline-flex"
-              }}
+              style={{ borderRadius: "1rem", display: "inline-flex" }}
             >
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-sm font-black text-slate-900 dark:text-valict-cyan tracking-wider uppercase">
@@ -88,13 +85,10 @@ export function Hero({ dict }: HeroProps) {
 
         <div className="hidden lg:block relative z-20 w-full">
           <div className="flex justify-center mb-12 -mt-4">
-            {/* البادج (ديسكتوب) - مع Style مباشر */}
+            {/* البادج (ديسكتوب) */}
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
-              style={{ 
-                borderRadius: "1rem",
-                display: "inline-flex"
-              }}
+              style={{ borderRadius: "1rem", display: "inline-flex" }}
             >
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-base font-black text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -106,7 +100,6 @@ export function Hero({ dict }: HeroProps) {
 
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
             <div className="flex flex-col text-start space-y-4 min-w-0">
-              {/* اسم الشركة - الجملة الجديدة (تم تكبيرها وتغميقها) */}
               <span className="text-lg lg:text-xl font-black text-valict-dark dark:text-white tracking-wide">
                 {dict.hero.companyName}
               </span>
@@ -154,14 +147,16 @@ export function Hero({ dict }: HeroProps) {
             </motion.div>
           </div>
         </div>
+      </div>
 
-        {/* الخط الفاصل - تم نقله جوه الحاوية */}
-        <div className="w-full mt-12 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
-            <div className="w-40 md:w-52"></div>
-            <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
-          </div>
+      {/* الخط الفاصل - يظهر في الديسكتوب بس */}
+      <div className="hidden lg:flex w-full pb-0">
+        <div className="flex items-center gap-4 w-full">
+          <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
+
+          <div className="w-40 md:w-52"></div>
+
+          <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
         </div>
       </div>
 
