@@ -74,7 +74,7 @@ export function Hero({ dict }: HeroProps) {
             </p>
           )}
 
-          <div className="w-full">
+          <div className="w-full mb-8">
             <Link
               href="#contact"
               aria-label="Navigate to Valict consultation and contact section"
@@ -156,7 +156,7 @@ export function Hero({ dict }: HeroProps) {
         </div>
       </div>
 
-      <div className="w-full pb-16 lg:pb-0">
+      <div className="w-full pb-8 lg:pb-0">
         <div className="flex items-center gap-4">
           <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
 
