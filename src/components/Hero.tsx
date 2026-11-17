@@ -154,15 +154,14 @@ export function Hero({ dict }: HeroProps) {
             </motion.div>
           </div>
         </div>
-      </div>
 
-      <div className="w-full pb-0">
-        <div className="flex items-center gap-4">
-          <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
-
-          <div className="w-40 md:w-52"></div>
-
-          <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
+        {/* الخط الفاصل - تم نقله جوه الحاوية */}
+        <div className="w-full mt-12 mb-8">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
+            <div className="w-40 md:w-52"></div>
+            <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
+          </div>
         </div>
       </div>
 
