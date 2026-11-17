@@ -1,170 +1,49 @@
-"use client";
+import { getDictionary } from "@/lib/dictionaries";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { StripBanner } from "@/components/StripBanner";
+import dynamic from "next/dynamic";
 
-import React, { useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { motion, useScroll, useTransform } from "framer-motion";
+const Services = dynamic(() => import("@/components/Services").then((mod) => mod.Services), {
+  ssr: true,
+  loading: () => <div className="min-h-[400px] bg-slate-50 dark:bg-[#0B1120] animate-pulse" />
+});
 
-interface HeroProps {
-  dict: any;
-}
+const WhyUs = dynamic(() => import("@/components/WhyUs").then((mod) => mod.WhyUs), {
+  ssr: true,
+});
 
-export function Hero({ dict }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+const HowItWorks = dynamic(() => import("@/components/HowItWorks").then((mod) => mod.HowItWorks), {
+  ssr: true,
+});
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+const Contact = dynamic(() => import("@/components/Contact").then((mod) => mod.Contact), {
+  ssr: true,
+});
 
-  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.92]);
+export default async function Home({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang;
+  const dict = await getDictionary(lang);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full h-auto transition-colors duration-300 overflow-hidden"
-    >
-      <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-cyan/[0.10] dark:bg-valict-cyan/[0.07] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
-
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-24 lg:pb-40">
-        <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
-          <div className="w-full flex justify-center mb-6">
-            {/* البادج (موبايل) - مع Style مباشر */}
-            <div 
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-sm bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
-              style={{ 
-                borderRadius: "1rem",
-                display: "inline-flex"
-              }}
-            >
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-sm font-black text-slate-900 dark:text-valict-cyan tracking-wider uppercase">
-                {dict.hero.badge}
-              </span>
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-            </div>
-          </div>
-
-          <div className="w-full max-w-[400px] xs:max-w-[440px] sm:max-w-[520px] mb-6">
-            <Image
-              src="/dashboard-mockup.png"
-              alt="Valict ICT Infrastructure Dashboard - Managed IT Services"
-              width={1050}
-              height={680}
-              className="w-full h-auto drop-shadow-md object-contain pointer-events-none"
-              priority
-              fetchPriority="high"
-              sizes="(max-width: 640px) 400px, (max-width: 1024px) 520px, 900px"
-            />
-          </div>
-
-          <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
-            {dict.hero.title1} <br />
-            <span className="logo-gradient-text leading-relaxed">
-              {dict.hero.title2}
-            </span>
-          </h2>
-
-          {(dict.hero.description || dict.about?.text) && (
-            <p className="w-full text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-6 leading-relaxed font-medium text-start">
-              {dict.hero.description || dict.about?.text}
-            </p>
-          )}
-
-          <div className="w-full">
-            <Link
-              href="#contact"
-              aria-label="Navigate to Valict consultation and contact section"
-              className="inline-flex font-sans btn-gradient rtl:bg-gradient-to-l text-white px-6 py-2.5 rounded-xl font-bold text-xs items-center gap-2 shadow-lg shadow-valict-cyan/25"
-            >
-              {dict.hero.cta}
-              <FaArrowRightLong className="h-3 w-3 rtl:rotate-180" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="hidden lg:block relative z-20 w-full">
-          <div className="flex justify-center mb-12 -mt-4">
-            {/* البادج (ديسكتوب) - مع Style مباشر */}
-            <div 
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
-              style={{ 
-                borderRadius: "1rem",
-                display: "inline-flex"
-              }}
-            >
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-              <span className="text-base font-black text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
-                {dict.hero.badge}
-              </span>
-              <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-12 items-center w-full">
-            <div className="flex flex-col text-start space-y-4 min-w-0">
-              {/* اسم الشركة - الجملة الجديدة (تم تكبيرها وتغميقها) */}
-              <span className="text-lg lg:text-xl font-black text-valict-dark dark:text-white tracking-wide">
-                {dict.hero.companyName}
-              </span>
-
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black leading-[1.15] text-valict-dark dark:text-white tracking-tight">
-                <span className="lg:whitespace-nowrap">{dict.hero.title1}</span>
-                <br />
-                <span className="logo-gradient-text leading-relaxed lg:whitespace-nowrap">
-                  {dict.hero.title2}
-                </span>
-              </h1>
-
-              {(dict.hero.description || dict.about?.text) && (
-                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-                  {dict.hero.description || dict.about?.text}
-                </p>
-              )}
-
-              <div className="pt-2">
-                <Link
-                  href="#contact"
-                  aria-label="Navigate to Valict consultation and contact section"
-                  className="inline-flex font-sans btn-gradient rtl:bg-gradient-to-l text-white px-7 py-3 rounded-xl font-bold text-sm items-center gap-2 shadow-lg shadow-valict-cyan/25 hover:shadow-valict-cyan/40 transition-all duration-300"
-                >
-                  {dict.hero.cta}
-                  <FaArrowRightLong className="h-4 w-4 rtl:rotate-180" />
-                </Link>
-              </div>
-            </div>
-
-            <motion.div
-              className="w-full flex items-center justify-center"
-              style={{ scale: imageScale }}
-            >
-              <Image
-                src="/dashboard-mockup.png"
-                alt="Valict ICT Infrastructure Dashboard - Managed IT Services"
-                width={1050}
-                height={680}
-                className="w-full h-auto max-w-[1400px] drop-shadow-[0_15px_35px_rgba(30,58,138,0.15)] object-contain pointer-events-none"
-                priority
-                fetchPriority="high"
-                sizes="(min-width: 1024px) 1400px, 100vw"
-              />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* الخط الفاصل - تم نقله جوه الحاوية */}
-        <div className="w-full mt-12 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
-            <div className="w-40 md:w-52"></div>
-            <div className="flex-1 h-[1px] bg-gradient-to-l rtl:bg-gradient-to-r from-slate-400 to-transparent dark:from-slate-600"></div>
-          </div>
-        </div>
+    <main className="w-full selection:bg-valict-cyan selection:text-valict-navy transition-colors duration-300">
+      <Navbar lang={lang} dict={dict} />
+      
+      <Hero dict={dict} />
+      
+      {/* الشريط: بنرفعه لفوق عشان يتداخل مع الـ Hero، والظل يبان */}
+      <div className="relative -mt-20 z-30">
+        <StripBanner lang={lang} />
       </div>
-
-    </section>
+      
+      <Services dict={dict} lang={lang} />
+      
+      <WhyUs dict={dict} />
+      
+      <HowItWorks dict={dict} />
+      
+      <Contact dict={dict} />
+    </main>
   );
 }
