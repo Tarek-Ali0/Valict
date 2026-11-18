@@ -31,7 +31,7 @@ export function Hero({ dict }: HeroProps) {
 
       <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-8 lg:pb-40">
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
-          <div className="w-full flex justify-center mb-6">
+          <div className="w-full flex justify-center mb-4">
             {/* البادج (موبايل) */}
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-sm bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
@@ -45,7 +45,7 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          <div className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] mb-6">
+          <div className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] mb-4">
             <Image
               src="/dashboard-mockup.png"
               alt="Valict ICT Infrastructure Dashboard - Managed IT Services"
@@ -58,7 +58,7 @@ export function Hero({ dict }: HeroProps) {
             />
           </div>
 
-          <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-2 text-valict-dark dark:text-white tracking-tight text-start">
+          <h2 className="w-full text-2xl xs:text-3xl sm:text-4xl font-black leading-[1.2] mb-4 text-valict-dark dark:text-white tracking-tight text-start">
             {dict.hero.title1} <br />
             <span className="logo-gradient-text leading-relaxed">
               {dict.hero.title2}
