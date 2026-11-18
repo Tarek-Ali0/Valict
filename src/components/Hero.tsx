@@ -45,7 +45,7 @@ export function Hero({ dict }: HeroProps) {
             </div>
           </div>
 
-          <div className="w-full max-w-[400px] xs:max-w-[440px] sm:max-w-[520px] mb-6">
+          <div className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] mb-6">
             <Image
               src="/dashboard-mockup.png"
               alt="Valict ICT Infrastructure Dashboard - Managed IT Services"
@@ -54,7 +54,7 @@ export function Hero({ dict }: HeroProps) {
               className="w-full h-auto drop-shadow-md object-contain pointer-events-none"
               priority
               fetchPriority="high"
-              sizes="(max-width: 640px) 400px, (max-width: 1024px) 520px, 900px"
+              sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 900px"
             />
           </div>
 
