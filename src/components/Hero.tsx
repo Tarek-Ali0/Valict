@@ -29,7 +29,7 @@ export function Hero({ dict }: HeroProps) {
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-24 lg:pb-40">
+      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-8 lg:pb-40">
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           <div className="w-full flex justify-center mb-6">
             {/* البادج (موبايل) */}
@@ -149,8 +149,8 @@ export function Hero({ dict }: HeroProps) {
         </div>
       </div>
 
-      {/* الخط الفاصل - يظهر في الديسكتوب بس */}
-      <div className="hidden lg:flex w-full pb-0">
+      {/* الخط الفاصل - يظهر في الموبايل والديسكتوب */}
+      <div className="flex w-full pb-8 lg:pb-0">
         <div className="flex items-center gap-4 w-full">
           <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
 
