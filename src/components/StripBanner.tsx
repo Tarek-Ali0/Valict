@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { FaShieldHalved, FaServer, FaHeadset } from "react-icons/fa6";
+import { FaShieldHalved, FaServer, FaHeadset, FaLaptopCode } from "react-icons/fa6";
 
 interface StripBannerProps {
   lang: string;
@@ -13,14 +13,16 @@ export function StripBanner({ lang }: StripBannerProps) {
 
   const highlights = isAr
     ? [
-        { text: "أمن سيبراني متقدم", icon: FaShieldHalved },
+        { text: "أمن سيبراني", icon: FaShieldHalved },
         { text: "بنية تحتية موثوقة", icon: FaServer },
         { text: "دعم فني 24/7", icon: FaHeadset },
+        { text: "حلول الويب", icon: FaLaptopCode },
       ]
     : [
-        { text: "Advanced Cybersecurity", icon: FaShieldHalved },
+        { text: "Cybersecurity", icon: FaShieldHalved },
         { text: "Reliable Infrastructure", icon: FaServer },
         { text: "24/7 Technical Support", icon: FaHeadset },
+        { text: "Web Solutions", icon: FaLaptopCode },
       ];
 
   return (
