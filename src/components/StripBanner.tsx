@@ -15,14 +15,14 @@ export function StripBanner({ lang }: StripBannerProps) {
     ? [
         { text: "أمن سيبراني", icon: FaShieldHalved },
         { text: "بنية تحتية موثوقة", icon: FaServer },
-        { text: "دعم فني 24/7", icon: FaHeadset },
         { text: "حلول الويب", icon: FaLaptopCode },
+        { text: "دعم فني 24/7", icon: FaHeadset },
       ]
     : [
         { text: "Cybersecurity", icon: FaShieldHalved },
         { text: "Reliable Infrastructure", icon: FaServer },
-        { text: "24/7 Technical Support", icon: FaHeadset },
         { text: "Web Solutions", icon: FaLaptopCode },
+        { text: "24/7 Technical Support", icon: FaHeadset },
       ];
 
   return (
