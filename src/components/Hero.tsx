@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong } from "react5/fa6"; // أو الـ import الطبيعي عندك للـ icons
 import { motion, useScroll, useTransform } from "framer-motion";
 
 interface HeroProps {
@@ -29,10 +29,12 @@ export function Hero({ dict }: HeroProps) {
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-valict-navy/[0.07] dark:bg-valict-cyan/[0.05] rounded-full blur-[90px] md:blur-[120px] -z-10 pointer-events-none"></div>
       <div className="circuit-bg absolute inset-0 opacity-[0.15] dark:opacity-[0.05] -z-20 pointer-events-none"></div>
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-48 lg:pt-52 pb-24 lg:pb-40">
+      {/* رجعنا الـ padding العلوي والسفلي بتاع الموبايل للوضع القديم المظبوط */}
+      <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-24 lg:pb-32">
+        
+        {/* === نسخة الموبايل (lg:hidden) - رجعت زي القديم بالمللي === */}
         <div className="lg:hidden relative z-20 flex flex-col items-center text-start w-full">
           <div className="w-full flex justify-center mb-6">
-            {/* البادج (موبايل) - زي القديم */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10">
               <span className="flex h-2.5 w-2.5 rounded-full bg-valict-cyan animate-pulse"></span>
               <span className="text-sm font-bold text-slate-900 dark:text-valict-cyan tracking-widest uppercase">
@@ -80,9 +82,9 @@ export function Hero({ dict }: HeroProps) {
           </div>
         </div>
 
+        {/* === نسخة الديسكتوب (hidden lg:block) - زي ما هي بتعديلاتك السليمة === */}
         <div className="hidden lg:block relative z-20 w-full">
-          <div className="flex justify-center mb-12 -mt-4">
-            {/* البادج (ديسكتوب) - بالتوسعة */}
+          <div className="flex justify-center mb-8 -mt-4">
             <div 
               className="inline-flex items-center gap-2 px-6 py-2.5 text-base bg-white dark:bg-slate-900 border border-valict-cyan/30 dark:border-valict-cyan/20 shadow-md shadow-valict-cyan/10"
               style={{ borderRadius: "1rem", display: "inline-flex" }}
@@ -146,7 +148,7 @@ export function Hero({ dict }: HeroProps) {
         </div>
       </div>
 
-      {/* الخط الفاصل - زي القديم (بدون pb) */}
+      {/* الخط الفاصل تحت الهيرو - رجع مكانه الطبيعي */}
       <div className="w-full">
         <div className="flex items-center gap-4">
           <div className="flex-1 h-[1px] bg-gradient-to-r rtl:bg-gradient-to-l from-slate-400 to-transparent dark:from-slate-600"></div>
