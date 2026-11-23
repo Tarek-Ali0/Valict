@@ -2,12 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
+import type { Dictionary } from "@/lib/dict.types";
+
 interface ContactProps {
-  dict: any;
-  lang?: string;
+  dict: Dictionary;
 }
 
-export function Contact({ dict, lang = "en" }: ContactProps) {
+export function Contact({ dict }: ContactProps) {
   return (
     <section id="contact" className="relative transition-colors duration-300 overflow-hidden">
       
