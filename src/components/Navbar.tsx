@@ -16,31 +16,67 @@ import {
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
+interface NavLink {
+  name: string;
+  href: string;
+  ariaLabel: string;
+}
+
+/**
+ * useMounted — بديل setState-in-effect.
+ *
+ * [إصلاح أداء #1] قبل التعديل كان الـ pattern هو:
+ *   const [mounted, setMounted] = useState(false);
+ *   useEffect(() => { setMounted(true); }, []);
+ * ده بيسبب cascading render: السيرفر بيرندر بـ false، الكلاينت بيرندر بـ false
+ * (عشان يتطابق مع السيرفر في الـ hydration)، وبعدين الـ effect بيشتغل وبيستدعي
+ * setMounted(true) فبيحصل re-render تاني. توثيق React 19 بيتجنب هذا النمط.
+ *
+ * useSyncExternalStore بيوفّر نفس السلوك بشكل رسمي:
+ * - getServerSnapshot بترجع false (matching SSR output).
+ * - getSnapshot بترجع true بعد الـ hydration.
+ * - ما فيش setState call جوّه effect → ما فيش تحذير set-state-in-effect
+ *   ولا re-render متتالي.
+ */
+function useMounted(): boolean {
+  return React.useSyncExternalStore(
+    () => () => {
+      // لا يوجد اشتراك فعلي — القيمة ثابتة (true على الكلاينت، false على السيرفر).
+    },
+    () => true, // getSnapshot (client only)
+    () => false // getServerSnapshot (SSR + initial hydration)
+  );
+}
+
 export function Navbar({ lang, dict }: { lang: string; dict: any }) {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useMounted();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const pathname = usePathname();
 
+  // [إصلاح أداء #1] أزلنا setMounted(true) من جوّه الـ effect.
+  // الـ effect ده دلوقتي مسؤول عن scroll listener فقط، وأي setState بيحصل
+  // جوّه معالج الحدث (handleScroll) — مش في جسم الـ effect نفسه — فده آمن
+  // وما بيطلّعش تحذير set-state-in-effect.
   React.useEffect(() => {
-    setMounted(true);
-
     let ticking = false;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          if (window.scrollY > 20) {
-            setIsScrolled(true);
-          } else {
-            setIsScrolled(false);
-          }
+          setIsScrolled(window.scrollY > 20);
           ticking = false;
         });
         ticking = true;
       }
     };
+
+    // مزامنة أولية: لو الصفحة اتنزّلت وهي بالفعل scrolled (مثلاً بعد refresh
+    // أو navigation من scroll position محفوظ)، نحدّث الحالة. بنستدعي
+    // handleScroll() بدل setIsScrolled مباشرة عشان الـ setState يحصل داخل
+    // rAF callback مش في جسم الـ effect.
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -49,12 +85,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
 
   const alternateLang = lang === "en" ? "ar" : "en";
   const alternatePath = pathname.replace(`/${lang}`, `/${alternateLang}`);
-
-  interface NavLink {
-    name: string;
-    href: string;
-    ariaLabel: string;
-  }
 
   const navLinks: NavLink[] = [
     {
