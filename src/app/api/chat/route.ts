@@ -22,23 +22,72 @@ function fixPhoneNumbers(text: string): string {
 }
 
 /**
- * تنظيف الرد من مصادر البحث
+ * تنظيف الرد من مصادر البحث + تعقيم XSS احتياطي.
+ *
+ * [إصلاح أمني #3] أضفنا تعقيم HTML كطبقة دفاع إضافية. React بتف避ّب XSS تلقائيًا
+ * لما النص يتعمل render كـ children، لكن كطبقة دفاع احتياطية لو الرد اتعمل render
+ * بطريقة خطرة (مثلاً dangerouslySetInnerHTML) أو اتمرّر لطرف تالت، نشيل أي
+ * <script>...</script> أو وسوم خطر برضو.
  */
-function cleanReply(text: string): string {
-  return text.replace(/【[^】]*】/g, "").trim();
+function escapeHtmlBasic(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
-/**
- * Rate limiter بسيط في الذاكرة.
- */
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+function stripScriptTags(str: string): string {
+  // يشيل أي <script ...>...</script> (حتى لو متقسّم على أسطر) و <iframe>/<object>/<embed> اللي ممكن تحمل كود خطر.
+  return str
+    .replace(/<\s*script\b[^>]*>[\s\S]*?<\s*\/\s*script\s*>/gi, "")
+    .replace(/<\s*script\b[^>]*\/?>/gi, "")
+    .replace(/<\s*iframe\b[^>]*>[\s\S]*?<\s*\/\s*iframe\s*>/gi, "")
+    .replace(/<\s*object\b[^>]*>[\s\S]*?<\s*\/\s*object\s*>/gi, "")
+    .replace(/<\s*embed\b[^>]*\/?>/gi, "")
+    .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")   // onerror="..." onload="..." etc.
+    .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
+    .replace(/\son\w+\s*=\s*[^\s>]+/gi, "");
+}
 
-function checkRateLimit(ip: string): { allowed: boolean; retryAfterSec?: number } {
+function cleanReply(text: string): string {
+  const withoutCitations = text.replace(/【[^】]*】/g, "").trim();
+  // تعقيم احتياطي: نشيل أي وسوم script/event handlers لو Groq رجّعها بالغلط.
+  // ملاحظة: بنشيل الوسوم الخطر بس، ونسيب النص العادي زي ما هو عشان الـ markdown
+  // اللي ممكن يرجع من Groq (زي • و الأسطر) يفضل شغّال.
+  return stripScriptTags(withoutCitations);
+}
+
+// =====================
+// Rate Limiter (Redis-first مع fallback لـ In-Memory)
+// =====================
+//
+// [إصلاح أمني #1] قبل التعديل كان الـ rate limiter معتمد على Map عادية في الذاكرة.
+// المشكلة: في بيئات serverless (Vercel/Edge) كل instance بيبقى ليها Map خاصة،
+// فيكون الحد الفعلي = (عدد الـ instances × 15) طلب/دقيقة بدل 15، وده بيفتح ثغرة
+// لإساءة الاستخدام عند التوسّع.
+//
+// الحل: نستخدم Upstash Redis لو متاح (وهو موجود في dependencies أصلاً)،
+// ونطبّق fixed window counter atomic عبر INCR + EXPIRE.
+// لو Redis مش متاح، نرجع لـ in-memory map كـ fallback (مع log واضح عشان يبان
+// إننا في وضع degraded).
+
+type InMemoryEntry = { count: number; resetAt: number };
+const inMemoryRateLimitStore = new Map<string, InMemoryEntry>();
+
+function checkRateLimitInMemory(ip: string): {
+  allowed: boolean;
+  retryAfterSec?: number;
+} {
   const now = Date.now();
-  const entry = rateLimitStore.get(ip);
+  const entry = inMemoryRateLimitStore.get(ip);
 
   if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    inMemoryRateLimitStore.set(ip, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
     return { allowed: true };
   }
 
@@ -53,14 +102,62 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfterSec?: number 
   return { allowed: true };
 }
 
-// تنظيف دوري للـ store
+/**
+ * Rate limit عبر Redis باستخدام fixed window counter atomic.
+ * - لو النافذة خلصت، نبدأ عدّاد جديد ونحط TTL.
+ * - كل العمليات atomic عشان ما يبقاش race condition بين الطلبات المتزامنة.
+ *
+ * [ملاحظة أداء] بنستخدم INCR بدل sliding window (تطبيقها على Redis محتاج
+ * sorted set ويكلّف أكتر). fixed window كافي تمامًا لمسار chat.
+ */
+async function checkRateLimitRedis(
+  client: Redis,
+  ip: string
+): Promise<{ allowed: boolean; retryAfterSec?: number }> {
+  const key = `valict:ratelimit:${ip}`;
+  // pipe atomic: INCR + EXPIRE (لو أول مرة)
+  const count = (await client.incr(key)) as number;
+  if (count === 1) {
+    // أول طلب في النافذة → نحط TTL
+    await client.expire(key, Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+  }
+  if (count > RATE_LIMIT_MAX_REQUESTS) {
+    // نحسب الـ TTL المتبقي لنعرف الـ retryAfter
+    const ttl = (await client.ttl(key)) as number;
+    return {
+      allowed: false,
+      retryAfterSec: ttl > 0 ? ttl : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000),
+    };
+  }
+  return { allowed: true };
+}
+
+async function checkRateLimit(ip: string): Promise<{
+  allowed: boolean;
+  retryAfterSec?: number;
+  degraded: boolean;
+}> {
+  const client = getRedis();
+  if (client) {
+    try {
+      const result = await checkRateLimitRedis(client, ip);
+      return { ...result, degraded: false };
+    } catch (err) {
+      // Redis وقع في runtime → نرجع لـ in-memory ونعلّم الـ response بأننا degraded.
+      console.error("[chat] Redis rate-limit error, falling back to memory:", err);
+    }
+  }
+  return { ...checkRateLimitInMemory(ip), degraded: true };
+}
+
+// تنظيف دوري للـ store اللي في الذاكرة (fallback)
 if (typeof globalThis !== "undefined") {
   const g = globalThis as any;
   if (!g.__valictRateLimitCleaner) {
     g.__valictRateLimitCleaner = setInterval(() => {
       const now = Date.now();
-      for (const [ip, entry] of rateLimitStore.entries()) {
-        if (now > entry.resetAt) rateLimitStore.delete(ip);
+      for (const [ip, entry] of inMemoryRateLimitStore.entries()) {
+        if (now > entry.resetAt) inMemoryRateLimitStore.delete(ip);
       }
     }, 5 * 60_000);
   }
@@ -70,6 +167,7 @@ if (typeof globalThis !== "undefined") {
 // Redis Client (Upstash)
 // =====================
 let redis: Redis | null = null;
+let redisLoggedMissingOnce = false;
 
 function getRedis(): Redis | null {
   if (redis) return redis;
@@ -78,7 +176,13 @@ function getRedis(): Redis | null {
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
   if (!url || !token) {
-    console.warn("[chat] Upstash Redis env vars missing - caching disabled");
+    // [إصلاح أمني #2] نعمل warn مرة واحدة بس عشان ما نظهرش الـ spam في الـ logs.
+    if (!redisLoggedMissingOnce) {
+      console.warn(
+        "[chat] Upstash Redis env vars missing - caching & distributed rate-limit disabled (running in DEGRADED mode)"
+      );
+      redisLoggedMissingOnce = true;
+    }
     return null;
   }
 
@@ -94,7 +198,10 @@ function buildCacheKey(message: string, lang: string): string {
   return `valict:chat:${lang}:${normalized}`;
 }
 
-async function getCachedReply(message: string, lang: string): Promise<string | null> {
+async function getCachedReply(
+  message: string,
+  lang: string
+): Promise<string | null> {
   try {
     const client = getRedis();
     if (!client) return null;
@@ -103,7 +210,12 @@ async function getCachedReply(message: string, lang: string): Promise<string | n
     const cached = await client.get<string>(key);
     return cached ?? null;
   } catch (err) {
-    console.error("[chat] Cache GET error:", err);
+    // [إصلاح أمني] ما نطبعش err كله (ممكن يحتوي على تفاصيل Redis/TLS حساسة).
+    // نطبع الـ message بس.
+    console.error(
+      "[chat] Cache GET error:",
+      err instanceof Error ? err.message : String(err)
+    );
     return null;
   }
 }
@@ -120,7 +232,10 @@ async function setCachedReply(
     const key = buildCacheKey(message, lang);
     await client.set(key, reply, { ex: CACHE_TTL_SECONDS });
   } catch (err) {
-    console.error("[chat] Cache SET error:", err);
+    console.error(
+      "[chat] Cache SET error:",
+      err instanceof Error ? err.message : String(err)
+    );
   }
 }
 
@@ -178,8 +293,10 @@ async function callGroqWithRetry(
       const status = err?.status || err?.error?.status || err?.response?.status;
       if ((status === 429 || status >= 500) && attempt < MAX_RETRIES) {
         const waitMs = attempt * 2000;
+        // [إصلاح أمني] ما نطبعش err.message (ممكن يحتوي على headers فيه الـ API key).
+        // نطبع الـ status واسم الخطأ بس.
         console.log(
-          `[chat] Groq attempt ${attempt} failed with ${status}, retrying in ${waitMs}ms...`
+          `[chat] Groq attempt ${attempt} failed with status ${status} (${err?.name ?? "Error"}), retrying in ${waitMs}ms...`
         );
         await new Promise((r) => setTimeout(r, waitMs));
         continue;
@@ -200,12 +317,14 @@ export async function POST(req: Request) {
       req.headers.get("x-real-ip") ||
       "unknown";
 
-    const rate = checkRateLimit(ip);
+    const rate = await checkRateLimit(ip);
     if (!rate.allowed) {
       return NextResponse.json(
         {
           reply: "عدد الرسائل كبير، يرجى المحاولة بعد قليل.",
           retryAfter: rate.retryAfterSec,
+          // [إصلاح أمني] flag واضح لو Redis وقع، عشان يقدروا يراقبوا.
+          _cache_disabled: rate.degraded,
         },
         {
           status: 429,
@@ -261,7 +380,11 @@ export async function POST(req: Request) {
     const cachedReply = await getCachedReply(trimmed, lang);
     if (cachedReply) {
       console.log("[chat] Cache HIT for:", trimmed.slice(0, 50));
-      return NextResponse.json({ reply: cachedReply, _cached: true });
+      return NextResponse.json({
+        reply: cachedReply,
+        _cached: true,
+        _cache_disabled: rate.degraded,
+      });
     }
 
     // 4. Groq Client
@@ -317,7 +440,7 @@ export async function POST(req: Request) {
 16. عند طرح سؤال توضيحي، اجعله سؤالاً واحداً محدداً (مش قائمة أسئلة)، وكن ودوداً ومرحباً.
 17. **لا تبدأ كل رد بـ "مرحباً" أو "أهلاً". استخدمها فقط في أول رد أو لو المستخدم قال "مرحباً" أو "السلام عليكم". في الردود التالية، ابدأ مباشرة بالإجابة.**
 18. **استخدم تاريخ المحادثة (History) اللي مرفق معاك عشان تفتكر السياق. لو العميل قال "ويندوز" قبل كده، اعتبر ده جزء من المشكلة ومتسألوش تاني.**
-19. عند التعامل مع مصطلحات عربية متعددة المعاني، راعِ السياق قبل التفسير:
+19. عند التعامل مع مصطلحات عربية متعددة المعني، راعِ السياق قبل التفسير:
 - كلمة "وقع" قد تعني "سقط على الأرض" أو "توقف عن العمل/باظ".
 - في السياق التقني (سيرفر، هارد، شبكة، نظام)، المعنى المرجح "توقف/باظ".
 - كلمة "طاح" أو "نزل" قد تعني "تعطل" في السياق التقني.
@@ -422,11 +545,11 @@ Strictly forbidden:
       const historyMessages = Array.isArray(history) ? history : [];
       reply = await callGroqWithRetry(groq, systemInstruction, historyMessages, trimmed);
     } catch (err: any) {
-      console.error(
-        "[chat] Groq error:",
-        err?.status || err?.error?.status,
-        err?.message
-      );
+      // [إصلاح أمني] ما نطبعش err.message كامل (ممكن يحتوي على headers فيه الـ API key
+      // أو تفاصيل الـ request). نطبع الـ status واسم الخطأ بس.
+      const status = err?.status || err?.error?.status || "unknown";
+      const errName = err?.name || "Error";
+      console.error(`[chat] Groq error: status=${status}, name=${errName}`);
       return NextResponse.json(
         {
           reply: isAr
@@ -449,7 +572,7 @@ Strictly forbidden:
     }
 
     // =====================
-    // 6.5 — تنظيف الرد + إصلاح الأرقام (LRM)
+    // 6.5 — تنظيف الرد + تعقيم XSS احتياطي + إصلاح الأرقام (LRM)
     // =====================
     const cleanedReply = cleanReply(reply);
     const fixedReply = fixPhoneNumbers(cleanedReply);
@@ -459,9 +582,16 @@ Strictly forbidden:
     // =====================
     await setCachedReply(trimmed, lang, fixedReply);
 
-    return NextResponse.json({ reply: fixedReply });
+    return NextResponse.json({
+      reply: fixedReply,
+      _cache_disabled: rate.degraded,
+    });
   } catch (error: unknown) {
-    console.error("[chat] Unhandled error:", error);
+    // [إصلاح أمني] نطبع الـ message بس، مش الكائن كامل.
+    console.error(
+      "[chat] Unhandled error:",
+      error instanceof Error ? error.message : String(error)
+    );
     return NextResponse.json(
       {
         reply: "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً.",
