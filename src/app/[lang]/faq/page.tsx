@@ -70,8 +70,8 @@ export default async function FAQPage({
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: dict.faq.categories.flatMap((category: any) =>
-      category.items.map((item: any) => ({
+    mainEntity: dict.faq.categories.flatMap((category) =>
+      category.items.map((item) => ({
         "@type": "Question",
         name: item.q,
         acceptedAnswer: {
