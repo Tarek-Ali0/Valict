@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import type { Dictionary } from "@/lib/dict.types";
 
 interface NavLink {
   name: string;
@@ -48,7 +49,13 @@ function useMounted(): boolean {
   );
 }
 
-export function Navbar({ lang, dict }: { lang: string; dict: any }) {
+// [ملاحظة types] النبارة بتقرأ dict.nav.* و dict.footer.contactUs فقط (مع
+// fallback مدمج). الصفحات التجريبية زي /experiment بتبعت footer جزئي،
+// فالنوع بيقبل footer اختياري جزئي بدل الـ FooterDict الكامل.
+export function Navbar({ lang, dict }: {
+  lang: string;
+  dict: Pick<Dictionary, "nav"> & { footer?: Pick<Dictionary["footer"], "contactUs"> };
+}) {
   const { setTheme, resolvedTheme } = useTheme();
   const mounted = useMounted();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -256,7 +263,7 @@ export function Navbar({ lang, dict }: { lang: string; dict: any }) {
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-slate-800 dark:text-slate-100 hover:text-valict-navy dark:hover:text-valict-cyan font-semibold text-lg py-2"
           >
-            {dict.footer.contactUs || "Contact Us"}
+            {dict.footer?.contactUs || "Contact Us"}
           </Link>
         </div>
       </div>
