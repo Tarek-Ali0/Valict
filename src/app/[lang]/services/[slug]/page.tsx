@@ -263,7 +263,7 @@ export async function generateMetadata({
   const dict = await getDictionary(currentLang);
 
   const service = dict.services.items.find(
-    (item: any) => item.slug === slug
+    (item) => item.slug === slug
   );
 
   if (!service) {
@@ -346,7 +346,7 @@ export default async function ServiceDetailsPage({
   const dict = await getDictionary(currentLang);
 
   const service = dict.services.items.find(
-    (item: any) => item.slug === slug
+    (item) => item.slug === slug
   );
 
   if (!service) {
