@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import type { Dictionary } from "@/lib/dict.types";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown } from "react-icons/fa6";
 
 interface FAQProps {
-  dict: any;
+  dict: Dictionary;
   lang: string;
 }
 
@@ -45,7 +46,7 @@ export function FAQ({ dict, lang }: FAQProps) {
 
         {/* Categories */}
         <div className="space-y-10">
-          {dict.faq.categories.map((category: any, catIndex: number) => (
+          {dict.faq.categories.map((category, catIndex: number) => (
             <div key={catIndex}>
               <h4 className="text-xl md:text-2xl font-bold text-valict-navy dark:text-white mb-6 flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-valict-cyan"></span>
@@ -53,7 +54,7 @@ export function FAQ({ dict, lang }: FAQProps) {
               </h4>
               
               <div className="space-y-4">
-                {category.items.map((item: any, itemIndex: number) => {
+                {category.items.map((item, itemIndex: number) => {
                   const uniqueId = `${catIndex}-${itemIndex}`;
                   const isOpen = openIndex === uniqueId;
 
