@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import Groq from "groq-sdk";
+import type { ChatCompletionCreateParams } from "groq-sdk/resources/chat/completions";
 
 // إعدادات عامة
 const MAX_MESSAGE_LENGTH = 1000;
@@ -29,14 +30,6 @@ function fixPhoneNumbers(text: string): string {
  * بطريقة خطرة (مثلاً dangerouslySetInnerHTML) أو اتمرّر لطرف تالت، نشيل أي
  * <script>...</script> أو وسوم خطر برضو.
  */
-function escapeHtmlBasic(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
 
 function stripScriptTags(str: string): string {
   // يشيل أي <script ...>...</script> (حتى لو متقسّم على أسطر) و <iframe>/<object>/<embed> اللي ممكن تحمل كود خطر.
@@ -152,7 +145,9 @@ async function checkRateLimit(ip: string): Promise<{
 
 // تنظيف دوري للـ store اللي في الذاكرة (fallback)
 if (typeof globalThis !== "undefined") {
-  const g = globalThis as any;
+  const g = globalThis as typeof globalThis & {
+    __valictRateLimitCleaner?: ReturnType<typeof setInterval>;
+  };
   if (!g.__valictRateLimitCleaner) {
     g.__valictRateLimitCleaner = setInterval(() => {
       const now = Date.now();
@@ -260,17 +255,22 @@ function getGroq(): Groq | null {
 // =====================
 // Groq API Call with Retry (with Browser Search)
 // =====================
+type HistoryMessage = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
 async function callGroqWithRetry(
   client: Groq,
   systemInstruction: string,
-  history: { role: string; content: string }[],
+  history: HistoryMessage[],
   userMessage: string
 ): Promise<string> {
-  let lastError: any = null;
+  let lastError: unknown = null;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const completion = await client.chat.completions.create({
+      const params: ChatCompletionCreateParams = {
         model: GROQ_MODEL,
         messages: [
           { role: "system", content: systemInstruction },
@@ -279,24 +279,39 @@ async function callGroqWithRetry(
         ],
         temperature: 0.6,
         max_tokens: 2048,
-        tools: [{ type: "browser_search" }] as any,
+        // [ملاحظة] أداة browser_search شغالة على Groq API الفعلي (موثّقة في
+        // docs Groq) لكن types بتاعة groq-sdk 0.12.0 لسه متأخرة عنها.
+        // الـ cast عبر unknown محصور هنا بس، مش any منتشر في الكل.
+        tools: [{ type: "browser_search" }] as unknown as ChatCompletionCreateParams["tools"],
         tool_choice: "auto",
-      } as any);
+      };
+
+      // [نوع] الاستدعاء non-streaming فالناتج ChatCompletion دايمًا؛ الـ union
+      // جاي من params union فقط. نضيّقه بدل optional chaining على Stream.
+      const completion = (await client.chat.completions.create(
+        params
+      )) as import("groq-sdk/resources/chat/completions").ChatCompletion;
 
       const reply = completion.choices?.[0]?.message?.content?.trim();
       if (reply) return reply;
 
       throw new Error("Empty response from Groq");
-    } catch (err: any) {
+    } catch (err) {
       lastError = err;
 
-      const status = err?.status || err?.error?.status || err?.response?.status;
-      if ((status === 429 || status >= 500) && attempt < MAX_RETRIES) {
+      const e = err as {
+        status?: number;
+        error?: { status?: number };
+        response?: { status?: number };
+        name?: string;
+      };
+      const status = e?.status || e?.error?.status || e?.response?.status;
+      if ((status === 429 || (status ?? 0) >= 500) && attempt < MAX_RETRIES) {
         const waitMs = attempt * 2000;
         // [إصلاح أمني] ما نطبعش err.message (ممكن يحتوي على headers فيه الـ API key).
         // نطبع الـ status واسم الخطأ بس.
         console.log(
-          `[chat] Groq attempt ${attempt} failed with status ${status} (${err?.name ?? "Error"}), retrying in ${waitMs}ms...`
+          `[chat] Groq attempt ${attempt} failed with status ${status} (${e?.name ?? "Error"}), retrying in ${waitMs}ms...`
         );
         await new Promise((r) => setTimeout(r, waitMs));
         continue;
@@ -334,7 +349,7 @@ export async function POST(req: Request) {
     }
 
     // 2. قراءة الـ body
-    let body: any;
+    let body: { message?: unknown; lang?: unknown; history?: unknown };
     try {
       body = await req.json();
     } catch {
@@ -344,7 +359,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const { message, lang, history } = body ?? {};
+    const { message, history } = body ?? {};
+    const lang = typeof body?.lang === "string" ? body.lang : "en";
     const isAr = lang === "ar";
 
     // 3. التحقق من الرسالة
@@ -542,13 +558,24 @@ Strictly forbidden:
     // 6. استدعاء Groq
     let reply: string;
     try {
-      const historyMessages = Array.isArray(history) ? history : [];
+      const VALID_ROLES = new Set(["system", "user", "assistant"]);
+      const historyMessages: HistoryMessage[] = Array.isArray(history)
+        ? history.filter(
+            (m): m is HistoryMessage =>
+              typeof m === "object" &&
+              m !== null &&
+              typeof (m as { role?: unknown }).role === "string" &&
+              VALID_ROLES.has((m as { role: string }).role) &&
+              typeof (m as { content?: unknown }).content === "string"
+          )
+        : [];
       reply = await callGroqWithRetry(groq, systemInstruction, historyMessages, trimmed);
-    } catch (err: any) {
+    } catch (err) {
       // [إصلاح أمني] ما نطبعش err.message كامل (ممكن يحتوي على headers فيه الـ API key
       // أو تفاصيل الـ request). نطبع الـ status واسم الخطأ بس.
-      const status = err?.status || err?.error?.status || "unknown";
-      const errName = err?.name || "Error";
+      const e = err as { status?: number; error?: { status?: number }; name?: string };
+      const status = e?.status || e?.error?.status || "unknown";
+      const errName = e?.name || "Error";
       console.error(`[chat] Groq error: status=${status}, name=${errName}`);
       return NextResponse.json(
         {
