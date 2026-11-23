@@ -1,47 +1,54 @@
 "use client";
 
+import Image from "next/image";
 import dynamic from "next/dynamic";
-import { cn } from "@/lib/utils";
 
 /**
- * ChatWidgetSkeleton — placeholder خفيف جدًا (~1KB CSS only) لزرار فالكتا.
+ * ChatWidgetSkeleton — نسخة طبق الأصل من زرار فالكتا (الحالة المقفولة).
  *
- * [تحسين أداء #1] قبل التعديل كان AIChatWidget (108 KB) بيتحمّل في initial
- * bundle لكل صفحة، رغم إنه عنصر ثانوي بيتفتح اختياريًا. ده بيأثّر على LCP
- * و INP خاصة على الموبايل.
+ * [إصلاح] النسخة السابقة من الـ skeleton كانت فيها غلطتين:
+ * 1. كانت بتتوضّع حسب اللغة (isRtl ? left-6 : right-6) بينما الزرار الحقيقي
+ *    (AIChatWidget.tsx سطر 326) ثابت دائمًا في fixed bottom-6 left-6 في كل
+ *    اللغات. نتيجة ده: في صفحات en الـ skeleton كان بيظهر في اليمين فوق
+ *    زرار ScrollToTop (fixed bottom-6 right-6) لحد ما الـ widget يحمّل.
+ * 2. كانت شكلها مختلف تمامًا عن الزرار الحقيقي (حرف V على خلفية navy،
+ *    بينما الحقيقي صورة valicta.webp على خلفية بيضاء بـ border) → jump واضح
+ *    عند الاستبدال.
  *
- * الحل: code-split عبر next/dynamic مع ssr:false. بس بدل ما نسيب loading
- * فاضي (هيدي انطباع "موقع ناقص")، بنعرض skeleton فوري للزرار. كده:
- * 1. السيرفر بيرندر الـ skeleton (CSS only، ما يحتاجش JS) → المستخدم بيشوف
- *    زرار فالكتا في أول paint.
- * 2. الـ JS الثقيل بيتحمّل async في الـ background → ما بيأثّرش على LCP.
- * 3. لما الـ JS يخلّص، React يستبدل الـ skeleton بالـ widget الحقيقي بدون flicker.
+ * الحل: الـ skeleton بقى نسخة طبق الأصل من الزرار الحقيقي — نفس المكان
+ * (bottom-6 left-6)، نفس الحجم (h-14 w-14)، نفس الألوان (bg-white +
+ * border)، نفس صورة فالكتا، ونفس نبضة الـ ping. كده الانتقال من الـ
+ * skeleton للزرار الحقيقي invisible تمامًا — مفيش لا flicker ولا jump.
  *
- * التصميم: زرار دائري في نفس مكان الـ widget الحقيقي (bottom-right LTR /
- * bottom-left RTL)، بنفس اللون الأساسي (valict-navy) + الأيقونة "V" بتاعة
- * فالكتا + نبضة pulse خفيفة عشان تدي إحساس "جاري التحضير".
- *
- * [ملاحظة] بنمرر lang عشان نحدد position الصح حسب direction:
- * - RTL (ar): زرار على اليسار (left-6)
- * - LTR (en): زرار على اليمين (right-6)
- * ده عشان يطابق position الـ widget الحقيقي بالظبط ويمنع flicker عند الاستبدال.
+ * ملاحظات:
+ * - ما بقيناش محتاجين lang في الـ skeleton خالص (المكان ثابت) → المشكلة
+ *   الأصلية بتاعة "loading function ما بيوصلهاش props" اتحلّت بالجذر.
+ * - الصورة بـ priority عشان تتحمّل فورًا في الـ first paint وتقعد في الـ
+ *   browser cache — فلما الزرار الحقيقي يرندر، الصورة جاهزة على طول.
+ * - pointer-events-none عشان المستخدم ما يقدرش يدوس على الـ skeleton —
+ *   أول ما الـ JS يخلّص بيتستبدل بالزرار الحقيقي الـ clickable.
  */
-function ChatWidgetSkeleton({ lang }: { lang: string }) {
-  const isRtl = lang === "ar";
+function ChatWidgetSkeleton() {
   return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "fixed bottom-6 z-50 w-14 h-14 rounded-full",
-        "bg-valict-navy dark:bg-valict-cyan-dynamic",
-        "shadow-lg shadow-valict-navy/30",
-        "flex items-center justify-center",
-        "animate-pulse",
-        "pointer-events-none select-none",
-        isRtl ? "left-6" : "right-6"
-      )}
-    >
-      <span className="text-white dark:text-[#0B1120] font-bold text-xl">V</span>
+    <div className="fixed bottom-6 left-6 z-50 font-sans">
+      <div
+        aria-hidden="true"
+        className="relative h-14 w-14 flex items-center justify-center rounded-full bg-white dark:bg-[#0F172A] shadow-lg border-2 border-valict-navy/20 dark:border-valict-cyan/30 pointer-events-none"
+      >
+        {/* نفس نبضة الـ ping اللي في الزرار الحقيقي (الحالة المقفولة) */}
+        <span className="absolute inset-0 rounded-full bg-valict-cyan opacity-20 animate-ping" />
+        <span className="relative z-10 flex items-center justify-center w-full h-full rounded-full overflow-hidden">
+          <Image
+            src="/valicta.webp"
+            alt=""
+            width={50}
+            height={50}
+            className="object-contain scale-110"
+            priority
+            sizes="50px"
+          />
+        </span>
+      </div>
     </div>
   );
 }
@@ -49,35 +56,23 @@ function ChatWidgetSkeleton({ lang }: { lang: string }) {
 /**
  * AIChatWidget — code-split مع ssr:false.
  *
- * [تحسين أداء #1]
- * - ssr:false → الـ widget ما بيتrenderش على السيرفر (وفّرنا الـ SSR cost).
- * - loading: ChatWidgetSkeleton → placeholder فوري بدل فراغ.
- * - الـ JS الثقيل (108 KB: Groq SDK + React state + framer-motion) بيتحمّل
- *   async بعد الـ first paint، من غير ما يأثّر على الـ Core Web Vitals.
+ * [تحسين أداء]
+ * - ssr:false → الـ widget نفسه ما بيتعملهوش SSR.
+ * - loading: ChatWidgetSkeleton → placeholder فوري مطابق للزرار الحقيقي.
+ * - الـ JS الثقيل (AIChatWidget كامل: state + fetch logic) بيتحمّل async
+ *   بعد الـ first paint من غير ما يأثّر على الـ Core Web Vitals.
  *
- * النتيجة المتوقعة: توفير ~80 KB من initial bundle في كل صفحة، مع الحفاظ
- * على ظهور زرار فالكتا فورًا (مهم لاستراتيجية الـ brand).
- *
- * [ليه client component منفصل؟] عشان الـ loading function بتاعة next/dynamic
- * ما بيوصلهاش props من الـ parent. لما نلفّها في client component بياخد lang
- * كـ prop، الـ skeleton يقدر يقرأ lang من closure ويتوضّع في المكان الصح
- * (left للـ RTL / right للـ LTR) ويمنع flicker عند الاستبدال.
+ * [ملاحظة Next.js 16] ssr:false مسموح بس جوّه Client Components — وده
+ * client component ("use client" فوق) فالـ pattern ده سليم حسب الـ docs.
  */
 const AIChatWidget = dynamic(
   () => import("@/components/AIChatWidget").then((m) => m.AIChatWidget),
   {
     ssr: false,
-    loading: () => <ChatWidgetSkeleton lang="" />,
+    loading: () => <ChatWidgetSkeleton />,
   }
 );
 
 export function LazyAIChatWidget({ lang }: { lang: string }) {
-  return (
-    <>
-      {/* skeleton فوري يظهر في first paint (لحد ما الـ JS الثقيل يحمّل) */}
-      <div className="contents">
-        <AIChatWidget lang={lang} />
-      </div>
-    </>
-  );
+  return <AIChatWidget lang={lang} />;
 }
