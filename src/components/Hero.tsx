@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion, useScroll, useTransform } from "framer-motion";
+import type { Dictionary } from "@/lib/dict.types";
 
 interface HeroProps {
-  dict: any;
+  dict: Dictionary;
 }
 
 export function Hero({ dict }: HeroProps) {
