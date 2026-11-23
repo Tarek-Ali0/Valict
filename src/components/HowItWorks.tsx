@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import type { Dictionary } from "@/lib/dict.types";
 
 interface StepData {
   title: string;
@@ -15,7 +16,7 @@ interface MappedStep {
 }
 
 interface HowItWorksProps {
-  dict: any;
+  dict: Dictionary;
 }
 
 export function HowItWorks({ dict }: HowItWorksProps) {
