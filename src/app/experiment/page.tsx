@@ -4,7 +4,6 @@ import "@/app/globals.css";
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 
 // ==================== الـ dict ====================
@@ -73,22 +72,22 @@ function LetterCanvas() {
 
       update() {
         if (!mouse.isOnV) {
-           if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
-           if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
+           if (this.x !== this.baseX) { const dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
+           if (this.y !== this.baseY) { const dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
            return;
         }
-        let dx = mouse.x - this.x; let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let forceDirectionX = dx / distance; let forceDirectionY = dy / distance;
-        let maxDistance = 60;
-        let force = (maxDistance - distance) / maxDistance;
-        let directionX = forceDirectionX * force * this.density * -1;
-        let directionY = forceDirectionY * force * this.density * -1;
+        const dx = mouse.x - this.x; const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const forceDirectionX = dx / distance; const forceDirectionY = dy / distance;
+        const maxDistance = 60;
+        const force = (maxDistance - distance) / maxDistance;
+        const directionX = forceDirectionX * force * this.density * -1;
+        const directionY = forceDirectionY * force * this.density * -1;
 
         if (distance < maxDistance) { this.x += directionX; this.y += directionY; } 
         else {
-          if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
-          if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
+          if (this.x !== this.baseX) { const dx = this.x - this.baseX; this.vx = dx * -0.05; this.x += this.vx; }
+          if (this.y !== this.baseY) { const dy = this.y - this.baseY; this.vy = dy * -0.05; this.y += this.vy; }
         }
       }
     }
@@ -114,7 +113,6 @@ function LetterCanvas() {
         ctx.clearRect(0, 0, width, height);
 
         const gap = width < 768 ? 4 : 3; 
-        const colors = ["#00A3E0", "#1E3A8A"]; 
 
         for (let y = 0; y < height; y += gap) {
           for (let x = 0; x < width; x += gap) {
@@ -140,8 +138,8 @@ function LetterCanvas() {
         particles[i].draw();
         particles[i].update();
         if (mouse.isOnV) {
-          let dx = mouse.x - particles[i].x; let dy = mouse.y - particles[i].y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
+          const dx = mouse.x - particles[i].x; const dy = mouse.y - particles[i].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 60) {
             nearbyParticles.push({ x: particles[i].x, y: particles[i].y, distance });
           }
@@ -170,8 +168,8 @@ function LetterCanvas() {
       
       let minDistance = Infinity;
       for (let i = 0; i < particles.length; i++) {
-        let dx = mouse.x - particles[i].baseX; let dy = mouse.y - particles[i].baseY;
-        let distance = Math.sqrt(dx * dx + dy * dy);
+        const dx = mouse.x - particles[i].baseX; const dy = mouse.y - particles[i].baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < minDistance) minDistance = distance;
       }
       mouse.isOnV = minDistance < 20; 
@@ -207,13 +205,6 @@ function LetterCanvas() {
 // ==================== الصفحة ====================
 export default function ExperimentPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const imageScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.92]);
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-[#0B1120]">
