@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, useSyncExternalStore } from "react";
 import Image from "next/image";
 import {
-  FaCommentDots,
   FaXmark,
   FaPaperPlane,
   FaTrash,
@@ -57,11 +56,9 @@ function ValictaAvatar({
 }
 
 export function AIChatWidget({ lang }: AIChatWidgetProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isBotTyping, setIsBotTyping] = useState(false);
-  const [isHydrated, setIsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -109,29 +106,44 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     [isAr]
   );
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-
-  useEffect(() => {
+  // [إصلاح react-hooks/set-state-in-effect] الاسترجاع من sessionStorage كان
+  // بيعمل setState مباشرة جوه effect → cascading renders. الـ lazy initializer
+  // بيقرأ الـ sessionStorage مرة واحدة في أول render (client-side فقط لأن
+  // الكومبوننت كله client-side — dynamic ssr:false)، والـ try/catch بيلتقط
+  // JSON تالف أو sessionStorage معطّل (private mode) من غير ما يكسر الـ UI.
+  // ملاحظة SSR-safety: الكومبوننت ده بيتحمّل بـ next/dynamic ssr:false فبيكون
+  // في المتصفح دائمًا؛ لو رجعنا للـ SSR يومًا ما لازم نتحقق من window هنا.
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
-      const savedMessages = sessionStorage.getItem(STORAGE_KEY_MESSAGES);
-      const savedOpen = sessionStorage.getItem(STORAGE_KEY_OPEN);
-
-      if (savedMessages) {
-        const parsed = JSON.parse(savedMessages) as ChatMessage[];
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-        }
-      }
-
-      if (savedOpen === "true") {
-        setIsOpen(true);
+      const saved = sessionStorage.getItem(STORAGE_KEY_MESSAGES);
+      if (saved) {
+        const parsed = JSON.parse(saved) as ChatMessage[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch (err) {
       console.error("[chat] Failed to restore session:", err);
-    } finally {
-      setIsHydrated(true);
     }
-  }, []);
+    return [];
+  });
+
+  // [نفس الإصلاح] حالة الفتح كمان كانت setState-in-effect
+  const [isOpen, setIsOpen] = useState(() => {
+    try {
+      return sessionStorage.getItem(STORAGE_KEY_OPEN) === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  // [إصلاح react-hooks/set-state-in-effect] بدل state + setState داخل effect،
+  // useSyncExternalStore بيوفّر نفس السلوك بلا setState: على السيرفر false،
+  // وبعد الـ mount مباشرة true. (نفس الـ pattern المستخدم في Navbar.)
+  const emptySubscribe = () => () => {};
+  const isHydrated = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   useEffect(() => {
     if (!isHydrated) return;
