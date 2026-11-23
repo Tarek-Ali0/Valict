@@ -4,21 +4,21 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { AIChatWidget } from "@/components/AIChatWidget";
+import { LazyAIChatWidget } from "@/components/LazyAIChatWidget";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
 
-const cairo = Cairo({ 
-  subsets: ["arabic"], 
+const cairo = Cairo({
+  subsets: ["arabic"],
   variable: "--font-cairo",
   display: "swap",
-  adjustFontFallback: false 
+  adjustFontFallback: false,
 });
-const geist = Geist({ 
-  subsets: ["latin"], 
+const geist = Geist({
+  subsets: ["latin"],
   variable: "--font-geist",
   display: "swap",
-  adjustFontFallback: false
+  adjustFontFallback: false,
 });
 
 export async function generateMetadata({
@@ -168,11 +168,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html
-      lang={lang}
-      dir={dir}
-      suppressHydrationWarning={true}
-    >
+    <html lang={lang} dir={dir} suppressHydrationWarning={true}>
       <head>
         {/* Organization Schema */}
         <script
@@ -224,7 +220,9 @@ export default async function RootLayout({
           <Footer lang={lang} dict={dict} />
 
           <ScrollToTop />
-          <AIChatWidget lang={lang} />
+
+          {/* [تحسين أداء #1] code-split AIChatWidget مع skeleton فوري */}
+          <LazyAIChatWidget lang={lang} />
         </ThemeProvider>
       </body>
     </html>
