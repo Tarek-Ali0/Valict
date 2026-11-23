@@ -13,6 +13,8 @@ import {
   FaChevronRight
 } from "react-icons/fa6";
 import { motion, Variants } from "framer-motion";
+import type { Dictionary } from "@/lib/dict.types";
+import type { IconType } from "react-icons";
 
 interface ServiceItem {
   slug: string;
@@ -21,11 +23,11 @@ interface ServiceItem {
 }
 
 interface ServicesProps {
-  dict: any;
+  dict: Dictionary;
   lang?: string;
 }
 
-const iconMap: { [key: number]: any } = {
+const iconMap: { [key: number]: IconType } = {
   0: FaLaptopCode,
   1: FaNetworkWired,
   2: FaCloud,
