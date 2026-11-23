@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaLinkedinIn, FaEnvelope, FaPhone, FaChevronRight, FaFacebook, FaCircleCheck } from "react-icons/fa6";
 
+import type { Dictionary } from "@/lib/dict.types";
+
 interface FooterProps {
-  dict?: any;
+  dict?: Dictionary;
   lang?: string;
 }
 
