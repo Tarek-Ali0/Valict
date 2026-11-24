@@ -111,8 +111,9 @@ const nextConfig: NextConfig = {
   },
 
   // 3. تحسينات الأداء المتقدمة لـ Next.js لتعطيل الـ Legacy Polyfills وتوليد أكواد حديثة
-  experimental: {
-    optimizePackageImports: ["react-icons"], // تسريع وضغط حزم الأيقونات تلقائيًا في الخلفية
+    experimental: {
+    optimizePackageImports: ["react-icons"],
+    fallbackNodePolyfills: false, // إيقاف Node.js polyfills في المتصفح — بيشيل core-js اللي بيدخل Function("return this")()
   },
 
   // تفعيل خيار الضغط التلقائي للمخرجات من السيرفر لتقليل مساحات جافا سكريبت المهدرة
