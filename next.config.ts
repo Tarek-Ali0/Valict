@@ -23,16 +23,11 @@ import type { NextConfig } from "next";
  * - object-src 'none': منع <object>/<embed>/<applet>.
  * - upgrade-insecure-requests: ترقية HTTP → HTTPS تلقائيًا.
  */
-// [ملاحظة أمنية] 'unsafe-eval' لازم نبقيها في كل البيئات لأن Next.js بيدخل
-// polyfill-nomodule (للمتصفحات القديمة) اللي بيستخدم Function("return this")()
-// للحصول على global object. ده نمط قياسي في core-js و آمن لأن:
-//   1. الكود بتاعنا نظيف من eval() — اتأكدنا
-//   2. groq-sdk و @upstash/redis شغّالة server-side (بره CSP)
-//   3. polyfill-nomodule بيشتغل بس في متصفحات قديمة (nomodule script)
-const cspScriptSrc =
-  process.env.NODE_ENV === "development"
-    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-    : "script-src 'self' 'unsafe-inline' 'unsafe-eval'";
+// 'unsafe-eval' لازم في كل البيئات لأن Next.js بيدخل polyfill-nomodule
+// (للمتصفحات القديمة) اللي بيستخدم Function("return this")() للحصول على
+// global object. ده نمط قياسي في core-js و آمن: كودنا نظيف من eval()،
+// و groq-sdk/upstash شغّالة server-side بره CSP.
+const cspScriptSrc = "script-src 'self' 'unsafe-inline' 'unsafe-eval'";
 
 const cspDirectives = [
   "default-src 'self'",
