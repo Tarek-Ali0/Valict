@@ -1,16 +1,38 @@
 # Valict IT Solutions
 
-Welcome to the Valict AI agent directory. This website provides reliable managed IT services, network infrastructure, cloud computing, and cybersecurity solutions.
+> Valict delivers reliable managed IT services, network infrastructure, cloud computing, and cybersecurity solutions for businesses of all sizes. This file guides AI agents and crawlers to the canonical content of our site.
 
 ## Core Sections
-- [Services](https://valict.com)
-- [Why Us](https://valict.com)
-- [About](https://valict.com)
+- [Home (English)](https://valict.com/en)
+- [Home (Arabic)](https://valict.com/ar)
+- [Why Us (English)](https://valict.com/en#why)
+- [Why Us (Arabic)](https://valict.com/ar#why)
+- [About (English)](https://valict.com/en/about)
+- [About (Arabic)](https://valict.com/ar/about)
+- [FAQ (English)](https://valict.com/en/faq)
+- [FAQ (Arabic)](https://valict.com/ar/faq)
+- [Contact (English)](https://valict.com/en#contact)
+- [Contact (Arabic)](https://valict.com/ar#contact)
 
 ## Our Services
-- [Managed IT Services](https://valict.com)
-- [Network & Infrastructure](https://valict.com)
-- [Cloud Solutions](https://valict.com)
-- [Cybersecurity](https://valict.com)
-- [Monitoring & Support](https://valict.com)
-- [Web Design & Development](https://valict.com)
+- [Managed IT Services (English)](https://valict.com/en/services/managed-it)
+- [Managed IT Services (Arabic)](https://valict.com/ar/services/managed-it)
+- [Network & Infrastructure (English)](https://valict.com/en/services/network)
+- [Network & Infrastructure (Arabic)](https://valict.com/ar/services/network)
+- [Cloud Solutions (English)](https://valict.com/en/services/cloud)
+- [Cloud Solutions (Arabic)](https://valict.com/ar/services/cloud)
+- [Cybersecurity (English)](https://valict.com/en/services/cybersecurity)
+- [Cybersecurity (Arabic)](https://valict.com/ar/services/cybersecurity)
+- [Monitoring & Support (English)](https://valict.com/en/services/monitoring)
+- [Monitoring & Support (Arabic)](https://valict.com/ar/services/monitoring)
+- [Web Design & Development (English)](https://valict.com/en/services/web-design)
+- [Web Design & Development (Arabic)](https://valict.com/ar/services/web-design)
+
+## Contact
+- General inquiries & sales: info@valict.com
+- Technical support: support@valict.com
+- Phone: +201505544455
+
+## Optional
+- Sitemap: https://valict.com/sitemap.xml
+- Robots: https://valict.com/robots.txt
