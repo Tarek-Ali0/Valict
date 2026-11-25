@@ -7,6 +7,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { LazyAIChatWidget } from "@/components/LazyAIChatWidget";
 import { getDictionary } from "@/lib/dictionaries";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -218,6 +219,9 @@ export default async function RootLayout({
 
           {/* [تحسين أداء #1] code-split AIChatWidget مع skeleton فوري */}
           <LazyAIChatWidget lang={lang} />
+
+          {/* [تحسين #17] Vercel Analytics — تتبع Core Web Vitals وزوار الصفحة */}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
