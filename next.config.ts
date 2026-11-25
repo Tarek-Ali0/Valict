@@ -113,7 +113,12 @@ const nextConfig: NextConfig = {
 
   // 3. تحسينات الأداء المتقدمة لـ Next.js لتعطيل الـ Legacy Polyfills وتوليد أكواد حديثة
     experimental: {
-    optimizePackageImports: ["react-icons"],
+    optimizePackageImports: [
+      "react-icons",
+      "framer-motion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-accordion",
+    ],
     fallbackNodePolyfills: false, // إيقاف Node.js polyfills في المتصفح — بيشيل core-js اللي بيدخل Function("return this")()
   },
 
