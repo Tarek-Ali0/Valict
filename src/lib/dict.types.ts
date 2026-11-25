@@ -89,7 +89,6 @@ export interface CtaDict {
 export interface ContactDict {
   email: string;
   phone: string;
-  language: string;
 }
 
 export interface FooterDict {
