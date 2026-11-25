@@ -23,6 +23,45 @@ const MAX_INPUT_LENGTH = 1000;
 const STORAGE_KEY_MESSAGES = "valict-chat-messages";
 const STORAGE_KEY_OPEN = "valict-chat-open";
 
+/**
+ * الترحيب ديناميكي حسب وقت القاهرة (Africa/Cairo).
+ *
+ * [تحسين تجربة المستخدم] بدل ترحيب ثابت ("مرحباً بك في فالكت!")، الترحيب بيتغيّر
+ * حسب وقت اليوم الفعلي للقاهرة — ده بيخلي فالكتا تبان حية وعارفة سياق المستخدم.
+ * بنستخدم Africa/Cairo explicitly عشان المستخدم لو فاتح VPN/SAT بوقت تاني،
+ * الترحيب يفضل متوافق مع ساعات عمل فالكت.
+ */
+function getCairoGreeting(isAr: boolean): string {
+  try {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Africa/Cairo",
+      hour: "2-digit",
+      hour12: false,
+    });
+    const hourStr = formatter.format(new Date());
+    const hour = parseInt(hourStr, 10);
+
+    // فشل في parsing → fallback للترحيب الافتراضي
+    if (isNaN(hour)) {
+      return isAr ? "أهلاً بك! 👋" : "Welcome! 👋";
+    }
+
+    // صباح: 5-11 | ظهر/عصر: 12-16 | مساء: 17-22 | ليل: 23-4
+    if (hour >= 5 && hour <= 11) {
+      return isAr ? "صباح الخير! ☀️" : "Good morning! ☀️";
+    } else if (hour >= 12 && hour <= 16) {
+      return isAr ? "نهارك سعيد! 🌤️" : "Good afternoon! 🌤️";
+    } else if (hour >= 17 && hour <= 22) {
+      return isAr ? "مساء الخير! 🌙" : "Good evening! 🌙";
+    } else {
+      return isAr ? "سهرة هادئة ✨" : "A quiet night ✨";
+    }
+  } catch {
+    // لو Intl مش متاح أو الـ timeZone غير مدعوم → fallback آمن
+    return isAr ? "أهلاً بك! 👋" : "Welcome! 👋";
+  }
+}
+
 function detectLang(text: string): "ar" | "en" {
   const arabicRegex = /[\u0600-\u06FF]/;
   return arabicRegex.test(text) ? "ar" : "en";
@@ -64,6 +103,12 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
 
   const isAr = lang === "ar";
 
+  // [تحسين] الترحيب دلوقتي ديناميكي حسب وقت القاهرة. بنحسبه مرة واحدة لكل
+  // تغيير لغة عبر useMemo عشان ما يتغيرش كل render. لو المستخدم فتح الـ widget
+  // في الصباح وقفله وفتحه تاني بالليل، الترحيب الجديد هيتحسب تاني (في أول render
+  // بعد فتح الـ widget لأن الـ greeting بيتحسب جوه t اللي بتعتمد على isAr بس).
+  const cairoGreeting = useMemo(() => getCairoGreeting(isAr), [isAr]);
+
   const t = useMemo(
     () => ({
       title: isAr
@@ -81,8 +126,8 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         ? "هل أنت متأكد من مسح المحادثة؟"
         : "Clear the conversation?",
       welcomePart1: isAr
-        ? "مرحباً بك في فالكت! 👋\nأنا 'فاليكتا' مساعدتك الرقمية الذكية."
-        : "Welcome to Valict! 👋\nI am 'Valicta', your smart digital assistant.",
+        ? `${cairoGreeting}\nأنا "فاليكتا" مساعدتك الرقمية الذكية في فالكت.`
+        : `${cairoGreeting}\nI am "Valicta", your smart digital assistant at Valict.`,
       welcomePart2: isAr
         ? "كيف يمكنني دعم أعمالك اليوم؟"
         : "How can I support your business today?",
@@ -93,7 +138,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
         ? "عدد الرسائل كبير، يرجى المحاولة بعد قليل."
         : "Too many messages, please try again shortly.",
     }),
-    [isAr]
+    [isAr, cairoGreeting]
   );
 
   const quickReplies = useMemo(
@@ -106,16 +151,23 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     [isAr]
   );
 
-  // [إصلاح react-hooks/set-state-in-effect] الاسترجاع من sessionStorage كان
+  // [تحسين] غيّرنا sessionStorage → localStorage. كده المحادثة بتفضل محفوظة حتى
+  // لو المستخدم قفل الـ tab أو الـ browser. ده أهم تحسين في تجربة الاستخدام —
+  // المستخدم بيرجع يفتح الموقع يلاقي محادثته زي ما سابها.
+  //
+  // ملاحظة أمنية: localStorage بيتم تخزينه على جهاز المستخدم فقط، ما بيتبعتش
+  // للسيرفر. المحتوى (رسائل المستخدم وردود فالكتا) مش حساس — زي ما المستخدم
+  // نفسه كتبه. لو فيه بيانات حساسة حقيقية (كلمات سر، بيانات بنكية) هنستخدم
+  // sessionStorage أو ما نحفظش خالص. بس لـ chat support، localStorage مناسب.
+  //
+  // [إصلاح react-hooks/set-state-in-effect] الاسترجاع من localStorage كان
   // بيعمل setState مباشرة جوه effect → cascading renders. الـ lazy initializer
-  // بيقرأ الـ sessionStorage مرة واحدة في أول render (client-side فقط لأن
+  // بيقرأ الـ localStorage مرة واحدة في أول render (client-side فقط لأن
   // الكومبوننت كله client-side — dynamic ssr:false)، والـ try/catch بيلتقط
-  // JSON تالف أو sessionStorage معطّل (private mode) من غير ما يكسر الـ UI.
-  // ملاحظة SSR-safety: الكومبوننت ده بيتحمّل بـ next/dynamic ssr:false فبيكون
-  // في المتصفح دائمًا؛ لو رجعنا للـ SSR يومًا ما لازم نتحقق من window هنا.
+  // JSON تالف أو localStorage معطّل (private mode) من غير ما يكسر الـ UI.
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
-      const saved = sessionStorage.getItem(STORAGE_KEY_MESSAGES);
+      const saved = localStorage.getItem(STORAGE_KEY_MESSAGES);
       if (saved) {
         const parsed = JSON.parse(saved) as ChatMessage[];
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -129,7 +181,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   // [نفس الإصلاح] حالة الفتح كمان كانت setState-in-effect
   const [isOpen, setIsOpen] = useState(() => {
     try {
-      return sessionStorage.getItem(STORAGE_KEY_OPEN) === "true";
+      return localStorage.getItem(STORAGE_KEY_OPEN) === "true";
     } catch {
       return false;
     }
@@ -148,7 +200,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   useEffect(() => {
     if (!isHydrated) return;
     try {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY_MESSAGES,
         JSON.stringify(messages)
       );
@@ -160,7 +212,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
   useEffect(() => {
     if (!isHydrated) return;
     try {
-      sessionStorage.setItem(STORAGE_KEY_OPEN, String(isOpen));
+      localStorage.setItem(STORAGE_KEY_OPEN, String(isOpen));
     } catch (err) {
       console.error("[chat] Failed to save open state:", err);
     }
@@ -186,6 +238,10 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     }
   }, [input]);
 
+  // [تحسين] الترحيب بيتعرض بس لما المستخدم يفتح الـ widget أول مرة (مفيش محادثة
+  // محفوظة). لو فيه محادثة سابقة في localStorage، الـ if (messages.length > 0)
+  // بيرجع قبل ما الترحيب يشتغل — كده المستخدم بيرجع لمحادثته زي ما سابها من غير
+  // ترحيب متكرر.
   useEffect(() => {
     if (!isHydrated) return;
     if (!isOpen) return;
@@ -246,7 +302,7 @@ export function AIChatWidget({ lang }: AIChatWidgetProps) {
     if (!confirm(t.clearConfirm)) return;
     setMessages([]);
     try {
-      sessionStorage.removeItem(STORAGE_KEY_MESSAGES);
+      localStorage.removeItem(STORAGE_KEY_MESSAGES);
     } catch (err) {
       console.error("[chat] Failed to clear storage:", err);
     }
