@@ -3,11 +3,14 @@ import { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://valict.com";
 
-  // 1. تاريخ ثابت للصفحات الأساسية (من وقت النشر في شهر 5)
-  const oldPagesDate = new Date("2026-05-01");
-
-  // 2. تاريخ ثابت للصفحات اللي اتضافت بعد كده (زي FAQ في أكتوبر)
-  const newPagesDate = new Date("2026-10-21");
+  // [تحديث #6] بدل تواريخ ثابتة قديمة (2026-05-01 / 2026-10-21)، بنستخدم
+  // تاريخ اليوم في وقت البناء. كده محركات البحث تلاقي آخر تحديث حقيقي
+  // بدل تاريخ جامد بيبقى قديم مع كل deploy.
+  //
+  // ملاحظة: الـ build بيتعمل على Vercel عند كل deploy، فالتاريخ هيتحدّث
+  // تلقائيًا مع كل نشر. لو محتاج دقة أكبر (آخر تعديل فعلي لكل صفحة)،
+  // ممكن نستخدم git log لاحقًا، بس ده كافي للمتطلب الحالي.
+  const now = new Date();
 
   const services = [
     "managed-it",
@@ -20,35 +23,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const languages = ["en", "ar"];
 
-  // الصفحات القديمة (الرئيسية + من نحن)
-  const oldStaticRoutes = ["/en", "/ar", "/en/about", "/ar/about"];
+  // الصفحات الأساسية (الرئيسية + من نحن)
+  const staticRoutes = ["/en", "/ar", "/en/about", "/ar/about"];
 
-  const mapOldStaticRoutes = oldStaticRoutes.map((route) => ({
+  const mapStaticRoutes = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: oldPagesDate,
+    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: route.endsWith("/about") ? 0.8 : 1.0,
   }));
 
-  // الصفحات الجديدة (FAQ)
-  const newStaticRoutes = ["/en/faq", "/ar/faq"];
+  // صفحات FAQ
+  const faqRoutes = ["/en/faq", "/ar/faq"];
 
-  const mapNewStaticRoutes = newStaticRoutes.map((route) => ({
+  const mapFaqRoutes = faqRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: newPagesDate,
+    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  // صفحات الخدمات (بتاخد تاريخ الصفحات القديمة)
+  // صفحات الخدمات
   const serviceRoutes = languages.flatMap((lang) =>
     services.map((slug) => ({
       url: `${baseUrl}/${lang}/services/${slug}`,
-      lastModified: oldPagesDate,
+      lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }))
   );
 
-  return [...mapOldStaticRoutes, ...mapNewStaticRoutes, ...serviceRoutes];
+  return [...mapStaticRoutes, ...mapFaqRoutes, ...serviceRoutes];
 }
