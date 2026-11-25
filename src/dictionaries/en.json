@@ -20,19 +20,39 @@
     "subtitle": "Our Core Expertise",
     "title": "IT & Security Solutions",
     "highlight": "That Drive Efficiency",
-    "description": "",
+    "description": "We deliver an integrated suite of IT solutions designed to boost your operational efficiency, safeguard your data, and ensure round-the-clock continuity of your systems.",
     "learnMore": "Learn more",
     "items": [
-      { 
-        "slug": "managed-it", 
-        "title": "Managed IT Services", 
-        "desc": "Proactive monitoring and support to keep operations running smoothly." 
+      {
+        "slug": "managed-it",
+        "title": "Managed IT Services",
+        "desc": "Proactive monitoring and support to keep operations running smoothly."
       },
-      { "slug": "network", "title": "Network & Infrastructure", "desc": "Design, implementation, and optimization of robust network environments." },
-      { "slug": "cloud", "title": "Cloud Solutions", "desc": "Scalable cloud systems designed for high availability and performance." },
-      { "slug": "cybersecurity", "title": "Cybersecurity", "desc": "Protect data and digital assets with advanced security measures." },
-      { "slug": "monitoring", "title": "Monitoring & Support", "desc": "24/7 monitoring and dedicated technical support for your peace of mind." },
-      { "slug": "web-design", "title": "Web Design & Development", "desc": "Professional corporate websites that enhance your digital footprint." }
+      {
+        "slug": "network",
+        "title": "Network & Infrastructure",
+        "desc": "Design, implementation, and optimization of robust network environments."
+      },
+      {
+        "slug": "cloud",
+        "title": "Cloud Solutions",
+        "desc": "Scalable cloud systems designed for high availability and performance."
+      },
+      {
+        "slug": "cybersecurity",
+        "title": "Cybersecurity",
+        "desc": "Protect data and digital assets with advanced security measures."
+      },
+      {
+        "slug": "monitoring",
+        "title": "Monitoring & Support",
+        "desc": "24/7 monitoring and dedicated technical support for your peace of mind."
+      },
+      {
+        "slug": "web-design",
+        "title": "Web Design & Development",
+        "desc": "Professional corporate websites that enhance your digital footprint."
+      }
     ]
   },
   "why": {
@@ -41,9 +61,18 @@
     "uptimeLabel": "System Uptime",
     "headline": "Connecting Technology with Real Business Value",
     "points": [
-      { "title": "Reduce downtime and keep operations running", "desc": "Keep operations running smoothly with our proactive maintenance and support." },
-      { "title": "Improve performance and system efficiency", "desc": "Optimize your system efficiency for faster, smarter, and scalable operations." },
-      { "title": "Secure your business infrastructure", "desc": "Flexible IT infrastructure designed to grow effortlessly with your business." }
+      {
+        "title": "Reduce downtime and keep operations running",
+        "desc": "Keep operations running smoothly with our proactive maintenance and support."
+      },
+      {
+        "title": "Improve performance and system efficiency",
+        "desc": "Optimize your system efficiency for faster, smarter, and scalable operations."
+      },
+      {
+        "title": "Secure your business infrastructure",
+        "desc": "Flexible IT infrastructure designed to grow effortlessly with your business."
+      }
     ]
   },
   "about": {
@@ -54,10 +83,22 @@
     "subtitle": "Our Process",
     "title": "How It Works",
     "steps": [
-      { "title": "Assess", "desc": "Evaluate your current IT environment and identify technical gaps." },
-      { "title": "Design", "desc": "Create tailored, scalable architecture solutions for your business." },
-      { "title": "Implement", "desc": "Deploy and optimize your new systems seamlessly and securely." },
-      { "title": "Monitor", "desc": "Continuous support and proactive 24/7 maintenance to prevent issues." }
+      {
+        "title": "Assess",
+        "desc": "Evaluate your current IT environment and identify technical gaps."
+      },
+      {
+        "title": "Design",
+        "desc": "Create tailored, scalable architecture solutions for your business."
+      },
+      {
+        "title": "Implement",
+        "desc": "Deploy and optimize your new systems seamlessly and securely."
+      },
+      {
+        "title": "Monitor",
+        "desc": "Continuous support and proactive 24/7 maintenance to prevent issues."
+      }
     ]
   },
   "cta": {
@@ -67,8 +108,7 @@
   },
   "contact": {
     "email": "info@valict.com",
-    "phone": "+201505544455",
-    "language": "العربية"
+    "phone": "+201505544455"
   },
   "footer": {
     "about": "At Valict, we deliver integrated ICT infrastructure solutions focused on reducing downtime, improving performance, and ensuring business continuity.",
